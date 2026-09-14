@@ -1,0 +1,24 @@
+name: CI placeholders
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint placeholder
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report lint status
+        run: echo "Placeholder only - lint is not configured yet."
+
+  test:
+    name: Test placeholder
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report test status
+        run: echo "Placeholder only - tests are not configured yet."
