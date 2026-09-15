@@ -107,6 +107,27 @@ https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp
 https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
 
 当前已确认这两个函数之间的调用关系，保存按钮到主窗口保存函数的调用路径尚待调查。
+#### 保存操作入口与调用流程
+
+在 `src/mainwindow.cpp` 中定位到 `MainWindow::on_actionSave_triggered()`。
+
+该函数先停止时间轴录制。如果当前工程没有保存路径，则进入“另存为”流程；如果已有路径，则在通过可写检查后调用定期备份逻辑，再执行 `saveXML(m_currentFile)`。
+
+已确认的已有路径保存调用链为：
+
+`MainWindow::on_actionSave_triggered()` → `MainWindow::saveXML(...)` → `Controller::saveXML(...)`
+
+三个函数分别承担保存操作处理、保存对象选择、XML 生成与文件写入的职责。
+
+保存后，入口函数重新建立自动保存对象、更新窗口和撤销历史状态，并根据 `success` 显示成功消息或错误提示。
+
+观察到的细节：已有路径分支末尾返回固定值 `true`，而不是 `success`，因此不能仅凭该入口函数返回 `true` 判断文件保存成功。
+
+源码依据：
+https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp
+https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
+
+当前范围：已追踪保存操作处理函数到文件写入的主要路径；尚未核对界面动作绑定，“另存为”内部流程也未展开调查。
 ### 5.3 模块依赖图
 待根据源码绘制。
 
