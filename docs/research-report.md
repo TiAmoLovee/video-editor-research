@@ -65,7 +65,19 @@ in、out 表示原素材中的起止位置，out 包含结束帧。
 本次实验文件：Week1Work.mlt 中的 resource、playlist0 和 entry。
 MLT XML 官方文档：https://www.mltframework.org/docs/mltxml/
 MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
+#### 保存工程的源码初步调查
 
+在 Shotcut 官方仓库 master 分支的 `src/mltcontroller.cpp` 中，定位到 `Controller::saveXML(...)` 函数。
+
+该函数使用 MLT 的 XML Consumer 生成工程 XML，并设置时间表示、工程标题等属性。在普通文件保存分支中，生成的 XML 经处理和校验后，通过 `QTextStream` 写入文件，最后调用 `QSaveFile::commit()` 完成保存。
+
+其中，`time_format` 设置为 `clock`，与本次 Week1Work.mlt 样本中观察到的时钟格式时间值一致。
+
+源码依据：https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
+
+版本说明：本次查看的是 master 分支，尚未记录具体提交编号；本地实验使用 Shotcut 26.8.1，两者尚未进行版本对应核对。
+
+当前进度：已定位保存工程函数，并初步理解普通文件保存流程；界面如何调用该函数、工程读取流程尚待继续调查。
 ### 5.3 模块依赖图
 待根据源码绘制。
 
