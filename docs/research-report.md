@@ -110,7 +110,7 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 - `Controller::saveXML`：生成工程 XML，在普通文件保存流程中将其写入文件。
 
 源码依据：
-https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp
+[https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp)
 https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
 
 当前已确认这两个函数之间的调用关系，保存按钮到主窗口保存函数的调用路径尚待调查。
@@ -131,7 +131,7 @@ https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
 观察到的细节：已有路径分支末尾返回固定值 `true`，而不是 `success`，因此不能仅凭该入口函数返回 `true` 判断文件保存成功。
 
 源码依据：
-https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp
+[https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp)
 https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
 
 当前范围：已追踪保存操作处理函数到文件写入的主要路径；尚未核对界面动作绑定，“另存为”内部流程也未展开调查。
