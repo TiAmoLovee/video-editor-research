@@ -78,6 +78,19 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 版本说明：本次查看的是 master 分支，尚未记录具体提交编号；本地实验使用 Shotcut 26.8.1，两者尚未进行版本对应核对。
 
 当前进度：已定位保存工程函数，并初步理解普通文件保存流程；界面如何调用该函数、工程读取流程尚待继续调查。
+#### 打开工程的源码初步调查
+
+在 `src/mltcontroller.cpp` 中定位到 `Controller::open(...)` 函数。
+
+该函数先调用 `checkFile()` 检查文件；检查未报告错误后，关闭当前内容。对于 `.mlt` 文件，它会处理路径编码，然后通过 `Mlt::Producer` 创建读取对象，并检查对象是否有效。
+
+读取成功后，函数根据条件更新工程和预览参数，并读取工程中保存的音频声道数、处理模式。本次 Week1Work.mlt 样本包含相应的 `shotcut:projectAudioChannels` 和 `shotcut:processingMode` 属性，可与这一读取流程对照。
+
+该函数返回整数错误码：正常流程返回 0；读取对象无效时设为 1；文件检查失败时返回检查得到的错误码。
+
+初步结论：这段代码通过 MLT 读取工程，而不是自行逐项解析 XML。MLT 内部解析以及界面时间轴恢复流程尚待进一步调查。
+
+源码依据：https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
 ### 5.3 模块依赖图
 待根据源码绘制。
 
