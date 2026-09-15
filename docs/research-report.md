@@ -136,7 +136,35 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 
 当前范围：已追踪保存操作处理函数到文件写入的主要路径；尚未核对界面动作绑定，“另存为”内部流程也未展开调查。
 ### 5.3 模块依赖图
-待根据源码绘制。
+本图为工程保存部分的模块关系草稿，仅覆盖目前已阅读的源码。
+
+```mermaid
+flowchart TD
+    A["主窗口：mainwindow.cpp"]
+    B["控制器：mltcontroller.cpp"]
+    C["MLT XML 输出组件"]
+    D[".mlt 工程文件"]
+
+    A -->|"选择保存对象，调用保存函数"| B
+    B -->|"连接工程对象，启动 XML 输出"| C
+    C -->|"返回生成的 XML 文本"| B
+    B -->|"写入并提交保存"| D
+```
+
+### 源码对应关系
+
+- 主窗口：`MainWindow::on_actionSave_triggered()` 处理保存操作，再调用 `MainWindow::saveXML()` 选择保存内容。
+- 控制器：`Controller::saveXML()` 调用 MLT 生成 XML，在普通文件保存分支中完成文件写入。
+- MLT XML 输出组件：由控制器创建并连接工程对象，用于生成 XML。
+
+### 源码依据
+
+- [主窗口源码](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp)
+- [控制器源码](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mltcontroller.cpp)
+
+### 当前范围
+
+已整理工程保存部分的模块关系。时间轴编辑、播放预览、滤镜和视频导出等模块尚未纳入，本图后续继续补充。
 
 ### 5.4 工程样本
 已生成 Week1Work.mlt，并在本机验证可以重新打开。
