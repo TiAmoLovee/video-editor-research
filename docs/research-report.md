@@ -140,17 +140,39 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 
 ```mermaid
 flowchart TD
-    A["主窗口：mainwindow.cpp"]
-    B["控制器：mltcontroller.cpp"]
-    C["MLT XML 输出组件"]
-    D[".mlt 工程文件"]
+    A["主窗口 MainWindow"]
+    B["时间轴面板 TimelineDock"]
+    C["多轨数据模型 MultitrackModel"]
+    D["MLT 多轨对象"]
+    E["保存控制器 Controller"]
+    F["MLT XML 输出组件"]
+    G[".mlt 工程文件"]
 
-    A -->|"选择保存对象，调用保存函数"| B
-    B -->|"连接工程对象，启动 XML 输出"| C
-    C -->|"返回生成的 XML 文本"| B
-    B -->|"写入并提交保存"| D
+    A -->|"通过 model() 取得数据模型"| B
+    B -->|"返回 m_model"| C
+    C -->|"tractor() 返回 m_tractor"| D
+    A -->|"将取得的多轨对象交给 saveXML()"| E
+    E -->|"连接保存对象，生成 XML"| F
+    F -->|"返回 XML 文本"| E
+    E -->|"写入文件"| G
 ```
+### 时间轴对象的获取关系
 
+`MainWindow::multitrack()` 调用 `m_timelineDock->model()->tractor()` 获取时间轴对象。
+
+其中：
+
+- `TimelineDock::model()` 返回面板持有的 `MultitrackModel` 对象地址。
+- `MultitrackModel::tractor()` 返回模型持有的 `m_tractor`，类型为 `Mlt::Tractor*`。
+
+这条路径说明，主窗口保存时间轴时，从时间轴面板的数据模型取得已有的 MLT 多轨对象，再交给保存控制器处理。
+
+补充源码依据：
+
+- [时间轴面板](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/docks/timelinedock.h)
+- [多轨数据模型](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/models/multitrackmodel.h)
+
+本图仍为时间轴对象获取与工程保存部分的关系图，尚未覆盖完整系统。
 ### 源码对应关系
 
 - 主窗口：`MainWindow::on_actionSave_triggered()` 处理保存操作，再调用 `MainWindow::saveXML()` 选择保存内容。
