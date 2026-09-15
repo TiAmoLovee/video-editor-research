@@ -71,7 +71,7 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 
 ### 5.4 工程样本
 已生成 Week1Work.mlt，并在本机验证可以重新打开。
-仓库计划存放位置：docs/samples/Week1Work.mlt。
+存放位置：docs/samples/Week1Work.mlt。
 原始素材：Sucai1.mp4。当前工程通过本机绝对路径引用素材，在其他电脑上打开时需重新定位素材。
 
 ### 5.5 关键技术发现与证据
