@@ -97,7 +97,7 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 
 初步结论：这段代码通过 MLT 读取工程，而不是自行逐项解析 XML。MLT 内部解析以及界面时间轴恢复流程尚待进一步调查。
 
-源码依据：https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
+源码依据：[https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mltcontroller.cpp)
 #### 主窗口与保存控制器的调用关系
 
 在 `src/mainwindow.cpp` 中定位到 `MainWindow::saveXML(...)` 函数。该函数根据当前工程状态选择保存对象，再调用 `MLT.saveXML(...)` 执行保存。
@@ -111,8 +111,8 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 
 源码依据：
 [https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp)
-https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
-
+[https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
+](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mltcontroller.cpp)
 当前已确认这两个函数之间的调用关系，保存按钮到主窗口保存函数的调用路径尚待调查。
 #### 保存操作入口与调用流程
 
@@ -132,7 +132,7 @@ https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
 
 源码依据：
 [https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp)
-https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
+[https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mltcontroller.cpp)
 
 当前范围：已追踪保存操作处理函数到文件写入的主要路径；尚未核对界面动作绑定，“另存为”内部流程也未展开调查。
 ### 5.3 模块依赖图
