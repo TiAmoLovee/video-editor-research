@@ -14,7 +14,14 @@
 - 操作系统：Windows，具体版本待记录
 - OpenCut Classic 版本或提交编号：待确认
 - AutoClip 版本或提交编号：待确认
-- Shotcut 与 MLT 版本：待确认
+### Shotcut 实验与源码版本
+
+- 本地实验软件：Shotcut 26.8.1。
+- 源码仓库：mltframework/shotcut。
+- 本次固定的源码提交编号：8cd39efcdf8ab80390ee4736db2f52577fc82cdc。
+- 主窗口源码永久链接：https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp
+
+版本说明：本地安装的软件版本与本次查阅的源码提交分别记录，尚未确认该提交对应 Shotcut 26.8.1。
 
 ## 3. OpenCut Classic
 
