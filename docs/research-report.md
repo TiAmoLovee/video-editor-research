@@ -91,6 +91,22 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 初步结论：这段代码通过 MLT 读取工程，而不是自行逐项解析 XML。MLT 内部解析以及界面时间轴恢复流程尚待进一步调查。
 
 源码依据：https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
+#### 主窗口与保存控制器的调用关系
+
+在 `src/mainwindow.cpp` 中定位到 `MainWindow::saveXML(...)` 函数。该函数根据当前工程状态选择保存对象，再调用 `MLT.saveXML(...)` 执行保存。
+
+当时间轴模型中存在轨道时，函数传入 `multitrack()`，保存多轨时间轴。本次样本包含 V1 轨道及两个片段，对应这一分支。其他分支分别处理播放列表、其他有效内容对象和空工程。
+
+初步确认的分工为：
+
+- `MainWindow::saveXML`：选择保存内容，并传递文件名、路径选项和工程备注。
+- `Controller::saveXML`：生成工程 XML，在普通文件保存流程中将其写入文件。
+
+源码依据：
+https://github.com/mltframework/shotcut/blob/master/src/mainwindow.cpp
+https://github.com/mltframework/shotcut/blob/master/src/mltcontroller.cpp
+
+当前已确认这两个函数之间的调用关系，保存按钮到主窗口保存函数的调用路径尚待调查。
 ### 5.3 模块依赖图
 待根据源码绘制。
 
