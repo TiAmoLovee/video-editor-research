@@ -60,16 +60,285 @@ AutoClip 当前仍待补充：
 ## 3. OpenCut Classic
 
 ### 3.1 本地运行与基础流程
-待记录：启动步骤、测试操作、运行结果及截图。
+
+#### 实验环境与版本
+
+- 操作系统：Windows 10。
+- 源码仓库：https://github.com/OpenCut-app/opencut-classic
+- 本次源码提交：`cf5e79e919144200294fb9fed22a222592a0aeea`。
+- 本地源码目录：`D:\CodeResearch\opencut-classic`。
+- 使用 Bun 1.2.18 执行 `bun install --frozen-lockfile` 安装依赖。
+- 使用 Node.js 24.19.0 启动 Next.js 16.1.3 开发服务。
+- PostgreSQL、Redis 和 Redis HTTP 服务通过 Docker Compose 运行，均确认显示 healthy。
+- 网页访问地址：`http://localhost:3100`。
+
+#### 部署问题与处理
+
+1. Git 直接连接 GitHub 失败，改用本地代理完成源码克隆。
+2. 为避免与 AutoClip 的配置冲突，将 Redis 宿主机端口改为 6380，容器内部端口保持 6379；网页使用 3100 端口。
+3. 数据库初始化配置引用了不存在的 `src/lib/db/schema.ts`，修正为实际路径 `src/db/schema.ts` 后，初始化成功。
+4. 使用 Bun 启动时出现异步接口兼容性警告及响应流错误；改用 Node.js 启动后，页面可以正常访问。尚未进一步隔离验证错误根因。
+
+#### 基础操作与结果
+
+创建项目 `OpenCut-Test1`，导入 `Test1.mp4` 并加入时间轴。对视频进行一次分割，删除其中一段，然后导出成品。
+
+- 导出格式：MP4（H.264）。
+- 导出质量：Low。
+- 音频设置：包含音频。
+- 成品时长：播放器显示约 4 分 18 秒。
+- 人工检查：成品可以正常播放。
+- 刷新恢复检查：刷新编辑器后，项目、素材及剪辑结果保留正常，预览正常。
+
+本次完成了单个样本的基础流程验证。尚未进行逐帧切点、音画同步误差、性能及导出画质的系统测量；刷新恢复成功也不代表已验证跨浏览器或跨设备恢复。
+
+上述操作结果依据本次实验截图及人工检查记录。
 
 ### 3.2 主要模块与职责
-待调研。
+
+本节依据提交 `cf5e79e919144200294fb9fed22a222592a0aeea` 的 Web 端源码进行初步调查。下表中的路径均相对于 `apps/web/src/`。
+
+| 模块 | 主要职责 | 源码依据 |
+| --- | --- | --- |
+| 编辑器核心 | `EditorCore` 集中创建时间轴、项目、素材、播放、渲染和保存等管理器，协调编辑功能。 | `core/index.ts` |
+| 项目管理 | 创建、加载和保存项目；加载项目时恢复相关素材。 | `core/managers/project-manager.ts` |
+| 素材管理 | 管理素材列表，调用存储服务保存素材，并通过命令机制处理素材删除。 | `core/managers/media-manager.ts` |
+| 时间轴编辑 | 提供轨道和片段操作入口，将插入、分割、删除、移动等操作交给对应命令执行。 | `core/managers/timeline-manager.ts`、`commands/timeline/` |
+| 命令与历史记录 | 执行编辑命令，维护操作历史和重做栈，提供撤销、重做功能。 | `core/managers/commands.ts` |
+| 播放控制 | 管理播放、暂停、当前位置和跳转，并根据时间轴范围调整播放状态。 | `core/managers/playback-manager.ts` |
+| 渲染与导出 | 根据轨道和素材构建渲染场景；导出器使用 CanvasRenderer 与 Mediabunny 组织视频帧、音频和输出文件，包含 MP4、WebM 输出实现。 | `core/managers/renderer-manager.ts`、`services/renderer/scene-exporter.ts` |
+| 自动保存与本地存储 | 监听场景和时间轴变化，延迟合并保存请求；将项目及素材元数据保存到 IndexedDB，将素材文件保存到 OPFS。 | `core/managers/save-manager.ts`、`services/storage/service.ts` |
+| 服务端数据 | 定义用户、会话、账号、验证和反馈等 PostgreSQL 数据表。 | `db/schema.ts` |
+
+#### 自动保存与刷新恢复
+
+`SaveManager` 订阅场景和时间轴变化，默认等待 800 毫秒后尝试保存，以合并短时间内连续发生的编辑操作。实际保存由 `ProjectManager.saveCurrentProject()` 调用存储服务完成。
+
+`StorageService` 使用 IndexedDB 保存项目结构和素材元数据，使用 OPFS（浏览器提供的源私有文件系统）保存素材文件。
+
+这条源码关系为本次“刷新后剪辑结果仍然保留”的实验现象提供了解释。当前调查没有发现上述工程保存流程将时间轴写入 PostgreSQL，不能把数据库启动成功等同于工程已保存到服务器。
+
+#### 调查边界
+
+本节是主要模块职责的初步梳理。撤销与重做、多轨编辑、WebM 导出等功能目前仅确认存在源码实现，尚未逐项进行运行验证。Rust/WASM 内部实现、完整渲染机制和跨模块依赖将在后续继续调查。
+
+固定版本源码入口：[apps/web/src](https://github.com/OpenCut-app/opencut-classic/tree/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src)。
 
 ### 3.3 模块依赖图
-待根据源码绘制。
+
+本图依据提交 `cf5e79e919144200294fb9fed22a222592a0aeea`，展示 Web 编辑器中已核对的主要模块关系。
+
+实线表示调用或使用关系，虚线表示变化通知。图中省略部分辅助模块，以及各管理器通过 EditorCore 相互访问的连接。
+
+```mermaid
+flowchart TD
+    UI["编辑器界面"] --> Hook["useEditor"]
+    Hook --> Core["EditorCore：统一提供管理器"]
+
+    Core --> Timeline["TimelineManager：时间轴编辑"]
+    Core --> Scenes["ScenesManager：场景管理"]
+    Core --> Project["ProjectManager：项目管理"]
+    Core --> Media["MediaManager：素材管理"]
+
+    Timeline --> Commands["CommandManager：执行、撤销与重做"]
+    Scenes --> Commands
+
+    Timeline -.->|变化通知| Save["SaveManager：合并保存请求"]
+    Scenes -.->|变化通知| Save
+    Save -->|保存当前项目| Project
+
+    Project --> Storage["StorageService：本地持久化"]
+    Media --> Storage
+    Storage --> IDB["IndexedDB：项目与素材元数据"]
+    Storage --> OPFS["OPFS：素材文件"]
+
+    Project -->|发起导出| Renderer["RendererManager：组织渲染与导出"]
+    Renderer -->|读取轨道| Scenes
+    Renderer -->|读取素材| Media
+    Renderer --> Builder["buildScene：构建渲染场景"]
+    Renderer --> Exporter["SceneExporter：执行导出"]
+    Exporter --> Canvas["CanvasRenderer：画面渲染"]
+    Canvas --> WASM["WASM compositor：画面合成"]
+    Exporter --> Bunny["Mediabunny：媒体编码与封装"]
+```
+
+#### 主要关系说明
+
+1. **界面与编辑器核心**：界面通过 `useEditor` 获取 EditorCore，并订阅管理器变化，使显示内容跟随编辑状态更新。
+2. **编辑与操作历史**：时间轴和场景管理器将相关编辑操作交给 CommandManager，由命令机制组织执行、撤销和重做。
+3. **变化与自动保存**：SaveManager 监听场景和时间轴变化，合并保存请求，再调用项目管理器保存当前项目。
+4. **项目与素材持久化**：项目管理器和素材管理器使用 StorageService。项目结构及素材元数据进入 IndexedDB，素材文件进入 OPFS。
+5. **渲染与导出**：项目管理器调用 RendererManager，后者读取轨道、素材和项目设置，构建渲染场景并交给 SceneExporter。导出器使用 CanvasRenderer 渲染画面，并使用 Mediabunny 组织媒体输出。
+
+#### 源码依据
+
+以下路径均相对于 `apps/web/src/`：
+
+| 图中关系 | 对应文件 |
+| --- | --- |
+| 界面获取核心、订阅变化 | `editor/use-editor.ts` |
+| 核心创建并提供管理器 | `core/index.ts` |
+| 时间轴、场景与命令调用 | `core/managers/timeline-manager.ts`、`core/managers/scenes-manager.ts`、`core/managers/commands.ts` |
+| 变化通知与自动保存 | `core/managers/save-manager.ts` |
+| 项目保存、加载及导出入口 | `core/managers/project-manager.ts` |
+| 素材保存与加载 | `core/managers/media-manager.ts` |
+| IndexedDB 与 OPFS 存储分工 | `services/storage/service.ts` |
+| 渲染场景与导出组织 | `core/managers/renderer-manager.ts` |
+| 渲染器和媒体输出依赖 | `services/renderer/scene-exporter.ts`、`services/renderer/canvas-renderer.ts` |
+
+固定版本源码：[apps/web/src](https://github.com/OpenCut-app/opencut-classic/tree/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src)。
+
+本图属于编辑、保存和导出主链路的局部依赖图，尚未完整展开实时预览、音频播放、字幕、特效、服务端接口及 Rust/WASM 内部模块。连线依据源码关系，不代表所有功能均已完成运行测试。
 
 ### 3.4 关键技术发现与证据
-待记录：技术结论、源码路径或官方文档链接。
+
+#### 3.4.1 时间轴数据结构与分割机制
+
+本节依据提交 `cf5e79e919144200294fb9fed22a222592a0aeea`。以下源码路径均相对于 `apps/web/src/`。
+
+**1. 项目、场景、轨道与片段分层组织**
+
+`TProject` 包含场景数组 `scenes`、当前场景编号 `currentSceneId` 和项目设置。每个 `TScene` 包含轨道集合 `SceneTracks`。
+
+轨道集合分为主视频轨道 `main`、叠加轨道数组 `overlay` 和音频轨道数组 `audio`；具体轨道通过 `elements` 数组保存片段。
+
+源码依据：`project/types.ts`、`timeline/types.ts`。
+
+**2. 区分时间轴位置与素材裁剪范围**
+
+视频片段 `VideoElement` 通过 `mediaId` 引用素材，并继承以下时间字段：
+
+| 字段 | 含义 |
+| --- | --- |
+| `id` | 时间轴片段自身的标识 |
+| `mediaId` | 片段引用的素材标识 |
+| `startTime` | 片段在时间轴上的开始位置 |
+| `duration` | 片段在时间轴上占用的时长 |
+| `trimStart` | 素材开头被裁去的时长 |
+| `trimEnd` | 素材结尾被裁去的时长 |
+| `retime` | 可选的变速配置 |
+
+因此，片段在成品中何时出现，与它从原素材哪里开始播放，是两个不同概念。存在变速时，时间轴时长和对应的素材时长也可能不同。
+
+源码依据：`timeline/types.ts`、`commands/timeline/element/split-elements.ts`。
+
+**3. 分割通过修改片段描述实现**
+
+`SplitElementsCommand` 首先检查分割点是否严格位于片段内部。分割点在片段起点、终点或范围之外时，该片段保持不变。
+
+在默认保留左右两侧的情况下：
+
+- 左片段保留原片段标识，缩短 `duration`，增加 `trimEnd`。
+- 右片段获得新标识，将 `startTime` 设置为分割位置，更新 `duration` 和 `trimStart`。
+- 两个视频片段保留相同的 `mediaId`，继续引用同一素材。
+- 代码同时处理变速对应的素材跨度及动画拆分。
+
+例如，假设一段未裁剪、正常速度的 60 秒视频位于时间轴起点，在第 20 秒分割：
+
+| 片段 | 时间轴起点 | 时间轴时长 | 素材开头裁去 | 素材结尾裁去 |
+| --- | --- | --- | --- | --- |
+| 左片段 | 0 秒 | 20 秒 | 0 秒 | 40 秒 |
+| 右片段 | 20 秒 | 40 秒 | 20 秒 | 0 秒 |
+
+该示例用于解释数据含义，不是本次 Test1.mp4 的实际分割记录。分割命令修改的是时间轴数据，不会在此步骤生成两个独立视频文件。
+
+源码依据：`commands/timeline/element/split-elements.ts`。
+
+**4. 删除片段与删除素材是不同操作**
+
+`DeleteElementsCommand` 根据轨道编号和片段编号，从轨道的 `elements` 数组中过滤目标片段，并更新轨道状态。该命令本身没有删除素材文件的调用。
+
+分割和删除命令都会保存操作前的轨道状态，供 `undo()` 恢复。删除后其他片段是否移动，还需结合波纹编辑等逻辑判断，不能仅凭删除命令认定空隙一定自动闭合。
+
+源码依据：`commands/timeline/element/delete-elements.ts`、`commands/timeline/element/split-elements.ts`、`core/managers/commands.ts`。
+
+**5. 内部时间使用整数刻度**
+
+时间字段使用 `MediaTime`。它在 TypeScript 中是带类型标记的数字，表示整数 tick；代码提供秒与内部时间之间的转换函数，以及整数检查和取整函数。
+
+因此，界面显示的“秒”不能直接当作这些字段的原始数值。上面的分割示例以秒展示，实际写入数据时需要转换。
+
+源码依据：`wasm/media-time.ts`。
+
+**对 ClipForge 的启发**
+
+可以借鉴“素材引用、时间轴位置、素材裁剪范围分开记录”的设计，使用户调整剪辑时主要修改结构化数据，在导出阶段再生成成品。这是设计建议，尚未实现 OpenCut 工程与 ClipForge 剪辑清单之间的转换。
+
+固定版本源码：[apps/web/src](https://github.com/OpenCut-app/opencut-classic/tree/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src)。
+#### 3.4.2 预览与视频导出机制
+
+本节依据提交 `cf5e79e919144200294fb9fed22a222592a0aeea`。以下源码路径均相对于 `apps/web/src/`。
+
+**1. 将时间轴转换成渲染场景**
+
+`buildScene()` 根据轨道、素材和画布设置构建渲染场景。视频片段会转换成 `VideoNode`，其中包含素材引用、时间轴位置、裁剪范围、变速、变换及特效等信息。
+
+因此，时间轴主要记录编辑安排，渲染场景负责组织生成画面所需的数据。
+
+源码依据：`services/renderer/scene-builder.ts`。
+
+**2. 预览根据当前播放位置更新画面**
+
+预览组件中的 `RenderTreeController` 读取轨道、素材和项目设置，调用 `buildScene()` 构建预览场景，并将其交给渲染管理器。
+
+`PreviewCanvas` 使用动画帧循环，读取当前播放位置，再调用 `CanvasRenderer.render()`。如果帧位置和渲染场景均未变化，则跳过重复渲染；已有渲染尚未完成时，也不会再次发起渲染。
+
+源码依据：`preview/components/index.tsx`。
+
+**3. 画面渲染包含状态解析与合成**
+
+`CanvasRenderer.render()` 依次执行：
+
+- 根据指定时间解析渲染节点状态。
+- 构建当前帧的描述及所需纹理。
+- 向 WASM 合成器同步纹理。
+- 调用合成器绘制画面。
+
+预览界面直接挂载合成器提供的输出画布。虽然类名为 CanvasRenderer，其实现还调用了 WASM 合成器，不能仅凭名称将其描述为纯 Canvas 2D 绘制。
+
+源码依据：`services/renderer/canvas-renderer.ts`、`services/renderer/resolve.ts`、`preview/components/index.tsx`。
+
+**4. 导出按帧生成视频并封装文件**
+
+点击导出后，界面调用项目管理器，再由 `RendererManager.exportProject()` 读取当前场景轨道、素材和项目设置，构建导出场景并创建 `SceneExporter`。
+
+`SceneExporter` 根据时长和帧率计算帧数，按顺序渲染每帧，将画布内容和时间戳交给 Mediabunny 的 `CanvasSource`，最后完成文件封装并返回内存缓冲区。界面收到成功结果后调用下载函数。
+
+| 输出格式 | 源码选择的视频编码 | 音频处理 |
+| --- | --- | --- |
+| MP4 | AVC，即 H.264 | 优先选择 AAC；代码在检测到 AAC 配置不支持时改用 Opus |
+| WebM | VP9 | 选择 Opus |
+
+以上是源码配置，不代表所有浏览器和播放器都支持这些组合。本次仅实际验证了 MP4 导出及本地播放，尚未检查成品的音频编码信息，也未测试 WebM。
+
+源码依据：`components/editor/export-button.tsx`、`core/managers/project-manager.ts`、`core/managers/renderer-manager.ts`、`services/renderer/scene-exporter.ts`。
+
+**5. 音频单独准备，再与视频一起输出**
+
+勾选包含音频时，渲染管理器先调用 `createTimelineAudioBuffer()` 准备时间轴音频缓冲区。导出器再通过 Mediabunny 的 `AudioBufferSource` 添加音轨。
+
+所查导出路径在浏览器端组织画面渲染、音频准备和文件生成；该调用链中没有将导出工作提交给 Celery 或服务端 FFmpeg 的步骤。
+
+源码依据：`media/audio.ts`、`core/managers/renderer-manager.ts`、`services/renderer/scene-exporter.ts`。
+
+**预览与导出的区别**
+
+| 对比项 | 预览 | 导出 |
+| --- | --- | --- |
+| 时间推进 | 跟随当前播放位置 | 按输出帧率依次生成各帧 |
+| 输出目标 | 编辑器中的画布 | 可下载的视频文件 |
+| 共用部分 | 场景构建与 CanvasRenderer | 场景构建与 CanvasRenderer |
+| 特有处理 | 跳过重复帧、响应交互 | 编码、封装、进度及取消处理 |
+
+两者共用部分实现，但预览构建启用了 `isPreview` 分支，例如限制图片源尺寸。因此，共用渲染代码不等于已经证明预览与成品逐像素一致。
+
+**对 ClipForge 的启发与调查边界**
+
+可以参考其做法，让预览和导出使用一致的时间轴语义及场景描述，减少两套逻辑对片段位置、裁剪和特效理解不一致的问题。
+
+本次成品约 4 分 18 秒，人工检查播放正常。尚未测量导出耗时、内存占用、逐帧精度及音画同步误差，也未完整调查 Rust/WASM 合成器内部实现。
+
+固定版本源码：[apps/web/src](https://github.com/OpenCut-app/opencut-classic/tree/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src)。
 
 ## 4. AutoClip
 
