@@ -1101,12 +1101,26 @@ MLT 官方版权政策说明，框架核心采用 LGPLv2.1；模块和附带程�
 4. 处理状态截图：展示 Edited 标记和预计剩余时间。
 5. 下载完成截图：展示导出的 MP4 文件。
 6. 人工操作记录：确认字幕修改、保存恢复、导出及 AI 语音清理体验。
+![OpusClip 自动生成的候选短片](opusclip-results.png)
 
+图 7-1：Test1.mp4 的候选结果页，展示自动生成的标题、时长与评分。
 **官方参考：**
 
-- [OpusClip 官方产品与流程介绍](https://help.opus.pro/docs/article/introduction-to-opusclip)
+[OpusClip 官方产品与流程介绍](https://help.opus.pro/docs/article/introduction-to-opusclip)
 
 官方资料用于补充产品流程背景；本节实测结果依据上述截图与人工操作记录。
+![OpusClip 编辑器](opusclip-editor.png)
+
+图 7-2：编辑器同时展示转写文本、视频预览、时间轴和音频波形。
+![OpusClip 字幕修改](opusclip-caption-edit.png)
+
+图 7-3：修改后的字幕出现在转写文本和预览画面中。保存恢复结果依据人工检查记录。
+![OpusClip 编辑后的处理状态](opusclip-processing.png)
+
+图 7-4：候选卡片显示 Edited 标记及预计剩余处理时间。截图中的 46 秒不是完整处理耗时。
+![OpusClip 成品下载完成](opusclip-download.png)
+
+图 7-5：浏览器下载面板显示导出的 MP4 文件已下载完成。
 ## 8. 调研结论与后续工作
 
 ### 8.1 当前验证结果
