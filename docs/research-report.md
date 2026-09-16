@@ -1,23 +1,13 @@
 # 视频剪辑项目调研报告 v1
 
-当前状态：已完成 Shotcut 和 AutoClip 的基础流程验证，并完成部分源码调查；整体调研仍在进行。
+当前状态：已完成 Shotcut、AutoClip 和 OpenCut Classic 的基础流程验证，并记录部分源码调查结果；第一周整体工作尚未完成。
 
-- **Shotcut / MLT**：已完成素材导入、剪辑、工程保存与重新打开、MP4 导出和播放验证；已克隆源码、固定提交，调查部分工程读写与保存调用关系。完整模块图、滤镜或渲染机制及源码编译仍待补充。
-- **AutoClip**：已完成 Docker 本地部署，以及自动转写、模型分析、切片生成、预览、下载和本地播放验证；已初步调查任务编排、LLM 调用层、主要数据模型和项目许可证，绘制文件导入与任务启动的局部关系图，并填写六维对比中的初步结论。
-- **OpenCut Classic**：本报告尚未记录实际运行和源码调查结果。
-- **综合部分**：仍需完善跨项目对比、产品体验记录、调研结论及参考资料。
+- **Shotcut / MLT**：已完成素材导入、剪辑、工程保存与重新打开、MP4 导出和播放验证；已调查部分工程读写与保存调用关系。尚未完成源码编译、完整模块图及滤镜或渲染机制调查。
+- **AutoClip**：已完成本地部署、自动转写、模型分析、切片生成、预览、下载和播放验证；已初步调查任务编排、LLM 调用层、数据模型及许可证。实际任务启动路径、完整模块关系和质量评估仍需补充，已发现的部署及代码问题仍需跟踪。
+- **OpenCut Classic**：已完成本地部署、素材导入、分割与删除片段、MP4 导出、本地播放及刷新恢复验证；已调查主要模块、浏览器本地存储、时间轴数据结构、分割删除机制及预览导出流程，并绘制局部模块依赖图、填写六维对比。Rust/WASM 内部实现、完整模块关系及性能测试尚未完成。
+- **综合部分**：六维对比已有三个项目的初步内容，仍需完善产品体验、跨项目结论、需求规格说明书、用例图与主流程时序图，以及最终交付材料整理。
 
-AutoClip 当前仍待补充：
-
-- 用运行证据确认本次实验实际经过的任务启动路径。
-- 扩充完整模块依赖图，核对前端进度获取和结果存储流程。
-- 检查字幕准确性、切点自然度及标题与内容的一致性。
-- 补充处理耗时、资源占用和模型调用用量。
-- 修复或明确记录已发现的上传入口、健康检查、安装接口及密钥日志问题。
-
-当前完成的是基础实验与初步源码调查，尚未完成第一周全部交付内容。
-
-当前完成的是部分项目的基础实验与初步调查，尚未完成第一周全部交付内容。
+目前完成的是基础实验与部分源码调查，尚不能据此认定第一周全部交付要求已满足。
 
 ## 1. 调研目的与范围
 
@@ -1053,15 +1043,53 @@ ClipForge 可以参考这种分工，对模型返回的结构、时间范围和�
 | [Shotcut FAQ](https://shotcut.org/FAQ/) | 软件使用及许可证信息 |
 | [MLT 版权政策](https://www.mltframework.org/docs/copyrightpolicy/) | 框架核心、模块及程序的许可证区分 |
 
-### 9.3 实验材料
+版本说明：本地实验使用 Shotcut 26.8.1；尚未确认上述源码提交与该安装版本对应同一发布版本。
 
-- Shotcut 工程样本：[`Week1Work.mlt`](samples/Week1Work.mlt)。
-- Shotcut MP4 导出与人工播放检查：见第 5.1 节。
-- AutoClip 部署、模型调用和切片播放验证：见第 4.1、4.5 节。
-- 终端输出、页面截图及视频文件：尚需统一归档，未全部加入仓库。
 
-OpenCut Classic 及产品体验部分的参考资料将在实际调查后补充。
-## 9. 参考资料
+### 9.3 OpenCut Classic
 
-待补充官方文档和源码链接。
-各项技术结论应同时在对应正文位置标注证据。
+本次记录的源码提交：`cf5e79e919144200294fb9fed22a222592a0aeea`。
+
+| 资料 | 对应调查内容 |
+| --- | --- |
+| [固定版本源码目录](https://github.com/OpenCut-app/opencut-classic/tree/cf5e79e919144200294fb9fed22a222592a0aeea) | 本次调查的版本依据 |
+| [项目 README](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/README.md) | 项目定位、目录和启动说明 |
+| [依赖与脚本配置](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/package.json) | Bun 版本声明及项目脚本 |
+| [Docker Compose](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/docker-compose.yml) | 数据库、Redis 和相关服务编排 |
+| [数据库初始化配置](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/drizzle.config.ts) | 本地部署中发现的 schema 路径问题 |
+| [编辑器核心](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/core/index.ts) | 管理器创建与功能组织 |
+| [界面与核心连接](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/editor/use-editor.ts) | 获取编辑器核心及订阅状态变化 |
+| [管理器目录](https://github.com/OpenCut-app/opencut-classic/tree/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/core/managers) | 项目、素材、命令、保存及渲染管理 |
+| [项目数据类型](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/project/types.ts) | 项目、场景引用与画布设置 |
+| [时间轴数据类型](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/timeline/types.ts) | 场景、轨道、片段及时间字段 |
+| [分割命令](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/commands/timeline/element/split-elements.ts) | 分割位置、素材裁剪范围和撤销 |
+| [删除命令](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/commands/timeline/element/delete-elements.ts) | 从轨道移除片段及恢复操作 |
+| [内部时间表示](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/wasm/media-time.ts) | 整数 tick 与秒之间的转换 |
+| [本地存储服务](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/services/storage/service.ts) | IndexedDB 与 OPFS 的存储分工 |
+| [服务端数据表](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/db/schema.ts) | 用户、会话、账号、验证和反馈数据定义 |
+| [预览组件](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/preview/components/index.tsx) | 预览场景构建与画面更新 |
+| [场景构建](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/services/renderer/scene-builder.ts) | 将时间轴与素材转换为渲染场景 |
+| [画面渲染器](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/services/renderer/canvas-renderer.ts) | 节点解析、帧描述、纹理同步与合成调用 |
+| [视频导出器](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/services/renderer/scene-exporter.ts) | 逐帧导出、音视频编码配置及文件封装 |
+| [音频处理](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/media/audio.ts) | 时间轴音频缓冲区准备 |
+| [导出界面](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/components/editor/export-button.tsx) | 导出参数提交及成品下载 |
+| [项目许可证](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/LICENSE) | 项目自身的 MIT 许可证 |
+
+版本说明：以上链接指向原始提交。本地部署修改了数据库 schema 路径、Redis 宿主机端口及网页环境配置，具体处理见第 3.1 节；这些本地调整不包含在上述原始源码链接中。
+
+Descript / Opus Clip 产品体验部分的参考资料将在实际体验后补充。
+### 9.4 实验材料
+
+| 材料 | 用途及归档说明 |
+| --- | --- |
+| [Shotcut 工程样本 Week1Work.mlt](samples/Week1Work.mlt) | 用于检查素材引用、片段范围和轨道排列 |
+| Shotcut MP4 导出与人工播放记录 | 见第 5.1 节 |
+| [AutoClip 切片结果截图](autoclip-result.png) | 展示切片标题、评分及时间范围，实验说明见第 4.1 节 |
+| AutoClip 部署与处理记录 | 部署、模型调用和切片播放验证见第 4.1、4.5 节；原视频及下载切片保留在本地，未上传仓库 |
+| OpenCut Classic 基础实验记录 | 项目 OpenCut-Test1 的导入、分割、删除、导出及刷新恢复结果见第 3.1 节 |
+| OpenCut Classic 导出成品 | MP4（H.264），Low 质量，勾选包含音频；播放器显示约 4 分 18 秒，已人工确认可以正常播放 |
+| OpenCut Classic 页面截图 | 用于记录编辑器状态及导出设置，尚需统一归档至仓库 |
+
+终端输出、页面截图和本地视频尚未全部统一归档。页面截图、人工播放记录与源码调查分别提供不同类型的证据，不能互相替代。
+
+OpenCut Classic 的刷新恢复检查仅验证了当前浏览器中的项目恢复，未验证跨浏览器或跨设备恢复。
