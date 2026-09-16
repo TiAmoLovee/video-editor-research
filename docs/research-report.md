@@ -170,6 +170,31 @@
 这一处存在触发未定义变量异常的风险。该异常会被任务提交部分的异常处理捕获，而接口仍可能返回项目创建成功。
 
 因此，需要进一步比对运行容器中的代码和任务记录，确认实际实验的执行路径。不能仅凭页面“项目创建成功”的提示，认定后台提交一定成功；本次实验最终生成并播放切片，是另一个独立的运行结果证据。
+#### 上传入口问题与另一条启动路径
+
+已检查运行容器中的 `backend/api/v1/projects.py`，第 126 行同样使用 `db.query(...)`，与本地源码一致。本地上传函数中未发现该变量的定义或注入，因此存在任务提交前触发未定义变量异常的问题。
+
+上传接口捕获该异常后，仍可能返回项目创建成功。因此，“项目创建成功”与“后台任务提交成功”需要分别判断。
+
+进一步检查本地前端源码，发现另一条启动路径：
+
+1. 首页上传成功后刷新项目列表。
+2. `ProjectCard.tsx` 检测到项目状态为 `pending`、未处于下载中，且尚未自动尝试启动时，调用 `handleRetry({ silent: true })`。
+3. 对于 `pending` 项目，该函数调用 `projectApi.startProcessing()`，请求 `/projects/{project_id}/process`。
+4. 后端 `start_processing()` 直接提交 `process_video_pipeline` 任务。
+5. `simple_pipeline_adapter.py` 在没有可用字幕时，也会尝试自动生成字幕，然后继续处理。
+
+这条路径可以解释为何上传接口存在问题，但项目仍有机会完成处理。
+
+需要区分证据范围：容器中的问题语句已经核对；另一条启动路径已通过本地源码确认。本次实验是否实际由该路径启动，尚未通过请求或任务日志逐项验证，当前属于基于源码的解释。
+
+相关源码：
+
+- `frontend/src/pages/HomePage.tsx`
+- `frontend/src/components/ProjectCard.tsx`
+- `frontend/src/services/api.ts`
+- `backend/api/v1/projects.py`
+- `backend/services/simple_pipeline_adapter.py`
 
 #### 源码依据
 
