@@ -210,7 +210,73 @@
 待调研：调用位置、输入输出及后续处理。
 
 ### 4.4 模块依赖图
-待根据源码绘制。
+
+#### 文件导入与任务启动的局部关系图
+
+本图依据本地源码绘制，覆盖文件上传、两条任务启动路径及视频处理入口，尚未覆盖完整系统。
+
+```mermaid
+flowchart TD
+    A["文件导入组件 FileUpload"]
+    B["上传接口 upload_files"]
+    C["创建项目并保存素材"]
+    D["提交导入任务前的检查"]
+    E["导入任务 process_import_task"]
+    F["准备字幕并提交视频处理任务"]
+    G["首页刷新项目列表"]
+    H["项目卡片 ProjectCard"]
+    I["启动处理接口 start_processing"]
+    J["Redis：processing 队列"]
+    K["Celery worker"]
+    L["视频处理任务 process_video_pipeline"]
+    M["处理适配器 simple_pipeline_adapter"]
+    N["字幕准备与后续视频处理"]
+    O["更新任务和项目状态"]
+
+    A --> B
+    B --> C
+    C --> D
+    D -.->|"预期提交；存在未定义 db 问题"| E
+    E --> F
+    F --> J
+
+    B -->|"返回项目信息"| G
+    G --> H
+    H -->|"pending 且满足自动启动条件"| I
+    I --> J
+
+    J --> K
+    K --> L
+    L --> M
+    M --> N
+    N --> O
+```
+
+#### 图示说明
+
+- 上传接口负责创建项目、保存文件，并尝试提交导入任务。
+- 图中虚线表示存在已发现问题的预期调用：任务提交前的 `db.query(...)` 可能触发异常，不能视为已经成功执行。
+- 导入任务本身也是由 Celery 经 `processing` 队列交给 worker 执行；图中为便于阅读，未重复展开这一段队列关系。
+- 项目卡片另有自动启动逻辑，可以调用独立的处理接口，直接提交视频处理任务。
+- 视频处理适配器在缺少字幕时，也会尝试自动生成字幕。
+- 两条启动路径来自源码调查；尚未通过日志确认本次实验实际经过的完整路径。
+
+#### 调查边界与依据
+
+当前图是文件导入与任务启动的局部关系图，不是完整模块依赖图。LLM 调用、具体切片步骤、结果存储和前端进度获取关系仍待展开。
+
+源码依据：
+
+- `frontend/src/components/FileUpload.tsx`
+- `frontend/src/pages/HomePage.tsx`
+- `frontend/src/components/ProjectCard.tsx`
+- `frontend/src/services/api.ts`
+- `backend/api/v1/projects.py`
+- `backend/core/celery_app.py`
+- `backend/tasks/import_processing.py`
+- `backend/utils/task_submission_utils.py`
+- `backend/tasks/processing.py`
+- `backend/services/simple_pipeline_adapter.py`
 
 ### 4.5 关键技术发现与证据
 
