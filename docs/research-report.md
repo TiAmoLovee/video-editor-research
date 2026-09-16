@@ -692,7 +692,51 @@ MLT 官方版权政策说明，框架核心采用 LGPLv2.1；模块和附带程�
 ## 8. 调研结论与后续工作
 
 待总结：适合本项目参考的设计、限制和待验证问题。
+## 9. 参考资料
 
+以下资料用于支持正文中的实验和源码分析。源码链接尽量固定到本次记录的提交，避免后续版本变化影响复核。各项结论的具体依据仍保留在对应正文中。
+
+### 9.1 AutoClip
+
+本次记录的提交：`aaf863bbd7bba99c64bc53284d41c0ed19034387`。
+
+| 资料 | 对应调查内容 |
+| --- | --- |
+| [固定版本源码目录](https://github.com/zhouxiaoka/autoclip/tree/aaf863bbd7bba99c64bc53284d41c0ed19034387) | 本次源码调查的版本依据 |
+| [Docker Compose 配置](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/docker-compose.yml) | 服务编排、共享目录和健康检查 |
+| [项目 API](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/api/v1/projects.py) | 文件上传、项目创建和任务启动 |
+| [项目卡片组件](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/frontend/src/components/ProjectCard.tsx) | 等待状态项目的自动启动逻辑 |
+| [视频处理任务](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/tasks/processing.py) | 后台任务执行及状态更新 |
+| [处理适配器](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/services/simple_pipeline_adapter.py) | 字幕准备及处理步骤组织 |
+| [处理步骤目录](https://github.com/zhouxiaoka/autoclip/tree/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/pipeline) | 大纲、时间定位、评分、标题、聚类及视频生成 |
+| [LLM 管理器](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/core/llm_manager.py) | 模型配置、提供商选择和调用重试 |
+| [模型提供商实现](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/core/llm_providers.py) | DashScope 请求、响应和日志处理 |
+| [数据库模型目录](https://github.com/zhouxiaoka/autoclip/tree/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/models) | 项目、任务及切片的数据定义 |
+| [项目许可证](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/LICENSE) | 项目自身的许可证核对 |
+
+### 9.2 Shotcut / MLT
+
+本次记录的 Shotcut 源码提交：`8cd39efcdf8ab80390ee4736db2f52577fc82cdc`。
+
+| 资料 | 对应调查内容 |
+| --- | --- |
+| [Shotcut 主窗口源码](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp) | 保存操作入口及保存对象选择 |
+| [Shotcut 控制器源码](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mltcontroller.cpp) | 工程读取、XML 生成和文件写入 |
+| [时间轴面板](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/docks/timelinedock.h) | 获取时间轴数据模型 |
+| [多轨数据模型](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/models/multitrackmodel.h) | 获取 MLT 多轨对象 |
+| [MLT XML 官方文档](https://www.mltframework.org/docs/mltxml/) | 工程 XML 的结构和素材引用 |
+| [MLT MVCP 文档](https://www.mltframework.org/docs/mvcp/) | 起止点及包含结束帧的语义参考 |
+| [Shotcut FAQ](https://shotcut.org/FAQ/) | 软件使用及许可证信息 |
+| [MLT 版权政策](https://www.mltframework.org/docs/copyrightpolicy/) | 框架核心、模块及程序的许可证区分 |
+
+### 9.3 实验材料
+
+- Shotcut 工程样本：[`Week1Work.mlt`](samples/Week1Work.mlt)。
+- Shotcut MP4 导出与人工播放检查：见第 5.1 节。
+- AutoClip 部署、模型调用和切片播放验证：见第 4.1、4.5 节。
+- 终端输出、页面截图及视频文件：尚需统一归档，未全部加入仓库。
+
+OpenCut Classic 及产品体验部分的参考资料将在实际调查后补充。
 ## 9. 参考资料
 
 待补充官方文档和源码链接。
