@@ -110,7 +110,76 @@
 上述评分为系统生成的评分，不是人工质量评价。四个切片连续覆盖原视频的一个时间区间，尚不能据此证明系统实现了高压缩率的精彩片段筛选。
 
 ### 4.2 后端任务编排
-待调研：任务如何创建、执行和返回结果。
+
+#### 调查范围
+
+本次调查文件导入入口、字幕准备和视频处理任务的提交关系，依据本地提交 `aaf863bbd7bba99c64bc53284d41c0ed19034387` 的源码。
+
+以下为源码调用关系调查，尚未通过运行日志逐项核对本次实验实际经过的全部分支。
+
+#### 1. 前端提交视频与项目信息
+
+`frontend/src/components/FileUpload.tsx` 调用 `projectApi.uploadFiles()`。
+
+该方法在 `frontend/src/services/api.ts` 中定义，将视频、可选字幕、项目名称和视频分类组成表单，提交到 `/projects/upload` 接口。
+
+前端收到项目响应后，将项目加入列表并提示后台正在处理。这个提示本身不能证明后台任务已经成功执行。
+
+#### 2. 上传接口创建项目并准备文件
+
+`backend/api/v1/projects.py` 中的 `upload_files()` 负责检查文件扩展名、创建项目记录，并将视频保存到项目原始素材目录。
+
+如果用户提供字幕，也会保存字幕文件。接口还会同步尝试生成缩略图，因此上传请求并非只负责提交后台任务。
+
+源码中随后安排调用 `process_import_task.delay()`，将项目编号、视频路径和可选字幕路径交给 Celery。
+
+#### 3. 导入任务准备字幕
+
+`backend/tasks/import_processing.py` 中的 `process_import_task()` 负责检查缩略图，并在缺少字幕时调用语音识别功能生成字幕。
+
+字幕准备完成后，该任务调用 `submit_video_pipeline_task()`，提交后续视频处理任务。
+
+这里的“导入处理完成”表示字幕等准备工作完成、后续处理已提交，不等同于最终切片已经生成。
+
+#### 4. Redis 与 Celery 分配后台任务
+
+`backend/core/celery_app.py` 配置 Redis 作为 Celery 的消息代理和结果后端，将导入任务及视频处理任务路由到 `processing` 队列。
+
+可以将其理解为：
+
+- 应用提交任务消息。
+- Redis 保存和传递队列消息。
+- Celery worker 接收任务并执行具体处理。
+
+`backend/utils/task_submission_utils.py` 在非 Desktop 模式下，通过 `celery_app.send_task()` 提交 `backend.tasks.processing.process_video_pipeline`。
+
+该工具另有 Desktop 模式的本地线程执行分支，不能将两种部署方式混为一谈。
+
+#### 5. 视频处理任务执行并保存结果状态
+
+`backend/tasks/processing.py` 中的 `process_video_pipeline()` 创建数据库任务记录，并调用 `simple_pipeline_adapter` 执行后续处理。
+
+处理结束后，根据返回结果更新任务和项目状态。成功分支将任务进度设置为 100，并记录项目完成时间；失败分支保存错误信息。
+
+当前尚未完整调查前端如何获取进度，以及处理适配器内部各步骤的实现。
+
+#### 待复核的入口问题
+
+当前源码的 `upload_files()` 在提交导入任务前使用了 `db.query(...)`，但该函数内未发现 `db` 的定义或注入；此前访问数据库使用的是 `project_service.db`。
+
+这一处存在触发未定义变量异常的风险。该异常会被任务提交部分的异常处理捕获，而接口仍可能返回项目创建成功。
+
+因此，需要进一步比对运行容器中的代码和任务记录，确认实际实验的执行路径。不能仅凭页面“项目创建成功”的提示，认定后台提交一定成功；本次实验最终生成并播放切片，是另一个独立的运行结果证据。
+
+#### 源码依据
+
+- `frontend/src/components/FileUpload.tsx`
+- `frontend/src/services/api.ts`
+- `backend/api/v1/projects.py`
+- `backend/tasks/import_processing.py`
+- `backend/core/celery_app.py`
+- `backend/utils/task_submission_utils.py`
+- `backend/tasks/processing.py`
 
 ### 4.3 LLM 调用层
 待调研：调用位置、输入输出及后续处理。
