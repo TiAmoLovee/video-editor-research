@@ -1,17 +1,17 @@
 # 视频剪辑项目调研报告 v1
 
-当前状态：已完成 Shotcut、AutoClip 和 OpenCut Classic 的基础流程验证及部分源码调查，已整理 OpusClip、Descript 体验，并形成需求规格说明书、用例图和主流程时序图。第一周材料正在收尾，模块图覆盖范围、证据核对及报告排版仍需完善。
+当前状态：已完成 Shotcut、AutoClip 和 OpenCut Classic 的基础流程验证及部分源码调查，已整理 OpusClip、Descript 体验，并形成需求规格说明书、用例图和主流程时序图。第一周材料正在收尾，三个项目的主要模块图已补充，证据核对及报告排版仍需完善。
 
 本次整理日期：2026-09-17。配套文档：[需求规格说明书](requirements.md)、[用例图与主流程时序图](design-diagrams.md)。
 
-- **Shotcut / MLT**：已完成素材导入、剪辑、工程保存与重新打开、MP4 导出和播放验证；已调查部分工程读写与保存调用关系。尚未完成源码编译、完整模块图及滤镜或渲染机制调查。
+- **Shotcut / MLT**：已完成素材导入、剪辑、工程保存与重新打开、MP4 导出和播放验证；已调查工程读写、时间轴分割、播放控制、滤镜挂接和后台导出关系，并补充主要模块图。尚未完成源码编译及底层滤镜、渲染算法调查。
 - **AutoClip**：已完成本地部署、自动转写、模型分析、切片生成、预览、下载和播放验证；已初步调查任务编排、LLM 调用层、数据模型及许可证。实际任务启动路径、完整模块关系和质量评估仍需补充，已发现的部署及代码问题仍需跟踪。
-- **OpenCut Classic**：已完成本地部署、素材导入、分割与删除片段、MP4 导出、本地播放及刷新恢复验证；已调查主要模块、浏览器本地存储、时间轴数据结构、分割删除机制及预览导出流程，并绘制局部模块依赖图、填写六维对比。Rust/WASM 内部实现、完整模块关系及性能测试尚未完成。
+- **OpenCut Classic**：已完成本地部署、素材导入、分割与删除片段、MP4 导出、本地播放及刷新恢复验证；已调查主要模块、浏览器本地存储、时间轴数据结构、分割删除机制及预览导出流程，并补充编辑、存储、预览、音频及导出的主要模块图，填写六维对比。Rust/WASM 内部实现、完整模块关系及性能测试尚未完成。
 - **商业产品体验**：已整理 OpusClip 的候选、评分、字幕编辑、保存恢复与 MP4 下载，以及 Descript 的编辑界面、对话式 AI 操作和导出设置。Descript 文本删改联动与最终输出尚未确认，详见第 7 节。
 - **需求与设计**：已形成 8 条功能需求、5 条非功能需求及逐条验收判据，并补充借鉴对比、用例图和主流程时序图；这些是设计交付，不表示 ClipForge 已开发完成。
-- **综合部分**：六维对比已填写三个项目的初步内容，三个参考项目均有局部模块图。仓库基础文件与 lint＋test 占位 CI 已建立；后续重点为模块图扩充、证据核对和最终排版。
+- **综合部分**：六维对比已填写三个项目的初步内容，三个参考项目均有主要模块图及源码依据，AutoClip 另保留任务入口细节图。仓库基础文件与 lint＋test 占位 CI 已建立；后续重点为证据核对、异常路径复核和最终排版。
 
-现有成果覆盖基础实验、部分源码调查、产品体验、需求定义和设计图。报告的最终页数与模块图覆盖范围尚未确认，不据此宣称第一周全部材料已定稿。
+现有成果覆盖基础实验、部分源码调查、产品体验、需求定义和设计图。报告的最终排版页数尚未确认，模块图也未穷举全部内部实现，不据此宣称第一周全部材料已定稿。
 
 ## 1. 调研目的与范围
 
@@ -125,7 +125,7 @@
 
 #### 调查边界
 
-本节是主要模块职责的初步梳理。撤销与重做、多轨编辑、WebM 导出等功能目前仅确认存在源码实现，尚未逐项进行运行验证。Rust/WASM 内部实现、完整渲染机制和跨模块依赖将在后续继续调查。
+本节是主要模块职责的初步梳理。撤销与重做、多轨编辑、WebM 导出等功能目前仅确认存在源码实现，尚未逐项进行运行验证。本轮已补充主要预览、音频与导出依赖；Rust/WASM 内部实现及更细的渲染机制仍待调查。
 
 固定版本源码入口：[apps/web/src](https://github.com/OpenCut-app/opencut-classic/tree/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src)。
 
@@ -165,6 +165,21 @@ flowchart TD
     Exporter --> Canvas["CanvasRenderer：画面渲染"]
     Canvas --> WASM["WASM compositor：画面合成"]
     Exporter --> Bunny["Mediabunny：媒体编码与封装"]
+
+    UI --> Preview["预览组件：场景更新与逐帧预览"]
+    Preview -->|读取编辑状态| Timeline
+    Preview -->|读取素材| Media
+    Preview --> Builder
+    Preview -->|更新或读取渲染树| Renderer
+    Preview -->|读取播放位置| Playback["PlaybackManager"]
+    Preview --> Canvas
+    Playback -.->|播放或跳转通知| Audio["AudioManager：音频调度"]
+    Timeline -.-> Audio
+    Media -.-> Audio
+    Audio --> Decode["Mediabunny：音频解码"]
+    Audio --> WebAudio["Web Audio：音频播放"]
+    Renderer -->|包含音频时| AudioBuffer["createTimelineAudioBuffer：生成导出音频"]
+    AudioBuffer -->|交付音频缓冲| Exporter
 ```
 
 #### 主要关系说明
@@ -174,6 +189,9 @@ flowchart TD
 3. **变化与自动保存**：SaveManager 监听场景和时间轴变化，合并保存请求，再调用项目管理器保存当前项目。
 4. **项目与素材持久化**：项目管理器和素材管理器使用 StorageService。项目结构及素材元数据进入 IndexedDB，素材文件进入 OPFS。
 5. **渲染与导出**：项目管理器调用 RendererManager，后者读取轨道、素材和项目设置，构建渲染场景并交给 SceneExporter。导出器使用 CanvasRenderer 渲染画面，并使用 Mediabunny 组织媒体输出。
+
+6. **实时预览**：预览组件读取轨道与素材，调用 `buildScene` 更新渲染树；画面刷新时读取 PlaybackManager 的当前位置，调用 CanvasRenderer。预览与导出复用场景构建和画面渲染实现，但调用时机和配置不同，不能据此认定结果已逐帧一致。
+7. **音频播放与导出音频**：AudioManager 订阅播放、时间轴及素材变化，使用 Mediabunny 读取音频，并通过 Web Audio 播放。导出时由 RendererManager 在包含音频的条件下生成音频缓冲，再传给 SceneExporter；实时播放和导出并非同一条音频调度路径。
 
 #### 源码依据
 
@@ -193,7 +211,16 @@ flowchart TD
 
 固定版本源码：[apps/web/src](https://github.com/OpenCut-app/opencut-classic/tree/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src)。
 
-本图属于编辑、保存和导出主链路的局部依赖图，尚未完整展开实时预览、音频播放、字幕、特效、服务端接口及 Rust/WASM 内部模块。连线依据源码关系，不代表所有功能均已完成运行测试。
+本轮补充的可定位依据：
+
+| 新增关系 | 固定版本源码 |
+| --- | --- |
+| 预览场景构建、播放位置读取和画面渲染 | [preview/components/index.tsx](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/preview/components/index.tsx#L94) |
+| 音频对播放、时间轴和素材的订阅 | [audio-manager.ts](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/core/managers/audio-manager.ts#L58) |
+| 导出音频缓冲、场景构建及导出器创建 | [renderer-manager.ts](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/core/managers/renderer-manager.ts#L141) |
+| 音视频输出与画面渲染调用 | [scene-exporter.ts](https://github.com/OpenCut-app/opencut-classic/blob/cf5e79e919144200294fb9fed22a222592a0aeea/apps/web/src/services/renderer/scene-exporter.ts#L66) |
+
+本图覆盖网页编辑、持久化、实时预览、音频播放和导出的主要关系；为控制图的复杂度，省略了部分核心对管理器的创建连线。字幕、特效、服务端接口和 Rust/WASM 内部实现仍未展开。实线中包含调用、读取和数据传递，具体含义以连线标签及本节说明为准；连线不代表相应功能已逐项运行验证。
 
 ### 3.4 关键技术发现与证据
 
@@ -449,7 +476,7 @@ flowchart TD
 
 处理结束后，根据返回结果更新任务和项目状态。成功分支将任务进度设置为 100，并记录项目完成时间；失败分支保存错误信息。
 
-当前尚未完整调查前端如何获取进度，以及处理适配器内部各步骤的实现。
+本轮已补充适配器六步处理、文件结果同步，以及前端定时查询进度快照的关系，见第 4.4 节；各步骤算法内部与全部异常分支仍未逐项验证。
 
 #### 待复核的入口问题
 
@@ -585,6 +612,58 @@ flowchart TD
 
 ### 4.4 模块依赖图
 
+#### 分析、输出与进度的主要关系
+
+本图依据提交 `aaf863bbd7bba99c64bc53284d41c0ed19034387`。实线表示调用、查询或文件读写；虚线表示进度上报。六步流水线是适配器组织的正常内容处理分支，空大纲时会跳过部分步骤。
+
+```mermaid
+flowchart TD
+    Entry["上传与启动入口：详见下图"] --> Queue["Redis 队列与 Celery worker"]
+    Queue --> Task["process_video_pipeline：后台任务"]
+    Task --> Adapter["SimplePipelineAdapter：组织处理"]
+    Adapter -->|无可用字幕时| ASR["speech_recognizer / faster-whisper"]
+    Adapter --> Steps["步骤 1—5：大纲、时间定位、评分、标题、聚类"]
+    Steps --> LLM["LLMClient → LLMManager → Provider"]
+    LLM --> Model["外部语言模型服务"]
+    ASR -->|生成字幕文件| Files["项目目录：字幕、中间 JSON、视频文件"]
+    Steps -->|读写中间结果| Files
+    Adapter --> Video["步骤 6 → VideoProcessor"]
+    Video --> FFmpeg["FFmpeg：切片与合集生成"]
+    FFmpeg -->|输出视频| Files
+    Video -->|保存切片和合集元数据| Files
+    Adapter --> Sync["DataSyncService：结果同步"]
+    Sync -->|读取元数据| Files
+    Sync -->|写入切片与合集记录| DB["项目数据库"]
+    Task -->|更新任务与项目状态| DB
+    Adapter -.->|emit_progress| Progress["ProgressStore：Redis 或 SQLite"]
+    StatusUI["UnifiedStatusBar / 前端进度 Store"] -->|定时查询| ProgressAPI["simple-progress 快照 API"]
+    ProgressAPI -->|读取进度快照| Progress
+    ResultUI["ProjectDetailPage：查看与下载结果"] --> ResultAPI["切片、合集与下载 API"]
+    ResultAPI -->|查询记录| DB
+    ResultAPI -->|返回视频文件| Files
+```
+
+这张图补充了四项容易混淆的职责：
+
+1. **AI 与媒体处理分开**：语音模型生成字幕；语言模型参与内容分析和候选组织；FFmpeg 根据处理结果生成视频。借鉴时可直接集成这些成熟组件，不需要自行训练模型或开发编码器。
+2. **文件与数据库分开**：流水线先产生项目目录中的中间结果与视频，再由 DataSyncService 读取元数据，写入切片、合集等数据库记录。视频文件本身不作为数据库记录保存。
+3. **进度与结果分开**：已确认 UnifiedStatusBar 使用前端进度 Store 定时查询快照 API。服务端进度存储优先使用 Redis，桌面模式使用 SQLite，初始化失败时尝试降级。这里只确认这一条进度链路，不概括项目内其他 WebSocket 实现。
+4. **结果查询与下载分开**：详情页通过切片和合集 API 获取记录，通过下载接口取得视频文件；因此“后台执行结束”与“结果可查询、文件可下载”需要分别核对。
+
+#### 新增关系的源码依据
+
+| 关系 | 固定版本源码 |
+| --- | --- |
+| 后台任务调用适配器并更新状态 | [processing.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/tasks/processing.py#L65) |
+| 字幕准备、六步处理和结果同步 | [simple_pipeline_adapter.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/services/simple_pipeline_adapter.py#L111) |
+| 本地 Whisper 调用 | [speech_recognizer.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/utils/speech_recognizer.py#L374) |
+| 模型调用分层 | [llm_client.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/utils/llm_client.py#L37)、[llm_manager.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/core/llm_manager.py#L287) |
+| 第六步与视频处理器 | [step6_video.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/pipeline/step6_video.py#L11)、[video_processor.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/utils/video_processor.py#L129) |
+| 文件结果同步到数据库 | [data_sync_service.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/services/data_sync_service.py#L66) |
+| 进度上报和存储选择 | [simple_progress.py](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/services/simple_progress.py#L153) |
+| 前端轮询与快照接口 | [UnifiedStatusBar.tsx](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/frontend/src/components/UnifiedStatusBar.tsx#L27)、[useSimpleProgressStore.ts](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/frontend/src/stores/useSimpleProgressStore.ts#L55)、[快照 API](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/api/v1/simple_progress.py#L16) |
+| 详情页查询及下载调用 | [ProjectDetailPage.tsx](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/frontend/src/pages/ProjectDetailPage.tsx#L53)、[api.ts](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/frontend/src/services/api.ts#L317)、[下载接口](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/api/v1/projects.py#L1256) |
+
 #### 文件导入与任务启动的局部关系图
 
 本图依据本地源码绘制，覆盖文件上传、两条任务启动路径及视频处理入口，尚未覆盖完整系统。
@@ -637,7 +716,7 @@ flowchart TD
 
 #### 调查边界与依据
 
-当前图是文件导入与任务启动的局部关系图，不是完整模块依赖图。LLM 调用、具体切片步骤、结果存储和前端进度获取关系仍待展开。
+上图专门保留两条任务入口及已发现的问题；本节前一张图补充分析、视频生成、结果同步与进度查询。两张图合起来描述已核对的主要处理关系，未覆盖所有媒体来源、发布渠道和异常恢复分支，也不证明实验实际走过全部路径。
 
 源码依据：
 
@@ -670,6 +749,14 @@ flowchart TD
 1. 设置接口存在 Desktop 模式限制，Docker 部署不能直接依赖网页完成全部配置。
 2. 语音运行时采用跨平台的 faster-whisper，但安装接口仍存在 macOS 平台限制。本次通过命令完成安装，接口本身尚未修复。
 3. DashScope 调用代码存在将完整 API Key 写入日志的语句，需删除或脱敏。实验报告及共享日志不应包含真实密钥。
+
+#### 补充发现：完成状态与有效产物需要分别判断
+
+在适配器源码中，无可用字幕且自动生成字幕未成功时，会写入空大纲；空大纲分支跳过后续分析与视频生成，将 `video_result.status` 设为 `skipped`。流程随后仍上报 `DONE`，并返回外层 `status: succeeded`。此外，`DONE` 在数据库同步之前上报，同步异常仅记录日志，不会直接改变这次返回的成功状态。
+
+这是静态源码发现的潜在误报成功和结果可见性风险，尚未通过故障注入复现；不表示本次成功生成的 4 个切片受到影响。对 ClipForge 的设计启发是：分别记录处理状态、有效片段数量、视频生成状态和结果入库状态；只有满足产品定义的成功条件后才向用户展示可用结果。无需为此开发新算法。
+
+依据：[适配器的空结果与同步分支](https://github.com/zhouxiaoka/autoclip/blob/aaf863bbd7bba99c64bc53284d41c0ed19034387/backend/services/simple_pipeline_adapter.py#L152)。
 
 #### 对 ClipForge 的启发
 
@@ -845,57 +932,64 @@ MLT 起止点与时长说明：https://www.mltframework.org/docs/mvcp/
 
 当前范围：已追踪保存操作处理函数到文件写入的主要路径；尚未核对界面动作绑定，“另存为”内部流程也未展开调查。
 ### 5.3 模块依赖图
-本图为工程保存部分的模块关系草稿，仅覆盖目前已阅读的源码。
+
+本图依据提交 `8cd39efcdf8ab80390ee4736db2f52577fc82cdc`，覆盖时间轴编辑、工程保存、播放控制、滤镜挂接和普通后台导出的主要关系。箭头表示调用、持有、数据传递或任务调度，以标签为准；不表示每个模块都在单独的进程中。
 
 ```mermaid
 flowchart TD
-    A["主窗口 MainWindow"]
-    B["时间轴面板 TimelineDock"]
-    C["多轨数据模型 MultitrackModel"]
-    D["MLT 多轨对象"]
-    E["保存控制器 Controller"]
-    F["MLT XML 输出组件"]
-    G[".mlt 工程文件"]
+    Main["MainWindow：界面与操作入口"] --> Timeline["TimelineDock：时间轴面板"]
+    Timeline -->|提交可撤销的分割操作| Command["UndoStack / Timeline::SplitCommand"]
+    Command -->|redo 调用 splitClip| Data["MultitrackModel"]
+    Timeline -->|持有模型| Data
+    Data -->|持有 tractor| Tractor["MLT 多轨工程对象"]
+    Main -->|取得工程对象并保存| Controller["Mlt::Controller"]
+    Controller --> XML["MLT XML consumer"]
+    XML -->|返回序列化文本| Controller
+    Controller -->|写文件| MLTFile[".mlt 工程文件"]
 
-    A -->|"通过 model() 取得数据模型"| B
-    B -->|"返回 m_model"| C
-    C -->|"tractor() 返回 m_tractor"| D
-    A -->|"将取得的多轨对象交给 saveXML()"| E
-    E -->|"连接保存对象，生成 XML"| F
-    F -->|"返回 XML 文本"| E
-    E -->|"写入文件"| G
+    Main --> Player["Player：播放界面"]
+    Player -->|播放、暂停、定位信号| Transport["TransportControl"]
+    Transport --> Controller
+    Controller -->|控制 producer 与 consumer| Preview["MLT 播放与预览输出"]
+
+    Main --> Filter["FiltersDock / FilterController"]
+    Filter --> Attached["AttachedFiltersModel"]
+    Attached -->|创建、挂接或重排| Services["MLT Filter / Producer"]
+
+    Main --> Encode["EncodeDock：导出设置与任务创建"]
+    Encode -->|saveXML 生成临时工程| Controller
+    Encode -->|加入 avformat consumer 配置| Job["EncodeJob：继承 MeltJob，持有 XML"]
+    Encode -->|加入任务| Queue["JobQueue"]
+    Queue -->|调度 start| Job
+    Job -->|启动外部进程并传入 XML| Melt["melt / melt-7"]
+    Melt -->|执行配置的 avformat consumer| Output["目标视频文件"]
 ```
-### 时间轴对象的获取关系
 
-`MainWindow::multitrack()` 调用 `m_timelineDock->model()->tractor()` 获取时间轴对象。
+#### 主要关系说明
 
-其中：
+1. **编辑与工程对象**：TimelineDock 持有 MultitrackModel；以分割操作为例，界面向撤销栈提交 SplitCommand，其 `redo()` 调用模型的 `splitClip()`。模型持有 MLT 多轨对象，主窗口通过 `m_timelineDock->model()->tractor()` 取得它，供保存等流程使用。
+2. **工程保存**：主窗口选择保存对象后调用 Controller 的 `saveXML()`，经 MLT XML consumer 生成文本，再在普通保存分支写入工程文件。保存工程记录编辑结构，不等于导出成品。
+3. **播放控制**：Player 在素材打开后的处理函数中连接 `MLT.transportControl()`；播放、暂停和定位信号交给 TransportControl，再转给 Controller。Controller 调整 producer 状态并控制 consumer。此处确认的是控制链，未展开图像像素处理、GPU 合成及各平台显示实现。
+4. **滤镜挂接**：FilterController 管理当前服务及附加滤镜模型，AttachedFiltersModel 创建 MLT Filter，并将服务挂接或重排到 producer 上。此处确认的是滤镜组织机制，没有分析某个滤镜的图像算法或实际效果质量。
+5. **后台导出**：EncodeDock 生成临时 XML 并写入目标文件、`avformat` consumer 等配置，创建 EncodeJob 并交给 JobQueue。调度后 MeltJob 启动外部 `melt` 程序执行；Linux 分支程序名为 `melt-7`。图中概括普通后台导出，未穷举实时输出和重构图等特殊分支。
 
-- `TimelineDock::model()` 返回面板持有的 `MultitrackModel` 对象地址。
-- `MultitrackModel::tractor()` 返回模型持有的 `m_tractor`，类型为 `Mlt::Tractor*`。
+#### 可定位的源码依据
 
-这条路径说明，主窗口保存时间轴时，从时间轴面板的数据模型取得已有的 MLT 多轨对象，再交给保存控制器处理。
+| 图中关系 | 固定版本源码 |
+| --- | --- |
+| 主窗口创建播放器、时间轴、滤镜和导出面板 | [mainwindow.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp#L323) |
+| 时间轴提交分割命令 | [timelinedock.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/docks/timelinedock.cpp#L1143) |
+| 分割命令调用模型 | [timelinecommands.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/commands/timelinecommands.cpp#L1538) |
+| 模型持有及返回 MLT tractor | [multitrackmodel.h](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/models/multitrackmodel.h#L101) |
+| 播放信号连接及接收者选择 | [player.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/player.cpp#L453)、[连接位置](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/player.cpp#L967) |
+| 播放控制转发及 consumer 控制 | [mltcontroller.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mltcontroller.cpp#L1906)、[play 实现](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mltcontroller.cpp#L230) |
+| 滤镜控制器及服务挂接 | [filtercontroller.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/controllers/filtercontroller.cpp#L481)、[attachedfiltersmodel.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/models/attachedfiltersmodel.cpp#L700) |
+| 导出任务创建与 avformat 配置 | [encodedock.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/docks/encodedock.cpp#L1527)、[consumer 配置](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/docks/encodedock.cpp#L1376) |
+| 导出任务继承关系、队列调度与外部进程 | [encodejob.h](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/jobs/encodejob.h)、[jobqueue.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/jobqueue.cpp#L189)、[meltjob.cpp](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/jobs/meltjob.cpp#L115) |
 
-补充源码依据：
+#### 对 ClipForge 的借鉴与范围
 
-- [时间轴面板](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/docks/timelinedock.h)
-- [多轨数据模型](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/models/multitrackmodel.h)
-
-本图仍为时间轴对象获取与工程保存部分的关系图，尚未覆盖完整系统。
-### 源码对应关系
-
-- 主窗口：`MainWindow::on_actionSave_triggered()` 处理保存操作，再调用 `MainWindow::saveXML()` 选择保存内容。
-- 控制器：`Controller::saveXML()` 调用 MLT 生成 XML，在普通文件保存分支中完成文件写入。
-- MLT XML 输出组件：由控制器创建并连接工程对象，用于生成 XML。
-
-### 源码依据
-
-- [主窗口源码](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mainwindow.cpp)
-- [控制器源码](https://github.com/mltframework/shotcut/blob/8cd39efcdf8ab80390ee4736db2f52577fc82cdc/src/mltcontroller.cpp)
-
-### 当前范围
-
-已整理工程保存部分的模块关系。时间轴编辑、播放预览、滤镜和视频导出等模块尚未纳入，本图后续继续补充。
+可以借鉴“编辑数据、可撤销操作、播放控制、后台导出分开组织”的方式。第一版可先保存统一剪辑清单，再调用成熟媒体组件生成视频；暂不需要实现 Shotcut 的完整时间轴、滤镜面板或预览引擎。上图是主要模块依赖图，不是完整类图；所查源码与已安装 Shotcut 26.8.1 的版本对应关系仍未确认。
 
 ### 5.4 工程样本
 已生成 Week1Work.mlt，并在本机验证可以重新打开。
@@ -944,19 +1038,19 @@ MLT 官方版权政策说明，框架核心采用 LGPLv2.1；模块和附带程�
 - 观察 MLT XML 中的素材引用、片段范围和排列顺序。
 - 追踪工程保存、打开以及多轨对象获取的部分源码。
 - 克隆官方源码，固定并核对提交编号。
-- 整理工程保存部分的模块关系图。
+- 补充时间轴分割、工程保存、播放控制、滤镜挂接和后台导出的主要模块关系图及源码依据。
 - 已完成一次 MP4 导出与人工播放检查，结果正常。
 
 待完成：
-- 继续调查滤镜或渲染流程，补充核心处理机制。
-- 扩充模块关系图，目前仅覆盖时间轴对象获取和工程保存。
+- 若后续需要实现或评估具体效果，再深入滤镜和渲染算法内部；当前已确认主要调用机制。
+- 运行核对后台导出和异常分支，并测量精度、同步和性能。
 - 源码编译运行尚未进行。
 ## 6. 六维对比
 
 | 维度 | OpenCut Classic | AutoClip | Shotcut/MLT |
 |---|---|---|---|
 | 架构模式 | 基于 Next.js、React 和 TypeScript 的网页应用。编辑功能由 EditorCore 及各管理器组织，通过命令机制执行编辑操作；部分界面状态使用 Zustand。所查画面渲染路径调用 WASM 合成器。依据见第 3.2、3.3 节，以及 apps/web/src/editor/editor-store.ts、apps/web/src/timeline/timeline-store.ts。| Web 前端通过 API 创建项目和启动处理；Docker 模式使用 Redis 与 Celery 执行后台任务，处理适配器组织字幕分析及视频生成。模型调用经过 LLMClient、LLMManager 和具体提供商分层封装。当前仅调查了相关局部流程，依据见第 4.2—4.4 节。 | 桌面应用。已调查的工程保存路径中，主窗口处理保存操作，时间轴面板及模型提供多轨对象，控制器调用 MLT 生成 XML 并写入文件。依据见第 5.2、5.3 节。 |
-| 核心算法 |已调查片段分割时的时间范围计算，以及按指定时间渲染、按帧导出等机制。分割通过调整片段描述实现，导出由 CanvasRenderer 与 Mediabunny 配合完成。尚未深入分析 Rust/WASM 内部合成算法。依据见第 3.4.1、3.4.2 节。| 已调查基于字幕文本的处理流程：Whisper 语音转写后，分阶段调用 LLM 提取大纲、定位时间范围、评分、生成标题和组织主题合集，再使用 FFmpeg 生成视频。当前记录的是处理机制，尚未深入分析语音模型内部算法，也未系统验证选段质量。依据见第 4.3 节。 | 当前已调查工程对象获取、XML 生成及文件读写流程，属于工程机制；尚未深入分析具体视频处理算法。后续需结合滤镜或渲染实现补充。 |
+| 核心算法 |已调查片段分割时的时间范围计算，以及按指定时间渲染、按帧导出等机制。分割通过调整片段描述实现，导出由 CanvasRenderer 与 Mediabunny 配合完成。尚未深入分析 Rust/WASM 内部合成算法。依据见第 3.4.1、3.4.2 节。| 已调查基于字幕文本的处理流程：Whisper 语音转写后，分阶段调用 LLM 提取大纲、定位时间范围、评分、生成标题和组织主题合集，再使用 FFmpeg 生成视频。当前记录的是处理机制，尚未深入分析语音模型内部算法，也未系统验证选段质量。依据见第 4.3 节。 | 已调查工程 XML 读写、分割命令调用模型、播放控制、滤镜服务挂接，以及由 JobQueue 调度 MeltJob 启动 melt 执行 avformat 输出的机制。属于调用与处理流程调查，未深入具体滤镜或像素渲染算法。依据见第 5.2、5.3 节。 |
 | 数据模型 |项目包含场景，场景包含主视频、叠加和音频轨道，轨道保存片段数组。视频片段通过 mediaId 引用素材，使用 startTime、duration、trimStart、trimEnd 描述位置和裁剪范围，时间采用整数 tick。项目及素材元数据保存在 IndexedDB，素材文件保存在 OPFS。依据见第 3.2、3.4.1 节。| 使用 SQLAlchemy 定义 Project、Task、Clip 等模型；任务和切片通过 project_id 关联项目。数据库记录状态、进度、片段时间、评分及文件路径，视频、字幕和部分中间结果保存在文件系统。当前仅核对主要字段与关联，依据见第 4.5 节。 | 工程使用 MLT XML 保存：resource 记录素材引用，playlist 中的 entry 记录片段范围与排列顺序；时间轴模型通过 tractor() 返回 MLT 多轨对象。依据见第 5.2、5.3 节。 |
 | 部署方式 | 在 Windows 10 上克隆固定版本，使用 Bun 1.2.18 安装锁定依赖、Node.js 24.19.0 启动网页开发服务，通过 Docker Compose 运行 PostgreSQL、Redis 和 Redis HTTP 服务。修正数据库 schema 路径并调整端口后，完成导入、剪辑、MP4 导出、播放及刷新恢复验证。尚未验证生产部署。依据见第 3.1 节。| 在 Windows 10 的 WSL 2 环境下使用 Docker Compose 构建并运行，包含应用、Redis 和 Celery 后台任务。额外添加前端静态文件挂载配置，通过环境变量配置千问服务，并在共享数据目录安装 faster-whisper 与 base 模型。已完成单视频导入、自动转写、切片生成及下载播放验证。依据见第 4.1、4.5 节。 | 使用已安装的 Shotcut 26.8.1 完成本地实验；已克隆官方源码并切换到报告记录的固定提交。尚未从源码编译运行，也未单独部署 MLT。依据见第 5.1 节。 |
 | 许可证 | 项目自身采用 MIT，已核对固定提交的根目录 LICENSE；依赖库、素材及外部服务条款需要分别核对。依据：固定版本 LICENSE。| 项目自身采用 MIT，已核对固定提交中的 LICENSE、pyproject.toml 和 README。依赖库、模型及外部服务条款仍需分别核对。依据见第 4.5 节。 | Shotcut：GPLv3；MLT 框架核心：LGPLv2.1。MLT 模块及附带程序可能采用不同许可证，使用时需分别核对。依据见第 5.5 节。 |
@@ -1208,7 +1302,7 @@ OpusClip 重点体验自动生成候选短片、评分与标题、人工编辑�
 
 | 项目 | 已验证内容 | 当前调查边界 |
 | --- | --- | --- |
-| Shotcut / MLT | 素材导入、剪辑、保存并重新打开 MLT 工程、MP4 导出及人工播放 | 已调查部分工程读写源码；尚未完成源码编译、完整模块图及渲染机制调查 |
+| Shotcut / MLT | 素材导入、剪辑、保存并重新打开 MLT 工程、MP4 导出及人工播放 | 已补充工程读写、分割、播放控制、滤镜挂接及后台导出模块关系；尚未完成源码编译和底层算法调查 |
 | AutoClip | 本地部署、自动转写、模型分析、切片生成、预览、下载及本地播放 | 已初步调查任务编排、LLM 调用和数据模型；实际任务启动路径、完整模块关系及质量评估仍需补充 |
 | OpenCut Classic | 本地部署、视频导入、分割与删除片段、MP4 导出、本地播放及刷新恢复 | 已调查主要模块、时间轴、浏览器存储及预览导出流程；尚未深入调查 Rust/WASM 内部实现及性能 |
 
@@ -1277,7 +1371,7 @@ ClipForge 需要单独设计服务端项目持久化、素材路径管理及备�
 ### 8.4 当前限制
 
 - 基础实验覆盖的素材数量有限，尚未系统测量处理速度、资源占用、字幕准确率、切点质量及音画同步误差。
-- 三个项目的模块图仍需检查覆盖范围，当前局部调用关系不能代替完整架构调查。
+- 三个项目的主要模块图已补充源码依据，但未穷举全部模块和异常分支；静态调用关系不替代运行验证。
 - Shotcut 安装版本与所查源码提交是否对应同一发布版本，尚未确认；也未完成源码编译。
 - AutoClip 实际任务启动路径仍待运行证据核对；已记录的问题不能因基础流程成功而视为已修复。
 - OpenCut Classic 本地修正了数据库配置路径并调整运行方式，尚未完成生产部署、跨浏览器恢复及长视频性能测试。
@@ -1291,7 +1385,7 @@ ClipForge 需要单独设计服务端项目持久化、素材路径管理及备�
 
 | 交付项 | 当前状态与入口 | 仍需处理 |
 | --- | --- | --- |
-| 调研报告 v1 | 本报告已包含三个项目的基础实验、源码调查、六维对比和两款产品体验 | 扩充模块图覆盖范围；核对证据并排版，确认最终达到 8 页 |
+| 调研报告 v1 | 本报告已包含三个项目的基础实验、源码调查、六维对比和两款产品体验 | 已补充三个主要模块图及源码依据；继续核对证据并排版，确认最终达到 8 页 |
 | 需求规格说明书 | [requirements.md](requirements.md)：8 条功能需求、5 条非功能需求，每条含验收判据，并有借鉴说明 | 后续按实现进度维护需求状态，不将设计目标记为实测结果 |
 | 用例图与主流程时序图 | [design-diagrams.md](design-diagrams.md)：两张图及需求对应说明 | 后续开发变更时同步调整 |
 | 仓库与 CI | 根目录 README、`.gitignore`、[lint＋test 占位配置](../.github/workflows/ci.yml) 已建立 | 应用开发阶段接入真实检查和测试 |
@@ -1301,14 +1395,14 @@ ClipForge 需要单独设计服务端项目持久化、素材路径管理及备�
 
 ### 8.6 后续工作
 
-1. 扩充三个参考项目的模块依赖图。优先补充 AutoClip 的 LLM 调用、分析步骤与结果存储，以及 Shotcut 的播放、滤镜和视频导出关系；新增连线须有源码依据。
-2. 核对 AutoClip 实际任务执行路径，跟踪已发现问题；运行证据不足时继续保留相应限制。
+1. 检查本轮补充的模块图在 GitHub 的显示，按最终报告版式调整大小；主要源码关系已在第 3.3、4.4、5.3 节列出。
+2. 核对 AutoClip 实际任务执行路径，以及空结果仍返回成功、同步异常仅记日志的分支；未复现前保留静态源码发现的表述。
 3. 检查已补充的工程样本来源说明、引用、图片和版本记录，排版导出并确认页数。
 4. 需要进一步评价商业产品时，补做 Descript 文本删改联动与最终输出验证；当前未验证部分保留在体验边界中。
 5. 在后续开发中按需求规格的分阶段安排，先打通上传、异步任务、统一剪辑清单和输出，再逐步加入语音转写、评分与人工复核。
 6. 后续评测记录字幕质量、候选质量、切点、音画同步、耗时及资源占用；不将尚未开展的测量写为达标。
 
-当前已形成第一周主要文档和基础实验记录，剩余收尾集中在模块图覆盖范围、来源核对与报告排版。三个参考项目的模块图与 ClipForge 自身的用例图、主流程时序图用途不同，需要分别保留。
+当前已形成第一周主要文档和基础实验记录，剩余收尾集中在图表显示检查、来源核对与报告排版。三个参考项目的模块图与 ClipForge 自身的用例图、主流程时序图用途不同，需要分别保留。
 
 ## 9. 参考资料
 
