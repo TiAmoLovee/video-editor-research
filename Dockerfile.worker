@@ -1,0 +1,13 @@
+FROM python:3.11-slim-bookworm
+
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /app
+
+COPY requirements-worker.txt ./
+RUN python -m pip install --no-cache-dir -r requirements-worker.txt \
+    && useradd --create-home --uid 10001 appuser
+
+COPY --chown=appuser:appuser tasks.py queue_demo.py ./
+USER appuser
+
+CMD ["python", "-m", "celery", "-A", "tasks:app", "worker", "--loglevel=INFO", "--concurrency=1"]
