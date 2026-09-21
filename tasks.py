@@ -19,6 +19,11 @@ app.conf.update(
     result_expires=86400,
     task_default_queue="clipforge",
     broker_connection_retry_on_startup=True,
+    broker_connection_timeout=3,
+    broker_transport_options={"socket_connect_timeout": 3, "socket_timeout": 3},
+    redis_socket_connect_timeout=3,
+    redis_socket_timeout=3,
+    result_backend_always_retry=False,
 )
 
 

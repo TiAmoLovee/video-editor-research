@@ -3,3 +3,7 @@
 !requirements-worker.txt
 !tasks.py
 !queue_demo.py
+!Dockerfile.api
+!requirements.txt
+!api.py
+!queue_client.py
