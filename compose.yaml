@@ -22,6 +22,9 @@ services:
     environment:
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/1
+      CLIPFORGE_DATA_DIR: /data
+    volumes:
+      - media_data:/data
     depends_on:
       redis:
         condition: service_healthy
@@ -37,6 +40,9 @@ services:
     environment:
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/1
+      CLIPFORGE_DATA_DIR: /data
+    volumes:
+      - media_data:/data
     depends_on:
       redis:
         condition: service_healthy
@@ -44,3 +50,4 @@ services:
 
 volumes:
   redis_data:
+  media_data:

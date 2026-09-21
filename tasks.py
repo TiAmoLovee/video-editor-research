@@ -1,4 +1,4 @@
-"""第一个 Celery 后台任务：用于验证队列连接，尚未接入视频处理。"""
+"""Celery 加法演示与视频处理任务。"""
 
 import os
 import time
@@ -32,3 +32,9 @@ def add(left: int, right: int) -> int:
     # 演示任务故意等待 3 秒，便于观察“提交后由后台执行”。
     time.sleep(3)
     return left + right
+
+
+@app.task(name="clipforge.process_video")
+def video_task(task_id: str) -> dict:
+    from video_pipeline import process_video
+    return process_video(task_id)

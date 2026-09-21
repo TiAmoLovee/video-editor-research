@@ -5,6 +5,8 @@
 已在用户本机通过 `queue_demo.py` 验证 Redis、Linux Celery worker 和结果查询，2 + 3 返回 5。
 本次新增 HTTP 提交和查询接口。它们仍是加法演示，不处理视频。
 
+后续新增的视频上传与处理接口使用 `/tasks`，运行方法、SQLite 状态和下载说明见 [VIDEO_TASKS.md](VIDEO_TASKS.md)。本页只记录 `/demo/tasks` 的加法实验。
+
 结构：浏览器或测试脚本 → FastAPI 容器 → Redis 队列 → worker → Redis 结果 → 查询接口。
 API 和 worker 通过 Docker 内网访问 `redis:6379`，无需向 Windows 开放 Redis 端口。
 API 仅映射到本机 `127.0.0.1:8200`。容器内监听 `0.0.0.0`，不等于向局域网开放宿主机端口。
@@ -48,7 +50,7 @@ docker compose logs --tail 40 api worker
 
 - PENDING 表示 Celery 没有状态记录：可能尚未执行，也可能编号不存在或结果已经过期。接口提供 note 说明，不能据此宣称任务存在。
 - 结果保留一天。Redis AOF 与持久化数据卷不等于已完成任务数据库、任务历史和重启恢复验收。
-- 尚未接入视频上传、归一化、切片、百分比进度、下载和前端页面。当前没有用户认证，接口仅供本机学习验证。
+- 加法演示接口不处理视频；视频接口初版另见 VIDEO_TASKS.md。前端页面尚未实现。当前没有用户认证，接口仅供本机学习验证。
 - `/health` 仅表示 API 进程正常响应，不证明 worker 或 Redis 可用。
 - 提交失败不能保证消息一定未投递；当前没有幂等提交机制，不应直接沿用为生产视频任务接口。
 

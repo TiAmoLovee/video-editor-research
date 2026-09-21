@@ -5,6 +5,17 @@ class QueueUnavailable(Exception):
     """提交或读取队列失败，由 HTTP 层转换为 503。"""
 
 
+def submit_video(task_id: str) -> None:
+    from kombu.exceptions import OperationalError
+    from redis.exceptions import RedisError
+    from tasks import video_task
+
+    try:
+        video_task.apply_async(args=[task_id], task_id=task_id, retry=False)
+    except (OperationalError, RedisError, OSError) as exc:
+        raise QueueUnavailable("Video submission failed") from exc
+
+
 def submit_add(left: int, right: int) -> str:
     from kombu.exceptions import OperationalError
     from redis.exceptions import RedisError

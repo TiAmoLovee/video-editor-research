@@ -16,3 +16,7 @@ Desktop.ini
 __pycache__/
 *.py[cod]
 .pytest_cache/
+
+# Local task data and downloaded verification results
+data/
+downloads/

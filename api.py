@@ -6,12 +6,14 @@ from fastapi import FastAPI, HTTPException, Response
 from pydantic import BaseModel, Field
 
 from queue_client import QueueUnavailable, read_result, submit_add
+from video_api import router as video_router
 
 app = FastAPI(
     title="ClipForge MVP-0",
-    description="ClipForge 视频处理服务；当前任务接口仅演示后台加法。",
-    version="0.2.0",
+    description="上传视频、后台归一化与固定 30 秒切片；支持任务查询和结果下载。",
+    version="0.3.0",
 )
+app.include_router(video_router)
 
 
 class AddRequest(BaseModel):

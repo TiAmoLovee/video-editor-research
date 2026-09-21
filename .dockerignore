@@ -7,3 +7,9 @@
 !requirements.txt
 !api.py
 !queue_client.py
+!video_api.py
+!video_pipeline.py
+!job_store.py
+!probe.py
+!normalize.py
+!split.py
