@@ -1,0 +1,24 @@
+{
+  "plan_version": "1.0",
+  "source_file": "Sucai1_python_normalized.mp4",
+  "fps": 30,
+  "total_frames": 1238,
+  "clips": [
+    {
+      "file": "clip_001.mp4",
+      "start_frame": 0,
+      "end_frame": 900,
+      "frame_count": 900,
+      "start_seconds": 0.0,
+      "duration_seconds": 30.0
+    },
+    {
+      "file": "clip_002.mp4",
+      "start_frame": 900,
+      "end_frame": 1238,
+      "frame_count": 338,
+      "start_seconds": 30.0,
+      "duration_seconds": 11.266666666666667
+    }
+  ]
+}
