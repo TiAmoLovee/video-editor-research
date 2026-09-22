@@ -1,0 +1,16 @@
+**
+!Dockerfile.worker
+!requirements-worker.txt
+!tasks.py
+!queue_demo.py
+!Dockerfile.api
+!requirements.txt
+!api.py
+!queue_client.py
+!video_api.py
+!video_pipeline.py
+!job_store.py
+!probe.py
+!normalize.py
+!split.py
+!index.html

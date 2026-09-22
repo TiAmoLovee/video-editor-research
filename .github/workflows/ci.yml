@@ -1,4 +1,4 @@
-name: CI placeholders
+name: ClipForge checks
 
 on:
   push:
@@ -8,17 +8,40 @@ on:
 permissions:
   contents: read
 
-jobs:
-  lint:
-    name: Lint placeholder
-    runs-on: ubuntu-latest
-    steps:
-      - name: Report lint status
-        run: echo "Placeholder only - lint is not configured yet."
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
-  test:
-    name: Test placeholder
-    runs-on: ubuntu-latest
+jobs:
+  checks:
+    name: Python 3.11 / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    env:
+      PYTHONUTF8: "1"
     steps:
-      - name: Report test status
-        run: echo "Placeholder only - tests are not configured yet."
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+            requirements-worker.txt
+      - name: Install development dependencies
+        run: python -m pip install -r requirements-dev.txt -r requirements-worker.txt
+      - name: Check dependency compatibility
+        run: python -m pip check
+      - name: Check Python errors with Ruff
+        run: python -m ruff check --no-cache --output-format=github .
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v

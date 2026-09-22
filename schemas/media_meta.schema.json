@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClipForge media_meta 1.0",
+  "description": "本地媒体的基本信息。无音轨时 audio 为 null；未知数值为 null。选第一条非封面视频流及第一条音频流。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_file",
+    "duration_seconds",
+    "container_format",
+    "video",
+    "audio"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "source_file": {
+      "type": "string",
+      "minLength": 1,
+      "description": "素材文件名，不保存机器绝对路径。"
+    },
+    "duration_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "exclusiveMinimum": 0,
+      "description": "容器总时长，单位秒；未知时为 null，后续切片应拒绝未知时长。"
+    },
+    "container_format": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "description": "保留 FFprobe 返回的格式名称，可能为逗号分隔的格式族，不能当成编码名称。"
+    },
+    "video": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stream_index",
+        "codec",
+        "width",
+        "height",
+        "avg_fps",
+        "avg_frame_rate"
+      ],
+      "properties": {
+        "stream_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "codec": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "width": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "height": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "avg_fps": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0,
+          "description": "平均帧率的数值表示，不作为恒定帧率证明。"
+        },
+        "avg_frame_rate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[1-9][0-9]*/[1-9][0-9]*$",
+          "description": "精确平均帧率分数，例如 30000/1001；未知时为 null。"
+        }
+      }
+    },
+    "audio": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "stream_index",
+            "codec",
+            "sample_rate_hz",
+            "channels"
+          ],
+          "properties": {
+            "stream_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "codec": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "sample_rate_hz": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "channels": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

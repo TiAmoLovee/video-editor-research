@@ -1,0 +1,108 @@
+{
+  "checked_at": "2026-09-21T08:48:00.209963+00:00",
+  "task_id": "8e9ae99c-68f4-441a-b635-b9947dedf537",
+  "source_file": "Test1.mp4",
+  "task_status": "SUCCEEDED",
+  "source_duration_seconds": 345.5,
+  "normalized_duration_seconds": 345.510998,
+  "clip_count": 12,
+  "total_frames": 10365,
+  "zip_crc_passed": true,
+  "zip_manifest_passed": true,
+  "decoded_frame_counts_passed": true,
+  "contiguous_frame_plan_passed": true,
+  "clips": [
+    {
+      "file": "clip_001.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_002.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_003.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_004.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_005.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_006.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_007.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_008.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_009.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_010.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_011.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_012.mp4",
+      "frames": 465,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    }
+  ],
+  "limits": [
+    "Average frame rate is checked; per-frame timestamp CFR is not rechecked.",
+    "This check does not measure audio/video synchronization or replace human playback review.",
+    "The original upload test stopped on an incorrect expected-clips=2 assertion; this audit checks the existing result without uploading again."
+  ],
+  "manual_playback_review": {
+    "status": "awaiting_confirmation"
+  }
+}

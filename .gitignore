@@ -11,3 +11,12 @@
 # Windows generated files
 Thumbs.db
 Desktop.ini
+# Python environment and cache
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local task data and downloaded verification results
+data/
+downloads/

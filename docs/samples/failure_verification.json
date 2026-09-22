@@ -1,0 +1,43 @@
+{
+  "checked_at": "2026-09-22T03:12:09.803488+00:00",
+  "passed": true,
+  "invalid_extension_http_status": 415,
+  "empty_upload_http_status": 422,
+  "failed_task": {
+    "task_id": "3b5543b5-a835-4468-afd2-f5eda310aa19",
+    "source_name": "intentional_corrupt_sample.mp4",
+    "status": "FAILED",
+    "stage": "probing",
+    "error": "视频处理在 probing 阶段失败，请查看 worker 日志。",
+    "result": null
+  },
+  "failed_download_http_status": {
+    "result.zip": 409,
+    "clip_001.mp4": 409
+  },
+  "recovery_task": {
+    "task_id": "a846c99a-4f6f-4d34-b7a8-30eb3f210ac5",
+    "source_name": "recovery_sample.mp4",
+    "status": "SUCCEEDED",
+    "stage": "done"
+  },
+  "recovery_clip_count": 1,
+  "recovery_frame_count_from_plan": 30,
+  "recovery_zip_crc_and_manifest_passed": true,
+  "health_after_failure": "ok",
+  "limits": [
+    "This verifies handling a failed input, not recovery from an interrupted worker.",
+    "Does not test >1 GiB uploads, full disk, resource exhaustion or mid-encode failure.",
+    "Browser behavior and decoded frames need separate verification."
+  ],
+  "browser_checks": {
+    "corrupt_fixture_uploaded_via_page": true,
+    "failure_label_visible": true,
+    "error_text": "视频处理在 probing 阶段失败，请查看 worker 日志。",
+    "failed_task_preserved_after_reload": true,
+    "failed_task_download_links_visible": 0,
+    "subsequent_valid_task_shown_as_completed": true,
+    "subsequent_valid_task_visible_clip_count": 1,
+    "subsequent_valid_task_visible_clip_duration_seconds": 1
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-09-22T01:08:47.597474+00:00",
+  "task_id": "1a0b0b8d-2d9a-45de-903a-e77e3dca1e04",
+  "source_file": "Sucai1.mp4",
+  "task_status": "SUCCEEDED",
+  "source_duration_seconds": 41.266667,
+  "normalized_duration_seconds": 41.266667,
+  "clip_count": 2,
+  "total_frames": 1238,
+  "zip_crc_passed": true,
+  "zip_manifest_passed": true,
+  "decoded_frame_counts_passed": true,
+  "contiguous_frame_plan_passed": true,
+  "clips": [
+    {
+      "file": "clip_001.mp4",
+      "frames": 900,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    },
+    {
+      "file": "clip_002.mp4",
+      "frames": 338,
+      "video_codec": "h264",
+      "avg_frame_rate": "30/1",
+      "audio_codec": "aac"
+    }
+  ],
+  "limits": [
+    "Average frame rate is checked; per-frame timestamp CFR is not rechecked.",
+    "This check does not measure audio/video synchronization or replace human playback review.",
+    "Uploaded through the deployed browser UI; this audit checks its existing result without uploading again."
+  ],
+  "browser_checks": {
+    "deployment": "Docker API and Celery worker at 127.0.0.1:8200",
+    "upload_via_page": true,
+    "observed_stage_before_reload": "splitting, 60%",
+    "same_task_restored_after_reload": true,
+    "state_after_reload": "SUCCEEDED",
+    "zip_download_event_observed": true,
+    "captured_console_errors": [],
+    "service_restart_tested": false,
+    "human_playback_tested_in_this_check": false
+  }
+}
