@@ -68,6 +68,19 @@ def claim_job(task_id: str) -> bool:
         ).rowcount == 1
 
 
+def list_jobs(limit: int = 20, offset: int = 0) -> dict:
+    if not 1 <= limit <= 100 or offset < 0:
+        raise ValueError("Invalid pagination")
+    with database() as connection:
+        rows = connection.execute(
+            "SELECT task_id, source_name, status, stage, progress, created_at, updated_at "
+            "FROM jobs ORDER BY created_at DESC, task_id DESC LIMIT ? OFFSET ?",
+            (limit + 1, offset),
+        ).fetchall()
+    return {"items": [dict(row) for row in rows[:limit]], "limit": limit,
+            "offset": offset, "has_more": len(rows) > limit}
+
+
 def submission_unknown(task_id: str) -> None:
     with database() as connection:
         connection.execute(

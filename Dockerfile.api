@@ -9,5 +9,6 @@ RUN python -m pip install --no-cache-dir -r requirements.txt -r requirements-wor
     && mkdir -p /data && chown appuser:appuser /data
 
 COPY --chown=appuser:appuser api.py video_api.py job_store.py queue_client.py tasks.py ./
+COPY --chown=appuser:appuser index.html ./
 USER appuser
 CMD ["python", "-m", "uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]

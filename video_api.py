@@ -4,15 +4,20 @@ from pathlib import Path, PureWindowsPath
 import shutil
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, File, HTTPException, Response, UploadFile
+from fastapi import APIRouter, File, HTTPException, Query, Response, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
 
-from job_store import create_job, get_job, job_dir, submission_unknown
+from job_store import create_job, get_job, job_dir, list_jobs, submission_unknown
 from queue_client import QueueUnavailable, submit_video
 
 router = APIRouter(prefix="/tasks", tags=["视频任务"])
 MAX_UPLOAD_BYTES = 1024 * 1024 * 1024
 VIDEO_SUFFIXES = {".mp4", ".mov", ".mkv", ".webm", ".m4v", ".avi"}
+
+
+@router.get("", summary="查看历史视频任务")
+def video_history(limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
+    return list_jobs(limit, offset)
 
 
 @router.post("", status_code=202, summary="上传视频并提交后台处理",

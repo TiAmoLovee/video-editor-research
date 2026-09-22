@@ -1,8 +1,10 @@
 """FastAPI 服务：健康检查与后台队列演示接口。"""
 
 from uuid import UUID
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Response
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from queue_client import QueueUnavailable, read_result, submit_add
@@ -11,9 +13,15 @@ from video_api import router as video_router
 app = FastAPI(
     title="ClipForge MVP-0",
     description="上传视频、后台归一化与固定 30 秒切片；支持任务查询和结果下载。",
-    version="0.3.0",
+    version="0.4.0",
 )
 app.include_router(video_router)
+
+
+@app.get("/", include_in_schema=False)
+def home():
+    return FileResponse(Path(__file__).with_name("index.html"), media_type="text/html",
+                        headers={"Cache-Control": "no-cache"})
 
 
 class AddRequest(BaseModel):
