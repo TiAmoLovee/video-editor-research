@@ -33,12 +33,12 @@
 
 黄色表示等待或执行中；红色时查看第一个失败步骤。若依赖安装失败，测试并未运行，不能记录为测试通过。旧的 CI placeholders 绿色结果仍不代表真实测试。
 
-首次运行前，本次工作只记为“配置已完成，本地预验收通过，GitHub 运行待确认”。手动触发入口的可见性受工作流是否在默认分支影响，首次以推送自动触发为准。
+首次运行已于 2026-09-22 核验：提交 `d70eb43` 的 [ClipForge checks](https://github.com/TiAmoLovee/video-editor-research/actions/runs/35679910293) 在 Ubuntu 与 Windows 上均成功；依赖检查、Ruff 和 Run unit tests 步骤全部通过。手动触发入口的可见性受工作流是否在默认分支影响，首次以推送自动触发为准。
 
 ## 验证范围
 
 接口单元测试使用队列与媒体处理替身，数据库使用临时目录，不需要启动 Redis、Docker 或 FFmpeg。`integration_*.py` 未纳入本工作流，真实媒体、容器联调与 60 分钟素材继续单独验收。
 
-本地已检查 Ruff 及 43 项测试；在 GitHub 执行之前，不能宣称 Ubuntu 或远程检查通过。本次未采集测试覆盖率，也不声明满足需求中的覆盖率目标。
+本地已检查 Ruff 及 43 项测试；上述指定提交的首次远程运行也已核验成功。此证据只对应该提交，后续改动须查看各自运行结果。本次未采集测试覆盖率，也不声明满足需求中的覆盖率目标。
 
 配置参考：[Ruff 官方 GitHub Actions 集成](https://docs.astral.sh/ruff/integrations/)、[setup-python](https://github.com/actions/setup-python)、[checkout](https://github.com/actions/checkout)。
