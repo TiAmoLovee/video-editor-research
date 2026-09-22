@@ -53,5 +53,5 @@ docker compose up -d --build api
 - 2026-09-22 实际 Docker 部署验收通过：首页显示原 Test1 任务；页面上传 Sucai1.mp4 后生成任务 `1a0b0b8d-2d9a-45de-903a-e77e3dca1e04`，后台生成两段。
 - 在页面显示切片阶段后刷新，保留同一任务编号并显示完成结果；点击 ZIP 按钮触发下载，控制台未捕获错误。
 - 新任务 ZIP 独立校验通过：文件清单、CRC、900 / 338 帧、H.264 / AAC、平均帧率 30/1。记录见 `samples/web_ui_video_task_verification.json`。
-- 服务重启后的任务和文件保留尚待验收；本次未测量音画同步，也不替代人工播放检查。
+- 2026-09-22 在用户按重启步骤反馈页面记录仍存在后，再次核对两个已完成任务及 ZIP，任务记录与文件 SHA-256 均与之前一致。未独立归档 Docker 重启输出，详见 `samples/restart_persistence_verification.json`。本次未测量音画同步，也不替代人工播放检查。
 - 前端轮询与阶段显示不解决 worker 强制中断后的恢复问题，仍沿用 VIDEO_TASKS.md 中的限制。

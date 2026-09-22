@@ -1,0 +1,33 @@
+{
+  "before_checked_at": "2026-09-22T09:24:01.313188+08:00",
+  "after_checked_at": "2026-09-22T09:28:26.519911+08:00",
+  "comparison_passed": true,
+  "restart_evidence": "User follow-up screenshot after requested Compose restart; Docker command output not independently captured.",
+  "checks": [
+    "Previously recorded task IDs remain in history",
+    "Both completed task records unchanged",
+    "Both ZIP downloads succeed and SHA-256 values match baseline"
+  ],
+  "tasks": [
+    {
+      "task_id": "8e9ae99c-68f4-441a-b635-b9947dedf537",
+      "source_name": "Test1.mp4",
+      "status": "SUCCEEDED",
+      "clip_count": 12,
+      "zip_bytes": 46826366,
+      "zip_sha256": "0b052aa622d16316225c260936e31f788289611ab941d01f7970c9c03c4006f6"
+    },
+    {
+      "task_id": "1a0b0b8d-2d9a-45de-903a-e77e3dca1e04",
+      "source_name": "Sucai1.mp4",
+      "status": "SUCCEEDED",
+      "clip_count": 2,
+      "zip_bytes": 11734191,
+      "zip_sha256": "a69a9f7ecbec37be5e41447782c9e9c79bbb068cb1d7a8ecf95142b24fff88d3"
+    }
+  ],
+  "limits": [
+    "Completed tasks only; no interrupted-task recovery test",
+    "No volume deletion, host reboot or container recreation test"
+  ]
+}
