@@ -72,7 +72,7 @@
 - 新增 `POST /tasks` 上传视频并返回任务编号；Celery 后台依次读取元数据、归一化、按 900 帧切片和打包。
 - 新增 `GET /tasks/{task_id}` 查询状态，以及按任务结果清单下载 MP4、JSON 和 ZIP 的接口。未知视频任务返回 404。
 - 引入 SQLite 保存视频任务状态，API 和 worker 共享 `media_data` 数据卷。实现阶段进度、失败记录、重复投递保护和未完成结果下载保护。
-- worker 配置改用 Trixie 基础镜像安装 FFmpeg 7.1 系列；实际运行版本仍需将 `ffmpeg -version` 输出归档。
+- worker 配置改用 Trixie 基础镜像安装 FFmpeg 7.1 系列；2026-09-22 已由用户执行 `ffmpeg -version` 确认运行版本为 7.1.5-0+deb13u1，输出归档于 `docs/samples/worker_ffmpeg_version.txt`。
 - 使用真实素材 `Test1.mp4`（345.5 秒）提交 Docker 后台任务，任务编号 `8e9ae99c-68f4-441a-b635-b9947dedf537`，处理状态为 SUCCEEDED，ZIP 可下载。
 - 独立复核该已完成任务：共 12 段，前 11 段各 900 帧（30 秒），末段 465 帧（15.5 秒），总计 10,365 帧，清单帧区间连续。
 - ZIP CRC 和文件清单检查通过；使用本机 FFprobe 解码计数，12 段均与计划一致，视频均为 H.264、平均帧率 30/1，音频均为 AAC。
@@ -125,7 +125,14 @@
 - 不重启服务，随后提交 1 秒正常无音轨视频，任务 SUCCEEDED，生成 1 段，ZIP CRC 与文件清单通过；页面显示正常下载入口。
 - 新增 `tests/integration_failure_api.py`、`docs/FAILURE_TESTS.md` 与 `docs/samples/failure_verification.json`，保留可复现脚本和实际证据。
 - 脚本通过 Ruff；本实验不验证强制中断恢复、磁盘不足或大文件资源边界。
-- 上一笔长视频记录提交 `a30d8ec` 的 [CI](https://github.com/TiAmoLovee/video-editor-research/actions/runs/35681686427)已确认两平台成功；本轮修改的 CI 需推送后单独确认。
+- 上一笔长视频记录提交 `a30d8ec` 的 [CI](https://github.com/TiAmoLovee/video-editor-research/actions/runs/35681686427)已确认两平台成功；随后提交 `9ad78fc` 的[两平台 CI](https://github.com/TiAmoLovee/video-editor-research/actions/runs/35682603364)也已确认成功。
+
+#### 14. 第二周交付整理
+
+- 新增 `docs/WEEK2_DELIVERY.md`，集中列出交付范围、老师查看入口、演示顺序、环境证据与尚未完成的指标。
+- 归档运行中 worker 的 FFmpeg 7.1.5-0+deb13u1 输出；明确区分实际版本、依赖配置版本和未来重建的不确定性。
+- 更新 README、详细验收说明与版本描述，准备 `week2/mvp0` 到 `main` 的合并请求标题和正文，当前尚未创建或合并 PR。
+- 当前只交付第二周媒体原型及已验证场景；不将峰值内存、完整端到端性能、覆盖率及处理中断恢复写成通过。
 
 ### 未完成及原因
 
@@ -157,4 +164,4 @@
 ### 下周计划
 
 - 根据第二周闭环完成情况，安排第三周的镜头检测、语音活动检测和语音转写。
-- 先完成第二周剩余验收：完整长视频性能记录和资源故障场景，并补齐运行环境版本记录，再推进结构分析功能。
+- 先完成第二周剩余验收：完整长视频性能记录和资源故障场景；运行环境版本已补充，再按验收反馈安排后续工作。

@@ -36,7 +36,7 @@ worker 首次切换到 Python 3.11 的 Trixie 基础镜像并新增 FFmpeg 系�
 
 ### FFmpeg 版本边界
 
-worker 使用 `python:3.11-slim-trixie`，从 Debian 官方软件源安装 FFmpeg 7.1 系列，与任务书的 7.x 版本范围对应。原 Bookworm 软件源提供 5.1 系列，因此本次只调整需要 FFmpeg 的 worker 基础镜像。Windows Shotcut 仍为 8.1 系列，Windows 验证不能替代容器验证。构建后应记录 `ffmpeg -version` 并完成真实视频集成验证。软件源包和基础镜像摘要尚未锁定。
+worker 使用 `python:3.11-slim-trixie`，从 Debian 官方软件源安装 FFmpeg 7.1 系列，与任务书的 7.x 版本范围对应。原 Bookworm 软件源提供 5.1 系列，因此本次只调整需要 FFmpeg 的 worker 基础镜像。Windows Shotcut 仍为 8.1 系列，Windows 验证不能替代容器验证。2026-09-22 已记录实际 worker 的 FFmpeg 7.1.5-0+deb13u1 输出并完成真实视频集成验证；以后重新构建应重新核对版本。软件源包和基础镜像摘要尚未锁定。
 
 参考：https://packages.debian.org/trixie/ffmpeg
 
@@ -103,7 +103,7 @@ API 和 worker 均以 UID 10001 运行，镜像预先创建属于该用户的 `/
 
 - 单元测试：43 项通过（含页面与历史接口），覆盖上传校验、隔离存储、提交异常、未知编号、失败状态、下载清单和重复任务保护。
 - 本机媒体验证：使用隔离目录和 Windows FFmpeg 对真实 Sucai1.mp4 运行上传接口、媒体处理函数及 ZIP 下载检查，得到 900、338 帧。另通过临时本地 HTTP 服务验证了集成脚本的真实上传、查询和 ZIP 下载。两个实验都替换了 Celery 投递，不能代替真实 Docker/Celery 视频联调。
-- Compose 配置检查和容器构建通过；真实 `Test1.mp4` 视频通过 HTTP 提交给 Docker worker，完成 12 段切片，状态查询和 ZIP 下载已验证，说明本例共享卷读写正常。实际容器 FFmpeg 版本输出待归档。
+- Compose 配置检查和容器构建通过；真实 `Test1.mp4` 视频通过 HTTP 提交给 Docker worker，完成 12 段切片，状态查询和 ZIP 下载已验证，说明本例共享卷读写正常。运行中 worker 的 FFmpeg 版本已确认是 7.1.5-0+deb13u1，见 [版本输出](samples/worker_ffmpeg_version.txt)。
 - 已新增操作页面，60 分钟 1080p 合成素材已通过 120 段切片与 ZIP 验收，详见 [LONG_VIDEO_TEST.md](LONG_VIDEO_TEST.md)；精确进度、自动恢复、清理策略与完整性能数据仍待补齐。原视频、中间文件与成品目前保留在卷中，会占用磁盘。页面上线后的实际 Docker 验收另见 WEB_UI.md。
 - 服务仅绑定本机，没有用户认证；上传限制在 multipart 解析后与文件复制时检查，不是面向公网的流量限制方案。
 
