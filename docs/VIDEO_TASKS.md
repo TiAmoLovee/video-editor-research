@@ -121,3 +121,9 @@ API 和 worker 均以 UID 10001 运行，镜像预先创建属于该用户的 `/
 - 结果记录见 [Test1_video_task_verification.json](samples/Test1_video_task_verification.json)。视频和 ZIP 不纳入版本管理。
 
 换新素材且不确定段数时，可以省略 `--expected-clips`；该参数只是测试预期，不控制视频生成几段。
+
+## 异常输入与失败后继续处理（2026-09-22）
+
+已在实际 Docker 环境验证：无效扩展名返回 415、空 MP4 返回 422；损坏 MP4 在 probing 阶段记为 FAILED，result 为 null，直接下载 ZIP / MP4 返回 409。页面显示失败且刷新保留记录，没有下载链接。随后正常 1 秒视频成功处理并下载 ZIP，健康检查正常。
+
+复现脚本为 `tests/integration_failure_api.py`，详细步骤与范围见 [FAILURE_TESTS.md](FAILURE_TESTS.md)，证据见 [failure_verification.json](samples/failure_verification.json)。失败后继续处理新任务不代表被强制中断的旧任务能自动恢复。
