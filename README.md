@@ -11,7 +11,7 @@ ClipForge 是一个正在开发的视频剪辑系统。第二周已实现本地�
 - 已实现：FFprobe 元数据读取、H.264 / AAC 与 CFR 30 fps 归一化、每段最多 900 帧切片、FastAPI 接口、Celery / Redis 后台处理、SQLite 任务记录、浏览器上传与历史任务下载。
 - 已验证：43 项本地自动化测试；真实短视频 2 段、345.5 秒视频 12 段；页面刷新恢复所选任务；用户重启操作后的已完成任务记录与 ZIP 内容对比一致。
 - 进行中：60 分钟 1080p 合成素材测试。当前未取得最终通过结论，不填写性能达标结果。
-- 待完成：更多实际部署异常场景、真实 CI、性能记录与处理中断恢复。详见[每周工作记录](docs/WEEKLY.md)。
+- 待完成：更多实际部署异常场景、真实 CI 首次远程运行确认、性能记录与处理中断恢复。详见[每周工作记录](docs/WEEKLY.md)。
 
 **老师查看入口：[第二周成果与验收说明](docs/WEEK2_REVIEW.md)**。其中列出演示步骤、验证记录和已知限制。
 
@@ -106,7 +106,7 @@ py -3.11 -m venv .venv
 - worker 被强制中断可能留下 RUNNING 状态；自动恢复、取消、重试与队列投递补偿尚未实现。
 - JSON Schema 自动校验、常规逐帧 CFR 检查及精确音画同步测量尚未接入。
 - 长视频使用低复杂度的蓝色画面与测试音，只用于该素材条件下的长时长流程检查，不能代表复杂实拍视频性能。
-- [GitHub Actions 配置](.github/workflows/ci.yml) 目前仍为 lint / test 占位任务。绿色状态不能证明真实测试已运行；43 项通过指本地运行结果。查看 [Actions](https://github.com/TiAmoLovee/video-editor-research/actions)。
+- [GitHub Actions 配置](.github/workflows/ci.yml) 已替换为真实检查：Ubuntu / Windows、Python 3.11、依赖兼容性、Ruff 和单元测试。配置及本地预验收已完成，首次远程结果待推送后确认；旧占位任务的绿色状态不算真实测试。详见 [CI 说明](docs/CI.md)，查看 [Actions](https://github.com/TiAmoLovee/video-editor-research/actions)。
 
 ## 第一周调研与设计
 
