@@ -6,7 +6,7 @@ ClipForge 是一个正在开发的视频剪辑系统。第二周已实现本地�
 
 ## 当前进度
 
-第二周成果在 **`week2/mvp0` 分支**。查看 GitHub 时请切换到该分支；`main` 未合并前可能仍显示第一周内容。
+第二周成果已通过 PR #2 合并到 **`main`**。本次工作台 UI/UX 改版在 `feat/ui-workbench` 分支，包含拖拽选片、切片搜索、分批展示与在线播放预览，见[界面改版说明](docs/UI_REFRESH.md)。
 
 - 已实现：FFprobe 元数据读取、H.264 / AAC 与 CFR 30 fps 归一化、每段最多 900 帧切片、FastAPI 接口、Celery / Redis 后台处理、SQLite 任务记录、浏览器上传与历史任务下载。
 - 已验证：43 项本地自动化测试；真实短视频 2 段、345.5 秒视频 12 段；页面刷新恢复所选任务；用户重启操作后的已完成任务记录与 ZIP 内容对比一致。
@@ -23,7 +23,7 @@ ClipForge 是一个正在开发的视频剪辑系统。第二周已实现本地�
 首次获取项目，在 PowerShell 中执行：
 
 ```powershell
-git clone --branch week2/mvp0 https://github.com/TiAmoLovee/video-editor-research.git
+git clone https://github.com/TiAmoLovee/video-editor-research.git
 cd video-editor-research
 docker compose config --quiet
 docker compose up -d --build
