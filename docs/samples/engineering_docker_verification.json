@@ -1,0 +1,25 @@
+{
+  "date": "2026-09-24",
+  "scope": "Rebuilt Docker deployment at local port 8200; HTTP and ZIP readback by assistant; browser interactions confirmed by user.",
+  "task_id": "0ab4374c-f874-4926-a1dc-e081e5fe51bb",
+  "source_name": "Sucai1.mp4",
+  "status": "SUCCEEDED",
+  "clip_count": 2,
+  "frame_counts": [
+    900,
+    338
+  ],
+  "zip_crc_ok": true,
+  "archive_sha256": "09404d88ddc04aa1ddc5ee50df8061a3bd97e451be7dbf9b97b91b8fd0067f57",
+  "user_confirmed": [
+    "Existing task history and old ZIP download",
+    "New short-video processing",
+    "Preview and new ZIP download",
+    "Task selection retained after page refresh"
+  ],
+  "not_independently_verified": [
+    "Video frame decoding after Docker rebuild",
+    "Rebuilt worker FFmpeg version",
+    "Remote CI for refactor branch"
+  ]
+}

@@ -1,0 +1,18 @@
+FROM node:24-bookworm-slim AS frontend
+WORKDIR /frontend
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY frontend/ ./
+RUN npm run build
+
+FROM python:3.11-slim-bookworm
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 CLIPFORGE_FRONTEND_DIST=/app/frontend/dist
+WORKDIR /app/backend
+COPY backend/requirements.txt backend/requirements-worker.txt ./
+RUN python -m pip install --no-cache-dir -r requirements.txt -r requirements-worker.txt \
+    && useradd --create-home --uid 10001 appuser \
+    && mkdir -p /data && chown appuser:appuser /data
+COPY --chown=appuser:appuser backend/clipforge ./clipforge
+COPY --from=frontend --chown=appuser:appuser /frontend/dist /app/frontend/dist
+USER appuser
+CMD ["python", "-m", "uvicorn", "clipforge.api:app", "--host", "0.0.0.0", "--port", "8000"]

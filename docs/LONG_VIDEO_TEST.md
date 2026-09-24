@@ -9,7 +9,7 @@
 - 使用既有 Docker API、Celery worker、Redis 和共享数据卷，测试命令如下：
 
 ```powershell
-.\.venv\Scripts\python.exe tests\integration_video_api.py "downloads\fixtures\long_60min_1080p.mp4" --expected-clips 120 --timeout 7200
+.\.venv\Scripts\python.exe backend\tests\integration_video_api.py "downloads\fixtures\long_60min_1080p.mp4" --expected-clips 120 --timeout 7200
 ```
 
 - 任务编号：`782b8db7-3b4c-40db-b749-90416103eec0`，最终状态为 `SUCCEEDED`。

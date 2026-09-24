@@ -1,5 +1,7 @@
 # ClipForge 每周工作记录
 
+> 本文是 2026-09-22 阶段记录；其中单文件前端和根目录模块描述对应历史版本。2026-09-24 工程整改的当前目录、技术栈和待验收项见 [ENGINEERING_REFACTOR.md](ENGINEERING_REFACTOR.md)。
+
 ## 第二周：媒体流水线骨架与最小闭环
 
 ### 本周目标
@@ -43,7 +45,7 @@
 
 - 媒体模块 22 项单元测试通过：7 项元数据转换测试、7 项转码约束与文件保护测试、8 项切片边界与目录保护测试。
 - 新增 7 项加法接口测试、10 项视频任务测试，覆盖提交响应、队列异常、状态记录、上传校验、下载保护与重复任务处理。与媒体测试合计 39 项，2026-09-21 在本地仓库运行全部通过。接口单元测试使用队列或媒体处理替身，真实素材验证另行记录。
-- 运行 `tests/integration_split.py`，真实调用 FFmpeg，以下媒体集成实验通过：
+- 运行 `backend/tests/integration_split.py`，真实调用 FFmpeg，以下媒体集成实验通过：
   - 5 分钟、9,000 帧的合成素材生成 10 个切片，每段 900 帧。
   - 901 帧的合成素材生成 900 帧与 1 帧的两段，保留真实尾帧。
   - 编码器缺失时正确返回失败，不遗留最终结果目录或临时目录。
@@ -63,7 +65,7 @@
 - 命令行队列实验通过：提交 2 + 3，后台执行后取得结果 5。
 - 实现 `POST /demo/tasks`，返回 HTTP 202、任务编号与查询地址；请求不等待计算结束。
 - 实现 `GET /demo/tasks/{task_id}`，读取任务状态快照与结果。
-- 2026-09-21 在本机运行 `tests/integration_queue_api.py --base-url http://127.0.0.1:8200`，实际观察到 PENDING → STARTED → SUCCESS，结果为 5；非法参数、非法编号及未知编号语义检查通过，脚本输出 PASS。
+- 2026-09-21 在本机运行 `backend/tests/integration_queue_api.py --base-url http://127.0.0.1:8200`，实际观察到 PENDING → STARTED → SUCCESS，结果为 5；非法参数、非法编号及未知编号语义检查通过，脚本输出 PASS。
 - ClipForge 使用宿主机 8200 端口，映射容器内 8000；Redis 不开放宿主机端口。
 - 记录 PENDING 可能表示未执行、未知编号或结果过期，不能代替任务数据库的存在性判断。
 
@@ -123,7 +125,7 @@
 - 通过实际页面上传刻意制作的无效 MP4，后台在 probing 阶段记为 FAILED；页面显示失败，刷新保留记录，没有下载链接。
 - 直接请求失败任务的 ZIP 与 MP4 均返回 409；无效扩展名上传返回 415，空 MP4 返回 422。
 - 不重启服务，随后提交 1 秒正常无音轨视频，任务 SUCCEEDED，生成 1 段，ZIP CRC 与文件清单通过；页面显示正常下载入口。
-- 新增 `tests/integration_failure_api.py`、`docs/FAILURE_TESTS.md` 与 `docs/samples/failure_verification.json`，保留可复现脚本和实际证据。
+- 新增 `backend/tests/integration_failure_api.py`、`docs/FAILURE_TESTS.md` 与 `docs/samples/failure_verification.json`，保留可复现脚本和实际证据。
 - 脚本通过 Ruff；本实验不验证强制中断恢复、磁盘不足或大文件资源边界。
 - 上一笔长视频记录提交 `a30d8ec` 的 [CI](https://github.com/TiAmoLovee/video-editor-research/actions/runs/35681686427)已确认两平台成功；随后提交 `9ad78fc` 的[两平台 CI](https://github.com/TiAmoLovee/video-editor-research/actions/runs/35682603364)也已确认成功。
 
@@ -145,7 +147,7 @@
 ### 技术障碍与当前假设
 
 - Python、FFprobe 和 FFmpeg 已能在 Windows 本机运行；Redis、Celery worker 与 FastAPI 容器已完成加法任务及真实视频任务联调。
-- worker 使用容器内 FFmpeg；API 与 worker 通过同一个数据卷访问上传文件、任务数据库和处理结果。Windows 的 `D:\Shotcut` 路径只用于本机媒体检查。
+- worker 使用容器内 FFmpeg；API 与 worker 通过同一个数据卷访问上传文件、任务数据库和处理结果。Windows 的 FFmpeg 工具路径只用于本机媒体检查，通过环境变量配置。
 - Windows 本机使用 Shotcut FFmpeg 8.1 系列，worker 配置采用 Debian Trixie 的 FFmpeg 7.1 系列；不能将一次素材通过视为所有版本、编码和时长的兼容性验收。
 
 ### 失败的尝试
@@ -165,3 +167,12 @@
 
 - 根据第二周闭环完成情况，安排第三周的镜头检测、语音活动检测和语音转写。
 - 先完成第二周剩余验收：完整长视频性能记录和资源故障场景；运行环境版本已补充，再按验收反馈安排后续工作。
+
+## 第二周交付后整改（2026-09-24）
+
+- 根据老师反馈，将单文件页面迁移到 React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5，补齐依赖锁文件、开发、构建与测试流程。
+- 整理 frontend、backend、deploy 目录；后端按接口、媒体、存储、队列和处理流程分层，调整导入、Docker 和 CI 路径。
+- 使用 FFMPEG / FFPROBE 环境变量统一工具配置，当前运行说明移除个人工具安装路径。
+- 51 项后端测试、7 项前端测试、类型检查、Ruff、生产构建和 Compose 配置解析在本地通过。隔离预览完成旧任务读取及短视频上传切片验证。
+- 本次整改的 Docker API 与 worker 已由用户重建启动；用户确认旧任务、下载、新上传、预览及刷新恢复正常。助手独立查询 8200 的新任务并校验 ZIP：SUCCEEDED、2 段、CRC 通过、清单为 900 / 338 帧。证据见 `docs/samples/engineering_docker_verification.json`。
+- 本次远程 CI 尚待推送后确认，不能沿用旧版通过记录。详情见 [工程整改说明](ENGINEERING_REFACTOR.md)。
