@@ -23,7 +23,7 @@
     }
   ],
   "not_verified": [
-    "Rebuilt Docker API/worker deployment",
+    "Docker deployment not covered by this isolated preview; subsequent verification recorded separately in engineering_docker_verification.json",
     "Remote CI for refactor commit",
     "New long-video performance run"
   ]

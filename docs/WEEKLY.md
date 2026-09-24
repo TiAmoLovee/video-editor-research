@@ -174,4 +174,5 @@
 - 整理 frontend、backend、deploy 目录；后端按接口、媒体、存储、队列和处理流程分层，调整导入、Docker 和 CI 路径。
 - 使用 FFMPEG / FFPROBE 环境变量统一工具配置，当前运行说明移除个人工具安装路径。
 - 51 项后端测试、7 项前端测试、类型检查、Ruff、生产构建和 Compose 配置解析在本地通过。隔离预览完成旧任务读取及短视频上传切片验证。
-- 本次整改的 Docker 真实部署与远程 CI 尚待应用及推送后确认，不能沿用旧版通过记录。详情见 [工程整改说明](ENGINEERING_REFACTOR.md)。
+- 本次整改的 Docker API 与 worker 已由用户重建启动；用户确认旧任务、下载、新上传、预览及刷新恢复正常。助手独立查询 8200 的新任务并校验 ZIP：SUCCEEDED、2 段、CRC 通过、清单为 900 / 338 帧。证据见 `docs/samples/engineering_docker_verification.json`。
+- 本次远程 CI 尚待推送后确认，不能沿用旧版通过记录。详情见 [工程整改说明](ENGINEERING_REFACTOR.md)。
