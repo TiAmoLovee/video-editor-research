@@ -1,5 +1,7 @@
 # 第二周异常输入与失败后继续处理验收
 
+> 工程整改后请先按 [README](../README.md) 安装 `backend` 包并设置 `FFMPEG` / `FFPROBE`。示例素材放在自行准备的 `downloads/fixtures/` 中；旧验收结果保留原时间，不表示本次重新运行。
+
 日期：2026-09-22。环境：实际 Docker API、Redis、Celery worker，页面与接口均访问本机 8200。
 
 ## 本次结果
@@ -21,17 +23,17 @@
 
 ## 复现方法
 
-新增 [integration_failure_api.py](../tests/integration_failure_api.py)，用真实 HTTP 调用检查拒绝上传、失败状态、下载保护和失败后正常处理。它不属于 `test_*.py` 单元测试集合，不会被每次推送的 CI 自动提交到本机服务。
+新增 [integration_failure_api.py](../backend/tests/integration_failure_api.py)，用真实 HTTP 调用检查拒绝上传、失败状态、下载保护和失败后正常处理。它不属于 `test_*.py` 单元测试集合，不会被每次推送的 CI 自动提交到本机服务。
 
 先启动本地服务，在仓库根目录用自己的 FFmpeg 路径生成一个小视频：
 
 ```powershell
 New-Item -ItemType Directory -Force downloads\fixtures
-& "D:\Shotcut\ffmpeg.exe" -hide_banner -n -f lavfi -i "color=c=green:s=320x180:r=30:d=1" -c:v libx264 -preset ultrafast -pix_fmt yuv420p "downloads\fixtures\recovery_sample.mp4"
-.\.venv\Scripts\python.exe tests\integration_failure_api.py --recovery-video "downloads\fixtures\recovery_sample.mp4"
+& $env:FFMPEG -hide_banner -n -f lavfi -i "color=c=green:s=320x180:r=30:d=1" -c:v libx264 -preset ultrafast -pix_fmt yuv420p "downloads\fixtures\recovery_sample.mp4"
+.\.venv\Scripts\python.exe backend\tests\integration_failure_api.py --recovery-video "downloads\fixtures\recovery_sample.mp4"
 ```
 
-`D:\Shotcut\ffmpeg.exe` 是开发机路径，其他机器需替换为实际位置。若样本文件已生成，可直接执行最后一行，无需覆盖旧文件。
+`$env:FFMPEG` 是开发机路径，其他机器需替换为实际位置。若样本文件已生成，可直接执行最后一行，无需覆盖旧文件。
 
 默认运行会新增一个故意失败的任务和一个正常任务，报告保存到 `downloads/failure_verification.json`。测试已有失败任务时可加 `--failed-task-id <UUID>`，避免再提交损坏样本；仍会提交一个正常任务以验证后台继续处理。脚本最多接受 10 MiB 的正常测试素材，适用于短小验收样本。
 

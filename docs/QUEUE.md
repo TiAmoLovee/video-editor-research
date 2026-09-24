@@ -1,8 +1,10 @@
 # 后台队列与 HTTP 演示
 
+> 工程整改后请先按 [README](../README.md) 安装 `backend` 包并设置 `FFMPEG` / `FFPROBE`。示例素材放在自行准备的 `downloads/fixtures/` 中；旧验收结果保留原时间，不表示本次重新运行。
+
 ## 当前阶段
 
-已在用户本机通过 `queue_demo.py` 验证 Redis、Linux Celery worker 和结果查询，2 + 3 返回 5。
+已在用户本机通过 `backend/clipforge/queue/demo.py` 验证 Redis、Linux Celery worker 和结果查询，2 + 3 返回 5。
 本次新增 HTTP 提交和查询接口。它们仍是加法演示，不处理视频。
 
 后续新增的视频上传与处理接口使用 `/tasks`，运行方法、SQLite 状态和下载说明见 [VIDEO_TASKS.md](VIDEO_TASKS.md)。本页只记录 `/demo/tasks` 的加法实验。
@@ -38,19 +40,19 @@ POST 不等待加法完成；GET 只读取一次状态，不阻塞等待最终�
 Redis 连接失败时返回 503。查询到 FAILURE 时返回通用说明，详细异常留在 worker 日志。
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-.\.venv\Scripts\python.exe tests\integration_queue_api.py
+.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
+.\.venv\Scripts\python.exe backend\tests\integration_queue_api.py
 docker compose logs --tail 40 api worker
 ```
 
 单元测试用队列替身检查接口逻辑，不连接 Redis。集成脚本通过真实 HTTP 提交 2 + 3，轮询结果，并检查参数校验和未知编号行为；本地连接不走系统代理。
-命令行队列实验仍可运行：`docker compose exec worker python queue_demo.py`。
+命令行队列实验仍可运行：`docker compose exec worker python -m clipforge.queue.demo`。
 
 ## 状态语义和限制
 
 - PENDING 表示 Celery 没有状态记录：可能尚未执行，也可能编号不存在或结果已经过期。接口提供 note 说明，不能据此宣称任务存在。
 - 结果保留一天。Redis AOF 与持久化数据卷不等于已完成任务数据库、任务历史和重启恢复验收。
-- 加法演示接口不处理视频；视频接口初版另见 VIDEO_TASKS.md。前端页面尚未实现。当前没有用户认证，接口仅供本机学习验证。
+- 加法演示接口不处理视频；视频接口初版另见 VIDEO_TASKS.md。前端现已实现，详见 WEB_UI.md。当前没有用户认证，接口仅供本机学习验证。
 - `/health` 仅表示 API 进程正常响应，不证明 worker 或 Redis 可用。
 - 提交失败不能保证消息一定未投递；当前没有幂等提交机制，不应直接沿用为生产视频任务接口。
 

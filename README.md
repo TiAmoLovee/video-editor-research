@@ -1,114 +1,142 @@
 # ClipForge 智剪工坊
 
-ClipForge 是一个正在开发的视频剪辑系统。第二周已实现本地媒体处理最小流程：**上传视频 → 后台转码 → 按最多 30 秒切片 → 查看进度 → 下载结果**。
+ClipForge 已实现第二周媒体处理最小流程：**网页上传 → 后台归一化 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。当前采用固定帧数切片，不进行语义选段。
 
-完整项目还计划加入镜头检测、语音分析、候选推荐、人工复核和 MP4 / MLT 导出；这些设计目标不表示当前均已实现。当前按固定帧数切片，不进行语义选段。
+根据老师的工程反馈，本分支将单文件前端迁移为 **React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5**，后端、测试和部署文件分目录，并统一 FFmpeg 环境配置。第二周原有验收记录是历史证据，迁移后的验证范围单独记录。
 
-## 当前进度
+**老师查看入口：[工程整改说明](docs/ENGINEERING_REFACTOR.md)** · [第二周交付摘要](docs/WEEK2_DELIVERY.md) · [周报](docs/WEEKLY.md)
 
-第二周成果已通过 PR #2 合并到 **`main`**。本次工作台 UI/UX 改版在 `feat/ui-workbench` 分支，包含拖拽选片、切片搜索、分批展示与在线播放预览，见[界面改版说明](docs/UI_REFRESH.md)。
+## 项目结构
 
-- 已实现：FFprobe 元数据读取、H.264 / AAC 与 CFR 30 fps 归一化、每段最多 900 帧切片、FastAPI 接口、Celery / Redis 后台处理、SQLite 任务记录、浏览器上传与历史任务下载。
-- 已验证：43 项本地自动化测试；真实短视频 2 段、345.5 秒视频 12 段；页面刷新恢复所选任务；用户重启操作后的已完成任务记录与 ZIP 内容对比一致。
-- 长视频流程通过：60 分钟 1080p 低复杂度合成素材生成 120 段，逐段解码共 108,000 帧，ZIP 核验通过；任务记录耗时约 50 分 18 秒。峰值内存与完整端到端性能仍未测量，见[长视频验收](docs/LONG_VIDEO_TEST.md)。
-- 异常验收通过：无效扩展名、空上传、损坏 MP4、失败任务下载保护，以及失败后继续处理正常视频，见[异常验收](docs/FAILURE_TESTS.md)。
-- 待完成：资源故障等更多异常场景、完整性能记录与处理中断恢复。详见[每周工作记录](docs/WEEKLY.md)。
+```text
+frontend/                     React 前端与构建配置
+  src/components/             上传、任务历史、详情、切片结果
+  src/api/                    HTTP 请求、上传及下载地址校验
+  src/store/                  Zustand 任务、分页、选中项与连接状态
+  src/hooks/                  可取消的任务轮询
+  src/types/                  TypeScript 接口类型
+  src/test/                   前端交互测试
+  package.json                开发、类型检查、测试、构建命令
+  package-lock.json           可复现安装的依赖锁文件
+backend/
+  clipforge/api.py            FastAPI 入口与前端构建产物提供
+  clipforge/routes/           HTTP 上传、查询、下载
+  clipforge/media/            FFprobe、归一化、切片
+  clipforge/services/         视频处理流程
+  clipforge/storage/          SQLite 与任务目录
+  clipforge/queue/            Celery 任务、客户端及队列演示
+  clipforge/config.py         FFmpeg / FFprobe 配置解析
+  tests/                     Python 单元与集成实验
+  requirements*.txt           Python 依赖
+deploy/                      API / worker Dockerfile
+docs/                        说明、周报与历史验收记录
+schemas/                     数据格式定义
+compose.yaml                 本地容器编排
+.env.example                 本机环境变量模板
+```
 
-**老师查看入口：[第二周交付摘要](docs/WEEK2_DELIVERY.md)**；[详细验收说明](docs/WEEK2_REVIEW.md)列出演示步骤、验证记录和已知限制。容器已实测 FFmpeg 7.1.5-0+deb13u1，版本输出随交付归档。
+## Docker 启动（用于完整流程）
 
-## 本机启动
-
-前提：安装 Git、Docker Desktop，并启用 Linux 容器。首次构建需要联网获取基础镜像及依赖。容器内自带 Python 和 FFmpeg；仅通过网页使用时，无需另装 Windows Python 或 Shotcut。
-
-首次获取项目，在 PowerShell 中执行：
+安装 Git、Docker Desktop，启用 Linux 容器。在项目根目录执行：
 
 ```powershell
-git clone https://github.com/TiAmoLovee/video-editor-research.git
-cd video-editor-research
 docker compose config --quiet
 docker compose up -d --build
 docker compose ps
 ```
 
-服务启动后，打开 [视频工作台](http://127.0.0.1:8200/)；[健康检查](http://127.0.0.1:8200/health)与[接口文档](http://127.0.0.1:8200/docs)用于开发检查。上述地址指向访问者自己的电脑，GitHub 不会运行这些服务。
+打开 [工作台](http://127.0.0.1:8200/)；[接口文档](http://127.0.0.1:8200/docs)用于开发检查。地址指向访问者自己的电脑，GitHub 不运行这些服务。
 
-以后在项目目录执行 `docker compose up -d` 启动已有服务。只有修改需打入镜像的代码后才重新构建。演示或长视频任务执行期间，请保持 Docker 运行和电脑唤醒，不要重建或重启 worker。
+API 镜像先使用 Node.js 24 构建 React 页面，再把静态产物复制到 Python 镜像。worker 自带 FFmpeg。只用 Docker 运行时无需在宿主机额外安装 Node、Python 或 FFmpeg。首次构建需要网络，可能需要配置 Docker Desktop 代理。
 
-若 Docker Hub 访问超时，先确认自己的网络和 Docker Desktop 代理设置。原开发机使用本地代理；其他机器不能直接照搬该机器的代理端口。排查记录见[周报](docs/WEEKLY.md)。
+**从旧版迁移时，等待正在处理的任务完成，再同时重新构建 API 和 worker**。本次 Python 模块路径发生变化，不能只更新页面。服务名、8200 端口、任务 API、Celery 任务名、SQLite 表结构及数据卷名称保持不变。不要删除数据卷；历史任务仍由现有数据卷读取，容器迁移后的实际回归需按整改说明执行。
 
-## 页面操作
+以后可用 `docker compose up -d` 启动，用 `docker compose stop` 停止。处理任务时保持 Docker 运行和电脑唤醒。`docker compose down -v` 会删除数据卷，不用于普通关闭。
 
-1. 选择本地视频，点击“上传并开始处理”。支持 MP4、MOV、MKV、WebM、M4V、AVI，单文件上限 1 GiB。
-2. 上传完成后获取任务编号，后台执行媒体处理；页面每 3 秒查询一次。
-3. 完成后点击“下载全部切片 · ZIP”，也可单独下载某一段。
-4. 历史任务可重新选择。地址栏包含所选任务编号，刷新后可继续查询。
+## 本地开发
 
-25%、60% 等数值表示处理阶段，不是按已处理帧数计算的实时百分比。视频最后不足 30 秒的部分会保留；无音轨视频不会强行生成音轨。
-
-浏览器下载的位置由浏览器设置决定，可在下载记录中找到。命令行集成脚本另将 ZIP 保存到仓库的 `downloads` 目录。完整说明见[页面使用说明](docs/WEB_UI.md)。
-
-## 结构与数据存储
-
-```text
-浏览器 → FastAPI → SQLite 保存任务 / Redis 队列 → Celery worker
-                     ↑                              ↓
-               查询状态与下载 ← 元数据、归一化、切片、ZIP
-```
-
-- `api.py` / `video_api.py`：页面、上传、历史列表、状态查询与下载。
-- `job_store.py`：SQLite 任务状态与任务目录。
-- `tasks.py` / `video_pipeline.py`：后台任务及处理顺序。
-- `probe.py` / `normalize.py` / `split.py`：读取参数、转码、切片。
-- `index.html`：无需前端构建工具的操作页面。
-- `compose.yaml` / `Dockerfile.*`：本地部署。
-- `schemas/` / `tests/` / `docs/`：数据格式、测试与证据。
-
-API 和 worker 共用 `media_data` 数据卷，保存上传素材、SQLite、转码中间文件和成品。Redis 使用 `redis_data` 卷。任务状态以 SQLite 为准，不依赖 Celery 临时结果是否过期。
-
-任务都结束后可用 `docker compose stop` 停止服务并保留数据。`docker compose down -v` 会删除项目数据卷，不用于普通关闭或重启。原视频与成品当前没有自动清理策略。
-
-## 本地开发与验证
-
-本地测试使用 Python 3.11。首次创建环境：
+本地开发使用 Python 3.11、Node.js 24 和 npm。先在仓库根目录创建 Python 环境：
 
 ```powershell
 py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt -r requirements-worker.txt
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m pip install -r backend/requirements-dev.txt -r backend/requirements-worker.txt
+.\.venv\Scripts\python.exe -m pip install -e backend
 ```
 
-2026-09-22 本地运行 43 项测试全部通过。接口单元测试使用替身隔离队列或媒体处理，因此真实 Docker、FFmpeg 与下载需另外验收。
-
-服务运行时，可用自己的视频运行完整接口测试；将下面路径替换为实际文件：
+编辑前端时，先启动上述 Docker 服务作为 API，再在另一窗口执行：
 
 ```powershell
-.\.venv\Scripts\python.exe tests\integration_video_api.py "C:\Videos\sample.mp4" --timeout 7200
+cd frontend
+npm ci
+npm run dev
 ```
 
-脚本会提交一个新任务，等待结果、下载 ZIP 并检查 CRC、文件清单和清单帧数求和。`--expected-clips` 只设置测试预期，不控制生成数量；不确定时可省略。等待超时不表示后台已停止，应保留任务编号继续查询，避免重复上传。
+打开 `http://127.0.0.1:5173/`。Vite 将 `/tasks` 等请求代理到 `http://127.0.0.1:8200`，上传和下载仍使用同一后端。如 API 地址不同，启动 Vite 前设置 `$env:CLIPFORGE_API_URL`。
 
-本地切片边界集成实验需要 FFmpeg / FFprobe；具体命令见[切片说明](docs/SPLITTING.md)。视频和 ZIP 不提交到 Git，`.venv`、`data`、`downloads` 与日志已忽略。
+构建及测试（在 `frontend` 目录）：
 
-## 验证证据
+```powershell
+npm run typecheck
+npm test
+npm run build
+```
 
-| 场景 | 已记录结果 | 证据 |
-| --- | --- | --- |
-| 41.27 秒真实视频 | 2 段，900 / 338 帧；实际页面上传与下载通过 | [页面验收记录](docs/samples/web_ui_video_task_verification.json) |
-| 345.5 秒真实视频 | 12 段，总计 10,365 帧；ZIP 与逐段解码计数通过 | [Test1 验收记录](docs/samples/Test1_video_task_verification.json) |
-| 重启操作后的已完成任务 | 两个任务记录与 ZIP SHA-256 均与之前一致 | [数据保留记录](docs/samples/restart_persistence_verification.json) |
-| 5 分钟合成素材与边界素材 | 10 段；901 帧保留 1 帧尾片；编码失败清理结果 | [切片实验说明](docs/SPLITTING.md) |
-| 60 分钟 1080p 合成素材 | 120 段均为 900 帧，ZIP 及逐段解码核验通过；资源指标待补充 | [长视频验收](docs/LONG_VIDEO_TEST.md) |
-| 异常输入与后续任务 | 损坏输入记录失败并拒绝下载，后续正常任务完成 | [异常验收](docs/FAILURE_TESTS.md) |
+产物为 `frontend/dist/`，不提交 Git。源码、package.json 和锁文件提交 Git。开发页面使用 Vite；部署页面由 FastAPI 提供构建产物，不把源码目录直接作为网站发布。
 
-重启记录包含用户操作后的页面反馈和前后接口、文件对比，未独立归档 Docker 重启命令输出。它不验证处理中任务的自动恢复。
+仅开发 API 时可在仓库根目录运行 `.\.venv\Scripts\python.exe -m uvicorn clipforge.api:app --host 127.0.0.1 --port 8201`，并设置 Vite 的 API 目标。该方式需要另外配置可连接的 Redis 和共用数据目录；推荐初学阶段使用 Docker 完整后台，避免误连另一套任务存储。
 
-## 当前限制与持续集成
+## 本机 FFmpeg 配置
 
-- 服务只绑定本机 `127.0.0.1:8200`，没有用户账户及多用户隔离。
-- worker 被强制中断可能留下 RUNNING 状态；自动恢复、取消、重试与队列投递补偿尚未实现。
-- JSON Schema 自动校验、常规逐帧 CFR 检查及精确音画同步测量尚未接入。
-- 长视频使用低复杂度的蓝色画面与测试音，只用于该素材条件下的长时长流程检查，不能代表复杂实拍视频性能。
-- [GitHub Actions 配置](.github/workflows/ci.yml) 已替换为真实检查：Ubuntu / Windows、Python 3.11、依赖兼容性、Ruff 和单元测试。提交 `d70eb43` 的[首次远程运行](https://github.com/TiAmoLovee/video-editor-research/actions/runs/35679910293)已确认两套系统的检查全部成功；旧占位任务的绿色状态不算真实测试。详见 [CI 说明](docs/CI.md)，查看 [Actions](https://github.com/TiAmoLovee/video-editor-research/actions)。
+Docker 已配置容器内工具；以下仅用于 Windows 本机媒体命令。优先使用系统 PATH 中的可执行文件：
+
+```powershell
+$env:FFMPEG = (Get-Command ffmpeg -ErrorAction Stop).Source
+$env:FFPROBE = (Get-Command ffprobe -ErrorAction Stop).Source
+& $env:FFMPEG -version
+& $env:FFPROBE -version
+```
+
+如果工具不在 PATH 中，改用下面方式输入本机实际路径（输入时不用额外加引号）：
+
+```powershell
+$env:FFMPEG = Read-Host "请输入 ffmpeg 可执行文件的完整路径"
+$env:FFPROBE = Read-Host "请输入 ffprobe 可执行文件的完整路径"
+& $env:FFMPEG -version
+& $env:FFPROBE -version
+```
+
+配置优先级：命令行显式参数 > `FFMPEG` / `FFPROBE` > 兼容旧变量 `FFMPEG_PATH` / `FFPROBE_PATH` > PATH 中的命令。变量在每次调用时读取。`.env.example` 只是模板，Python 不会自动读取 `.env`；PowerShell 的 `$env:` 设置作用于当前窗口及其子进程。
+
+准备自己的输入视频后，在仓库根目录执行（输出必须是新路径）：
+
+```powershell
+$video = Read-Host "请输入要处理的视频完整路径"
+.\.venv\Scripts\python.exe -m clipforge.media.probe "$video"
+.\.venv\Scripts\python.exe -m clipforge.media.normalize "$video" "downloads/normalized.mp4"
+.\.venv\Scripts\python.exe -m clipforge.media.split "downloads/normalized.mp4" "downloads/clips"
+```
+
+## 验证与 CI
+
+在仓库根目录执行：
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
+.\.venv\Scripts\python.exe -m ruff check --no-cache backend
+.\.venv\Scripts\python.exe backend/tests/integration_split.py
+.\.venv\Scripts\python.exe backend/tests/integration_video_api.py "$video" --timeout 7200
+```
+
+最后一条需要服务运行并先设置 `$video`；会创建一个真实任务。`--expected-clips` 设置测试预期，不控制切片数量，不确定时省略。等待超时不代表后台停止，应先查询已有任务，避免重复上传。
+
+[GitHub Actions](.github/workflows/ci.yml) 分别在 Ubuntu / Windows 检查 Python 与前端：Python 依赖检查、Ruff、单元测试；前端锁文件安装、TypeScript 检查、交互测试和 Vite 构建。新提交的远程结果以其 Actions 记录为准。
+
+## 已完成的历史验收与当前限制
+
+- 第二周原型已验证真实短视频 2 段、345.5 秒素材 12 段，记录见 [页面验收](docs/samples/web_ui_video_task_verification.json) 和 [Test1 验收](docs/samples/Test1_video_task_verification.json)。
+- 60 分钟 1080p 低复杂度合成素材生成 120 段，逐段解码共 108,000 帧；任务记录耗时约 50 分 18 秒，见 [长视频验收](docs/LONG_VIDEO_TEST.md)。这是旧版已归档的媒体实验，不代表本次重新转码或真实复杂素材性能。
+- 已归档的 [数据保留记录](docs/samples/restart_persistence_verification.json) 和 [异常验收](docs/FAILURE_TESTS.md)保留原测试时间与范围。
+- 仍未实现处理中断自动恢复、取消/重试、多用户隔离与自动清理；峰值内存、精确音画同步和完整端到端性能未测量。阶段百分比不是逐帧进度。
 
 ## 第一周调研与设计
 

@@ -8,9 +8,9 @@
 2. 上传成功后自动选择新任务，右侧显示当前处理阶段，页面每 3 秒查询一次。
 3. 处理完成后，点击“下载全部切片 · ZIP”，或点击某一段旁边的“下载”。
 4. 页面左侧“我的任务”显示数据库中的历史视频任务，按创建时间倒序，每页 10 条，可翻页。
-5. 从历史任务中选择已有的 Test1.mp4，即可下载其 12 段结果，不需要重复上传。
+5. 选择已有的历史任务即可再次下载；新安装没有历史任务，需要自行上传素材。
 
-新版提供切片搜索、每批 24 段的分批展示和按需播放预览。选择切片的“预览”后点击播放器播放；关闭预览或切换任务会释放播放器。窄屏页面先显示上传与处理结果，再显示历史任务。完整改版与验证范围见 [UI/UX 改版说明](UI_REFRESH.md)。
+新版提供切片搜索、每批 24 段的分批展示和按需播放预览。选择切片的“预览”后点击播放器播放；关闭预览或切换任务会释放播放器。窄屏页面使用单列布局，提交任务后自动滚动到处理结果。完整改版与验证范围见 [UI/UX 改版说明](UI_REFRESH.md)。
 
 浏览器下载由浏览器管理，通常出现在浏览器“下载记录”中；若设置了下载前询问保存位置，会弹出选择位置窗口。网页不能代替浏览器直接指定 Windows 保存目录。
 命令行集成脚本仍会把结果保存到项目 `downloads` 目录，两种方式的保存位置不一定相同。
@@ -26,27 +26,26 @@
 
 ## 新增文件与接口
 
-- `index.html`：原生 HTML、CSS、JavaScript，不引入额外前端构建依赖。
+- `frontend/src/`：React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5；页面入口为 `frontend/index.html`，构建产物为 `frontend/dist/`。
 - `GET /`：提供首页。
 - `GET /tasks?limit=10&offset=0`：按创建时间倒序分页读取历史视频任务，不返回内部文件路径。
 - 上传、状态查询和下载继续复用现有视频接口，SQLite 表结构保持不变，不迁移或清空已有数据。
-- 修改页面后需要重新构建 API 镜像；worker 无需重新构建。
+- 仅修改前端时重新构建 API 镜像即可；本次后端目录迁移必须同时更新 API 和 worker，步骤见 ENGINEERING_REFACTOR.md。
 
 ## 应用和启动
 
 在项目根目录执行：
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-$env:HTTP_PROXY = "http://127.0.0.1:10808"
-$env:HTTPS_PROXY = "http://127.0.0.1:10808"
-$env:NO_PROXY = "localhost,127.0.0.1,::1"
-docker compose up -d --build api
+.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
+docker compose up -d --build api worker
 ```
 
-需要本机代理保持运行。继续使用现有 8200 端口和原有数据卷，无需重建 worker，也不需要重新下载它的 Trixie 镜像。
+构建网络按实际情况配置 Docker Desktop 代理。继续使用现有 8200 端口和原数据卷；本次目录迁移需重建 API 和 worker。前端开发和构建命令见 README。
 
-## 验证范围
+## 2026-09-22 旧版验证记录
+
+以下为迁移前的历史验收；本次 React 迁移验证见 [工程整改说明](ENGINEERING_REFACTOR.md)。
 
 - 43 项测试通过：原有 39 项，以及首页响应、空历史、历史排序与分页、分页参数校验 4 项。
 - 在隔离的本地预览环境中，用 Test1 的已验证结果副本检查了历史列表和 12 个切片下载入口；没有改动用户 Docker 数据。

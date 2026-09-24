@@ -1,5 +1,7 @@
 # 第二周成果与验收说明
 
+> 本文是 2026-09-22 阶段记录；其中单文件前端和根目录模块描述对应历史版本。2026-09-24 工程整改的当前目录、技术栈和待验收项见 [ENGINEERING_REFACTOR.md](ENGINEERING_REFACTOR.md)。
+
 记录日期：2026-09-22。请在 GitHub 切换到 `week2/mvp0` 分支查看，回到[仓库首页](../README.md)，或先阅读[交付摘要与运行版本](WEEK2_DELIVERY.md)。
 
 ## 本周交付是什么
@@ -22,9 +24,9 @@
 
 | 验收项 | 结果与范围 | 可查看的证据 |
 | --- | --- | --- |
-| 元数据读取与统一格式 | 已实现，含未知值、封面流和无音轨分支测试 | [Schema](../schemas/media_meta.schema.json)、[样本](samples/media_meta.json)、[测试](../tests/test_probe.py) |
+| 元数据读取与统一格式 | 已实现，含未知值、封面流和无音轨分支测试 | [Schema](../schemas/media_meta.schema.json)、[样本](samples/media_meta.json)、[测试](../backend/tests/test_probe.py) |
 | 归一化与固定切片 | 真实素材成功；本地边界实验保留一帧尾片 | [归一化说明](NORMALIZATION.md)、[切片说明](SPLITTING.md) |
-| 本地自动化测试 | 2026-09-22 共 43 项通过；接口测试有替身 | [测试目录](../tests)、[周报](WEEKLY.md) |
+| 本地自动化测试 | 2026-09-22 共 43 项通过；接口测试有替身 | [测试目录](../backend/tests)、[周报](WEEKLY.md) |
 | Docker 后台视频处理 | 345.5 秒真实素材生成 12 段，ZIP 与逐段帧数核验通过 | [Test1 JSON](samples/Test1_video_task_verification.json) |
 | 页面上传、刷新与下载 | 41.27 秒真实素材生成 2 段；刷新恢复任务；触发 ZIP 下载 | [页面验收 JSON](samples/web_ui_video_task_verification.json) |
 | 已完成任务保留 | 用户重启步骤反馈后，两个任务与 ZIP 校验值与之前一致；未归档 Docker 重启输出 | [数据保留 JSON](samples/restart_persistence_verification.json) |

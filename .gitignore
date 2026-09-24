@@ -20,3 +20,10 @@ __pycache__/
 # Local task data and downloaded verification results
 data/
 downloads/
+
+# Built frontend and local dependencies
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+*.tsbuildinfo
+*.egg-info/

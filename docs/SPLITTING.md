@@ -1,8 +1,10 @@
 # 固定 30 秒切片：第一版
 
+> 工程整改后请先按 [README](../README.md) 安装 `backend` 包并设置 `FFMPEG` / `FFPROBE`。示例素材放在自行准备的 `downloads/fixtures/` 中；旧验收结果保留原时间，不表示本次重新运行。
+
 ## 输入、清单和输出
 
-输入使用 `normalize.py` 生成的 H.264 / CFR 30 fps MP4；有音轨时要求为 AAC。程序检查编码和平均帧率，但没有逐帧鉴定任意输入是否为 CFR，所以不能把任意平均 30 fps 的视频视为已归一化素材。
+输入使用 `backend/clipforge/media/normalize.py` 生成的 H.264 / CFR 30 fps MP4；有音轨时要求为 AAC。程序检查编码和平均帧率，但没有逐帧鉴定任意输入是否为 CFR，所以不能把任意平均 30 fps 的视频视为已归一化素材。
 
 每段 900 帧。切片清单由整数帧数生成，包含起始帧、结束帧（不包含）、帧数和对应秒数，然后渲染器依照清单重新编码。这样避免按容器时长的小数误差多切一个空尾片。
 
@@ -17,7 +19,7 @@
 在仓库根目录运行，按本机情况替换路径；输出目录必须尚不存在。
 
 ```powershell
-.\.venv\Scripts\python.exe .\split.py "C:\Users\asus\Desktop\Sucai\Sucai1_python_normalized.mp4" "C:\Users\asus\Desktop\Sucai\clipforge_auto_segments" --ffmpeg "D:\Shotcut\ffmpeg.exe" --ffprobe "D:\Shotcut\ffprobe.exe"
+.\.venv\Scripts\python.exe -m clipforge.media.split "downloads\fixtures\Sucai1_python_normalized.mp4" "downloads\fixtures\clipforge_auto_segments" --ffmpeg $env:FFMPEG --ffprobe $env:FFPROBE
 ```
 
 每段完成后检查视频编码、平均帧率、预期音轨，并实际解码统计视频帧数。全部片段通过后保存清单，再发布最终结果目录。失败时清理本次临时目录，不覆盖已有输出。当前程序面向本次 Windows 环境验证。
@@ -29,13 +31,13 @@
 不调用 FFmpeg 的单元测试：
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
 ```
 
 独立媒体集成实验：自动生成低分辨率素材、运行真实切片并清理临时文件，需要 FFmpeg / FFprobe。
 
 ```powershell
-.\.venv\Scripts\python.exe tests\integration_split.py --ffmpeg "D:\Shotcut\ffmpeg.exe" --ffprobe "D:\Shotcut\ffprobe.exe"
+.\.venv\Scripts\python.exe backend\tests\integration_split.py --ffmpeg $env:FFMPEG --ffprobe $env:FFPROBE
 ```
 
 ## 当前验证记录

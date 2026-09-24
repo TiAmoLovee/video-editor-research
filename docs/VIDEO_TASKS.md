@@ -1,5 +1,7 @@
 # 视频后台处理接口初版
 
+> 工程整改后请先按 [README](../README.md) 安装 `backend` 包并设置 `FFMPEG` / `FFPROBE`。示例素材放在自行准备的 `downloads/fixtures/` 中；旧验收结果保留原时间，不表示本次重新运行。
+
 ## 这一阶段要验证什么
 
 上传视频 → 保存文件和任务记录 → Celery 队列 → FFprobe 读取参数 → FFmpeg 归一化 → 固定切片 → ZIP → 查询和下载。
@@ -10,20 +12,20 @@
 
 | 文件 | 作用 |
 | --- | --- |
-| video_api.py | 上传文件、查询视频任务、下载已完成结果 |
-| job_store.py | SQLite 状态记录与按 UUID 分配存储目录 |
-| video_pipeline.py | 按顺序调用已有 probe、normalize、split 模块并打包 |
-| tasks.py | 注册 Celery 视频任务，只传递任务编号 |
+| backend/clipforge/routes/video.py | 上传文件、查询视频任务、下载已完成结果 |
+| backend/clipforge/storage/jobs.py | SQLite 状态记录与按 UUID 分配存储目录 |
+| backend/clipforge/services/pipeline.py | 按顺序调用已有 probe、normalize、split 模块并打包 |
+| backend/clipforge/queue/tasks.py | 注册 Celery 视频任务，只传递任务编号 |
 | compose.yaml | API 和 worker 共用 media_data 卷，Redis 保持原数据卷 |
-| tests/integration_video_api.py | 通过真实 HTTP 上传、查询、下载并核对 ZIP 清单 |
+| backend/tests/integration_video_api.py | 通过真实 HTTP 上传、查询、下载并核对 ZIP 清单 |
 
 ## 安装、检查和启动
 
 在仓库根目录执行，保持 Docker Desktop 与已经验证可用的代理运行：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m pip install -r backend/requirements-dev.txt
+.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
 docker compose config --quiet
 docker compose up -d --build api worker
 docker compose ps
@@ -43,7 +45,7 @@ worker 使用 `python:3.11-slim-trixie`，从 Debian 官方软件源安装 FFmpe
 ## 第一次用真实素材验证
 
 ```powershell
-.\.venv\Scripts\python.exe tests\integration_video_api.py "C:\Users\asus\Desktop\Sucai\Sucai1.mp4" --expected-clips 2
+.\.venv\Scripts\python.exe backend\tests\integration_video_api.py "downloads\fixtures\Sucai1.mp4" --expected-clips 2
 ```
 
 默认连接 8200；默认等待最多 600 秒。脚本分块上传，不把整个视频读进内存；下载到 `downloads/<任务编号>-result.zip`，该目录已加入 `.gitignore`。
@@ -126,4 +128,4 @@ API 和 worker 均以 UID 10001 运行，镜像预先创建属于该用户的 `/
 
 已在实际 Docker 环境验证：无效扩展名返回 415、空 MP4 返回 422；损坏 MP4 在 probing 阶段记为 FAILED，result 为 null，直接下载 ZIP / MP4 返回 409。页面显示失败且刷新保留记录，没有下载链接。随后正常 1 秒视频成功处理并下载 ZIP，健康检查正常。
 
-复现脚本为 `tests/integration_failure_api.py`，详细步骤与范围见 [FAILURE_TESTS.md](FAILURE_TESTS.md)，证据见 [failure_verification.json](samples/failure_verification.json)。失败后继续处理新任务不代表被强制中断的旧任务能自动恢复。
+复现脚本为 `backend/tests/integration_failure_api.py`，详细步骤与范围见 [FAILURE_TESTS.md](FAILURE_TESTS.md)，证据见 [failure_verification.json](samples/failure_verification.json)。失败后继续处理新任务不代表被强制中断的旧任务能自动恢复。

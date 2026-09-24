@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-24",
+  "scope": "Isolated React production-build preview, FastAPI and real native FFmpeg; thread executor replaces Celery. Original Docker data untouched.",
+  "task_id": "ca2433be-d976-4a92-8386-ed46f2e33491",
+  "source_name": "Sucai1.mp4",
+  "status": "SUCCEEDED",
+  "archive_sha256": "74e8a6b8c76967cd50461df0ad5132fb6ad9a271b0e3c4caad5c57607ae7a070",
+  "zip_crc_ok": true,
+  "clips": [
+    {
+      "file": "clip_001.mp4",
+      "decoded_video_frames": 900,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "avg_frame_rate": "30/1"
+    },
+    {
+      "file": "clip_002.mp4",
+      "decoded_video_frames": 338,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "avg_frame_rate": "30/1"
+    }
+  ],
+  "not_verified": [
+    "Rebuilt Docker API/worker deployment",
+    "Remote CI for refactor commit",
+    "New long-video performance run"
+  ]
+}

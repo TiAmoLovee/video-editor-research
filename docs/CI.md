@@ -1,44 +1,45 @@
 # GitHub 自动检查
 
-## 本次改动
+工作流为 `.github/workflows/ci.yml`，在推送、PR 和手动触发时运行。Ubuntu 与 Windows 各执行一套后端和前端检查，共四个任务。
 
-将 `.github/workflows/ci.yml` 的 lint / test 占位任务替换为 `ClipForge checks`。推送、拉取请求及手动触发时，分别在 Ubuntu 和 Windows 上使用 Python 3.11 执行：
+## 后端
 
-1. 安装开发与 worker Python 依赖；Ruff 固定为 0.16.8。
-2. `pip check` 检查依赖兼容性。
-3. Ruff 检查 Python 语法、部分控制流错误及未定义名称，规则为 E9、F63、F7、F82。
-4. `unittest` 发现并运行 `tests/test_*.py`，目前为 43 项。
+使用 Python 3.11，安装 `backend/requirements-dev.txt` 与 `backend/requirements-worker.txt`，运行依赖兼容性检查、Ruff 和 `backend/tests/test_*.py`。当前本地发现并通过 51 项测试。
 
-检查不会自动修改代码；本次未要求全仓库统一格式或启用全部风格规则。workflow 只读仓库，不部署服务、不访问开发机的任务和视频。同一分支新提交会取消该分支尚未完成的旧 CI，不影响本机 Docker。
-
-## 本地执行相同检查
-
-在仓库根目录执行：
+在根目录完成 README 中的本地安装后执行：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt -r requirements-worker.txt
 .\.venv\Scripts\python.exe -m pip check
-.\.venv\Scripts\python.exe -m ruff check --no-cache .
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
+.\.venv\Scripts\python.exe -m ruff check --no-cache backend
+.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
 ```
 
-首次安装新增的 Ruff 需要联网；遇到下载失败时保留错误信息排查，不通过跳过检查来获取绿色结果。
+CI 通过 `PYTHONPATH=backend` 定位包，本地开发通过 `pip install -e backend` 安装。接口单元测试使用临时数据库及队列替身，不需要 Docker、Redis 或 FFmpeg。
 
-## 如何查看 GitHub 结果
+## 前端
 
-1. 提交并推送本次配置到 `week2/mvp0`。
-2. 打开仓库的 Actions 页面，选择本次提交对应的 **ClipForge checks**。
-3. 确认 `Python 3.11 / ubuntu-latest` 与 `Python 3.11 / windows-latest` 两个任务都成功。
-4. 展开 Run unit tests，确认日志显示实际发现的测试数和 OK；记录提交编号及本次运行链接。
+使用 Node.js 24。`package.json` 固定直接依赖版本，`package-lock.json` 锁定依赖树；CI 使用 `npm ci`。在 `frontend` 目录执行：
 
-黄色表示等待或执行中；红色时查看第一个失败步骤。若依赖安装失败，测试并未运行，不能记录为测试通过。旧的 CI placeholders 绿色结果仍不代表真实测试。
+```powershell
+npm ci
+npm run typecheck
+npm test
+npm run build
+```
 
-首次运行已于 2026-09-22 核验：提交 `d70eb43` 的 [ClipForge checks](https://github.com/TiAmoLovee/video-editor-research/actions/runs/35679910293) 在 Ubuntu 与 Windows 上均成功；依赖检查、Ruff 和 Run unit tests 步骤全部通过。手动触发入口的可见性受工作流是否在默认分支影响，首次以推送自动触发为准。
+当前本地 7 项交互与校验测试通过，覆盖上传输入、下载地址、长列表搜索、按需预览、失败任务下载保护和任务选择。构建执行 TypeScript 检查并生成 `dist/`。Vite 使用原生配置加载器，要求 Node.js 24。
 
-## 验证范围
+## 查看远程结果
 
-接口单元测试使用队列与媒体处理替身，数据库使用临时目录，不需要启动 Redis、Docker 或 FFmpeg。`integration_*.py` 未纳入本工作流，真实媒体、容器联调与 60 分钟素材继续单独验收。
+推送整改分支后，在 Actions 中打开对应提交的 **ClipForge checks**，确认以下四个任务成功：
 
-本地已检查 Ruff 及 43 项测试；上述指定提交的首次远程运行也已核验成功。此证据只对应该提交，后续改动须查看各自运行结果。本次未采集测试覆盖率，也不声明满足需求中的覆盖率目标。
+- Python 3.11 / ubuntu-latest
+- Python 3.11 / windows-latest
+- Frontend / ubuntu-latest
+- Frontend / windows-latest
 
-配置参考：[Ruff 官方 GitHub Actions 集成](https://docs.astral.sh/ruff/integrations/)、[setup-python](https://github.com/actions/setup-python)、[checkout](https://github.com/actions/checkout)。
+绿色只代表该次工作流运行的检查通过。安装依赖失败时，后续测试并没有执行。旧提交的通过记录不能证明本次整改通过。本次本地检查已完成，整改提交的远程 CI 尚待推送后确认。
+
+## 验证边界
+
+本工作流不部署服务，不包含真实 Docker/Celery 联调或长视频性能测试，也没有采集覆盖率。`integration_*.py` 是单独运行的媒体/API 实验。旧版第二周验收和本次迁移验证分别记录在 WEEK2_DELIVERY.md 与 ENGINEERING_REFACTOR.md。

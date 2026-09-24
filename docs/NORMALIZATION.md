@@ -1,8 +1,10 @@
 # 媒体归一化：第一版
 
+> 工程整改后请先按 [README](../README.md) 安装 `backend` 包并设置 `FFMPEG` / `FFPROBE`。示例素材放在自行准备的 `downloads/fixtures/` 中；旧验收结果保留原时间，不表示本次重新运行。
+
 ## 功能
 
-`normalize.py` 复用 `probe.py` 读取素材，再调用 FFmpeg 转码，并检查成品基本参数。
+`backend/clipforge/media/normalize.py` 复用 `backend/clipforge/media/probe.py` 读取素材，再调用 FFmpeg 转码，并检查成品基本参数。
 
 - 视频：H.264、恒定 30 fps、yuv420p，CRF 20、fast 预设。
 - 音频：有音轨时选第一条并转成 AAC，目标码率 128 kbps；无音轨时保持无音轨，不生成静音轨。
@@ -16,13 +18,13 @@
 在仓库根目录执行，前提是已经创建 `.venv`，并安装支持 libx264 和 AAC 的 FFmpeg。
 
 ```powershell
-.\.venv\Scripts\python.exe .\normalize.py "C:\Users\asus\Desktop\Sucai\Sucai1.mp4" "C:\Users\asus\Desktop\Sucai\Sucai1_python_normalized.mp4" --ffmpeg "D:\Shotcut\ffmpeg.exe" --ffprobe "D:\Shotcut\ffprobe.exe"
+.\.venv\Scripts\python.exe -m clipforge.media.normalize "downloads\fixtures\Sucai1.mp4" "downloads\fixtures\Sucai1_python_normalized.mp4" --ffmpeg $env:FFMPEG --ffprobe $env:FFPROBE
 ```
 
-上述是本机示例路径，其他机器需替换。重复运行请换一个输出文件名。程序把元数据打印到终端；保存 JSON 仍使用 `probe.py --output`。
+示例素材需自行准备，工具路径由环境变量提供。重复运行请换一个输出文件名。程序把元数据打印到终端；保存 JSON 仍使用 `python -m clipforge.media.probe 输入视频 --output 输出.json`。
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
 ```
 
 默认转码超时为 3600 秒，可通过 `--timeout` 调整。成功退出码为 0，失败为 1。当前只有开始和结束提示，尚未实现百分比进度。
