@@ -1,0 +1,120 @@
+{
+  "schema_version": "0.1.0",
+  "result_kind": "synthetic_example",
+  "media": {
+    "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "normalized_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "duration_seconds": 10.0,
+    "time_reference": "normalized_video",
+    "has_audio": true
+  },
+  "analyzers": {
+    "shots": {
+      "status": "ok",
+      "tool": "synthetic-fixture",
+      "version": "example-only",
+      "model": null,
+      "parameters": {}
+    },
+    "vad": {
+      "status": "ok",
+      "tool": "synthetic-fixture",
+      "version": "example-only",
+      "model": null,
+      "parameters": {}
+    },
+    "asr": {
+      "status": "ok",
+      "tool": "synthetic-fixture",
+      "version": "example-only",
+      "model": null,
+      "parameters": {}
+    }
+  },
+  "shots": [
+    {
+      "start": 0.0,
+      "end": 4.0
+    },
+    {
+      "start": 4.0,
+      "end": 10.0
+    }
+  ],
+  "speech": [
+    {
+      "start": 1.0,
+      "end": 3.0
+    },
+    {
+      "start": 5.0,
+      "end": 7.0
+    }
+  ],
+  "silence": [
+    {
+      "start": 0.0,
+      "end": 1.0
+    },
+    {
+      "start": 3.0,
+      "end": 5.0
+    },
+    {
+      "start": 7.0,
+      "end": 10.0
+    }
+  ],
+  "words": [
+    {
+      "id": "w0001",
+      "start": 1.0,
+      "end": 1.8,
+      "text": "大家",
+      "probability": null
+    },
+    {
+      "id": "w0002",
+      "start": 1.8,
+      "end": 3.0,
+      "text": "好。",
+      "probability": null
+    },
+    {
+      "id": "w0003",
+      "start": 5.0,
+      "end": 6.0,
+      "text": "开始",
+      "probability": null
+    },
+    {
+      "id": "w0004",
+      "start": 6.0,
+      "end": 7.0,
+      "text": "学习。",
+      "probability": null
+    }
+  ],
+  "sentences": [
+    {
+      "id": "s0001",
+      "start": 1.0,
+      "end": 3.0,
+      "text": "大家好。",
+      "word_ids": [
+        "w0001",
+        "w0002"
+      ]
+    },
+    {
+      "id": "s0002",
+      "start": 5.0,
+      "end": 7.0,
+      "text": "开始学习。",
+      "word_ids": [
+        "w0003",
+        "w0004"
+      ]
+    }
+  ]
+}

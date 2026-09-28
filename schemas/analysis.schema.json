@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClipForge analysis 0.1.0 (draft)",
+  "description": "三路分析的成功结果；时间统一为归一化视频起点起算的秒，区间为 [start, end)。跨字段约束由 validate_analysis 补充。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "result_kind",
+    "media",
+    "analyzers",
+    "shots",
+    "speech",
+    "silence",
+    "words",
+    "sentences"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "result_kind": {
+      "enum": [
+        "measured",
+        "synthetic_example"
+      ]
+    },
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_sha256",
+        "normalized_sha256",
+        "duration_seconds",
+        "time_reference",
+        "has_audio"
+      ],
+      "properties": {
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "normalized_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "duration_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "time_reference": {
+          "const": "normalized_video"
+        },
+        "has_audio": {
+          "type": "boolean"
+        }
+      }
+    },
+    "analyzers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "shots",
+        "vad",
+        "asr"
+      ],
+      "properties": {
+        "shots": {
+          "$ref": "#/$defs/analyzer"
+        },
+        "vad": {
+          "$ref": "#/$defs/analyzer"
+        },
+        "asr": {
+          "$ref": "#/$defs/analyzer"
+        }
+      }
+    },
+    "shots": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/interval"
+      },
+      "minItems": 1
+    },
+    "speech": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/interval"
+      }
+    },
+    "silence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/interval"
+      }
+    },
+    "words": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/word"
+      }
+    },
+    "sentences": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sentence"
+      }
+    }
+  },
+  "$defs": {
+    "analyzer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "tool",
+        "version",
+        "model",
+        "parameters"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "ok",
+            "no_audio"
+          ]
+        },
+        "tool": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "parameters": {
+          "type": "object"
+        }
+      }
+    },
+    "interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "word": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "start",
+        "end",
+        "text",
+        "probability"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "probability": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "sentence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "start",
+        "end",
+        "text",
+        "word_ids"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "word_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        }
+      }
+    }
+  }
+}
