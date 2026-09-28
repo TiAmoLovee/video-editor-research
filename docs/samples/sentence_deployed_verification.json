@@ -1,0 +1,107 @@
+{
+  "task_id": "208ef4c5-a867-491e-9921-11169746f5a8",
+  "source": "Downloaded directly from successful local task; named Downloads attachments were absent.",
+  "media": {
+    "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+    "normalized_sha256": "8ebfb3551bac936974775529113faedf86e5993b50b1cf87d72aae395763d983",
+    "duration_seconds": 72.6,
+    "time_reference": "normalized_video",
+    "has_audio": true
+  },
+  "checks": {
+    "schema_and_cross_fields": true,
+    "sentence_rule_version_2": true,
+    "small_model": true,
+    "asr_matches_analysis": true,
+    "same_media_as_previous": true,
+    "all_word_fields_unchanged": true,
+    "raw_segments_unchanged": true,
+    "sentence_recomputation_matches": true,
+    "shots_and_vad_arrays_unchanged": true,
+    "simplified_chinese": true,
+    "compound_words_intact": true,
+    "no_words_in_confirmed_music_ranges": true
+  },
+  "word_count": 202,
+  "previous_sentence_count": 5,
+  "sentence_count": 6,
+  "compounds": {
+    "智能": {
+      "occurrences": 3,
+      "all_kept_together": true
+    },
+    "抽空": {
+      "occurrences": 1,
+      "all_kept_together": true
+    },
+    "小伙伴": {
+      "occurrences": 1,
+      "all_kept_together": true
+    }
+  },
+  "music_ranges": [
+    {
+      "start": 60.4,
+      "end": 70.62,
+      "word_count": 0
+    },
+    {
+      "start": 71.78,
+      "end": 72.58,
+      "word_count": 0
+    }
+  ],
+  "score": {
+    "reference_characters": 231,
+    "hypothesis_characters": 231,
+    "substitution": 25,
+    "deletion": 9,
+    "insertion": 9,
+    "edit_distance": 43,
+    "character_error_rate": 0.18614718614718614
+  },
+  "sentences": [
+    {
+      "id": "s000001",
+      "start": 1.43,
+      "end": 11.01,
+      "text": "人类就完了真的真的超级外星文明来了你怎么判断它是有智能的你往桌子上放一个蚂蚁它能判断我们俩是有智能的"
+    },
+    {
+      "id": "s000002",
+      "start": 11.44,
+      "end": 19.74,
+      "text": "判断不出来而且你进一步想想将来我们和人工智能也要面对这种局面牵着了 牵着了 牵着了我跟你说"
+    },
+    {
+      "id": "s000003",
+      "start": 21.08,
+      "end": 27.84,
+      "text": "同志们今天在自工刘慈欣三体二中年这书牵收会"
+    },
+    {
+      "id": "s000004",
+      "start": 28.36,
+      "end": 35.37,
+      "text": "这人山人海这里边都在踩破头了给大家签了那么十本"
+    },
+    {
+      "id": "s000005",
+      "start": 35.93,
+      "end": 48.49,
+      "text": "然后呢给咱小伙伴抽奖用的今天啊赶着签出会呢我们这边也是拖人啊找到刘慈禧老师说他今天忙完的时候呢能来抽空跟我们聊两句"
+    },
+    {
+      "id": "s000006",
+      "start": 48.63,
+      "end": 56.07,
+      "text": "看看据说啊这个刘慈禧老师是个超爱的人看看这个抓紧这几分钟时间能跟他聊是点啥"
+    }
+  ],
+  "limitations": [
+    "No new listening or manual word timing assessment.",
+    "One development video; not full week-three acceptance.",
+    "Artifact media hashes compared, not recomputed from original video.",
+    "No ZIP CRC check this turn."
+  ]
+}

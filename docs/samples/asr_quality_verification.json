@@ -1,0 +1,1100 @@
+{
+  "date": "2026-09-28",
+  "base_commit": "d49022234008ea2ac7b71e5460a26973a55686fe",
+  "base_ci": {
+    "conclusion": "success",
+    "url": "https://github.com/TiAmoLovee/video-editor-research/actions/runs/36397131288"
+  },
+  "human_feedback": {
+    "source": "user listening feedback in this conversation",
+    "simplified_chinese_requested": true,
+    "no_speech_music_ranges": [
+      {
+        "sentence_id": "s000008",
+        "start": 60.4,
+        "end": 70.62
+      },
+      {
+        "sentence_id": "s000009",
+        "start": 71.78,
+        "end": 72.58
+      }
+    ],
+    "remaining_sentences": "not fully manually verified; do not assume exact text or timing accuracy"
+  },
+  "music_regression": {
+    "old_overlapping_word_count": 21,
+    "new_overlapping_word_count": 0,
+    "source_method": "concat the three downloaded Test3 clips, then run normal pipeline",
+    "original_duration_seconds": 72.6,
+    "regression_duration_seconds": 72.63333333333334,
+    "last_new_word_end": 56.1
+  },
+  "validation": {
+    "backend_unit_tests": 120,
+    "ruff": "passed",
+    "pip_check": "passed",
+    "full_pipeline_fixtures": 5,
+    "extra_speech_guard_fixtures": 2,
+    "frontend": "unchanged; not rerun",
+    "docker": "user deployment verification pending"
+  },
+  "pipeline_results": [
+    {
+      "source_name": "no_audio.mp4",
+      "media": {
+        "normalized_sha256": "78e21299b40ede172baa2054b9de961fdd04f9b90aad63814764ca89fe2fcd0b",
+        "time_reference": "normalized_video",
+        "fps": 30,
+        "total_frames": 91,
+        "duration_seconds": 3.033333333333333,
+        "has_audio": false
+      },
+      "word_count": 0,
+      "sentence_count": 0,
+      "sentences": [],
+      "analyzer": {
+        "status": "no_audio",
+        "tool": "faster-whisper",
+        "version": "1.2.1",
+        "model": "Systran/faster-whisper-base",
+        "parameters": {
+          "beam_size": 5,
+          "temperature": 0.0,
+          "word_timestamps": true,
+          "vad_filter": true,
+          "vad_parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "condition_on_previous_text": false,
+          "no_speech_threshold": 0.6,
+          "log_prob_threshold": -1.0,
+          "compression_ratio_threshold": 2.4,
+          "task": "transcribe",
+          "requested_language": null,
+          "detected_language": null,
+          "language_probability": null,
+          "device": "cpu",
+          "compute_type": "int8",
+          "cpu_threads": 4,
+          "num_workers": 1,
+          "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+          "model_identity": null,
+          "digital_silence_skipped": false,
+          "speech_gate": null,
+          "text_normalization": {
+            "tool": "opencc-python-reimplemented",
+            "version": "0.1.7",
+            "config": "t2s",
+            "applied": false,
+            "raw_segments_preserved": true
+          },
+          "ctranslate2_version": "4.6.0",
+          "sentence_rules": {
+            "rule_version": "1",
+            "max_characters": 50,
+            "max_seconds": 15.0,
+            "gap_seconds": 1.0
+          },
+          "alignment_adjustments": {
+            "zero_duration_words_merged": 0,
+            "boundary_words_clamped": 0
+          }
+        }
+      },
+      "clip_frames": [
+        91
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "analysis_contract_passed": true
+    },
+    {
+      "source_name": "silence.mp4",
+      "media": {
+        "normalized_sha256": "715f246d6286efb93cb075012619341922896822a4297bbd12374b30a5a0c874",
+        "time_reference": "normalized_video",
+        "fps": 30,
+        "total_frames": 91,
+        "duration_seconds": 3.033333333333333,
+        "has_audio": true
+      },
+      "word_count": 0,
+      "sentence_count": 0,
+      "sentences": [],
+      "analyzer": {
+        "status": "ok",
+        "tool": "faster-whisper",
+        "version": "1.2.1",
+        "model": "Systran/faster-whisper-base",
+        "parameters": {
+          "beam_size": 5,
+          "temperature": 0.0,
+          "word_timestamps": true,
+          "vad_filter": true,
+          "vad_parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "condition_on_previous_text": false,
+          "no_speech_threshold": 0.6,
+          "log_prob_threshold": -1.0,
+          "compression_ratio_threshold": 2.4,
+          "task": "transcribe",
+          "requested_language": null,
+          "detected_language": null,
+          "language_probability": null,
+          "device": "cpu",
+          "compute_type": "int8",
+          "cpu_threads": 4,
+          "num_workers": 1,
+          "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+          "model_identity": null,
+          "digital_silence_skipped": true,
+          "speech_gate": null,
+          "text_normalization": {
+            "tool": "opencc-python-reimplemented",
+            "version": "0.1.7",
+            "config": "t2s",
+            "applied": false,
+            "raw_segments_preserved": true
+          },
+          "ctranslate2_version": "4.6.0",
+          "sentence_rules": {
+            "rule_version": "1",
+            "max_characters": 50,
+            "max_seconds": 15.0,
+            "gap_seconds": 1.0
+          },
+          "alignment_adjustments": {
+            "zero_duration_words_merged": 0,
+            "boundary_words_clamped": 0
+          }
+        }
+      },
+      "clip_frames": [
+        91
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "analysis_contract_passed": true
+    },
+    {
+      "source_name": "Test3-reconstructed.mp4",
+      "media": {
+        "normalized_sha256": "0e354e3be3811f7241364d0daa80f943b0233545b6c3353713b4fb5704b2994a",
+        "time_reference": "normalized_video",
+        "fps": 30,
+        "total_frames": 2179,
+        "duration_seconds": 72.63333333333334,
+        "has_audio": true
+      },
+      "word_count": 196,
+      "sentence_count": 5,
+      "sentences": [
+        {
+          "id": "s000001",
+          "start": 1.46,
+          "end": 10.42,
+          "text": "人类就完了 真的真的超级外星文明来了你怎么办这样的 有智能的你忘了做的算放一个马尼他能判断我们俩的有",
+          "word_ids": [
+            "w000001",
+            "w000002",
+            "w000003",
+            "w000004",
+            "w000005",
+            "w000006",
+            "w000007",
+            "w000008",
+            "w000009",
+            "w000010",
+            "w000011",
+            "w000012",
+            "w000013",
+            "w000014",
+            "w000015",
+            "w000016",
+            "w000017",
+            "w000018",
+            "w000019",
+            "w000020",
+            "w000021",
+            "w000022",
+            "w000023",
+            "w000024",
+            "w000025",
+            "w000026",
+            "w000027",
+            "w000028",
+            "w000029",
+            "w000030",
+            "w000031",
+            "w000032",
+            "w000033",
+            "w000034",
+            "w000035",
+            "w000036",
+            "w000037",
+            "w000038",
+            "w000039",
+            "w000040"
+          ]
+        },
+        {
+          "id": "s000002",
+          "start": 10.42,
+          "end": 19.98,
+          "text": "智能判断不出来而且你进一步想想将来我们和人工智能也要面对这种经验穿着了穿着了穿着了我跟你说",
+          "word_ids": [
+            "w000041",
+            "w000042",
+            "w000043",
+            "w000044",
+            "w000045",
+            "w000046",
+            "w000047",
+            "w000048",
+            "w000049",
+            "w000050",
+            "w000051",
+            "w000052",
+            "w000053",
+            "w000054",
+            "w000055",
+            "w000056",
+            "w000057",
+            "w000058",
+            "w000059",
+            "w000060",
+            "w000061",
+            "w000062",
+            "w000063",
+            "w000064",
+            "w000065",
+            "w000066",
+            "w000067",
+            "w000068",
+            "w000069",
+            "w000070",
+            "w000071",
+            "w000072",
+            "w000073",
+            "w000074",
+            "w000075",
+            "w000076",
+            "w000077",
+            "w000078",
+            "w000079",
+            "w000080"
+          ]
+        },
+        {
+          "id": "s000003",
+          "start": 21.1,
+          "end": 35.43,
+          "text": "同志们今儿在自宫刘四星三体二中年说天收会这人杀人海这里面都在踩破头了给大家签了那么10本",
+          "word_ids": [
+            "w000081",
+            "w000082",
+            "w000083",
+            "w000084",
+            "w000085",
+            "w000086",
+            "w000087",
+            "w000088",
+            "w000089",
+            "w000090",
+            "w000091",
+            "w000092",
+            "w000093",
+            "w000094",
+            "w000095",
+            "w000096",
+            "w000097",
+            "w000098",
+            "w000099",
+            "w000100",
+            "w000101",
+            "w000102",
+            "w000103",
+            "w000104",
+            "w000105",
+            "w000106",
+            "w000107",
+            "w000108",
+            "w000109",
+            "w000110",
+            "w000111",
+            "w000112",
+            "w000113",
+            "w000114",
+            "w000115",
+            "w000116",
+            "w000117",
+            "w000118",
+            "w000119",
+            "w000120",
+            "w000121"
+          ]
+        },
+        {
+          "id": "s000004",
+          "start": 36.26,
+          "end": 47.56,
+          "text": "然后给咱小伙伴抽奖用的今天赶这个签中会呢我们这边也是托人找到刘四星老师说他其实忙完的时候能来抽空跟",
+          "word_ids": [
+            "w000122",
+            "w000123",
+            "w000124",
+            "w000125",
+            "w000126",
+            "w000127",
+            "w000128",
+            "w000129",
+            "w000130",
+            "w000131",
+            "w000132",
+            "w000133",
+            "w000134",
+            "w000135",
+            "w000136",
+            "w000137",
+            "w000138",
+            "w000139",
+            "w000140",
+            "w000141",
+            "w000142",
+            "w000143",
+            "w000144",
+            "w000145",
+            "w000146",
+            "w000147",
+            "w000148",
+            "w000149",
+            "w000150",
+            "w000151",
+            "w000152",
+            "w000153",
+            "w000154",
+            "w000155",
+            "w000156",
+            "w000157",
+            "w000158",
+            "w000159",
+            "w000160",
+            "w000161",
+            "w000162"
+          ]
+        },
+        {
+          "id": "s000005",
+          "start": 47.56,
+          "end": 56.1,
+          "text": "我们聊两句看看据说刘四星老师是个超爱的人看看抓紧这几分钟的时间能不能让他聊这点事",
+          "word_ids": [
+            "w000163",
+            "w000164",
+            "w000165",
+            "w000166",
+            "w000167",
+            "w000168",
+            "w000169",
+            "w000170",
+            "w000171",
+            "w000172",
+            "w000173",
+            "w000174",
+            "w000175",
+            "w000176",
+            "w000177",
+            "w000178",
+            "w000179",
+            "w000180",
+            "w000181",
+            "w000182",
+            "w000183",
+            "w000184",
+            "w000185",
+            "w000186",
+            "w000187",
+            "w000188",
+            "w000189",
+            "w000190",
+            "w000191",
+            "w000192",
+            "w000193",
+            "w000194",
+            "w000195",
+            "w000196"
+          ]
+        }
+      ],
+      "analyzer": {
+        "status": "ok",
+        "tool": "faster-whisper",
+        "version": "1.2.1",
+        "model": "Systran/faster-whisper-base",
+        "parameters": {
+          "beam_size": 5,
+          "temperature": 0.0,
+          "word_timestamps": true,
+          "vad_filter": true,
+          "vad_parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "condition_on_previous_text": false,
+          "no_speech_threshold": 0.6,
+          "log_prob_threshold": -1.0,
+          "compression_ratio_threshold": 2.4,
+          "task": "transcribe",
+          "requested_language": null,
+          "detected_language": "zh",
+          "language_probability": 0.9974155426025391,
+          "device": "cpu",
+          "compute_type": "int8",
+          "cpu_threads": 4,
+          "num_workers": 1,
+          "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+          "model_identity": {
+            "repository": "Systran/faster-whisper-base",
+            "revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+            "sha256": {
+              "config.json": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+              "model.bin": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+              "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+              "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+            }
+          },
+          "digital_silence_skipped": false,
+          "speech_gate": {
+            "tool": "Silero VAD",
+            "model": "silero_vad_v6.onnx",
+            "model_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2",
+            "parameters": {
+              "threshold": 0.5,
+              "neg_threshold": 0.35,
+              "min_speech_duration_ms": 0,
+              "min_silence_duration_ms": 500,
+              "speech_pad_ms": 200
+            },
+            "speech_intervals": [
+              {
+                "start": 1.464,
+                "end": 7.368
+              },
+              {
+                "start": 7.64,
+                "end": 10.984
+              },
+              {
+                "start": 11.544,
+                "end": 12.296
+              },
+              {
+                "start": 12.984,
+                "end": 17.416
+              },
+              {
+                "start": 17.816,
+                "end": 20.936
+              },
+              {
+                "start": 21.208,
+                "end": 24.104
+              },
+              {
+                "start": 24.312,
+                "end": 32.328
+              },
+              {
+                "start": 32.536,
+                "end": 35.688
+              },
+              {
+                "start": 36.056,
+                "end": 48.712
+              },
+              {
+                "start": 48.856,
+                "end": 56.552
+              }
+            ],
+            "retained_seconds": 51.968,
+            "no_speech_skipped": false
+          },
+          "text_normalization": {
+            "tool": "opencc-python-reimplemented",
+            "version": "0.1.7",
+            "config": "t2s",
+            "applied": true,
+            "raw_segments_preserved": true
+          },
+          "ctranslate2_version": "4.6.0",
+          "sentence_rules": {
+            "rule_version": "1",
+            "max_characters": 50,
+            "max_seconds": 15.0,
+            "gap_seconds": 1.0
+          },
+          "alignment_adjustments": {
+            "zero_duration_words_merged": 0,
+            "boundary_words_clamped": 0
+          }
+        }
+      },
+      "clip_frames": [
+        900,
+        900,
+        379
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "analysis_contract_passed": true
+    },
+    {
+      "source_name": "Test1-first30s.mp4",
+      "media": {
+        "normalized_sha256": "0b24fac178a8fd4a794cb6fa1e1425925bdf3f9a3e651ee5dfe377c0984d7965",
+        "time_reference": "normalized_video",
+        "fps": 30,
+        "total_frames": 900,
+        "duration_seconds": 30.0,
+        "has_audio": true
+      },
+      "word_count": 33,
+      "sentence_count": 6,
+      "sentences": [
+        {
+          "id": "s000001",
+          "start": 2.2,
+          "end": 5.0,
+          "text": "There are 8 counters, cars and each one can work,",
+          "word_ids": [
+            "w000001",
+            "w000002",
+            "w000003",
+            "w000004",
+            "w000005",
+            "w000006",
+            "w000007",
+            "w000008",
+            "w000009",
+            "w000010"
+          ]
+        },
+        {
+          "id": "s000002",
+          "start": 5.97,
+          "end": 6.89,
+          "text": "and we can choose one.",
+          "word_ids": [
+            "w000011",
+            "w000012",
+            "w000013",
+            "w000014",
+            "w000015"
+          ]
+        },
+        {
+          "id": "s000003",
+          "start": 13.23,
+          "end": 14.51,
+          "text": "I choose 3s, this one.",
+          "word_ids": [
+            "w000016",
+            "w000017",
+            "w000018",
+            "w000019",
+            "w000020"
+          ]
+        },
+        {
+          "id": "s000004",
+          "start": 15.44,
+          "end": 16.4,
+          "text": "I choose 8s, this one.",
+          "word_ids": [
+            "w000021",
+            "w000022",
+            "w000023",
+            "w000024"
+          ]
+        },
+        {
+          "id": "s000005",
+          "start": 18.2,
+          "end": 18.7,
+          "text": "At this stage.",
+          "word_ids": [
+            "w000025",
+            "w000026",
+            "w000027"
+          ]
+        },
+        {
+          "id": "s000006",
+          "start": 27.71,
+          "end": 28.83,
+          "text": "Do we get a hard course?",
+          "word_ids": [
+            "w000028",
+            "w000029",
+            "w000030",
+            "w000031",
+            "w000032",
+            "w000033"
+          ]
+        }
+      ],
+      "analyzer": {
+        "status": "ok",
+        "tool": "faster-whisper",
+        "version": "1.2.1",
+        "model": "Systran/faster-whisper-base",
+        "parameters": {
+          "beam_size": 5,
+          "temperature": 0.0,
+          "word_timestamps": true,
+          "vad_filter": true,
+          "vad_parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "condition_on_previous_text": false,
+          "no_speech_threshold": 0.6,
+          "log_prob_threshold": -1.0,
+          "compression_ratio_threshold": 2.4,
+          "task": "transcribe",
+          "requested_language": null,
+          "detected_language": "en",
+          "language_probability": 0.3252440094947815,
+          "device": "cpu",
+          "compute_type": "int8",
+          "cpu_threads": 4,
+          "num_workers": 1,
+          "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+          "model_identity": {
+            "repository": "Systran/faster-whisper-base",
+            "revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+            "sha256": {
+              "config.json": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+              "model.bin": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+              "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+              "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+            }
+          },
+          "digital_silence_skipped": false,
+          "speech_gate": {
+            "tool": "Silero VAD",
+            "model": "silero_vad_v6.onnx",
+            "model_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2",
+            "parameters": {
+              "threshold": 0.5,
+              "neg_threshold": 0.35,
+              "min_speech_duration_ms": 0,
+              "min_silence_duration_ms": 500,
+              "speech_pad_ms": 200
+            },
+            "speech_intervals": [
+              {
+                "start": 2.2,
+                "end": 5.416
+              },
+              {
+                "start": 6.008,
+                "end": 7.24
+              },
+              {
+                "start": 13.176,
+                "end": 14.824
+              },
+              {
+                "start": 15.256,
+                "end": 16.776
+              },
+              {
+                "start": 18.136,
+                "end": 19.272
+              },
+              {
+                "start": 27.704,
+                "end": 29.288
+              }
+            ],
+            "retained_seconds": 10.336,
+            "no_speech_skipped": false
+          },
+          "text_normalization": {
+            "tool": "opencc-python-reimplemented",
+            "version": "0.1.7",
+            "config": "t2s",
+            "applied": false,
+            "raw_segments_preserved": true
+          },
+          "ctranslate2_version": "4.6.0",
+          "sentence_rules": {
+            "rule_version": "1",
+            "max_characters": 50,
+            "max_seconds": 15.0,
+            "gap_seconds": 1.0
+          },
+          "alignment_adjustments": {
+            "zero_duration_words_merged": 1,
+            "boundary_words_clamped": 0
+          }
+        }
+      },
+      "clip_frames": [
+        900
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "analysis_contract_passed": true
+    },
+    {
+      "source_name": "public-chinese-demo.mp4",
+      "media": {
+        "normalized_sha256": "29f0718d4bf17301a1c4084b386680fdd557d05634bc4ba718404b8644461859",
+        "time_reference": "normalized_video",
+        "fps": 30,
+        "total_frames": 220,
+        "duration_seconds": 7.333333333333333,
+        "has_audio": true
+      },
+      "word_count": 11,
+      "sentence_count": 1,
+      "sentences": [
+        {
+          "id": "s000001",
+          "start": 0.57,
+          "end": 4.97,
+          "text": "开放时间早上9点睡下5点",
+          "word_ids": [
+            "w000001",
+            "w000002",
+            "w000003",
+            "w000004",
+            "w000005",
+            "w000006",
+            "w000007",
+            "w000008",
+            "w000009",
+            "w000010",
+            "w000011"
+          ]
+        }
+      ],
+      "analyzer": {
+        "status": "ok",
+        "tool": "faster-whisper",
+        "version": "1.2.1",
+        "model": "Systran/faster-whisper-base",
+        "parameters": {
+          "beam_size": 5,
+          "temperature": 0.0,
+          "word_timestamps": true,
+          "vad_filter": true,
+          "vad_parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "condition_on_previous_text": false,
+          "no_speech_threshold": 0.6,
+          "log_prob_threshold": -1.0,
+          "compression_ratio_threshold": 2.4,
+          "task": "transcribe",
+          "requested_language": null,
+          "detected_language": "zh",
+          "language_probability": 0.998206377029419,
+          "device": "cpu",
+          "compute_type": "int8",
+          "cpu_threads": 4,
+          "num_workers": 1,
+          "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+          "model_identity": {
+            "repository": "Systran/faster-whisper-base",
+            "revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+            "sha256": {
+              "config.json": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+              "model.bin": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+              "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+              "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+            }
+          },
+          "digital_silence_skipped": false,
+          "speech_gate": {
+            "tool": "Silero VAD",
+            "model": "silero_vad_v6.onnx",
+            "model_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2",
+            "parameters": {
+              "threshold": 0.5,
+              "neg_threshold": 0.35,
+              "min_speech_duration_ms": 0,
+              "min_silence_duration_ms": 500,
+              "speech_pad_ms": 200
+            },
+            "speech_intervals": [
+              {
+                "start": 0.568,
+                "end": 5.288
+              }
+            ],
+            "retained_seconds": 4.72,
+            "no_speech_skipped": false
+          },
+          "text_normalization": {
+            "tool": "opencc-python-reimplemented",
+            "version": "0.1.7",
+            "config": "t2s",
+            "applied": true,
+            "raw_segments_preserved": true
+          },
+          "ctranslate2_version": "4.6.0",
+          "sentence_rules": {
+            "rule_version": "1",
+            "max_characters": 50,
+            "max_seconds": 15.0,
+            "gap_seconds": 1.0
+          },
+          "alignment_adjustments": {
+            "zero_duration_words_merged": 0,
+            "boundary_words_clamped": 0
+          }
+        }
+      },
+      "clip_frames": [
+        220
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "analysis_contract_passed": true
+    }
+  ],
+  "speech_guard_results": [
+    {
+      "source_name": "chinese-quiet.mp4",
+      "source_sha256": "8596825e855a1e8fda949138348462de3941d6fa544abe68140a481c2708555d",
+      "expected_speech": true,
+      "word_count": 11,
+      "media": {
+        "normalized_sha256": "8596825e855a1e8fda949138348462de3941d6fa544abe68140a481c2708555d",
+        "time_reference": "normalized_video",
+        "fps": 30,
+        "total_frames": 220,
+        "duration_seconds": 7.333333333333333,
+        "has_audio": true
+      },
+      "sentences": [
+        {
+          "id": "s000001",
+          "start": 0.57,
+          "end": 4.97,
+          "text": "开放时间早上9点,炫下5点",
+          "word_ids": [
+            "w000001",
+            "w000002",
+            "w000003",
+            "w000004",
+            "w000005",
+            "w000006",
+            "w000007",
+            "w000008",
+            "w000009",
+            "w000010",
+            "w000011"
+          ]
+        }
+      ],
+      "analyzer": {
+        "status": "ok",
+        "tool": "faster-whisper",
+        "version": "1.2.1",
+        "model": "Systran/faster-whisper-base",
+        "parameters": {
+          "beam_size": 5,
+          "temperature": 0.0,
+          "word_timestamps": true,
+          "vad_filter": true,
+          "vad_parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "condition_on_previous_text": false,
+          "no_speech_threshold": 0.6,
+          "log_prob_threshold": -1.0,
+          "compression_ratio_threshold": 2.4,
+          "task": "transcribe",
+          "requested_language": null,
+          "detected_language": "zh",
+          "language_probability": 0.9969351291656494,
+          "device": "cpu",
+          "compute_type": "int8",
+          "cpu_threads": 4,
+          "num_workers": 1,
+          "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+          "model_identity": {
+            "repository": "Systran/faster-whisper-base",
+            "revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+            "sha256": {
+              "config.json": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+              "model.bin": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+              "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+              "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+            }
+          },
+          "digital_silence_skipped": false,
+          "speech_gate": {
+            "tool": "Silero VAD",
+            "model": "silero_vad_v6.onnx",
+            "model_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2",
+            "parameters": {
+              "threshold": 0.5,
+              "neg_threshold": 0.35,
+              "min_speech_duration_ms": 0,
+              "min_silence_duration_ms": 500,
+              "speech_pad_ms": 200
+            },
+            "speech_intervals": [
+              {
+                "start": 0.568,
+                "end": 5.32
+              }
+            ],
+            "retained_seconds": 4.752,
+            "no_speech_skipped": false
+          },
+          "text_normalization": {
+            "tool": "opencc-python-reimplemented",
+            "version": "0.1.7",
+            "config": "t2s",
+            "applied": true,
+            "raw_segments_preserved": true
+          },
+          "ctranslate2_version": "4.6.0",
+          "sentence_rules": {
+            "rule_version": "1",
+            "max_characters": 50,
+            "max_seconds": 15.0,
+            "gap_seconds": 1.0
+          },
+          "alignment_adjustments": {
+            "zero_duration_words_merged": 0,
+            "boundary_words_clamped": 0
+          }
+        }
+      },
+      "elapsed_seconds": 5.386427
+    },
+    {
+      "source_name": "clip_003.mp4",
+      "source_sha256": "cb37220c0bc8eef0373d02453dc693946e4eeae7d88b6dea7802184287002683",
+      "expected_speech": false,
+      "word_count": 0,
+      "media": {
+        "normalized_sha256": "cb37220c0bc8eef0373d02453dc693946e4eeae7d88b6dea7802184287002683",
+        "time_reference": "normalized_video",
+        "fps": 30,
+        "total_frames": 378,
+        "duration_seconds": 12.6,
+        "has_audio": true
+      },
+      "sentences": [],
+      "analyzer": {
+        "status": "ok",
+        "tool": "faster-whisper",
+        "version": "1.2.1",
+        "model": "Systran/faster-whisper-base",
+        "parameters": {
+          "beam_size": 5,
+          "temperature": 0.0,
+          "word_timestamps": true,
+          "vad_filter": true,
+          "vad_parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "condition_on_previous_text": false,
+          "no_speech_threshold": 0.6,
+          "log_prob_threshold": -1.0,
+          "compression_ratio_threshold": 2.4,
+          "task": "transcribe",
+          "requested_language": null,
+          "detected_language": null,
+          "language_probability": null,
+          "device": "cpu",
+          "compute_type": "int8",
+          "cpu_threads": 4,
+          "num_workers": 1,
+          "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+          "model_identity": null,
+          "digital_silence_skipped": false,
+          "speech_gate": {
+            "tool": "Silero VAD",
+            "model": "silero_vad_v6.onnx",
+            "model_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2",
+            "parameters": {
+              "threshold": 0.5,
+              "neg_threshold": 0.35,
+              "min_speech_duration_ms": 0,
+              "min_silence_duration_ms": 500,
+              "speech_pad_ms": 200
+            },
+            "speech_intervals": [],
+            "retained_seconds": 0.0,
+            "no_speech_skipped": true
+          },
+          "text_normalization": {
+            "tool": "opencc-python-reimplemented",
+            "version": "0.1.7",
+            "config": "t2s",
+            "applied": false,
+            "raw_segments_preserved": true
+          },
+          "ctranslate2_version": "4.6.0",
+          "sentence_rules": {
+            "rule_version": "1",
+            "max_characters": 50,
+            "max_seconds": 15.0,
+            "gap_seconds": 1.0
+          },
+          "alignment_adjustments": {
+            "zero_duration_words_merged": 0,
+            "boundary_words_clamped": 0
+          }
+        }
+      },
+      "elapsed_seconds": 0.316024
+    }
+  ],
+  "limitations": [
+    "Pipeline uses real local models/media and TestClient, with queue submission mocked.",
+    "Reconstructed Test3 is not byte-identical to original: normalization added one frame (72.6333 vs 72.6 seconds).",
+    "Reupload original Test3 to Docker service for final acceptance; existing tasks are unchanged.",
+    "Quiet fixture is public Chinese sample with volume=0.1; nonempty words do not prove absence of partial omissions.",
+    "New decoding also changes spoken text; no manual accuracy or <=0.3s word alignment acceptance.",
+    "Silero can still misclassify music, singing or quiet speech; WebRTC vad.json is unchanged."
+  ]
+}

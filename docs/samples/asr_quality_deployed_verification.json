@@ -1,0 +1,86 @@
+{
+  "task_id": "68a9ecfb-da40-4393-9d6f-780bcc9b4753",
+  "status": "SUCCEEDED",
+  "media": {
+    "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+    "normalized_sha256": "8ebfb3551bac936974775529113faedf86e5993b50b1cf87d72aae395763d983",
+    "duration_seconds": 72.6,
+    "time_reference": "normalized_video",
+    "has_audio": true
+  },
+  "checks": {
+    "analysis_schema_and_semantics": true,
+    "asr_matches_analysis": true,
+    "sentence_recomputation": true,
+    "public_text_is_t2s_normalized": true,
+    "same_source_and_normalized_hash_as_original_test3": true,
+    "supplied_files_equal_http_downloads": true,
+    "shots_vad_match_analysis": true
+  },
+  "counts": {
+    "shots": 4,
+    "speech": 49,
+    "silence": 50,
+    "words": 199,
+    "sentences": 5
+  },
+  "music_ranges": [
+    {
+      "start": 60.4,
+      "end": 70.62,
+      "overlapping_word_count": 0
+    },
+    {
+      "start": 71.78,
+      "end": 72.58,
+      "overlapping_word_count": 0
+    }
+  ],
+  "last_word_end": 56.05,
+  "alignment_adjustments": {
+    "zero_duration_words_merged": 0,
+    "boundary_words_clamped": 0
+  },
+  "sentences": [
+    {
+      "id": "s000001",
+      "start": 1.43,
+      "end": 10.59,
+      "text": "人类就完了 真的真的超级外星文明来了你怎么办这样的 有智能你忘了做的算放一个马椅它能判断我们两个有智"
+    },
+    {
+      "id": "s000002",
+      "start": 10.59,
+      "end": 22.52,
+      "text": "能判断不出来而且你进一步想想将来我们和人工智能也要面对这种情况穿着了 穿着了 穿着了我说 同志们啊今"
+    },
+    {
+      "id": "s000003",
+      "start": 22.52,
+      "end": 37.41,
+      "text": "儿在自宫刘四星三体二中年这书啊 牵收会啊这人杀人海啊这里边都在踩破头了给大家签了那么十本然后给咱修我"
+    },
+    {
+      "id": "s000004",
+      "start": 37.41,
+      "end": 48.43,
+      "text": "半抽奖用的今天赶这个签中会呢我们这边也是托人找到刘斯池老师说他其实忙完的时候呢能来抽空跟我们聊两句"
+    },
+    {
+      "id": "s000005",
+      "start": 48.57,
+      "end": 56.05,
+      "text": "看看据说刘斯池老师是个超爱的人看看抓紧这几分钟时间能不能让他聊这点事"
+    }
+  ],
+  "remaining_observations": [
+    "Suspected text errors such as 马椅 and inconsistent 刘四星/刘斯池 need listening reference.",
+    "Sentence 1 ends 有智 and sentence 2 begins 能; structural validity is not natural sentence quality."
+  ],
+  "limits": [
+    "No new audio listening, per-word accuracy or <=0.3s manual timing validation.",
+    "No ZIP download/CRC repeated this turn.",
+    "Hashes compared between artifacts, not recomputed from original media.",
+    "No guarantee of speech recall or music rejection on other recordings."
+  ]
+}

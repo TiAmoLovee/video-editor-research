@@ -10,7 +10,9 @@ import tempfile
 import time
 import wave
 
-from clipforge.analysis.model import MODEL_ID, REVISION, model_directory, verify_model
+from clipforge.analysis.model import model_spec, model_directory, verify_model
+from clipforge.analysis.chinese import simplify_words
+from clipforge.analysis.speech_gate import SPEECH_GATE_PARAMETERS, prepare_speech
 from clipforge.analysis.sentences import SENTENCE_PARAMETERS, split_sentences
 from clipforge.analysis.vad import SAMPLE_RATE, extract_pcm
 from clipforge.config import media_tool
@@ -18,15 +20,16 @@ from clipforge.media.probe import normalize_metadata, probe_video
 from clipforge.media.split import read_frame_count
 
 TRANSCRIBE_PARAMETERS = {"beam_size": 5, "temperature": 0.0, "word_timestamps": True,
-                         "vad_filter": False, "condition_on_previous_text": False,
+                         "vad_filter": True, "vad_parameters": dict(SPEECH_GATE_PARAMETERS),
+                         "condition_on_previous_text": False,
                          "no_speech_threshold": 0.6, "log_prob_threshold": -1.0,
                          "compression_ratio_threshold": 2.4, "task": "transcribe"}
 
 
 @lru_cache(maxsize=1)
-def _load_model(directory):
+def _load_model(directory, model_name):
     # 模型对象在单个 worker 进程内复用；不是分析结果缓存。
-    identity = verify_model(directory)
+    identity = verify_model(directory, model_name)
     from faster_whisper import WhisperModel
     model = WhisperModel(directory, device="cpu", compute_type="int8", cpu_threads=4,
                          num_workers=1, local_files_only=True)
@@ -75,7 +78,7 @@ def collect_words(segments, duration):
 
 
 def pcm_has_signal(path, samples):
-    """仅跳过数字全零音频；不按音量阈值删除轻声，也不使用 VAD 筛选词。"""
+    """仅检查数字全零音频；语音筛选由独立的 Silero 步骤执行。"""
     nonzero = False
     count = 0
     with wave.open(str(path), "rb") as audio:
@@ -90,6 +93,7 @@ def pcm_has_signal(path, samples):
 
 
 def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, language=None):
+    spec = model_spec()
     source = Path(video_path).expanduser().resolve()
     started = time.perf_counter()
     probe = media_tool("ffprobe", ffprobe)
@@ -104,6 +108,7 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
     words, segments, diagnostics = [], [], {"zero_duration_words_merged": 0, "boundary_words_clamped": 0}
     detected_language, language_probability, identity = None, None, None
     digital_silence_skipped = False
+    speech_gate = None
     if has_audio:
         stream = next(s for s in raw["streams"] if s["index"] == meta["video"]["stream_index"])
         origin = float(stream.get("start_time", "0"))
@@ -114,19 +119,30 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
             extract_pcm(source, pcm, meta["audio"]["stream_index"], origin,
                         math.ceil(duration * SAMPLE_RATE), media_tool("ffmpeg", ffmpeg))
             if pcm_has_signal(pcm, math.ceil(duration * SAMPLE_RATE)):
-                model, identity = _load_model(str(model_directory(model_dir)))
-                generated, info = model.transcribe(str(pcm), language=requested_language, **TRANSCRIBE_PARAMETERS)
-                words, segments, diagnostics = collect_words(generated, duration)
-                detected_language, language_probability = info.language, info.language_probability
+                audio, speech_gate = prepare_speech(pcm, math.ceil(duration * SAMPLE_RATE))
+                # 全部非语音时不加载 Whisper，也不让空音频进入语言检测/解码。
+                if not speech_gate["no_speech_skipped"]:
+                    model, identity = _load_model(str(model_directory(model_dir, model_name=spec["name"])), spec["name"])
+                    # 使用相同的 VAD 参数；库负责删去区间后的词级时间还原。
+                    generated, info = model.transcribe(audio, language=requested_language, **TRANSCRIBE_PARAMETERS)
+                    words, segments, diagnostics = collect_words(generated, duration)
+                    detected_language, language_probability = info.language, info.language_probability
             else:
                 digital_silence_skipped = True
+    simplify_chinese = (requested_language or detected_language) == "zh"
+    if simplify_chinese:
+        words = simplify_words(words)
     with source.open("rb") as file:
         digest = hashlib.file_digest(file, "sha256").hexdigest()
     parameters = {**TRANSCRIBE_PARAMETERS, "requested_language": requested_language,
                   "detected_language": detected_language, "language_probability": language_probability,
                   "device": "cpu", "compute_type": "int8", "cpu_threads": 4, "num_workers": 1,
-                  "model_revision": REVISION, "model_identity": identity,
+                  "model_revision": spec["revision"], "model_identity": identity,
                   "digital_silence_skipped": digital_silence_skipped,
+                  "speech_gate": speech_gate,
+                  "text_normalization": {"tool": "opencc-python-reimplemented", "version": version("opencc-python-reimplemented"),
+                                         "config": "t2s", "applied": simplify_chinese,
+                                         "raw_segments_preserved": True},
                   "ctranslate2_version": version("ctranslate2"),
                   "sentence_rules": dict(SENTENCE_PARAMETERS), "alignment_adjustments": diagnostics}
     result = {
@@ -134,7 +150,7 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
         "media": {"normalized_sha256": digest, "time_reference": "normalized_video", "fps": 30,
                   "total_frames": frames, "duration_seconds": duration, "has_audio": has_audio},
         "analyzer": {"status": "ok" if has_audio else "no_audio", "tool": "faster-whisper",
-                     "version": version("faster-whisper"), "model": MODEL_ID, "parameters": parameters},
+                     "version": version("faster-whisper"), "model": spec["repository"], "parameters": parameters},
         "words": words, "sentences": split_sentences(words), "raw_segments": segments,
         "elapsed_seconds": round(time.perf_counter() - started, 6),
     }
