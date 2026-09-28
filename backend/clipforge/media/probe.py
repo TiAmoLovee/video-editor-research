@@ -24,7 +24,7 @@ def probe_video(video_path: str, ffprobe_path: str | None = None) -> dict:
         "-v", "error",
         "-show_entries",
         "format=duration,format_name:"
-        "stream=index,codec_type,codec_name,width,height,"
+        "stream=index,codec_type,codec_name,width,height,start_time,"
         "r_frame_rate,avg_frame_rate,sample_rate,channels:"
         "stream_disposition=attached_pic",
         "-of", "json",

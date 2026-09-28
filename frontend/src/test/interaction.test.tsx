@@ -23,6 +23,18 @@ describe('file and download boundaries', () => {
   });
 });
 describe('clip browser', () => {
+  it('shows speech analysis in progress', () => {
+    useTasks.setState({ task: { ...completedTask(), status: 'RUNNING', stage: 'analyzing_speech', progress: 55, result: null } });
+    render(<TaskDetail />);
+    expect(screen.getByText('检测语音活动')).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: '语音活动分析结果' })).not.toBeInTheDocument();
+  });
+  it('offers VAD JSON only when the task has that artifact', () => {
+    const task = completedTask();
+    task.result!.downloads['vad.json'] = `/tasks/${taskId}/files/vad.json`;
+    render(<ClipResults task={task} result={task.result!} />);
+    expect(screen.getByRole('link', { name: '语音活动分析结果', hidden: true })).toHaveAttribute('href', `/tasks/${taskId}/files/vad.json`);
+  });
   it('shows the shot analysis stage while running and has no completed downloads', () => {
     useTasks.setState({ task: { ...completedTask(), status: 'RUNNING', stage: 'analyzing_shots', progress: 45, result: null } });
     render(<TaskDetail />);
@@ -39,6 +51,7 @@ describe('clip browser', () => {
     const task = completedTask();
     render(<ClipResults task={task} result={task.result!} />);
     expect(screen.queryByRole('link', { name: '镜头分析结果', hidden: true })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: '语音活动分析结果', hidden: true })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /下载全部切片/ })).toBeInTheDocument();
   });
   it('searches all 120 clips beyond the first batch and handles no matches', () => {

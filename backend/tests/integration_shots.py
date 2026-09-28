@@ -41,24 +41,31 @@ def exercise(source, data_dir):
         direct = client.get(downloads["shots.json"])
         assert direct.status_code == 200
         shots = direct.json()
+        vad_download = client.get(downloads["vad.json"])
+        assert vad_download.status_code == 200
+        vad = vad_download.json()
         download = client.get(downloads["result.zip"])
         assert download.status_code == 200
         with zipfile.ZipFile(io.BytesIO(download.content)) as archive:
             assert archive.testzip() is None
             assert json.loads(archive.read("shots.json")) == shots
+            assert json.loads(archive.read("vad.json")) == vad
+            assert vad["media"]["normalized_sha256"] == shots["media"]["normalized_sha256"]
+            assert vad["media"]["duration_seconds"] == shots["media"]["duration_seconds"]
             plan = json.loads(archive.read("clip_plan.json"))
             assert shots["media"]["total_frames"] == plan["total_frames"]
             assert set(archive.namelist()) == {
-                "media_meta.json", "normalized_media_meta.json", "clip_plan.json", "shots.json",
+                "media_meta.json", "normalized_media_meta.json", "clip_plan.json", "shots.json", "vad.json",
                 *(clip["file"] for clip in plan["clips"])}
         assert [x["progress"] for x in stages] == sorted(x["progress"] for x in stages)
         assert "analyzing_shots" in [x["stage"] for x in stages]
+        assert "analyzing_speech" in [x["stage"] for x in stages]
         assert client.get(f"/tasks/{task_id}").json() == task  # 刷新后的结果保持一致。
         return {"source_name": source.name, "task_id": task_id, "status": task["status"],
                 "pipeline_seconds": round(elapsed, 4), "stages": stages,
                 "clip_frames": [clip["frame_count"] for clip in plan["clips"]],
                 "zip_crc_passed": True, "direct_and_zip_json_equal": True,
-                "shot_result": shots}
+                "shot_result": shots, "vad_result": vad}
 
 
 def main():

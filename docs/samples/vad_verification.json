@@ -1,0 +1,630 @@
+{
+  "scope": "native media and HTTP adapters; queue mocked; no Docker/Celery verification",
+  "python": "3.11.9",
+  "results": [
+    {
+      "source_name": "no_audio.mp4",
+      "task_id": "1988d916-15af-46f2-93d0-e62ceba9894b",
+      "status": "SUCCEEDED",
+      "pipeline_seconds": 0.8924,
+      "stages": [
+        {
+          "status": "RUNNING",
+          "stage": "normalizing",
+          "progress": 25
+        },
+        {
+          "status": "RUNNING",
+          "stage": "analyzing_shots",
+          "progress": 45
+        },
+        {
+          "status": "RUNNING",
+          "stage": "analyzing_speech",
+          "progress": 55
+        },
+        {
+          "status": "RUNNING",
+          "stage": "splitting",
+          "progress": 60
+        },
+        {
+          "status": "RUNNING",
+          "stage": "packaging",
+          "progress": 90
+        },
+        {
+          "status": "SUCCEEDED",
+          "stage": "done",
+          "progress": 100
+        }
+      ],
+      "clip_frames": [
+        91
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "shot_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "shot_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "78e21299b40ede172baa2054b9de961fdd04f9b90aad63814764ca89fe2fcd0b",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 91,
+          "duration_seconds": 3.033333333333333
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "PySceneDetect.ContentDetector",
+          "version": "0.6.7.1",
+          "model": null,
+          "parameters": {
+            "threshold": 27.0,
+            "min_scene_len_frames": 15,
+            "downscale": 1,
+            "auto_downscale": false,
+            "frame_skip": 0,
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "luma_only": false,
+            "kernel_size": null,
+            "filter_mode": "MERGE",
+            "interpolation": "LINEAR"
+          }
+        },
+        "decoder": {
+          "backend": "opencv",
+          "version": "4.12.0.88",
+          "max_decode_attempts": 0
+        },
+        "cut_frames": [],
+        "shots": [
+          {
+            "start": 0.0,
+            "end": 3.033333333333333
+          }
+        ],
+        "elapsed_seconds": 0.363284
+      },
+      "vad_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "vad_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "78e21299b40ede172baa2054b9de961fdd04f9b90aad63814764ca89fe2fcd0b",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 91,
+          "duration_seconds": 3.033333333333333,
+          "has_audio": false
+        },
+        "analyzer": {
+          "status": "no_audio",
+          "tool": "WebRTC VAD",
+          "version": "2.0.14",
+          "model": null,
+          "parameters": {
+            "mode": 2,
+            "frame_ms": 30,
+            "sample_rate_hz": 16000,
+            "channels": 1,
+            "sample_width_bits": 16,
+            "merge_adjacent_equal_labels": true,
+            "extra_smoothing": false,
+            "last_frame": "zero_pad_for_detection_clamp_output"
+          }
+        },
+        "speech": [],
+        "silence": [],
+        "elapsed_seconds": 0.056381
+      },
+      "reference_kind": "synthetic_silent_or_absent_audio_not_speech_accuracy_dataset"
+    },
+    {
+      "source_name": "silence.mp4",
+      "task_id": "23c5fd68-5082-4995-bcc2-142e00ae9583",
+      "status": "SUCCEEDED",
+      "pipeline_seconds": 0.6494,
+      "stages": [
+        {
+          "status": "RUNNING",
+          "stage": "normalizing",
+          "progress": 25
+        },
+        {
+          "status": "RUNNING",
+          "stage": "analyzing_shots",
+          "progress": 45
+        },
+        {
+          "status": "RUNNING",
+          "stage": "analyzing_speech",
+          "progress": 55
+        },
+        {
+          "status": "RUNNING",
+          "stage": "splitting",
+          "progress": 60
+        },
+        {
+          "status": "RUNNING",
+          "stage": "packaging",
+          "progress": 90
+        },
+        {
+          "status": "SUCCEEDED",
+          "stage": "done",
+          "progress": 100
+        }
+      ],
+      "clip_frames": [
+        91
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "shot_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "shot_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "715f246d6286efb93cb075012619341922896822a4297bbd12374b30a5a0c874",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 91,
+          "duration_seconds": 3.033333333333333
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "PySceneDetect.ContentDetector",
+          "version": "0.6.7.1",
+          "model": null,
+          "parameters": {
+            "threshold": 27.0,
+            "min_scene_len_frames": 15,
+            "downscale": 1,
+            "auto_downscale": false,
+            "frame_skip": 0,
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "luma_only": false,
+            "kernel_size": null,
+            "filter_mode": "MERGE",
+            "interpolation": "LINEAR"
+          }
+        },
+        "decoder": {
+          "backend": "opencv",
+          "version": "4.12.0.88",
+          "max_decode_attempts": 0
+        },
+        "cut_frames": [],
+        "shots": [
+          {
+            "start": 0.0,
+            "end": 3.033333333333333
+          }
+        ],
+        "elapsed_seconds": 0.104857
+      },
+      "vad_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "vad_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "715f246d6286efb93cb075012619341922896822a4297bbd12374b30a5a0c874",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 91,
+          "duration_seconds": 3.033333333333333,
+          "has_audio": true
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "WebRTC VAD",
+          "version": "2.0.14",
+          "model": null,
+          "parameters": {
+            "mode": 2,
+            "frame_ms": 30,
+            "sample_rate_hz": 16000,
+            "channels": 1,
+            "sample_width_bits": 16,
+            "merge_adjacent_equal_labels": true,
+            "extra_smoothing": false,
+            "last_frame": "zero_pad_for_detection_clamp_output"
+          }
+        },
+        "speech": [],
+        "silence": [
+          {
+            "start": 0.0,
+            "end": 3.033333333333333
+          }
+        ],
+        "elapsed_seconds": 0.108822
+      },
+      "reference_kind": "synthetic_silent_or_absent_audio_not_speech_accuracy_dataset"
+    },
+    {
+      "source_name": "Sucai1.mp4",
+      "task_id": "d43b3fe8-0857-4264-bde6-c3beb46fd474",
+      "status": "SUCCEEDED",
+      "pipeline_seconds": 38.7993,
+      "stages": [
+        {
+          "status": "RUNNING",
+          "stage": "normalizing",
+          "progress": 25
+        },
+        {
+          "status": "RUNNING",
+          "stage": "analyzing_shots",
+          "progress": 45
+        },
+        {
+          "status": "RUNNING",
+          "stage": "analyzing_speech",
+          "progress": 55
+        },
+        {
+          "status": "RUNNING",
+          "stage": "splitting",
+          "progress": 60
+        },
+        {
+          "status": "RUNNING",
+          "stage": "packaging",
+          "progress": 90
+        },
+        {
+          "status": "SUCCEEDED",
+          "stage": "done",
+          "progress": 100
+        }
+      ],
+      "clip_frames": [
+        900,
+        338
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "shot_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "shot_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "8dbac82e2f4ec3ae1081b9e657ead27e7d21c84bff7b17b448b0e94ae6dd6626",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 1238,
+          "duration_seconds": 41.266666666666666
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "PySceneDetect.ContentDetector",
+          "version": "0.6.7.1",
+          "model": null,
+          "parameters": {
+            "threshold": 27.0,
+            "min_scene_len_frames": 15,
+            "downscale": 1,
+            "auto_downscale": false,
+            "frame_skip": 0,
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "luma_only": false,
+            "kernel_size": null,
+            "filter_mode": "MERGE",
+            "interpolation": "LINEAR"
+          }
+        },
+        "decoder": {
+          "backend": "opencv",
+          "version": "4.12.0.88",
+          "max_decode_attempts": 0
+        },
+        "cut_frames": [
+          271,
+          587,
+          607
+        ],
+        "shots": [
+          {
+            "start": 0.0,
+            "end": 9.033333333333333
+          },
+          {
+            "start": 9.033333333333333,
+            "end": 19.566666666666666
+          },
+          {
+            "start": 19.566666666666666,
+            "end": 20.233333333333334
+          },
+          {
+            "start": 20.233333333333334,
+            "end": 41.266666666666666
+          }
+        ],
+        "elapsed_seconds": 23.681919
+      },
+      "vad_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "vad_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "8dbac82e2f4ec3ae1081b9e657ead27e7d21c84bff7b17b448b0e94ae6dd6626",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 1238,
+          "duration_seconds": 41.266666666666666,
+          "has_audio": true
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "WebRTC VAD",
+          "version": "2.0.14",
+          "model": null,
+          "parameters": {
+            "mode": 2,
+            "frame_ms": 30,
+            "sample_rate_hz": 16000,
+            "channels": 1,
+            "sample_width_bits": 16,
+            "merge_adjacent_equal_labels": true,
+            "extra_smoothing": false,
+            "last_frame": "zero_pad_for_detection_clamp_output"
+          }
+        },
+        "speech": [
+          {
+            "start": 0.0,
+            "end": 0.09
+          },
+          {
+            "start": 0.18,
+            "end": 0.87
+          },
+          {
+            "start": 2.04,
+            "end": 8.79
+          },
+          {
+            "start": 9.39,
+            "end": 9.57
+          },
+          {
+            "start": 9.96,
+            "end": 10.47
+          },
+          {
+            "start": 10.59,
+            "end": 12.24
+          },
+          {
+            "start": 12.45,
+            "end": 12.63
+          },
+          {
+            "start": 12.84,
+            "end": 19.59
+          },
+          {
+            "start": 19.89,
+            "end": 22.05
+          },
+          {
+            "start": 22.11,
+            "end": 23.7
+          },
+          {
+            "start": 23.73,
+            "end": 27.03
+          },
+          {
+            "start": 27.33,
+            "end": 37.38
+          },
+          {
+            "start": 37.71,
+            "end": 37.8
+          },
+          {
+            "start": 38.16,
+            "end": 38.37
+          },
+          {
+            "start": 38.61,
+            "end": 38.76
+          },
+          {
+            "start": 38.88,
+            "end": 41.266666666666666
+          }
+        ],
+        "silence": [
+          {
+            "start": 0.09,
+            "end": 0.18
+          },
+          {
+            "start": 0.87,
+            "end": 2.04
+          },
+          {
+            "start": 8.79,
+            "end": 9.39
+          },
+          {
+            "start": 9.57,
+            "end": 9.96
+          },
+          {
+            "start": 10.47,
+            "end": 10.59
+          },
+          {
+            "start": 12.24,
+            "end": 12.45
+          },
+          {
+            "start": 12.63,
+            "end": 12.84
+          },
+          {
+            "start": 19.59,
+            "end": 19.89
+          },
+          {
+            "start": 22.05,
+            "end": 22.11
+          },
+          {
+            "start": 23.7,
+            "end": 23.73
+          },
+          {
+            "start": 27.03,
+            "end": 27.33
+          },
+          {
+            "start": 37.38,
+            "end": 37.71
+          },
+          {
+            "start": 37.8,
+            "end": 38.16
+          },
+          {
+            "start": 38.37,
+            "end": 38.61
+          },
+          {
+            "start": 38.76,
+            "end": 38.88
+          }
+        ],
+        "elapsed_seconds": 0.18013
+      },
+      "reference_kind": "real_video_smoke_without_manual_speech_labels"
+    }
+  ],
+  "timestamp_checks": [
+    {
+      "video_start_seconds": 0.0,
+      "audio_start_seconds": 0.936,
+      "leading_and_trailing_padding_passed": true,
+      "vad_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "vad_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "473ac89b6b183046520fa916b5e2d349dfb7a24b9811076b1013c7eda3840305",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 91,
+          "duration_seconds": 3.033333333333333,
+          "has_audio": true
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "WebRTC VAD",
+          "version": "2.0.14",
+          "model": null,
+          "parameters": {
+            "mode": 2,
+            "frame_ms": 30,
+            "sample_rate_hz": 16000,
+            "channels": 1,
+            "sample_width_bits": 16,
+            "merge_adjacent_equal_labels": true,
+            "extra_smoothing": false,
+            "last_frame": "zero_pad_for_detection_clamp_output"
+          }
+        },
+        "speech": [
+          {
+            "start": 0.99,
+            "end": 1.62
+          }
+        ],
+        "silence": [
+          {
+            "start": 0.0,
+            "end": 0.99
+          },
+          {
+            "start": 1.62,
+            "end": 3.033333333333333
+          }
+        ],
+        "elapsed_seconds": 0.096875
+      }
+    },
+    {
+      "video_start_seconds": 5.0,
+      "audio_start_seconds": 5.936,
+      "leading_and_trailing_padding_passed": true,
+      "vad_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "vad_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "f6f8b44f0c91565b7fa5a33b1aff10b25b86da31f7fa72a77e99d3e11a50033c",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 91,
+          "duration_seconds": 3.033333333333333,
+          "has_audio": true
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "WebRTC VAD",
+          "version": "2.0.14",
+          "model": null,
+          "parameters": {
+            "mode": 2,
+            "frame_ms": 30,
+            "sample_rate_hz": 16000,
+            "channels": 1,
+            "sample_width_bits": 16,
+            "merge_adjacent_equal_labels": true,
+            "extra_smoothing": false,
+            "last_frame": "zero_pad_for_detection_clamp_output"
+          }
+        },
+        "speech": [
+          {
+            "start": 0.99,
+            "end": 1.62
+          }
+        ],
+        "silence": [
+          {
+            "start": 0.0,
+            "end": 0.99
+          },
+          {
+            "start": 1.62,
+            "end": 3.033333333333333
+          }
+        ],
+        "elapsed_seconds": 0.114853
+      }
+    }
+  ]
+}

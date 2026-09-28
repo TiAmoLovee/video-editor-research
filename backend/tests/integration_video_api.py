@@ -100,7 +100,7 @@ def main() -> int:
                     raise ValueError("ZIP integrity check failed")
                 plan = json.loads(archive.read("clip_plan.json"))
                 names = set(archive.namelist())
-                expected = {"media_meta.json", "normalized_media_meta.json", "clip_plan.json", "shots.json"}
+                expected = {"media_meta.json", "normalized_media_meta.json", "clip_plan.json", "shots.json", "vad.json"}
                 expected.update(clip["file"] for clip in plan["clips"])
                 if names != expected or len(plan["clips"]) != count:
                     raise ValueError("ZIP files do not match clip plan")

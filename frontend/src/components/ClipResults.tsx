@@ -32,7 +32,7 @@ export function ClipResults({ task, result }: { task: Task; result: TaskResult }
       return <div className="clip" key={clip.file}><div className="clip-index">{String(index + 1).padStart(2, '0')}</div><div className="clip-info"><div className="clip-name">{clip.file}</div><div className="clip-time">{clip.duration_seconds.toFixed(2)} 秒 · MP4</div></div><div className="clip-actions"><Button type="text" size="small" icon={<PlayCircleOutlined />} aria-label={`预览 ${clip.file}`} onClick={() => { setPreview(clip); setPlayError(false); requestAnimationFrame(() => previewPanel.current?.scrollIntoView({ block: 'nearest' })); }}>预览</Button><Button type="link" size="small" href={url} download aria-label={`下载 ${clip.file}`}>下载 ↓</Button></div></div>;
     })}</div>
     {visible < matches.length && <Button className="load-more" onClick={() => setVisible(value => value + 24)}>显示更多切片</Button>}
-    <details className="more"><summary>处理记录与参数文件</summary>{Object.entries({ 'media_meta.json': '原视频参数', 'normalized_media_meta.json': '归一化参数', 'clip_plan.json': '切片清单', 'shots.json': '镜头分析结果' }).map(([name, label]) => {
+    <details className="more"><summary>处理记录与参数文件</summary>{Object.entries({ 'media_meta.json': '原视频参数', 'normalized_media_meta.json': '归一化参数', 'clip_plan.json': '切片清单', 'shots.json': '镜头分析结果', 'vad.json': '语音活动分析结果' }).map(([name, label]) => {
       if (!result.downloads[name]) return null;
       try { return <a key={name} href={downloadUrl(result.downloads[name], task.task_id)} download>{label}</a>; }
       catch { return null; }

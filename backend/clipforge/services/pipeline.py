@@ -11,6 +11,7 @@ from clipforge.media.normalize import normalize_video
 from clipforge.media.probe import normalize_metadata, probe_video
 from clipforge.media.split import split_video
 from clipforge.analysis.shots import detect_shots
+from clipforge.analysis.vad import detect_speech
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +44,11 @@ def process_video(task_id: str) -> dict:
         shot_analysis = detect_shots(folder / "normalized.mp4", ffprobe)
         save_json(folder / "shots.json", shot_analysis)
 
+        stage, progress = "analyzing_speech", 55
+        update_job(task_id, "RUNNING", stage, progress)
+        vad_analysis = detect_speech(folder / "normalized.mp4", ffmpeg, ffprobe)
+        save_json(folder / "vad.json", vad_analysis)
+
         stage, progress = "splitting", 60
         update_job(task_id, "RUNNING", stage, progress)
         plan = split_video(str(folder / "normalized.mp4"), str(folder / "clips"), ffmpeg, ffprobe)
@@ -54,6 +60,7 @@ def process_video(task_id: str) -> dict:
             "normalized_media_meta.json": "normalized_media_meta.json",
             "clip_plan.json": "clips/clip_plan.json",
             "shots.json": "shots.json",
+            "vad.json": "vad.json",
         }
         for clip in plan["clips"]:
             files[clip["file"]] = f"clips/{clip['file']}"
