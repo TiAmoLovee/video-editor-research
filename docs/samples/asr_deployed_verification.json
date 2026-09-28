@@ -1,0 +1,108 @@
+{
+  "verified_at_utc": "2026-09-28T08:11:22.107982+00:00",
+  "scope": "Read-only HTTP and downloaded artifact verification; build and container model check supplied by user.",
+  "task_id": "96231ccc-97d6-41ed-b132-8ff83be6d98e",
+  "source_name": "Test3.mp4",
+  "status": "SUCCEEDED",
+  "created_at": "2026-09-28T08:05:54.798895+00:00",
+  "updated_at": "2026-09-28T08:09:31.143352+00:00",
+  "media": {
+    "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+    "normalized_sha256": "8ebfb3551bac936974775529113faedf86e5993b50b1cf87d72aae395763d983",
+    "duration_seconds": 72.6,
+    "time_reference": "normalized_video",
+    "has_audio": true
+  },
+  "counts": {
+    "shots": 4,
+    "speech": 49,
+    "silence": 50,
+    "words": 217,
+    "sentences": 9
+  },
+  "total_frames": 2178,
+  "clip_frames_from_manifest": [
+    900,
+    900,
+    378
+  ],
+  "asr_analyzer": {
+    "status": "ok",
+    "tool": "faster-whisper",
+    "version": "1.2.1",
+    "model": "Systran/faster-whisper-base",
+    "parameters": {
+      "beam_size": 5,
+      "temperature": 0.0,
+      "word_timestamps": true,
+      "vad_filter": false,
+      "condition_on_previous_text": false,
+      "no_speech_threshold": 0.6,
+      "log_prob_threshold": -1.0,
+      "compression_ratio_threshold": 2.4,
+      "task": "transcribe",
+      "requested_language": null,
+      "detected_language": "zh",
+      "language_probability": 0.9960418939590454,
+      "device": "cpu",
+      "compute_type": "int8",
+      "cpu_threads": 4,
+      "num_workers": 1,
+      "model_revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "model_identity": {
+        "repository": "Systran/faster-whisper-base",
+        "revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+        "sha256": {
+          "config.json": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+          "model.bin": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+          "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+          "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+        }
+      },
+      "digital_silence_skipped": false,
+      "ctranslate2_version": "4.6.0",
+      "sentence_rules": {
+        "rule_version": "1",
+        "max_characters": 50,
+        "max_seconds": 15.0,
+        "gap_seconds": 1.0
+      },
+      "alignment_adjustments": {
+        "zero_duration_words_merged": 9,
+        "boundary_words_clamped": 0
+      }
+    }
+  },
+  "asr_elapsed_seconds": 16.466007,
+  "checks": {
+    "schema_and_semantics": true,
+    "sentence_rules_reproduced": true,
+    "three_components_equal_combined_analysis": true,
+    "provided_files_equal_http_and_zip": true,
+    "zip_crc": true,
+    "zip_file_list": true
+  },
+  "zip_sha256": "7585331209ffb9b501739c1a4fc7f83ee42db0cd56bf496fc77376ec490e86de",
+  "user_build_evidence": {
+    "api_and_worker_built_started": true,
+    "redis_healthy": true,
+    "container_model_check": "PASS: /models/faster-whisper-base"
+  },
+  "old_task": {
+    "task_id": "ee2cb03c-9298-499e-9d4f-f16cc7811b32",
+    "status": "SUCCEEDED",
+    "vad_download_readable": true,
+    "not_retroactively_given_analysis": true
+  },
+  "quality_observations": [
+    "Transcript contains apparent recognition errors and repetition; no audio-based judgment of correctness.",
+    "9 zero-duration model entries merged; no boundary clamps."
+  ],
+  "limitations": [
+    "No manual word timing reference or <=0.3s accuracy acceptance.",
+    "No fresh clip decoding, playback, or independent Docker/queue log inspection.",
+    "Old VAD task and JSON checked; old ZIP not downloaded in this check.",
+    "No source/normalized media hash recomputation; artifact identities compared.",
+    "No F1 evaluation, cache performance test, or full week-three acceptance."
+  ]
+}

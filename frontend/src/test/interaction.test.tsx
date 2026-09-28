@@ -23,6 +23,22 @@ describe('file and download boundaries', () => {
   });
 });
 describe('clip browser', () => {
+  it('shows transcription and validation stages', () => {
+    useTasks.setState({ task: { ...completedTask(), status: 'RUNNING', stage: 'transcribing', progress: 60, result: null } });
+    const view = render(<TaskDetail />);
+    expect(screen.getByText('语音转文字')).toBeInTheDocument();
+    useTasks.setState({ task: { ...completedTask(), status: 'RUNNING', stage: 'combining_analysis', progress: 65, result: null } });
+    view.rerender(<TaskDetail />);
+    expect(screen.getByText('校验分析结果')).toBeInTheDocument();
+  });
+  it('offers ASR and complete analysis downloads for new tasks', () => {
+    const task = completedTask();
+    task.result!.downloads['asr.json'] = `/tasks/${taskId}/files/asr.json`;
+    task.result!.downloads['analysis.json'] = `/tasks/${taskId}/files/analysis.json`;
+    render(<ClipResults task={task} result={task.result!} />);
+    expect(screen.getByRole('link', { name: '词级转写与分句', hidden: true })).toHaveAttribute('href', `/tasks/${taskId}/files/asr.json`);
+    expect(screen.getByRole('link', { name: '完整分析结果', hidden: true })).toHaveAttribute('href', `/tasks/${taskId}/files/analysis.json`);
+  });
   it('shows speech analysis in progress', () => {
     useTasks.setState({ task: { ...completedTask(), status: 'RUNNING', stage: 'analyzing_speech', progress: 55, result: null } });
     render(<TaskDetail />);
@@ -52,6 +68,8 @@ describe('clip browser', () => {
     render(<ClipResults task={task} result={task.result!} />);
     expect(screen.queryByRole('link', { name: '镜头分析结果', hidden: true })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: '语音活动分析结果', hidden: true })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: '完整分析结果', hidden: true })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: '词级转写与分句', hidden: true })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /下载全部切片/ })).toBeInTheDocument();
   });
   it('searches all 120 clips beyond the first batch and handles no matches', () => {

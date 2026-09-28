@@ -1,8 +1,8 @@
 # ClipForge 智剪工坊
 
-ClipForge 当前流程：**网页上传 → 后台归一化 → 镜头检测 → 语音活动检测 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。第三周新增 PySceneDetect 镜头区间、WebRTC VAD 语音区间，以及 shots.json / vad.json 下载；成品仍采用固定帧数切片，镜头结果暂不改变选段。
+ClipForge 当前流程：**网页上传 → 后台归一化 → 镜头检测 → 语音活动检测 → 词级转写与分析校验 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。第三周新增 PySceneDetect 镜头区间、WebRTC VAD 语音区间，词级转写、中文分句与 analysis.json 汇总，以及 shots.json / vad.json / asr.json 下载；成品仍采用固定帧数切片，镜头结果暂不改变选段。
 
-**第三周进展：[镜头检测](docs/SHOT_DETECTION.md) · [语音活动检测](docs/VAD_DETECTION.md)**。VAD 已完成本地接入与验证；转写、缓存和镜头 F1 评测尚未完成；本次本地验证与 Docker 部署验证分开记录。
+**第三周进展：[镜头检测](docs/SHOT_DETECTION.md) · [语音活动检测](docs/VAD_DETECTION.md) · [词级转写与分析汇总](docs/ASR_ANALYSIS.md)**。ASR 已完成本地接入，仍待项目环境与 Docker 验收；识别质量、词级时间误差、缓存和镜头 F1 尚未验收。
 
 根据老师的工程反馈，本分支将单文件前端迁移为 **React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5**，后端、测试和部署文件分目录，并统一 FFmpeg 环境配置。第二周原有验收记录是历史证据，迁移后的验证范围单独记录。
 
@@ -24,7 +24,7 @@ backend/
   clipforge/api.py            FastAPI 入口与前端构建产物提供
   clipforge/routes/           HTTP 上传、查询、下载
   clipforge/media/            FFprobe、归一化、切片
-  clipforge/analysis/         分析数据校验、镜头检测与 WebRTC VAD
+  clipforge/analysis/         分析校验、镜头、VAD、词级 ASR 与中文分句
   clipforge/services/         视频处理流程
   clipforge/storage/          SQLite 与任务目录
   clipforge/queue/            Celery 任务、客户端及队列演示
@@ -40,7 +40,7 @@ compose.yaml                 本地容器编排
 
 ## Docker 启动（用于完整流程）
 
-安装 Git、Docker Desktop，启用 Linux 容器。在项目根目录执行：
+安装 Git、Docker Desktop，启用 Linux 容器。先按 [ASR 说明](docs/ASR_ANALYSIS.md) 将固定版本模型准备到 models/faster-whisper-base；模型由 worker 只读挂载。然后在项目根目录执行：
 
 ```powershell
 docker compose config --quiet

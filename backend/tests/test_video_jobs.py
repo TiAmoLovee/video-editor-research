@@ -143,6 +143,8 @@ class VideoJobTests(unittest.TestCase):
              patch("clipforge.services.pipeline.normalize_video", side_effect=normalize), \
              patch("clipforge.services.pipeline.detect_shots", return_value={"shots": [{"start": 0, "end": 1 / 30}]}), \
              patch("clipforge.services.pipeline.detect_speech", return_value={"speech": [], "silence": []}), \
+             patch("clipforge.services.pipeline.transcribe_video", return_value={"words": [], "sentences": []}), \
+             patch("clipforge.services.pipeline.combine_analysis", return_value={"result_kind": "measured"}), \
              patch("clipforge.services.pipeline.split_video", side_effect=split):
             process_video(task_id)
         job = self.client.get(f"/tasks/{task_id}").json()
@@ -154,14 +156,40 @@ class VideoJobTests(unittest.TestCase):
             self.assertEqual(zipped.read("clip_001.mp4"), b"clip")
             self.assertEqual(json.loads(zipped.read("shots.json"))["shots"], [{"start": 0, "end": 1 / 30}])
             self.assertEqual(json.loads(zipped.read("vad.json")), {"speech": [], "silence": []})
+            self.assertEqual(json.loads(zipped.read("analysis.json")), {"result_kind": "measured"})
+            self.assertEqual(json.loads(zipped.read("asr.json")), {"words": [], "sentences": []})
             self.assertIsNone(zipped.testzip())
         self.assertEqual(self.client.get(f"/tasks/{task_id}/files/source.mp4").status_code, 404)
         self.assertEqual(self.client.get(job["result"]["downloads"]["shots.json"]).status_code, 200)
         self.assertEqual(self.client.get(job["result"]["downloads"]["vad.json"]).status_code, 200)
+        for name in ("asr.json", "analysis.json"):
+            self.assertEqual(self.client.get(job["result"]["downloads"][name]).status_code, 200)
         self.assertTrue(process_video(task_id)["skipped"])
         # 新建数据库连接和 HTTP 客户端依然能查询到完成记录。
         with TestClient(app) as new_client:
             self.assertEqual(new_client.get(f"/tasks/{task_id}").json()["status"], "SUCCEEDED")
+
+    def test_asr_or_contract_failure_prevents_publishing(self):
+        for failure_stage in ("transcribing", "combining_analysis"):
+            with self.subTest(stage=failure_stage):
+                response, _ = self.submit()
+                task_id = response.json()["task_id"]
+                with patch("clipforge.services.pipeline.probe_video", return_value={}), \
+                     patch("clipforge.services.pipeline.normalize_metadata", return_value={}), \
+                     patch("clipforge.services.pipeline.normalize_video", return_value={}), \
+                     patch("clipforge.services.pipeline.detect_shots", return_value={}), \
+                     patch("clipforge.services.pipeline.detect_speech", return_value={}), \
+                     patch("clipforge.services.pipeline.transcribe_video", return_value={}) as asr, \
+                     patch("clipforge.services.pipeline.combine_analysis", return_value={}) as combine, \
+                     patch("clipforge.services.pipeline.split_video") as split:
+                    (asr if failure_stage == "transcribing" else combine).side_effect = ValueError("invalid result")
+                    with self.assertLogs("clipforge.services.pipeline", level="ERROR"), self.assertRaises(ValueError):
+                        process_video(task_id)
+                split.assert_not_called()
+                job = self.client.get(f"/tasks/{task_id}").json()
+                self.assertEqual((job["status"], job["stage"]), ("FAILED", failure_stage))
+                self.assertIsNone(job["result"])
+                self.assertEqual(self.client.get(f"/tasks/{task_id}/files/analysis.json").status_code, 409)
 
     def test_vad_failure_stops_pipeline_and_preserves_failure_stage(self):
         response, _ = self.submit()

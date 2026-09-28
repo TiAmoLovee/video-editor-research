@@ -27,3 +27,4 @@ frontend/dist/
 frontend/coverage/
 *.tsbuildinfo
 *.egg-info/
+models/

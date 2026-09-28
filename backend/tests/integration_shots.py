@@ -14,6 +14,7 @@ import zipfile
 
 from fastapi.testclient import TestClient
 from clipforge.api import app
+from clipforge.analysis.validation import validate_analysis
 from clipforge.config import media_tool
 from clipforge.services.pipeline import process_video
 from clipforge.storage.jobs import update_job
@@ -44,6 +45,12 @@ def exercise(source, data_dir):
         vad_download = client.get(downloads["vad.json"])
         assert vad_download.status_code == 200
         vad = vad_download.json()
+        asr_response = client.get(downloads["asr.json"])
+        analysis_response = client.get(downloads["analysis.json"])
+        assert asr_response.status_code == analysis_response.status_code == 200
+        asr, analysis = asr_response.json(), analysis_response.json()
+        schema = json.loads((Path(__file__).resolve().parents[2] / "schemas/analysis.schema.json").read_text(encoding="utf-8"))
+        validate_analysis(analysis, schema)
         download = client.get(downloads["result.zip"])
         assert download.status_code == 200
         with zipfile.ZipFile(io.BytesIO(download.content)) as archive:
@@ -52,10 +59,12 @@ def exercise(source, data_dir):
             assert json.loads(archive.read("vad.json")) == vad
             assert vad["media"]["normalized_sha256"] == shots["media"]["normalized_sha256"]
             assert vad["media"]["duration_seconds"] == shots["media"]["duration_seconds"]
+            assert json.loads(archive.read("asr.json")) == asr
+            assert json.loads(archive.read("analysis.json")) == analysis
             plan = json.loads(archive.read("clip_plan.json"))
             assert shots["media"]["total_frames"] == plan["total_frames"]
             assert set(archive.namelist()) == {
-                "media_meta.json", "normalized_media_meta.json", "clip_plan.json", "shots.json", "vad.json",
+                "media_meta.json", "normalized_media_meta.json", "clip_plan.json", "shots.json", "vad.json", "asr.json", "analysis.json",
                 *(clip["file"] for clip in plan["clips"])}
         assert [x["progress"] for x in stages] == sorted(x["progress"] for x in stages)
         assert "analyzing_shots" in [x["stage"] for x in stages]
@@ -65,7 +74,7 @@ def exercise(source, data_dir):
                 "pipeline_seconds": round(elapsed, 4), "stages": stages,
                 "clip_frames": [clip["frame_count"] for clip in plan["clips"]],
                 "zip_crc_passed": True, "direct_and_zip_json_equal": True,
-                "shot_result": shots, "vad_result": vad}
+                "shot_result": shots, "vad_result": vad, "asr_result": asr, "analysis_result": analysis}
 
 
 def main():

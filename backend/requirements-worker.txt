@@ -3,6 +3,13 @@ scenedetect[opencv-headless]==0.6.7.1
 opencv-python-headless==4.12.0.88
 numpy==2.2.6
 webrtcvad-wheels==2.0.14
+faster-whisper==1.2.1
+ctranslate2==4.6.0
+av==16.1.0
+tokenizers==0.22.2
+onnxruntime==1.24.3
+huggingface-hub==0.36.2
+jsonschema==4.26.0
 click==8.2.1
 platformdirs==4.4.0
 tqdm==4.67.1
