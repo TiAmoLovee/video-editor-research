@@ -1,0 +1,106 @@
+{
+  "verified_at_utc": "2026-09-28T04:09:19.032814+00:00",
+  "scope": "Read-only HTTP verification of the deployed localhost:8200 service; no Docker pipe access.",
+  "new_task": {
+    "task_id": "28194bd5-46e0-4344-ae2d-d28e06e601e7",
+    "source_name": "Sucai1.mp4",
+    "status": "SUCCEEDED",
+    "created_at": "2026-09-28T03:38:00.601314+00:00",
+    "updated_at": "2026-09-28T03:38:19.587003+00:00",
+    "clip_count": 2,
+    "clip_frames_from_manifest": [
+      900,
+      338
+    ],
+    "zip_crc_passed": true,
+    "zip_file_list_matches_downloads": true,
+    "zip_sha256": "95d3682df75175e14f804754bc86e3e057b2087577793d732cf2f5c0ea55b812",
+    "shot_result": {
+      "schema_version": "0.1.0",
+      "artifact_kind": "shot_analysis",
+      "result_kind": "measured",
+      "media": {
+        "normalized_sha256": "3f771e0f2ce3688e904727585dff468f6441a908bb7d98bcbe89e6edded43799",
+        "time_reference": "normalized_video",
+        "fps": 30,
+        "total_frames": 1238,
+        "duration_seconds": 41.266666666666666
+      },
+      "analyzer": {
+        "status": "ok",
+        "tool": "PySceneDetect.ContentDetector",
+        "version": "0.6.7.1",
+        "model": null,
+        "parameters": {
+          "threshold": 27.0,
+          "min_scene_len_frames": 15,
+          "downscale": 1,
+          "auto_downscale": false,
+          "frame_skip": 0,
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "luma_only": false,
+          "kernel_size": null,
+          "filter_mode": "MERGE",
+          "interpolation": "LINEAR"
+        }
+      },
+      "decoder": {
+        "backend": "opencv",
+        "version": "4.12.0.88",
+        "max_decode_attempts": 0
+      },
+      "cut_frames": [
+        271,
+        587,
+        607
+      ],
+      "shots": [
+        {
+          "start": 0.0,
+          "end": 9.033333333333333
+        },
+        {
+          "start": 9.033333333333333,
+          "end": 19.566666666666666
+        },
+        {
+          "start": 19.566666666666666,
+          "end": 20.233333333333334
+        },
+        {
+          "start": 20.233333333333334,
+          "end": 41.266666666666666
+        }
+      ],
+      "elapsed_seconds": 4.545894
+    },
+    "json_download_and_zip_and_user_file_equal": true,
+    "shot_intervals_contiguous_and_complete": true
+  },
+  "old_task": {
+    "task_id": "0ab4374c-f874-4926-a1dc-e081e5fe51bb",
+    "source_name": "Sucai1.mp4",
+    "status": "SUCCEEDED",
+    "created_at": "2026-09-24T08:05:24.214697+00:00",
+    "updated_at": "2026-09-24T08:05:41.845915+00:00",
+    "clip_count": 2,
+    "clip_frames_from_manifest": [
+      900,
+      338
+    ],
+    "zip_crc_passed": true,
+    "zip_file_list_matches_downloads": true,
+    "zip_sha256": "09404d88ddc04aa1ddc5ee50df8061a3bd97e451be7dbf9b97b91b8fd0067f57"
+  },
+  "limitations": [
+    "No browser playback or visual review in this verification.",
+    "Clip frame counts come from the saved manifest; no fresh full decode.",
+    "No manual shot labels or F1 measurement.",
+    "No direct container version, queue log or intermediate progress sampling."
+  ]
+}

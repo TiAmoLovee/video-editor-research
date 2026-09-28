@@ -1,5 +1,5 @@
 export type TaskState = 'QUEUED' | 'RUNNING' | 'SUCCEEDED' | 'FAILED' | 'SUBMISSION_UNKNOWN';
-export type Stage = 'queued' | 'probing' | 'normalizing' | 'splitting' | 'packaging' | 'done';
+export type Stage = 'queued' | 'probing' | 'normalizing' | 'analyzing_shots' | 'splitting' | 'packaging' | 'done';
 export interface TaskSummary {
   task_id: string;
   source_name: string;
@@ -40,5 +40,6 @@ export const statusLabels: Record<TaskState, string> = {
 };
 export const stageLabels: Record<Stage, string> = {
   queued: '等待后台领取', probing: '读取视频参数', normalizing: '归一化视频',
+  analyzing_shots: '检测镜头边界',
   splitting: '生成切片', packaging: '整理下载文件', done: '处理完成',
 };

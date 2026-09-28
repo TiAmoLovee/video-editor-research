@@ -1,6 +1,8 @@
 # ClipForge 智剪工坊
 
-ClipForge 已实现第二周媒体处理最小流程：**网页上传 → 后台归一化 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。当前采用固定帧数切片，不进行语义选段。
+ClipForge 当前流程：**网页上传 → 后台归一化 → 镜头检测 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。第三周新增 PySceneDetect 镜头区间和 shots.json 下载；成品仍采用固定帧数切片，镜头结果暂不改变选段。
+
+**第三周进展：[镜头检测接入与验证](docs/SHOT_DETECTION.md)**。VAD、转写、缓存和镜头 F1 评测尚未完成；本次本地验证与 Docker 部署验证分开记录。
 
 根据老师的工程反馈，本分支将单文件前端迁移为 **React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5**，后端、测试和部署文件分目录，并统一 FFmpeg 环境配置。第二周原有验收记录是历史证据，迁移后的验证范围单独记录。
 
@@ -22,6 +24,7 @@ backend/
   clipforge/api.py            FastAPI 入口与前端构建产物提供
   clipforge/routes/           HTTP 上传、查询、下载
   clipforge/media/            FFprobe、归一化、切片
+  clipforge/analysis/         分析数据校验与 PySceneDetect 镜头检测
   clipforge/services/         视频处理流程
   clipforge/storage/          SQLite 与任务目录
   clipforge/queue/            Celery 任务、客户端及队列演示

@@ -23,6 +23,24 @@ describe('file and download boundaries', () => {
   });
 });
 describe('clip browser', () => {
+  it('shows the shot analysis stage while running and has no completed downloads', () => {
+    useTasks.setState({ task: { ...completedTask(), status: 'RUNNING', stage: 'analyzing_shots', progress: 45, result: null } });
+    render(<TaskDetail />);
+    expect(screen.getByText('检测镜头边界')).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: '镜头分析结果' })).not.toBeInTheDocument();
+  });
+  it('offers shot JSON for new tasks', () => {
+    const task = completedTask();
+    task.result!.downloads['shots.json'] = `/tasks/${taskId}/files/shots.json`;
+    render(<ClipResults task={task} result={task.result!} />);
+    expect(screen.getByRole('link', { name: '镜头分析结果', hidden: true })).toHaveAttribute('href', `/tasks/${taskId}/files/shots.json`);
+  });
+  it('keeps old completed tasks usable without shot results', () => {
+    const task = completedTask();
+    render(<ClipResults task={task} result={task.result!} />);
+    expect(screen.queryByRole('link', { name: '镜头分析结果', hidden: true })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /下载全部切片/ })).toBeInTheDocument();
+  });
   it('searches all 120 clips beyond the first batch and handles no matches', () => {
     const task = completedTask(120);
     render(<ClipResults task={task} result={task.result!} />);
@@ -51,7 +69,7 @@ describe('clip browser', () => {
   it('does not expose stale result links on failed tasks', () => {
     useTasks.setState({ task: { ...completedTask(), status: 'FAILED', stage: 'probing', progress: 10, error: '处理失败' } });
     render(<TaskDetail />);
-    expect(screen.queryByRole('link', { name: '下载全部切片 · ZIP' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /下载全部切片/ })).not.toBeInTheDocument();
   });
 });
 describe('upload selection', () => {

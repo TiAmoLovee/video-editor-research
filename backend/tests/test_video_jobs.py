@@ -141,6 +141,7 @@ class VideoJobTests(unittest.TestCase):
         with patch("clipforge.services.pipeline.probe_video", return_value={}), \
              patch("clipforge.services.pipeline.normalize_metadata", return_value={}), \
              patch("clipforge.services.pipeline.normalize_video", side_effect=normalize), \
+             patch("clipforge.services.pipeline.detect_shots", return_value={"shots": [{"start": 0, "end": 1 / 30}]}), \
              patch("clipforge.services.pipeline.split_video", side_effect=split):
             process_video(task_id)
         job = self.client.get(f"/tasks/{task_id}").json()
@@ -150,12 +151,30 @@ class VideoJobTests(unittest.TestCase):
         self.assertEqual(archive.status_code, 200)
         with zipfile.ZipFile(io.BytesIO(archive.content)) as zipped:
             self.assertEqual(zipped.read("clip_001.mp4"), b"clip")
+            self.assertEqual(json.loads(zipped.read("shots.json"))["shots"], [{"start": 0, "end": 1 / 30}])
             self.assertIsNone(zipped.testzip())
         self.assertEqual(self.client.get(f"/tasks/{task_id}/files/source.mp4").status_code, 404)
+        self.assertEqual(self.client.get(job["result"]["downloads"]["shots.json"]).status_code, 200)
         self.assertTrue(process_video(task_id)["skipped"])
         # 新建数据库连接和 HTTP 客户端依然能查询到完成记录。
         with TestClient(app) as new_client:
             self.assertEqual(new_client.get(f"/tasks/{task_id}").json()["status"], "SUCCEEDED")
+
+    def test_shot_failure_stops_pipeline_and_preserves_failure_stage(self):
+        response, _ = self.submit()
+        task_id = response.json()["task_id"]
+        with patch("clipforge.services.pipeline.probe_video", return_value={}), \
+             patch("clipforge.services.pipeline.normalize_metadata", return_value={}), \
+             patch("clipforge.services.pipeline.normalize_video", return_value={}), \
+             patch("clipforge.services.pipeline.detect_shots", side_effect=ValueError("incomplete frames")), \
+             patch("clipforge.services.pipeline.split_video") as split:
+            with self.assertLogs("clipforge.services.pipeline", level="ERROR"), self.assertRaises(ValueError):
+                process_video(task_id)
+        split.assert_not_called()
+        job = self.client.get(f"/tasks/{task_id}").json()
+        self.assertEqual((job["status"], job["stage"]), ("FAILED", "analyzing_shots"))
+        self.assertIsNone(job["result"])
+        self.assertEqual(self.client.get(f"/tasks/{task_id}/files/shots.json").status_code, 409)
 
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ from clipforge.storage.jobs import claim_job, get_job, job_dir, update_job
 from clipforge.media.normalize import normalize_video
 from clipforge.media.probe import normalize_metadata, probe_video
 from clipforge.media.split import split_video
+from clipforge.analysis.shots import detect_shots
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +38,11 @@ def process_video(task_id: str) -> dict:
         normalized = normalize_video(str(source), str(folder / "normalized.mp4"), ffmpeg, ffprobe)
         save_json(folder / "normalized_media_meta.json", normalized)
 
+        stage, progress = "analyzing_shots", 45
+        update_job(task_id, "RUNNING", stage, progress)
+        shot_analysis = detect_shots(folder / "normalized.mp4", ffprobe)
+        save_json(folder / "shots.json", shot_analysis)
+
         stage, progress = "splitting", 60
         update_job(task_id, "RUNNING", stage, progress)
         plan = split_video(str(folder / "normalized.mp4"), str(folder / "clips"), ffmpeg, ffprobe)
@@ -47,6 +53,7 @@ def process_video(task_id: str) -> dict:
             "media_meta.json": "media_meta.json",
             "normalized_media_meta.json": "normalized_media_meta.json",
             "clip_plan.json": "clips/clip_plan.json",
+            "shots.json": "shots.json",
         }
         for clip in plan["clips"]:
             files[clip["file"]] = f"clips/{clip['file']}"
