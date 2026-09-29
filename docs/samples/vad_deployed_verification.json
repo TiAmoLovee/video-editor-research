@@ -1,0 +1,73 @@
+{
+  "verified_at_utc": "2026-09-28T06:14:32.318319+00:00",
+  "scope": "Read-only HTTP verification of deployed localhost service and user-provided vad.json.",
+  "task_id": "ee2cb03c-9298-499e-9d4f-f16cc7811b32",
+  "source_name": "Test1.mp4",
+  "status": "SUCCEEDED",
+  "created_at": "2026-09-28T06:04:33.231427+00:00",
+  "updated_at": "2026-09-28T06:06:20.705900+00:00",
+  "media": {
+    "normalized_sha256": "63154540024eecae36e0763fd907fbc1a0a7852ffe196c7073eda8b6d78495f6",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 10365,
+    "duration_seconds": 345.5,
+    "has_audio": true
+  },
+  "analyzer": {
+    "status": "ok",
+    "tool": "WebRTC VAD",
+    "version": "2.0.14",
+    "model": null,
+    "parameters": {
+      "mode": 2,
+      "frame_ms": 30,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "sample_width_bits": 16,
+      "merge_adjacent_equal_labels": true,
+      "extra_smoothing": false,
+      "last_frame": "zero_pad_for_detection_clamp_output"
+    }
+  },
+  "speech_intervals": 406,
+  "non_speech_intervals": 407,
+  "speech_seconds": 131.79,
+  "non_speech_seconds": 213.71,
+  "vad_elapsed_seconds": 0.513569,
+  "clip_frames_from_manifest": [
+    900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    465
+  ],
+  "checks": {
+    "user_file_direct_download_and_zip_equal": true,
+    "speech_partition_complete": true,
+    "shots_partition_complete": true,
+    "shots_and_vad_media_match": true,
+    "zip_crc_passed": true,
+    "zip_file_list_matches_downloads": true
+  },
+  "zip_sha256": "57dd4de62d8211d1363143c1a7dcd319fe6aeda3c637c797154f5fa56e8b8aca",
+  "old_task": {
+    "task_id": "28194bd5-46e0-4344-ae2d-d28e06e601e7",
+    "status": "SUCCEEDED",
+    "still_has_no_vad_artifact": true,
+    "shots_download_readable": true
+  },
+  "limitations": [
+    "No manual speech labels or VAD accuracy measurement.",
+    "No browser playback or fresh clip decoding; frame counts from manifest.",
+    "No direct Docker version inspection or queue log review.",
+    "Old task JSON and shots download checked; old ZIP not re-downloaded this time."
+  ]
+}

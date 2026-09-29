@@ -1,0 +1,56 @@
+{
+  "format_version": "1",
+  "annotation_kind": "human_shot_boundaries",
+  "source_name": "Caifang1.mp4",
+  "source_sha256": "22f2494c450b67c273f3ac4d2ef9cb4de9952911610e6f3b1f4b35b05ac62dd9",
+  "media": {
+    "normalized_sha256": "cdab04186f11dafaa0e50168e24cb5696741bac333ba8ed4b817a3b662dde5c2",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 2624,
+    "duration_seconds": 87.46666666666667
+  },
+  "status": "draft",
+  "reviewer": "",
+  "reviewed_at": "",
+  "cut_frames": [
+    113,
+    186,
+    269,
+    360,
+    660,
+    759,
+    850,
+    1091,
+    1476,
+    1584,
+    2126,
+    2273,
+    2450,
+    2605
+  ],
+  "notes": "助手复核尾段连续帧提出4处补点，等待用户确认；原v1参考保持不变。",
+  "provenance": {
+    "reference_method": "existing_10_user_events_plus_assistant_tail_review",
+    "user_confirmed_tail_additions": false,
+    "proposed_added_frames": [
+      2126,
+      2273,
+      2450,
+      2605
+    ],
+    "assistant_full_tail_frame_by_frame_audit": false,
+    "review_scope": "53秒后每秒概览及9个未匹配预测附近逐帧检查",
+    "excluded_motion_frames": [
+      2288,
+      2312,
+      2328,
+      2500,
+      2525
+    ],
+    "excluded_obs_frames": [
+      40,
+      2583
+    ]
+  }
+}

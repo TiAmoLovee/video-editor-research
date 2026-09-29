@@ -1,0 +1,7 @@
+# 显式选择 small：docker compose -f compose.yaml -f compose.asr-small.yaml up -d --build
+# 回到 base：docker compose -f compose.yaml up -d
+services:
+  worker:
+    environment:
+      CLIPFORGE_ASR_MODEL: small
+      CLIPFORGE_ASR_MODEL_DIR: /models/faster-whisper-small

@@ -1,0 +1,55 @@
+{
+  "schema_version": "0.1.0",
+  "artifact_kind": "shot_analysis",
+  "result_kind": "measured",
+  "media": {
+    "normalized_sha256": "31097c0168ca01020ad2d917e6e57b773613e0ad89a7fd84984447c4ac881e14",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 1002,
+    "duration_seconds": 33.4
+  },
+  "analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": null,
+      "context_guard_requested": false
+    }
+  },
+  "decoder": {
+    "backend": "opencv",
+    "version": "4.12.0.88",
+    "frame_position_checked": true
+  },
+  "cut_frames": [],
+  "shots": [
+    {
+      "start": 0.0,
+      "end": 33.4
+    }
+  ],
+  "elapsed_seconds": 14.20885,
+  "diagnostics": {
+    "context_guard_suppressed_frames": []
+  }
+}

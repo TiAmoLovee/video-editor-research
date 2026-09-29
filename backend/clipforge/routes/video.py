@@ -1,14 +1,16 @@
 """视频上传、持久化状态查询与按清单下载。"""
 
 from pathlib import Path, PureWindowsPath
+import json
 import shutil
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, File, HTTPException, Query, Response, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Query, Response, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
 
 from clipforge.storage.jobs import create_job, get_job, job_dir, list_jobs, submission_unknown
 from clipforge.queue.client import QueueUnavailable, submit_video
+from clipforge.analysis.options import parse_options
 
 router = APIRouter(prefix="/tasks", tags=["视频任务"])
 MAX_UPLOAD_BYTES = 1024 * 1024 * 1024
@@ -24,7 +26,11 @@ def video_history(limit: int = Query(20, ge=1, le=100), offset: int = Query(0, g
              responses={413: {"description": "文件超过 1 GiB"},
                         415: {"description": "不支持的扩展名"},
                         503: {"description": "提交结果不确定，请保留返回的任务编号"}})
-def upload_video(response: Response, file: UploadFile = File(...)):
+def upload_video(response: Response, file: UploadFile = File(...), shot_options: str | None = Form(None)):
+    try:
+        options = parse_options(shot_options)
+    except ValueError as error:
+        raise HTTPException(422, str(error)) from error
     # 浏览器文件名只用于显示；Windows 和 POSIX 路径前缀均去除。
     source_name = PureWindowsPath(file.filename or "").name
     suffix = Path(source_name).suffix.lower()
@@ -48,6 +54,9 @@ def upload_video(response: Response, file: UploadFile = File(...)):
                 destination.write(chunk)
         if size == 0:
             raise HTTPException(422, "上传文件为空。")
+        if options is not None:
+            (folder / "shot_options.json").write_text(
+                json.dumps(options, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
         create_job(task_id, source_name, source_key)
     except BaseException:
         # 只清理刚由服务生成的 UUID 目录；该任务尚未发送到队列。

@@ -1,0 +1,34 @@
+{
+  "format_version": "1",
+  "annotation_kind": "human_shot_boundaries",
+  "source_name": "Test1.mp4",
+  "source_sha256": "23b305c22f0af2ddd81dbcea16faf45da0c42e9a56aaa5f28ffb47e47b0a4545",
+  "media": {
+    "normalized_sha256": "7abbb0519af9d21a0ab535f3a53ecd3be54aa27edc58a0154ee12e23d1b408a5",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 10365,
+    "duration_seconds": 345.5
+  },
+  "status": "verified",
+  "reviewer": "用户：根据回忆说明无切换并要求记录；助手：预测位置及上下文抽帧核对",
+  "reviewed_at": "2026-09-29",
+  "cut_frames": [],
+  "notes": "用户根据回忆说明没有镜头切换并要求记录。采用其说明作为零切点参考，助手抽帧未发现矛盾；没有独立完成全片逐帧审查，也没有把用户回忆写成重新完整观看确认。",
+  "provenance": {
+    "reference_method": "user_recollection_no_cuts_plus_assistant_spot_check",
+    "user_original_message": "应该是都结束了吧 我记得我Sucai Test1 Test2都是没有切换镜头的 这个你也可以记录一下",
+    "no_cut_recording_requested_by_user": true,
+    "fresh_full_video_rewatch_confirmed_by_user": false,
+    "assistant_sampled_frames": [
+      0,
+      1800,
+      4500,
+      7200,
+      10364
+    ],
+    "assistant_independent_full_video_completeness_check": false,
+    "evidence": "review-20260929/prediction-and-context.jpg",
+    "recorded_at": "2026-09-29T09:20:08.774465+00:00"
+  }
+}

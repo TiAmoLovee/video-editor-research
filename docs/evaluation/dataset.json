@@ -1,0 +1,46 @@
+{
+  "format_version": "1",
+  "tolerance_frames": 3,
+  "videos": [
+    {
+      "id": "sucai1",
+      "kind": "real",
+      "split": "development",
+      "category": "unknown",
+      "source_name": "Sucai1.mp4",
+      "source_sha256": "8ef321c445c1f5d0acc4ebf4c59efb200b13428f40d26fb11a2093542aed029e",
+      "annotation": "../../data/evaluation/Sucai1/annotation.json",
+      "prediction": "../../data/evaluation/Sucai1/prediction.json"
+    },
+    {
+      "id": "test1",
+      "kind": "real",
+      "split": "development",
+      "category": "unknown",
+      "source_name": "Test1.mp4",
+      "source_sha256": "23b305c22f0af2ddd81dbcea16faf45da0c42e9a56aaa5f28ffb47e47b0a4545",
+      "annotation": "../../data/evaluation/Test1/annotation.json",
+      "prediction": "../../data/evaluation/Test1/prediction.json"
+    },
+    {
+      "id": "test2",
+      "kind": "real",
+      "split": "development",
+      "category": "unknown",
+      "source_name": "Test2.mp4",
+      "source_sha256": "241f089477cce0be8ff051dcdbe57db677f336c1bb86643eb52639f1f7fea417",
+      "annotation": "../../data/evaluation/Test2/annotation.json",
+      "prediction": "../../data/evaluation/Test2/prediction.json"
+    },
+    {
+      "id": "test3",
+      "kind": "real",
+      "split": "development",
+      "category": "unknown",
+      "source_name": "Test3.mp4",
+      "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+      "annotation": "../../data/evaluation/Test3/annotation.json",
+      "prediction": "../../data/evaluation/Test3/prediction.json"
+    }
+  ]
+}

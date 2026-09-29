@@ -1,0 +1,64 @@
+{
+  "task_id": "4da56c5e-be49-4858-a296-07aa54ed798b",
+  "status": "SUCCEEDED",
+  "media": {
+    "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+    "normalized_sha256": "8ebfb3551bac936974775529113faedf86e5993b50b1cf87d72aae395763d983",
+    "duration_seconds": 72.6,
+    "time_reference": "normalized_video",
+    "has_audio": true
+  },
+  "comparison": [
+    {
+      "case": "previous_deployed_base",
+      "model": "Systran/faster-whisper-base",
+      "elapsed_seconds": 15.908636,
+      "score": {
+        "reference_characters": 231,
+        "hypothesis_characters": 227,
+        "substitution": 37,
+        "deletion": 6,
+        "insertion": 2,
+        "edit_distance": 45,
+        "character_error_rate": 0.19480519480519481
+      },
+      "word_count": 199,
+      "sentence_count": 5
+    },
+    {
+      "case": "new_deployed_small",
+      "model": "Systran/faster-whisper-small",
+      "elapsed_seconds": 44.407719,
+      "score": {
+        "reference_characters": 231,
+        "hypothesis_characters": 231,
+        "substitution": 25,
+        "deletion": 9,
+        "insertion": 9,
+        "edit_distance": 43,
+        "character_error_rate": 0.18614718614718614
+      },
+      "word_count": 202,
+      "sentence_count": 5
+    }
+  ],
+  "reference_id": "test3-human-20260928-v1",
+  "checks": {
+    "schema_and_cross_fields": true,
+    "asr_matches_analysis": true,
+    "same_normalized_media_as_previous_base": true,
+    "supplied_files_match_http": true,
+    "simplified_text": true,
+    "zero_words_in_two_user_confirmed_music_ranges": true
+  },
+  "remaining_issues": [
+    "Opening 一夜之间 absent",
+    "Reference 刘慈欣 still recognized as 刘慈禧 in later mentions",
+    "Sentence 4/5 splits 抽空 into 抽 and 空"
+  ],
+  "limitations": [
+    "Text comparison only; no new audio listening or manual word-alignment acceptance.",
+    "No ZIP CRC recheck this turn.",
+    "One video; two runs are not a controlled speed benchmark."
+  ]
+}

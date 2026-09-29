@@ -1,0 +1,72 @@
+{
+  "format_version": "1",
+  "annotation_kind": "human_shot_boundaries",
+  "source_name": "Sucai1.mp4",
+  "source_sha256": "8ef321c445c1f5d0acc4ebf4c59efb200b13428f40d26fb11a2093542aed029e",
+  "media": {
+    "normalized_sha256": "8dbac82e2f4ec3ae1081b9e657ead27e7d21c84bff7b17b448b0e94ae6dd6626",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 1238,
+    "duration_seconds": 41.266666666666666
+  },
+  "status": "verified",
+  "reviewer": "用户：确认3处事件纳入；助手：相邻帧及局部连续帧定位",
+  "reviewed_at": "2026-09-29",
+  "cut_frames": [
+    587,
+    607,
+    1225
+  ],
+  "notes": "用户先根据回忆说明无切换，后针对19.567、20.233、40.833秒的明确询问回复“按统一口径记录 3 处”。本次明确同意将新回合出生位置跳转计入。精确帧来自助手定位，非用户逐帧独立核准；助手未独立完成全片逐帧漏标审查。",
+  "provenance": {
+    "reference_method": "assistant_boundary_review_after_user_recollection_discrepancy",
+    "user_original_message": "应该是都结束了吧 我记得我Sucai Test1 Test2都是没有切换镜头的 这个你也可以记录一下",
+    "user_confirmed_candidate_frames": true,
+    "assistant_adjacent_frame_visual_check": true,
+    "assistant_independent_full_video_completeness_check": false,
+    "candidate_events": [
+      {
+        "frame": 587,
+        "seconds": 19.566666666666666,
+        "event": "切到另一名选手",
+        "evidence": "observer-switches.jpg"
+      },
+      {
+        "frame": 607,
+        "seconds": 20.233333333333334,
+        "event": "切回原选手",
+        "evidence": "observer-switches.jpg"
+      },
+      {
+        "frame": 1225,
+        "seconds": 40.833333333333336,
+        "event": "新回合开始，画面跳到出生位置",
+        "evidence": "round-transition.jpg"
+      }
+    ],
+    "user_confirmation": "按统一口径记录 3 处",
+    "recorded_at": "2026-09-29T09:26:39.351766+00:00",
+    "round_reset_inclusion_explicitly_confirmed": true,
+    "confirmation_record": "review-20260929/user-confirmation.json",
+    "excluded_prediction": {
+      "frame": 271,
+      "reason": "同一角色连续转向与换弹动作，非内容切点",
+      "visually_reviewed_frames": [
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276
+      ],
+      "evidence": "review-20260929/continuous-motion-check.jpg"
+    }
+  }
+}

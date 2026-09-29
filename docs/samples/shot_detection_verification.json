@@ -1,0 +1,214 @@
+{
+  "scope": "native Windows pipeline and HTTP adapter; queue mocked; no Docker/Celery verification",
+  "python": "3.11.9",
+  "platform": "Windows",
+  "results": [
+    {
+      "source_name": "synthetic_31s.mp4",
+      "task_id": "932c4cdd-69cd-45da-9efd-3083e16b3df4",
+      "status": "SUCCEEDED",
+      "pipeline_seconds": 1.6055,
+      "stages": [
+        {
+          "status": "RUNNING",
+          "stage": "normalizing",
+          "progress": 25
+        },
+        {
+          "status": "RUNNING",
+          "stage": "analyzing_shots",
+          "progress": 45
+        },
+        {
+          "status": "RUNNING",
+          "stage": "splitting",
+          "progress": 60
+        },
+        {
+          "status": "RUNNING",
+          "stage": "packaging",
+          "progress": 90
+        },
+        {
+          "status": "SUCCEEDED",
+          "stage": "done",
+          "progress": 100
+        }
+      ],
+      "clip_frames": [
+        900,
+        30
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "shot_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "shot_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "fb92ef10afe4c274957430bd2e0389dfa9bf27fbcd4149aa2c0ed824b2157e16",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 930,
+          "duration_seconds": 31.0
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "PySceneDetect.ContentDetector",
+          "version": "0.6.7.1",
+          "model": null,
+          "parameters": {
+            "threshold": 27.0,
+            "min_scene_len_frames": 15,
+            "downscale": 1,
+            "auto_downscale": false,
+            "frame_skip": 0,
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "luma_only": false,
+            "kernel_size": null,
+            "filter_mode": "MERGE",
+            "interpolation": "LINEAR"
+          }
+        },
+        "decoder": {
+          "backend": "opencv",
+          "version": "4.12.0.88",
+          "max_decode_attempts": 0
+        },
+        "cut_frames": [
+          60,
+          120
+        ],
+        "shots": [
+          {
+            "start": 0.0,
+            "end": 2.0
+          },
+          {
+            "start": 2.0,
+            "end": 4.0
+          },
+          {
+            "start": 4.0,
+            "end": 31.0
+          }
+        ],
+        "elapsed_seconds": 0.820683
+      },
+      "reference_cut_frames": [
+        60,
+        120
+      ],
+      "reference_kind": "synthetic_known_cuts_not_evaluation_dataset"
+    },
+    {
+      "source_name": "Sucai1.mp4",
+      "task_id": "32a07084-a7ef-48c6-ba8a-5c2926d234ff",
+      "status": "SUCCEEDED",
+      "pipeline_seconds": 27.9713,
+      "stages": [
+        {
+          "status": "RUNNING",
+          "stage": "normalizing",
+          "progress": 25
+        },
+        {
+          "status": "RUNNING",
+          "stage": "analyzing_shots",
+          "progress": 45
+        },
+        {
+          "status": "RUNNING",
+          "stage": "splitting",
+          "progress": 60
+        },
+        {
+          "status": "RUNNING",
+          "stage": "packaging",
+          "progress": 90
+        },
+        {
+          "status": "SUCCEEDED",
+          "stage": "done",
+          "progress": 100
+        }
+      ],
+      "clip_frames": [
+        900,
+        338
+      ],
+      "zip_crc_passed": true,
+      "direct_and_zip_json_equal": true,
+      "shot_result": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "shot_analysis",
+        "result_kind": "measured",
+        "media": {
+          "normalized_sha256": "8dbac82e2f4ec3ae1081b9e657ead27e7d21c84bff7b17b448b0e94ae6dd6626",
+          "time_reference": "normalized_video",
+          "fps": 30,
+          "total_frames": 1238,
+          "duration_seconds": 41.266666666666666
+        },
+        "analyzer": {
+          "status": "ok",
+          "tool": "PySceneDetect.ContentDetector",
+          "version": "0.6.7.1",
+          "model": null,
+          "parameters": {
+            "threshold": 27.0,
+            "min_scene_len_frames": 15,
+            "downscale": 1,
+            "auto_downscale": false,
+            "frame_skip": 0,
+            "weights": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "luma_only": false,
+            "kernel_size": null,
+            "filter_mode": "MERGE",
+            "interpolation": "LINEAR"
+          }
+        },
+        "decoder": {
+          "backend": "opencv",
+          "version": "4.12.0.88",
+          "max_decode_attempts": 0
+        },
+        "cut_frames": [
+          271,
+          587,
+          607
+        ],
+        "shots": [
+          {
+            "start": 0.0,
+            "end": 9.033333333333333
+          },
+          {
+            "start": 9.033333333333333,
+            "end": 19.566666666666666
+          },
+          {
+            "start": 19.566666666666666,
+            "end": 20.233333333333334
+          },
+          {
+            "start": 20.233333333333334,
+            "end": 41.266666666666666
+          }
+        ],
+        "elapsed_seconds": 16.338696
+      },
+      "reference_kind": "real_video_smoke_without_manual_labels"
+    }
+  ]
+}

@@ -51,7 +51,9 @@ class WebUiTests(unittest.TestCase):
         ids = []
         for number in range(3):
             task_id = str(uuid4())
-            create_job(task_id, f'video{number}.mp4', 'source.mp4')
+            # 连续调用可能得到相同系统时间；明确时间顺序，避免 UUID 决定测试结果。
+            with patch('clipforge.storage.jobs.now', return_value=f'2026-09-28T00:00:0{number}+00:00'):
+                create_job(task_id, f'video{number}.mp4', 'source.mp4')
             ids.append(task_id)
         claim_job(ids[2])
         update_job(ids[2], 'SUCCEEDED', 'done', 100, result={'files': {}})

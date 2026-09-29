@@ -1,0 +1,419 @@
+{
+  "media": {
+    "normalized_sha256": "8fe46aa73dcb615aa6d7567220fddd2734e61be7f52b6a50e6031c0e0ed2e6e9",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 2487,
+    "duration_seconds": 82.9
+  },
+  "source_sha256": "4d4049b5f40bf688a975c7be741239176d2a86979a38ebe6352337b2e32b85da",
+  "prediction_analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": [
+        165,
+        252,
+        1305,
+        897
+      ],
+      "context_guard_requested": true
+    }
+  },
+  "primary": {
+    "tp": 30,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.967741935483871,
+    "recall": 1.0,
+    "f1": 0.9836065573770492,
+    "tolerance_frames": 3,
+    "matches": [
+      {
+        "reference_frame": 104,
+        "predicted_frame": 104,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 297,
+        "predicted_frame": 297,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 345,
+        "predicted_frame": 345,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 486,
+        "predicted_frame": 486,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 516,
+        "predicted_frame": 516,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 568,
+        "predicted_frame": 568,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 600,
+        "predicted_frame": 600,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 633,
+        "predicted_frame": 633,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 664,
+        "predicted_frame": 664,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 685,
+        "predicted_frame": 685,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 714,
+        "predicted_frame": 714,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1247,
+        "predicted_frame": 1247,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1273,
+        "predicted_frame": 1273,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1293,
+        "predicted_frame": 1293,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1325,
+        "predicted_frame": 1325,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1337,
+        "predicted_frame": 1337,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1357,
+        "predicted_frame": 1357,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1373,
+        "predicted_frame": 1373,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1536,
+        "predicted_frame": 1536,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1575,
+        "predicted_frame": 1575,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1607,
+        "predicted_frame": 1607,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1668,
+        "predicted_frame": 1668,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1718,
+        "predicted_frame": 1718,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1863,
+        "predicted_frame": 1863,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1963,
+        "predicted_frame": 1963,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2028,
+        "predicted_frame": 2028,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2076,
+        "predicted_frame": 2076,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2138,
+        "predicted_frame": 2138,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2215,
+        "predicted_frame": 2215,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2396,
+        "predicted_frame": 2396,
+        "offset_frames": 0
+      }
+    ],
+    "missed_frames": [],
+    "extra_frames": [
+      2273
+    ],
+    "correct_no_cuts": false
+  },
+  "exact": {
+    "tp": 30,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.967741935483871,
+    "recall": 1.0,
+    "f1": 0.9836065573770492,
+    "tolerance_frames": 0,
+    "matches": [
+      {
+        "reference_frame": 104,
+        "predicted_frame": 104,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 297,
+        "predicted_frame": 297,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 345,
+        "predicted_frame": 345,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 486,
+        "predicted_frame": 486,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 516,
+        "predicted_frame": 516,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 568,
+        "predicted_frame": 568,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 600,
+        "predicted_frame": 600,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 633,
+        "predicted_frame": 633,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 664,
+        "predicted_frame": 664,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 685,
+        "predicted_frame": 685,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 714,
+        "predicted_frame": 714,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1247,
+        "predicted_frame": 1247,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1273,
+        "predicted_frame": 1273,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1293,
+        "predicted_frame": 1293,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1325,
+        "predicted_frame": 1325,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1337,
+        "predicted_frame": 1337,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1357,
+        "predicted_frame": 1357,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1373,
+        "predicted_frame": 1373,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1536,
+        "predicted_frame": 1536,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1575,
+        "predicted_frame": 1575,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1607,
+        "predicted_frame": 1607,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1668,
+        "predicted_frame": 1668,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1718,
+        "predicted_frame": 1718,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1863,
+        "predicted_frame": 1863,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1963,
+        "predicted_frame": 1963,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2028,
+        "predicted_frame": 2028,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2076,
+        "predicted_frame": 2076,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2138,
+        "predicted_frame": 2138,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2215,
+        "predicted_frame": 2215,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2396,
+        "predicted_frame": 2396,
+        "offset_frames": 0
+      }
+    ],
+    "missed_frames": [],
+    "extra_frames": [
+      2273
+    ],
+    "correct_no_cuts": false
+  },
+  "annotation_sha256": "9f5c7c0e36f314dc0bcf015f76f47902918e7508cd9cd12d0990c5ad485a797a",
+  "prediction_sha256": "4999ce9493e96754fc021d340a058543f9fbfe2d5c1e7b3414d4882e204ce9d4",
+  "reference_provenance": {
+    "reference_method": "user_coarse_list_plus_assistant_adjacent_and_temporal_frame_review",
+    "user_reported_seconds": [
+      3.0,
+      10.0,
+      12.0,
+      16.0,
+      17.0,
+      19.0,
+      20.0,
+      21.0,
+      22.0,
+      23.0,
+      24.0,
+      41.0,
+      42.0,
+      43.0,
+      44.0,
+      45.0,
+      45.5,
+      46.0,
+      51.0,
+      52.0,
+      53.0,
+      56.0,
+      57.0,
+      62.0,
+      65.0,
+      67.0,
+      69.0,
+      71.0,
+      74.0,
+      80.0
+    ],
+    "full_video_review_context": "User supplied this list in response to instruction to watch the entire Vlog1 clip; approximate times under prior agreed workflow.",
+    "user_original_message": "3 10 12 16 17 19 20 21 22 23 24 41 42 43 44 45 45.5 46 51 52 53 56 57 62 65 67 69 71 74 80 （这也太多切屏了这就是vlog吗）",
+    "exact_frame_positions_confirmed_by_user": false,
+    "assistant_adjacent_frame_visual_check": true,
+    "assistant_independent_full_video_completeness_check": false,
+    "localization_review": "review-20260929/proposal-review.json",
+    "recorded_at": "2026-09-29T07:11:52.251249+00:00"
+  },
+  "experiment_group": "development"
+}

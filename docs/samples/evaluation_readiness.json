@@ -1,0 +1,88 @@
+{
+  "format_version": "1",
+  "metric": "micro F1, one-to-one internal cut matching",
+  "manifest_sha256": "0d1395ee5e964bafbff5b08706eafe01c33706defa866b1ef8c87115185051c2",
+  "tolerance_frames": 3,
+  "tolerance_seconds": 0.1,
+  "registered_videos": 4,
+  "scored_videos": 0,
+  "pending": [
+    {
+      "id": "sucai1",
+      "reason": "category_not_eligible"
+    },
+    {
+      "id": "test1",
+      "reason": "category_not_eligible"
+    },
+    {
+      "id": "test2",
+      "reason": "category_not_eligible"
+    },
+    {
+      "id": "test3",
+      "reason": "category_not_eligible"
+    }
+  ],
+  "category_counts": {
+    "interview": 0,
+    "course": 0,
+    "vlog": 0
+  },
+  "dataset_ready": false,
+  "overall": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+  },
+  "by_category": {
+    "interview": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "course": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "vlog": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    }
+  },
+  "by_split": {
+    "development": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "evaluation": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    }
+  },
+  "shot_f1_target_met": false,
+  "week3_complete": false,
+  "videos": []
+}

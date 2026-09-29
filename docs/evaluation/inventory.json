@@ -1,0 +1,113 @@
+{
+  "date": "2026-09-28",
+  "videos": [
+    {
+      "file": "Sucai1.mp4",
+      "source_sha256": "8ef321c445c1f5d0acc4ebf4c59efb200b13428f40d26fb11a2093542aed029e",
+      "bytes": 4713672,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 960,
+            "height": 600,
+            "avg_frame_rate": "30/1"
+          },
+          {
+            "codec_type": "audio",
+            "avg_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "41.266667"
+        }
+      },
+      "category": "unknown",
+      "split": "development"
+    },
+    {
+      "file": "Test1.mp4",
+      "source_sha256": "23b305c22f0af2ddd81dbcea16faf45da0c42e9a56aaa5f28ffb47e47b0a4545",
+      "bytes": 20236055,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 544,
+            "height": 960,
+            "avg_frame_rate": "30/1"
+          },
+          {
+            "codec_type": "audio",
+            "avg_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "345.500000"
+        }
+      },
+      "category": "unknown",
+      "split": "development"
+    },
+    {
+      "file": "Test2.mp4",
+      "source_sha256": "241f089477cce0be8ff051dcdbe57db677f336c1bb86643eb52639f1f7fea417",
+      "bytes": 3894609,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 720,
+            "height": 1280,
+            "avg_frame_rate": "5000/167"
+          },
+          {
+            "codec_type": "audio",
+            "avg_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "33.400000"
+        }
+      },
+      "category": "unknown",
+      "split": "development"
+    },
+    {
+      "file": "Test3.mp4",
+      "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+      "bytes": 106416503,
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "avg_frame_rate": "60/1"
+          },
+          {
+            "codec_type": "audio",
+            "avg_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "72.600000"
+        }
+      },
+      "category": "unknown",
+      "split": "development"
+    }
+  ],
+  "excluded_derived_files": [
+    "Sucai1_normalized.mp4",
+    "Sucai1_python_normalized.mp4"
+  ]
+}

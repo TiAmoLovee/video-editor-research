@@ -1,0 +1,82 @@
+{
+  "media": {
+    "normalized_sha256": "7abbb0519af9d21a0ab535f3a53ecd3be54aa27edc58a0154ee12e23d1b408a5",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 10365,
+    "duration_seconds": 345.5
+  },
+  "source_sha256": "23b305c22f0af2ddd81dbcea16faf45da0c42e9a56aaa5f28ffb47e47b0a4545",
+  "prediction_analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": null,
+      "context_guard_requested": false
+    }
+  },
+  "primary": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "tolerance_frames": 3,
+    "matches": [],
+    "missed_frames": [],
+    "extra_frames": [],
+    "correct_no_cuts": true
+  },
+  "exact": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "tolerance_frames": 0,
+    "matches": [],
+    "missed_frames": [],
+    "extra_frames": [],
+    "correct_no_cuts": true
+  },
+  "annotation_sha256": "ccbd7dbc77d1ae583f58e43ffbcb6a710d2e64feb550c2abdfca0c0c7e005da4",
+  "prediction_sha256": "1f9d2f09b93ef0d1ffd2eb908315caaa6398f2f7c1dca292d82dba6e8b371c9a",
+  "reference_provenance": {
+    "reference_method": "user_recollection_no_cuts_plus_assistant_spot_check",
+    "user_original_message": "应该是都结束了吧 我记得我Sucai Test1 Test2都是没有切换镜头的 这个你也可以记录一下",
+    "no_cut_recording_requested_by_user": true,
+    "fresh_full_video_rewatch_confirmed_by_user": false,
+    "assistant_sampled_frames": [
+      0,
+      1800,
+      4500,
+      7200,
+      10364
+    ],
+    "assistant_independent_full_video_completeness_check": false,
+    "evidence": "review-20260929/prediction-and-context.jpg",
+    "recorded_at": "2026-09-29T09:20:08.774465+00:00"
+  },
+  "experiment_group": "previous_validation_regression"
+}

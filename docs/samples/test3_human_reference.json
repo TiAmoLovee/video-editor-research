@@ -1,0 +1,91 @@
+{
+  "reference_version": "0.1.0",
+  "reference_id": "test3-human-20260928-v1",
+  "kind": "human_transcription_reference",
+  "media": {
+    "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+    "normalized_sha256": "8ebfb3551bac936974775529113faedf86e5993b50b1cf87d72aae395763d983",
+    "duration_seconds": 72.6,
+    "time_reference": "normalized_video",
+    "has_audio": true
+  },
+  "provenance": {
+    "transcriber": "user",
+    "method": "user reports typing while watching the video",
+    "source_filename": "人手翻译.json",
+    "source_file_sha256": "ff5ac16e20405efb77ceb222bc92146a1a99865ff08892e374f476bcbb108a7c",
+    "transcribed_text_preserved_verbatim": true,
+    "independent_listening_by_assistant": false
+  },
+  "timing_status": "user_verified_block_ranges",
+  "timing_confirmation": {
+    "source": "user reply in this conversation",
+    "text": "文字和时间都核对过",
+    "scope": "five block start/end ranges; no per-word reference supplied"
+  },
+  "coverage_status": "user_supplied_text; completeness_not_independently_verified",
+  "text": "一夜之间 人类就完了 真的真的超级外星文明来了你怎么判断它是有智能的 你往桌子上放一个蚂蚁它能判断我们俩是有智能的吗判断不出来而且你进一步想想将来我们和人工智能也要面对这种局面 签着了 签着了 签着了我说 同志们啊今儿在自贡刘慈欣三体二十周年签售会 啊这人山人海啊这里边都在踩破头了给大家签了那么十本然后给咱小伙伴抽奖用的 今天赶这个签售会呢我们这边也是托人找到刘慈欣老师说他其实忙完的时候呢能来抽空跟我们聊两句看看据说刘慈欣老师是个超i的人看看抓紧这几分钟时间能不能让他聊这点事",
+  "source_blocks": [
+    {
+      "source_block_id": "s000001",
+      "text": "一夜之间 人类就完了 真的真的超级外星文明来了你怎么判断它是有智能的 你往桌子上放一个蚂蚁它能判断我们俩是有智能的吗",
+      "user_verified_range": {
+        "start": 1.43,
+        "end": 10.59
+      },
+      "timing_manually_verified": true
+    },
+    {
+      "source_block_id": "s000002",
+      "text": "判断不出来而且你进一步想想将来我们和人工智能也要面对这种局面 签着了 签着了 签着了我说 同志们啊",
+      "user_verified_range": {
+        "start": 10.59,
+        "end": 22.52
+      },
+      "timing_manually_verified": true
+    },
+    {
+      "source_block_id": "s000003",
+      "text": "今儿在自贡刘慈欣三体二十周年签售会 啊这人山人海啊这里边都在踩破头了给大家签了那么十本然后给咱小伙",
+      "user_verified_range": {
+        "start": 22.52,
+        "end": 37.41
+      },
+      "timing_manually_verified": true
+    },
+    {
+      "source_block_id": "s000004",
+      "text": "伴抽奖用的 今天赶这个签售会呢我们这边也是托人找到刘慈欣老师说他其实忙完的时候呢能来抽空跟我们聊两句",
+      "user_verified_range": {
+        "start": 37.41,
+        "end": 48.43
+      },
+      "timing_manually_verified": true
+    },
+    {
+      "source_block_id": "s000005",
+      "text": "看看据说刘慈欣老师是个超i的人看看抓紧这几分钟时间能不能让他聊这点事",
+      "user_verified_range": {
+        "start": 48.57,
+        "end": 56.05
+      },
+      "timing_manually_verified": true
+    }
+  ],
+  "excluded_inherited_fields": [
+    "status",
+    "checks",
+    "counts",
+    "alignment_adjustments",
+    "remaining_observations",
+    "limits",
+    "last_word_end"
+  ],
+  "notes": [
+    "原文完整保留，包括“超i”、口语和重复；未擅自润色、纠错或补充标点。",
+    "原文件沿用旧核验记录的字段；自动 checks/counts 不是人工标注结果。",
+    "用户确认已核对五个片段的文字和起止时间；未提供逐词时间，不能据此验收词级 ≤0.3 秒。",
+    "“小伙／伴”等跨块词语在全文比较时连接，不作为参考文本错误。",
+    "本参考用于评估；不要作为识别提示词、热词或训练输入后再声称同一片段是独立测试集。"
+  ]
+}

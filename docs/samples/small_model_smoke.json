@@ -1,0 +1,454 @@
+[
+  {
+    "source_name": "no_audio.mp4",
+    "media": {
+      "normalized_sha256": "78e21299b40ede172baa2054b9de961fdd04f9b90aad63814764ca89fe2fcd0b",
+      "time_reference": "normalized_video",
+      "fps": 30,
+      "total_frames": 91,
+      "duration_seconds": 3.033333333333333,
+      "has_audio": false
+    },
+    "word_count": 0,
+    "sentences": [],
+    "analyzer": {
+      "status": "no_audio",
+      "tool": "faster-whisper",
+      "version": "1.2.1",
+      "model": "Systran/faster-whisper-small",
+      "parameters": {
+        "beam_size": 5,
+        "temperature": 0.0,
+        "word_timestamps": true,
+        "vad_filter": true,
+        "vad_parameters": {
+          "threshold": 0.5,
+          "neg_threshold": 0.35,
+          "min_speech_duration_ms": 0,
+          "min_silence_duration_ms": 500,
+          "speech_pad_ms": 200
+        },
+        "condition_on_previous_text": false,
+        "no_speech_threshold": 0.6,
+        "log_prob_threshold": -1.0,
+        "compression_ratio_threshold": 2.4,
+        "task": "transcribe",
+        "requested_language": null,
+        "detected_language": null,
+        "language_probability": null,
+        "device": "cpu",
+        "compute_type": "int8",
+        "cpu_threads": 4,
+        "num_workers": 1,
+        "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+        "model_identity": null,
+        "digital_silence_skipped": false,
+        "speech_gate": null,
+        "text_normalization": {
+          "tool": "opencc-python-reimplemented",
+          "version": "0.1.7",
+          "config": "t2s",
+          "applied": false,
+          "raw_segments_preserved": true
+        },
+        "ctranslate2_version": "4.6.0",
+        "sentence_rules": {
+          "rule_version": "1",
+          "max_characters": 50,
+          "max_seconds": 15.0,
+          "gap_seconds": 1.0
+        },
+        "alignment_adjustments": {
+          "zero_duration_words_merged": 0,
+          "boundary_words_clamped": 0
+        }
+      }
+    },
+    "pipeline_zip_check": true,
+    "pipeline_download_equality": true
+  },
+  {
+    "source_name": "silence.mp4",
+    "media": {
+      "normalized_sha256": "715f246d6286efb93cb075012619341922896822a4297bbd12374b30a5a0c874",
+      "time_reference": "normalized_video",
+      "fps": 30,
+      "total_frames": 91,
+      "duration_seconds": 3.033333333333333,
+      "has_audio": true
+    },
+    "word_count": 0,
+    "sentences": [],
+    "analyzer": {
+      "status": "ok",
+      "tool": "faster-whisper",
+      "version": "1.2.1",
+      "model": "Systran/faster-whisper-small",
+      "parameters": {
+        "beam_size": 5,
+        "temperature": 0.0,
+        "word_timestamps": true,
+        "vad_filter": true,
+        "vad_parameters": {
+          "threshold": 0.5,
+          "neg_threshold": 0.35,
+          "min_speech_duration_ms": 0,
+          "min_silence_duration_ms": 500,
+          "speech_pad_ms": 200
+        },
+        "condition_on_previous_text": false,
+        "no_speech_threshold": 0.6,
+        "log_prob_threshold": -1.0,
+        "compression_ratio_threshold": 2.4,
+        "task": "transcribe",
+        "requested_language": null,
+        "detected_language": null,
+        "language_probability": null,
+        "device": "cpu",
+        "compute_type": "int8",
+        "cpu_threads": 4,
+        "num_workers": 1,
+        "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+        "model_identity": null,
+        "digital_silence_skipped": true,
+        "speech_gate": null,
+        "text_normalization": {
+          "tool": "opencc-python-reimplemented",
+          "version": "0.1.7",
+          "config": "t2s",
+          "applied": false,
+          "raw_segments_preserved": true
+        },
+        "ctranslate2_version": "4.6.0",
+        "sentence_rules": {
+          "rule_version": "1",
+          "max_characters": 50,
+          "max_seconds": 15.0,
+          "gap_seconds": 1.0
+        },
+        "alignment_adjustments": {
+          "zero_duration_words_merged": 0,
+          "boundary_words_clamped": 0
+        }
+      }
+    },
+    "pipeline_zip_check": true,
+    "pipeline_download_equality": true
+  },
+  {
+    "source_name": "public-chinese-demo.mp4",
+    "media": {
+      "normalized_sha256": "29f0718d4bf17301a1c4084b386680fdd557d05634bc4ba718404b8644461859",
+      "time_reference": "normalized_video",
+      "fps": 30,
+      "total_frames": 220,
+      "duration_seconds": 7.333333333333333,
+      "has_audio": true
+    },
+    "word_count": 12,
+    "sentences": [
+      {
+        "id": "s000001",
+        "start": 0.57,
+        "end": 5.01,
+        "text": "开放时间早上9点至下午5点",
+        "word_ids": [
+          "w000001",
+          "w000002",
+          "w000003",
+          "w000004",
+          "w000005",
+          "w000006",
+          "w000007",
+          "w000008",
+          "w000009",
+          "w000010",
+          "w000011",
+          "w000012"
+        ]
+      }
+    ],
+    "analyzer": {
+      "status": "ok",
+      "tool": "faster-whisper",
+      "version": "1.2.1",
+      "model": "Systran/faster-whisper-small",
+      "parameters": {
+        "beam_size": 5,
+        "temperature": 0.0,
+        "word_timestamps": true,
+        "vad_filter": true,
+        "vad_parameters": {
+          "threshold": 0.5,
+          "neg_threshold": 0.35,
+          "min_speech_duration_ms": 0,
+          "min_silence_duration_ms": 500,
+          "speech_pad_ms": 200
+        },
+        "condition_on_previous_text": false,
+        "no_speech_threshold": 0.6,
+        "log_prob_threshold": -1.0,
+        "compression_ratio_threshold": 2.4,
+        "task": "transcribe",
+        "requested_language": null,
+        "detected_language": "zh",
+        "language_probability": 0.9979578256607056,
+        "device": "cpu",
+        "compute_type": "int8",
+        "cpu_threads": 4,
+        "num_workers": 1,
+        "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+        "model_identity": {
+          "repository": "Systran/faster-whisper-small",
+          "revision": "536b0662742c02347bc0e980a01041f333bce120",
+          "sha256": {
+            "config.json": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828",
+            "model.bin": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+            "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+            "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+          }
+        },
+        "digital_silence_skipped": false,
+        "speech_gate": {
+          "tool": "Silero VAD",
+          "model": "silero_vad_v6.onnx",
+          "model_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2",
+          "parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "speech_intervals": [
+            {
+              "start": 0.568,
+              "end": 5.288
+            }
+          ],
+          "retained_seconds": 4.72,
+          "no_speech_skipped": false
+        },
+        "text_normalization": {
+          "tool": "opencc-python-reimplemented",
+          "version": "0.1.7",
+          "config": "t2s",
+          "applied": true,
+          "raw_segments_preserved": true
+        },
+        "ctranslate2_version": "4.6.0",
+        "sentence_rules": {
+          "rule_version": "1",
+          "max_characters": 50,
+          "max_seconds": 15.0,
+          "gap_seconds": 1.0
+        },
+        "alignment_adjustments": {
+          "zero_duration_words_merged": 0,
+          "boundary_words_clamped": 0
+        }
+      }
+    },
+    "pipeline_zip_check": true,
+    "pipeline_download_equality": true
+  },
+  {
+    "source_name": "chinese-quiet.mp4",
+    "media": {
+      "normalized_sha256": "8596825e855a1e8fda949138348462de3941d6fa544abe68140a481c2708555d",
+      "time_reference": "normalized_video",
+      "fps": 30,
+      "total_frames": 220,
+      "duration_seconds": 7.333333333333333,
+      "has_audio": true
+    },
+    "word_count": 12,
+    "sentences": [
+      {
+        "id": "s000001",
+        "start": 0.57,
+        "end": 5.01,
+        "text": "开放时间早上9点至下午5点",
+        "word_ids": [
+          "w000001",
+          "w000002",
+          "w000003",
+          "w000004",
+          "w000005",
+          "w000006",
+          "w000007",
+          "w000008",
+          "w000009",
+          "w000010",
+          "w000011",
+          "w000012"
+        ]
+      }
+    ],
+    "analyzer": {
+      "status": "ok",
+      "tool": "faster-whisper",
+      "version": "1.2.1",
+      "model": "Systran/faster-whisper-small",
+      "parameters": {
+        "beam_size": 5,
+        "temperature": 0.0,
+        "word_timestamps": true,
+        "vad_filter": true,
+        "vad_parameters": {
+          "threshold": 0.5,
+          "neg_threshold": 0.35,
+          "min_speech_duration_ms": 0,
+          "min_silence_duration_ms": 500,
+          "speech_pad_ms": 200
+        },
+        "condition_on_previous_text": false,
+        "no_speech_threshold": 0.6,
+        "log_prob_threshold": -1.0,
+        "compression_ratio_threshold": 2.4,
+        "task": "transcribe",
+        "requested_language": null,
+        "detected_language": "zh",
+        "language_probability": 0.9970689415931702,
+        "device": "cpu",
+        "compute_type": "int8",
+        "cpu_threads": 4,
+        "num_workers": 1,
+        "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+        "model_identity": {
+          "repository": "Systran/faster-whisper-small",
+          "revision": "536b0662742c02347bc0e980a01041f333bce120",
+          "sha256": {
+            "config.json": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828",
+            "model.bin": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+            "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+            "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+          }
+        },
+        "digital_silence_skipped": false,
+        "speech_gate": {
+          "tool": "Silero VAD",
+          "model": "silero_vad_v6.onnx",
+          "model_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2",
+          "parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "speech_intervals": [
+            {
+              "start": 0.568,
+              "end": 5.32
+            }
+          ],
+          "retained_seconds": 4.752,
+          "no_speech_skipped": false
+        },
+        "text_normalization": {
+          "tool": "opencc-python-reimplemented",
+          "version": "0.1.7",
+          "config": "t2s",
+          "applied": true,
+          "raw_segments_preserved": true
+        },
+        "ctranslate2_version": "4.6.0",
+        "sentence_rules": {
+          "rule_version": "1",
+          "max_characters": 50,
+          "max_seconds": 15.0,
+          "gap_seconds": 1.0
+        },
+        "alignment_adjustments": {
+          "zero_duration_words_merged": 0,
+          "boundary_words_clamped": 0
+        }
+      }
+    },
+    "pipeline_zip_check": null,
+    "pipeline_download_equality": null
+  },
+  {
+    "source_name": "clip_003.mp4",
+    "media": {
+      "normalized_sha256": "cb37220c0bc8eef0373d02453dc693946e4eeae7d88b6dea7802184287002683",
+      "time_reference": "normalized_video",
+      "fps": 30,
+      "total_frames": 378,
+      "duration_seconds": 12.6,
+      "has_audio": true
+    },
+    "word_count": 0,
+    "sentences": [],
+    "analyzer": {
+      "status": "ok",
+      "tool": "faster-whisper",
+      "version": "1.2.1",
+      "model": "Systran/faster-whisper-small",
+      "parameters": {
+        "beam_size": 5,
+        "temperature": 0.0,
+        "word_timestamps": true,
+        "vad_filter": true,
+        "vad_parameters": {
+          "threshold": 0.5,
+          "neg_threshold": 0.35,
+          "min_speech_duration_ms": 0,
+          "min_silence_duration_ms": 500,
+          "speech_pad_ms": 200
+        },
+        "condition_on_previous_text": false,
+        "no_speech_threshold": 0.6,
+        "log_prob_threshold": -1.0,
+        "compression_ratio_threshold": 2.4,
+        "task": "transcribe",
+        "requested_language": null,
+        "detected_language": null,
+        "language_probability": null,
+        "device": "cpu",
+        "compute_type": "int8",
+        "cpu_threads": 4,
+        "num_workers": 1,
+        "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+        "model_identity": null,
+        "digital_silence_skipped": false,
+        "speech_gate": {
+          "tool": "Silero VAD",
+          "model": "silero_vad_v6.onnx",
+          "model_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2",
+          "parameters": {
+            "threshold": 0.5,
+            "neg_threshold": 0.35,
+            "min_speech_duration_ms": 0,
+            "min_silence_duration_ms": 500,
+            "speech_pad_ms": 200
+          },
+          "speech_intervals": [],
+          "retained_seconds": 0.0,
+          "no_speech_skipped": true
+        },
+        "text_normalization": {
+          "tool": "opencc-python-reimplemented",
+          "version": "0.1.7",
+          "config": "t2s",
+          "applied": false,
+          "raw_segments_preserved": true
+        },
+        "ctranslate2_version": "4.6.0",
+        "sentence_rules": {
+          "rule_version": "1",
+          "max_characters": 50,
+          "max_seconds": 15.0,
+          "gap_seconds": 1.0
+        },
+        "alignment_adjustments": {
+          "zero_duration_words_merged": 0,
+          "boundary_words_clamped": 0
+        }
+      }
+    },
+    "pipeline_zip_check": null,
+    "pipeline_download_equality": null
+  }
+]

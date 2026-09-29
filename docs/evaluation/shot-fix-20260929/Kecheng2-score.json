@@ -1,0 +1,90 @@
+{
+  "media": {
+    "normalized_sha256": "70ca2339a268aea5a86f0f72bef36401c4d02ca0229907cba38b942356de36a0",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 1599,
+    "duration_seconds": 53.3
+  },
+  "source_sha256": "1cde45d228a4dc59ad422ac2f1bd3cc78abc2b56d79d18a84923ede11a41ecc8",
+  "prediction_analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": [
+        165,
+        252,
+        1305,
+        897
+      ],
+      "context_guard_requested": true
+    }
+  },
+  "primary": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "tolerance_frames": 3,
+    "matches": [],
+    "missed_frames": [],
+    "extra_frames": [],
+    "correct_no_cuts": true
+  },
+  "exact": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "tolerance_frames": 0,
+    "matches": [],
+    "missed_frames": [],
+    "extra_frames": [],
+    "correct_no_cuts": true
+  },
+  "annotation_sha256": "b08bff021424cf97a172e53f366597c9928364c922280d3e0e9f44cf37f25da0",
+  "prediction_sha256": "92aa5fbc001d8602c18eb515dc4c57743882015cabc0c16f180b22d0d0ee705c",
+  "reference_provenance": {
+    "reference_method": "user_confirmed_no_content_cuts_plus_assistant_prediction_spot_check",
+    "user_confirmation": "没有切换",
+    "confirmation_context": "User replied to the request to annotate Kecheng2.",
+    "no_content_cuts_confirmed_by_user": true,
+    "assistant_checked_prediction_frames": [
+      49,
+      1524
+    ],
+    "assistant_context_sample_frames": [
+      300,
+      750,
+      1200,
+      1598
+    ],
+    "assistant_independent_full_video_completeness_check": false,
+    "evidence": "review-20260929/prediction-and-context.jpg",
+    "recorded_at": "2026-09-29T06:43:27.736945+00:00"
+  },
+  "experiment_group": "previous_validation_regression"
+}

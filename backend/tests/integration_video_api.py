@@ -9,6 +9,8 @@ from urllib.parse import urlsplit
 from uuid import uuid4
 import zipfile
 
+from clipforge.analysis.validation import validate_analysis
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -100,12 +102,24 @@ def main() -> int:
                     raise ValueError("ZIP integrity check failed")
                 plan = json.loads(archive.read("clip_plan.json"))
                 names = set(archive.namelist())
-                expected = {"media_meta.json", "normalized_media_meta.json", "clip_plan.json"}
+                expected = {"media_meta.json", "normalized_media_meta.json", "clip_plan.json", "shots.json", "vad.json", "asr.json", "analysis.json"}
                 expected.update(clip["file"] for clip in plan["clips"])
                 if names != expected or len(plan["clips"]) != count:
                     raise ValueError("ZIP files do not match clip plan")
                 if sum(clip["frame_count"] for clip in plan["clips"]) != plan["total_frames"]:
                     raise ValueError("Frame counts do not match")
+                shots = json.loads(archive.read("shots.json"))
+                if (shots["artifact_kind"] != "shot_analysis"
+                        or shots["media"]["total_frames"] != plan["total_frames"]
+                        or not shots["shots"] or shots["shots"][0]["start"] != 0
+                        or shots["shots"][-1]["end"] != plan["total_frames"] / 30):
+                    raise ValueError("Shot analysis does not cover the video")
+                analysis = json.loads(archive.read("analysis.json"))
+                schema = json.loads((Path(__file__).resolve().parents[2] / "schemas/analysis.schema.json").read_text(encoding="utf-8"))
+                validate_analysis(analysis, schema)
+                if analysis["media"]["normalized_sha256"] != shots["media"]["normalized_sha256"]:
+                    raise ValueError("Analysis results refer to different media")
+                print(f"analysis: {len(analysis['words'])} word entries / {len(analysis['sentences'])} sentences")
                 print(f"clip_frames: {[clip['frame_count'] for clip in plan['clips']]}")
         except BaseException:
             if created:

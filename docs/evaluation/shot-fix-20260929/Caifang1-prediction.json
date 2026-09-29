@@ -1,0 +1,129 @@
+{
+  "schema_version": "0.1.0",
+  "artifact_kind": "shot_analysis",
+  "result_kind": "measured",
+  "media": {
+    "normalized_sha256": "cdab04186f11dafaa0e50168e24cb5696741bac333ba8ed4b817a3b662dde5c2",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 2624,
+    "duration_seconds": 87.46666666666667
+  },
+  "analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": [
+        165,
+        252,
+        1305,
+        897
+      ],
+      "context_guard_requested": true
+    }
+  },
+  "decoder": {
+    "backend": "opencv",
+    "version": "4.12.0.88",
+    "frame_position_checked": true
+  },
+  "cut_frames": [
+    10,
+    113,
+    186,
+    269,
+    360,
+    660,
+    759,
+    850,
+    1091,
+    1476,
+    1584,
+    2126,
+    2605
+  ],
+  "shots": [
+    {
+      "start": 0.0,
+      "end": 0.3333333333333333
+    },
+    {
+      "start": 0.3333333333333333,
+      "end": 3.7666666666666666
+    },
+    {
+      "start": 3.7666666666666666,
+      "end": 6.2
+    },
+    {
+      "start": 6.2,
+      "end": 8.966666666666667
+    },
+    {
+      "start": 8.966666666666667,
+      "end": 12.0
+    },
+    {
+      "start": 12.0,
+      "end": 22.0
+    },
+    {
+      "start": 22.0,
+      "end": 25.3
+    },
+    {
+      "start": 25.3,
+      "end": 28.333333333333332
+    },
+    {
+      "start": 28.333333333333332,
+      "end": 36.36666666666667
+    },
+    {
+      "start": 36.36666666666667,
+      "end": 49.2
+    },
+    {
+      "start": 49.2,
+      "end": 52.8
+    },
+    {
+      "start": 52.8,
+      "end": 70.86666666666666
+    },
+    {
+      "start": 70.86666666666666,
+      "end": 86.83333333333333
+    },
+    {
+      "start": 86.83333333333333,
+      "end": 87.46666666666667
+    }
+  ],
+  "elapsed_seconds": 84.310324,
+  "diagnostics": {
+    "context_guard_suppressed_frames": [
+      40,
+      2583
+    ]
+  }
+}

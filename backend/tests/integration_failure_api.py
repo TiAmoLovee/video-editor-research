@@ -99,7 +99,7 @@ def main():
     with zipfile.ZipFile(io.BytesIO(raw)) as archive:
         assert archive.testzip() is None
         plan = json.loads(archive.read('clip_plan.json'))
-        names = {'media_meta.json', 'normalized_media_meta.json', 'clip_plan.json'}
+        names = {'media_meta.json', 'normalized_media_meta.json', 'clip_plan.json', 'shots.json', 'vad.json', 'asr.json', 'analysis.json'}
         names.update(c['file'] for c in plan['clips'])
         assert len(archive.namelist()) == len(names) and set(archive.namelist()) == names
         assert len(plan['clips']) == recovery['result']['clip_count'] > 0

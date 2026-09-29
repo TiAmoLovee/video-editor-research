@@ -1,0 +1,239 @@
+{
+  "decision": "do_not_promote",
+  "reason": "Vlog2 recovers one cut but Vlog3 gains one false positive; negligible aggregate gain. Keep current deployed configuration.",
+  "old_all": {
+    "tp": 169,
+    "fp": 48,
+    "fn": 8,
+    "precision": 0.7788018433179723,
+    "recall": 0.9548022598870056,
+    "f1": 0.8578680203045685,
+    "videos": 12
+  },
+  "candidate_all": {
+    "tp": 170,
+    "fp": 49,
+    "fn": 7,
+    "precision": 0.776255707762557,
+    "recall": 0.96045197740113,
+    "f1": 0.8585858585858586,
+    "videos": 12
+  },
+  "all_cases": [
+    {
+      "case": "Caifang1",
+      "old": {
+        "tp": 10,
+        "fp": 3,
+        "fn": 0,
+        "f1": 0.8695652173913043
+      },
+      "candidate": {
+        "tp": 10,
+        "fp": 3,
+        "fn": 0,
+        "f1": 0.8695652173913043
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Caifang2",
+      "old": {
+        "tp": 18,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "candidate": {
+        "tp": 18,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Caifang3",
+      "old": {
+        "tp": 18,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "candidate": {
+        "tp": 18,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Kecheng1",
+      "old": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Kecheng2",
+      "old": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Kecheng3",
+      "old": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Sucai1",
+      "old": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 1,
+        "f1": 0.6666666666666666
+      },
+      "candidate": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 1,
+        "f1": 0.6666666666666666
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Test1",
+      "old": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Test2",
+      "old": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "f1": null
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Vlog1",
+      "old": {
+        "tp": 30,
+        "fp": 1,
+        "fn": 0,
+        "f1": 0.9836065573770492
+      },
+      "candidate": {
+        "tp": 30,
+        "fp": 1,
+        "fn": 0,
+        "f1": 0.9836065573770492
+      },
+      "new_extra_frames": [],
+      "recovered_frames": []
+    },
+    {
+      "case": "Vlog2",
+      "old": {
+        "tp": 48,
+        "fp": 20,
+        "fn": 3,
+        "f1": 0.8067226890756303
+      },
+      "candidate": {
+        "tp": 49,
+        "fp": 20,
+        "fn": 2,
+        "f1": 0.8166666666666667
+      },
+      "new_extra_frames": [],
+      "recovered_frames": [
+        1932
+      ]
+    },
+    {
+      "case": "Vlog3",
+      "old": {
+        "tp": 43,
+        "fp": 23,
+        "fn": 4,
+        "f1": 0.7610619469026548
+      },
+      "candidate": {
+        "tp": 43,
+        "fp": 24,
+        "fn": 4,
+        "f1": 0.7543859649122807
+      },
+      "new_extra_frames": [
+        2592
+      ],
+      "recovered_frames": []
+    }
+  ],
+  "backend_tests": {
+    "count": 163,
+    "passed": true,
+    "scope": "candidate 5-frame upload configuration"
+  },
+  "ruff": "passed project configured rules",
+  "independent_holdout": false
+}
