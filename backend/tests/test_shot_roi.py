@@ -25,7 +25,8 @@ class ShotRoiTests(unittest.TestCase):
             detector = stack.enter_context(patch('clipforge.analysis.shots._detect_frames',
                                                  return_value=([(0, 30), (30, 90)], 90)))
             result = detect_shots(source, crop=[40, 48, 120, 96])
-            detector.assert_called_once_with(source, 27.0, 15, 1, crop=(40, 48, 120, 96))
+            # detect_shots expands Windows short paths before calling the detector.
+            detector.assert_called_once_with(source.resolve(), 27.0, 15, 1, crop=(40, 48, 120, 96))
             self.assertEqual(result['cut_frames'], [30])
             self.assertEqual(result['shots'], [{'start': 0, 'end': 1}, {'start': 1, 'end': 3}])
             self.assertEqual(result['analyzer']['parameters']['crop_xyxy_exclusive'], [40, 48, 120, 96])

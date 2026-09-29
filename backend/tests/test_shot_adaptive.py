@@ -27,7 +27,8 @@ class AdaptiveShotTests(unittest.TestCase):
             detector = stack.enter_context(patch('clipforge.analysis.shots._detect_frames',
                                                  return_value=([(0, 30), (30, 90)], 90)))
             result = detect_shots(source, method='adaptive', min_scene_len=6)
-            detector.assert_called_once_with(source, 27.0, 6, 1, crop=None, method='adaptive',
+            # detect_shots expands Windows short paths before calling the detector.
+            detector.assert_called_once_with(source.resolve(), 27.0, 6, 1, crop=None, method='adaptive',
                                              adaptive_threshold=3.0, min_content_val=15.0, window_width=2)
             self.assertEqual(result['analyzer']['tool'], 'PySceneDetect.AdaptiveDetector')
             parameters = result['analyzer']['parameters']
