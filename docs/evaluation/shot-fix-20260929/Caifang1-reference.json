@@ -1,0 +1,51 @@
+{
+  "format_version": "1",
+  "annotation_kind": "human_shot_boundaries",
+  "source_name": "Caifang1.mp4",
+  "source_sha256": "22f2494c450b67c273f3ac4d2ef9cb4de9952911610e6f3b1f4b35b05ac62dd9",
+  "media": {
+    "normalized_sha256": "cdab04186f11dafaa0e50168e24cb5696741bac333ba8ed4b817a3b662dde5c2",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 2624,
+    "duration_seconds": 87.46666666666667
+  },
+  "status": "verified",
+  "reviewer": "用户：完整视频粗略切点；助手：对应相邻帧视觉复核",
+  "reviewed_at": "2026-09-29",
+  "cut_frames": [
+    113,
+    186,
+    269,
+    360,
+    660,
+    759,
+    850,
+    1091,
+    1476,
+    1584
+  ],
+  "notes": "用户明确确认完整观看且提供的是大致时间。使用用户提供的十个事件作为完整切点清单，由助手检查对应相邻帧后定位；24秒提示对应25.300秒切换。不是用户逐帧独立确认，不是独立双人标注。按既定规则标注播放器内容的镜头切换，不把 OBS 窗口显示/隐藏计作内容镜头。完整性依据用户确认，助手没有独立完成全片逐帧漏标审查。",
+  "provenance": {
+    "reference_method": "user_coarse_full_video_review_plus_assistant_frame_localization",
+    "user_original_times_seconds": [
+      3.5,
+      6,
+      9,
+      12,
+      22,
+      24,
+      28,
+      36,
+      49,
+      53
+    ],
+    "user_confirmation": "是的我都查看过了 没有任何毛病 是大致时间",
+    "full_video_review_confirmed_by_user": true,
+    "exact_frame_positions_confirmed_by_user": false,
+    "assistant_adjacent_frame_visual_check": true,
+    "assistant_independent_full_video_completeness_check": false,
+    "localization_review": "review-20260929/proposal-review.json",
+    "recorded_at": "2026-09-29T04:32:10.603190+00:00"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.1.0",
+  "artifact_kind": "shot_analysis",
+  "result_kind": "measured",
+  "media": {
+    "normalized_sha256": "b130cd4fb634628d2310f3ed55c97a5c65f348b172404738c428f847cf205518",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 3974,
+    "duration_seconds": 132.46666666666667
+  },
+  "analyzer": {
+    "status": "ok",
+    "tool": "PySceneDetect.ContentDetector",
+    "version": "0.6.7.1",
+    "model": null,
+    "parameters": {
+      "threshold": 27.0,
+      "min_scene_len_frames": 15,
+      "downscale": 1,
+      "auto_downscale": false,
+      "frame_skip": 0,
+      "weights": [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      "luma_only": false,
+      "kernel_size": null,
+      "filter_mode": "MERGE",
+      "interpolation": "LINEAR"
+    }
+  },
+  "decoder": {
+    "backend": "opencv",
+    "version": "4.12.0.88",
+    "max_decode_attempts": 0
+  },
+  "cut_frames": [
+    43,
+    3896
+  ],
+  "shots": [
+    {
+      "start": 0.0,
+      "end": 1.4333333333333333
+    },
+    {
+      "start": 1.4333333333333333,
+      "end": 129.86666666666667
+    },
+    {
+      "start": 129.86666666666667,
+      "end": 132.46666666666667
+    }
+  ],
+  "elapsed_seconds": 426.943115
+}

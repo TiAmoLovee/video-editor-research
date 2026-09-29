@@ -1,0 +1,107 @@
+{
+  "scope": "Native real small/base inference; fresh process each run; worker processing including cache key, validation, copying, ZIP and index publication. Excludes upload, queue wait and browser polling. HTTP adapters checked with TestClient, no real Celery/Docker acceptance.",
+  "source": "C:\\Users\\asus\\Desktop\\Sucai\\Test3.mp4",
+  "runs": [
+    {
+      "worker_seconds": 252.52953519999573,
+      "transcription_calls": 1,
+      "result": {
+        "task_id": "9bb08fb3-3136-4433-a7ec-fbd6d74a1259",
+        "clip_count": 3,
+        "cache_hit": false
+      },
+      "cache": {
+        "format_version": 1,
+        "hit": false,
+        "status": "miss",
+        "transcription_executed": true,
+        "reused_stages": [],
+        "key": "c550a5c1a45f89e8c311a12e6f065178888f92af4a19291b5951fc464e1354dd",
+        "worker_seconds_before_packaging": 252.131144,
+        "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+        "component_elapsed_seconds_are_original": false
+      },
+      "words": 200,
+      "analysis_sha256": "e96c2931aaccd4ea905dd80d03fe01994e98386e432fc6386da48c8dffde597a",
+      "clip_sha256": {
+        "clip_001.mp4": "1f6e973e7c77e8c536112b2d043809f0d4b25d4e7c7b9013247634d47c3807ae",
+        "clip_002.mp4": "5ff17a2093563b52356a3bb309c9f70de7b2c73cfd532d2d4db3297e539b506b",
+        "clip_003.mp4": "5a7692b87990b14dac6611760d2d683dee820434c41ab4af2160d47d76e7d737"
+      }
+    },
+    {
+      "worker_seconds": 1.3328754999965895,
+      "transcription_calls": 0,
+      "result": {
+        "task_id": "8efe98db-a9b3-4921-bf1b-5baec6d558cc",
+        "clip_count": 3,
+        "cache_hit": true
+      },
+      "cache": {
+        "format_version": 1,
+        "hit": true,
+        "status": "hit",
+        "transcription_executed": false,
+        "reused_stages": [
+          "normalizing",
+          "analyzing_shots",
+          "analyzing_speech",
+          "transcribing",
+          "combining_analysis",
+          "splitting"
+        ],
+        "key": "c550a5c1a45f89e8c311a12e6f065178888f92af4a19291b5951fc464e1354dd",
+        "reused_from_task_id": "9bb08fb3-3136-4433-a7ec-fbd6d74a1259",
+        "worker_seconds_before_packaging": 1.153331,
+        "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+        "component_elapsed_seconds_are_original": true
+      },
+      "words": 200,
+      "analysis_sha256": "e96c2931aaccd4ea905dd80d03fe01994e98386e432fc6386da48c8dffde597a",
+      "clip_sha256": {
+        "clip_001.mp4": "1f6e973e7c77e8c536112b2d043809f0d4b25d4e7c7b9013247634d47c3807ae",
+        "clip_002.mp4": "5ff17a2093563b52356a3bb309c9f70de7b2c73cfd532d2d4db3297e539b506b",
+        "clip_003.mp4": "5a7692b87990b14dac6611760d2d683dee820434c41ab4af2160d47d76e7d737"
+      }
+    },
+    {
+      "worker_seconds": 1.2910857999959262,
+      "transcription_calls": 0,
+      "result": {
+        "task_id": "31a7c21c-eae3-4fdd-95ce-da1bd43b4d1a",
+        "clip_count": 3,
+        "cache_hit": true
+      },
+      "cache": {
+        "format_version": 1,
+        "hit": true,
+        "status": "hit",
+        "transcription_executed": false,
+        "reused_stages": [
+          "normalizing",
+          "analyzing_shots",
+          "analyzing_speech",
+          "transcribing",
+          "combining_analysis",
+          "splitting"
+        ],
+        "key": "c550a5c1a45f89e8c311a12e6f065178888f92af4a19291b5951fc464e1354dd",
+        "reused_from_task_id": "9bb08fb3-3136-4433-a7ec-fbd6d74a1259",
+        "worker_seconds_before_packaging": 1.099884,
+        "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+        "component_elapsed_seconds_are_original": true
+      },
+      "words": 200,
+      "analysis_sha256": "e96c2931aaccd4ea905dd80d03fe01994e98386e432fc6386da48c8dffde597a",
+      "clip_sha256": {
+        "clip_001.mp4": "1f6e973e7c77e8c536112b2d043809f0d4b25d4e7c7b9013247634d47c3807ae",
+        "clip_002.mp4": "5ff17a2093563b52356a3bb309c9f70de7b2c73cfd532d2d4db3297e539b506b",
+        "clip_003.mp4": "5a7692b87990b14dac6611760d2d683dee820434c41ab4af2160d47d76e7d737"
+      }
+    }
+  ],
+  "median_warm_worker_reduction": 0.9948046447360812,
+  "passes_80_percent_target": true,
+  "all_analysis_and_clip_hashes_equal": true,
+  "all_download_and_zip_checks_passed": true
+}

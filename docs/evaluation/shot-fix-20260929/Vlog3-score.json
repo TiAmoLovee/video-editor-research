@@ -1,0 +1,629 @@
+{
+  "media": {
+    "normalized_sha256": "0e25c786541825730d17d5f924bc63dbc30a66b7cc62185d6816a23be0c560e4",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 4064,
+    "duration_seconds": 135.46666666666667
+  },
+  "source_sha256": "9312378476a9031098790e2c1e55d2e4d694a67ccade81dfc4a7462648995a3d",
+  "prediction_analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": [
+        165,
+        252,
+        1305,
+        897
+      ],
+      "context_guard_requested": true
+    }
+  },
+  "primary": {
+    "tp": 43,
+    "fp": 23,
+    "fn": 4,
+    "precision": 0.6515151515151515,
+    "recall": 0.9148936170212766,
+    "f1": 0.7610619469026548,
+    "tolerance_frames": 3,
+    "matches": [
+      {
+        "reference_frame": 105,
+        "predicted_frame": 105,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 147,
+        "predicted_frame": 147,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 244,
+        "predicted_frame": 244,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 351,
+        "predicted_frame": 351,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 446,
+        "predicted_frame": 446,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 541,
+        "predicted_frame": 541,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 585,
+        "predicted_frame": 585,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 854,
+        "predicted_frame": 854,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 889,
+        "predicted_frame": 889,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 916,
+        "predicted_frame": 916,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 960,
+        "predicted_frame": 960,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1005,
+        "predicted_frame": 1005,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1104,
+        "predicted_frame": 1104,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1124,
+        "predicted_frame": 1124,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1136,
+        "predicted_frame": 1136,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1324,
+        "predicted_frame": 1324,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1387,
+        "predicted_frame": 1387,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1437,
+        "predicted_frame": 1437,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1478,
+        "predicted_frame": 1478,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1557,
+        "predicted_frame": 1557,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1630,
+        "predicted_frame": 1630,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1697,
+        "predicted_frame": 1697,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1796,
+        "predicted_frame": 1796,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1925,
+        "predicted_frame": 1925,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1987,
+        "predicted_frame": 1987,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2075,
+        "predicted_frame": 2075,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2112,
+        "predicted_frame": 2112,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2136,
+        "predicted_frame": 2136,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2189,
+        "predicted_frame": 2189,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2287,
+        "predicted_frame": 2287,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2428,
+        "predicted_frame": 2428,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2455,
+        "predicted_frame": 2455,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2559,
+        "predicted_frame": 2559,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2587,
+        "predicted_frame": 2587,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2935,
+        "predicted_frame": 2935,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2996,
+        "predicted_frame": 2996,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3044,
+        "predicted_frame": 3044,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3275,
+        "predicted_frame": 3275,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3692,
+        "predicted_frame": 3692,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3796,
+        "predicted_frame": 3796,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3876,
+        "predicted_frame": 3876,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3947,
+        "predicted_frame": 3947,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 4008,
+        "predicted_frame": 4008,
+        "offset_frames": 0
+      }
+    ],
+    "missed_frames": [
+      1582,
+      1648,
+      1859,
+      2364
+    ],
+    "extra_frames": [
+      23,
+      548,
+      643,
+      773,
+      829,
+      1570,
+      1684,
+      1750,
+      1757,
+      1764,
+      2000,
+      2208,
+      2307,
+      2315,
+      2396,
+      2414,
+      2505,
+      2913,
+      3437,
+      3622,
+      3747,
+      3975,
+      4055
+    ],
+    "correct_no_cuts": false
+  },
+  "exact": {
+    "tp": 43,
+    "fp": 23,
+    "fn": 4,
+    "precision": 0.6515151515151515,
+    "recall": 0.9148936170212766,
+    "f1": 0.7610619469026548,
+    "tolerance_frames": 0,
+    "matches": [
+      {
+        "reference_frame": 105,
+        "predicted_frame": 105,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 147,
+        "predicted_frame": 147,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 244,
+        "predicted_frame": 244,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 351,
+        "predicted_frame": 351,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 446,
+        "predicted_frame": 446,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 541,
+        "predicted_frame": 541,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 585,
+        "predicted_frame": 585,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 854,
+        "predicted_frame": 854,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 889,
+        "predicted_frame": 889,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 916,
+        "predicted_frame": 916,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 960,
+        "predicted_frame": 960,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1005,
+        "predicted_frame": 1005,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1104,
+        "predicted_frame": 1104,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1124,
+        "predicted_frame": 1124,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1136,
+        "predicted_frame": 1136,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1324,
+        "predicted_frame": 1324,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1387,
+        "predicted_frame": 1387,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1437,
+        "predicted_frame": 1437,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1478,
+        "predicted_frame": 1478,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1557,
+        "predicted_frame": 1557,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1630,
+        "predicted_frame": 1630,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1697,
+        "predicted_frame": 1697,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1796,
+        "predicted_frame": 1796,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1925,
+        "predicted_frame": 1925,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1987,
+        "predicted_frame": 1987,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2075,
+        "predicted_frame": 2075,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2112,
+        "predicted_frame": 2112,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2136,
+        "predicted_frame": 2136,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2189,
+        "predicted_frame": 2189,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2287,
+        "predicted_frame": 2287,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2428,
+        "predicted_frame": 2428,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2455,
+        "predicted_frame": 2455,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2559,
+        "predicted_frame": 2559,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2587,
+        "predicted_frame": 2587,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2935,
+        "predicted_frame": 2935,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2996,
+        "predicted_frame": 2996,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3044,
+        "predicted_frame": 3044,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3275,
+        "predicted_frame": 3275,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3692,
+        "predicted_frame": 3692,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3796,
+        "predicted_frame": 3796,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3876,
+        "predicted_frame": 3876,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3947,
+        "predicted_frame": 3947,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 4008,
+        "predicted_frame": 4008,
+        "offset_frames": 0
+      }
+    ],
+    "missed_frames": [
+      1582,
+      1648,
+      1859,
+      2364
+    ],
+    "extra_frames": [
+      23,
+      548,
+      643,
+      773,
+      829,
+      1570,
+      1684,
+      1750,
+      1757,
+      1764,
+      2000,
+      2208,
+      2307,
+      2315,
+      2396,
+      2414,
+      2505,
+      2913,
+      3437,
+      3622,
+      3747,
+      3975,
+      4055
+    ],
+    "correct_no_cuts": false
+  },
+  "annotation_sha256": "d92440ab5a3e39bcaf429ab8c7baaff00340461aa40b5b1b901dd7cc0efb4e0f",
+  "prediction_sha256": "9cafc299e88d98650eea29812fc39a7d5bfe6c2288053b92e038c4f2b42648ab",
+  "reference_provenance": {
+    "reference_method": "user_coarse_list_plus_assistant_adjacent_and_temporal_frame_review",
+    "user_reported_seconds": [
+      4.0,
+      5.0,
+      8.0,
+      12.0,
+      15.0,
+      18.0,
+      19.0,
+      28.0,
+      29.0,
+      30.0,
+      32.0,
+      34.0,
+      46.0,
+      48.0,
+      49.0,
+      52.0,
+      67.0,
+      86.0,
+      98.0,
+      100.0,
+      101.0,
+      110.0,
+      123.0,
+      127.0,
+      129.0,
+      132.0
+    ],
+    "user_original_message": "4 5 8 12 15 18 19 28 29 30 32 34 46 48 49 52 67 86 98  100  101 110 123 127 129 132",
+    "supersedes_earlier_partial_message": true,
+    "full_video_review_context": "User supplied this list in response to instruction to watch the entire Vlog3 clip; approximate times under prior agreed workflow.",
+    "exact_frame_positions_confirmed_by_user": false,
+    "assistant_adjacent_frame_visual_check": true,
+    "assistant_independent_full_video_completeness_check": false,
+    "extra_assistant_event_frames": [
+      1104,
+      1124,
+      1136,
+      1324,
+      1582,
+      1630,
+      1648,
+      1697,
+      1796,
+      1859,
+      1925,
+      2075,
+      2112,
+      2136,
+      2189,
+      2287,
+      2364,
+      2428,
+      2455,
+      2587,
+      4008
+    ],
+    "extra_events_confirmed_by_user": true,
+    "gameplay_annotation_rule": "内容剪辑跳切、比赛导播切换选手视角计入；同一角色的连续转向、开关瞄准镜、闪光弹效果、连续阵亡动画不单独计入；OBS窗口变化不计入。",
+    "gameplay_annotation_rule_confirmed_by_user": true,
+    "gameplay_rule_confirmation_source": "Vlog2/review-20260929/user-confirmation.json",
+    "localization_review": "review-20260929/proposal-review.json",
+    "user_confirmation": "同意补入，Vlog3 共 47 个",
+    "recorded_at": "2026-09-29T09:20:08.774465+00:00",
+    "confirmation_record": "review-20260929/user-confirmation.json"
+  },
+  "experiment_group": "new_validation"
+}

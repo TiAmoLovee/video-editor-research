@@ -1,0 +1,114 @@
+{
+  "status": "user_confirmed_within_threshold",
+  "media": {
+    "normalized_sha256": "8ebfb3551bac936974775529113faedf86e5993b50b1cf87d72aae395763d983",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 2178,
+    "duration_seconds": 72.6,
+    "has_audio": true
+  },
+  "source_asr_sha256": "c3af9f7d00a02c103c4678d539b7514e951ce4f0b4794e0998be656c612b5597",
+  "sampling": "Pilot: two existing ASR word entries from each of five user-verified speech blocks, distributed across the recording. Convenience sample, not random or corpus-wide acceptance.",
+  "boundary_threshold_seconds": 0.3,
+  "pass_rule": "Each sampled entry must have both absolute start and end error <= 0.3 seconds; preserve failed and unalignable entries.",
+  "human_reference_status": "User confirmed all 10 sampled entries have start/end error within 0.3 seconds; exact manual timestamps not supplied. MAE, maximum error, and distribution cannot be calculated.",
+  "samples": [
+    {
+      "id": "w000004",
+      "text": "完了",
+      "predicted_start": 2.09,
+      "predicted_end": 2.31,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000015",
+      "text": "怎么",
+      "predicted_start": 5.57,
+      "predicted_end": 5.77,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000048",
+      "text": "而且",
+      "predicted_start": 13.04,
+      "predicted_end": 13.28,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000057",
+      "text": "我们",
+      "predicted_start": 14.66,
+      "predicted_end": 14.9,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000117",
+      "text": "大家",
+      "predicted_start": 32.73,
+      "predicted_end": 33.07,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000123",
+      "text": "然后",
+      "predicted_start": 35.93,
+      "predicted_end": 36.65,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000134",
+      "text": "今天",
+      "predicted_start": 38.39,
+      "predicted_end": 38.95,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000145",
+      "text": "也是",
+      "predicted_start": 41.87,
+      "predicted_end": 42.27,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000172",
+      "text": "看看",
+      "predicted_start": 48.63,
+      "predicted_end": 49.17,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    },
+    {
+      "id": "w000195",
+      "text": "时间",
+      "predicted_start": 54.71,
+      "predicted_end": 54.99,
+      "human_start": null,
+      "human_end": null,
+      "status": "user_confirmed_within_threshold"
+    }
+  ],
+  "user_confirmation": {
+    "text": "我已经检查过了都在",
+    "context": "Reply to checking whether all 10 sampled words have both start/end error within 0.3 seconds",
+    "scope": "These 10 sampled entries only",
+    "method": "User reported manual check; not independently remeasured by assistant"
+  }
+}

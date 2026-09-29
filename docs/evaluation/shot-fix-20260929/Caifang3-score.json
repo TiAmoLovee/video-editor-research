@@ -1,0 +1,285 @@
+{
+  "media": {
+    "normalized_sha256": "664cafe81ef7f5fcad249c568058e40971c65dcddf843ff30b30c6a636064932",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 3489,
+    "duration_seconds": 116.3
+  },
+  "source_sha256": "3cfbefe0d28f3f80fe2785b5f9036b81f6688b6b32b0e478c88284c73b49c8e9",
+  "prediction_analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": [
+        165,
+        252,
+        1305,
+        897
+      ],
+      "context_guard_requested": true
+    }
+  },
+  "primary": {
+    "tp": 18,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "tolerance_frames": 3,
+    "matches": [
+      {
+        "reference_frame": 101,
+        "predicted_frame": 101,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 333,
+        "predicted_frame": 333,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 476,
+        "predicted_frame": 476,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 837,
+        "predicted_frame": 837,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1074,
+        "predicted_frame": 1074,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1141,
+        "predicted_frame": 1141,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1394,
+        "predicted_frame": 1394,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1546,
+        "predicted_frame": 1546,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1731,
+        "predicted_frame": 1731,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2006,
+        "predicted_frame": 2006,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2246,
+        "predicted_frame": 2246,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2430,
+        "predicted_frame": 2430,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2571,
+        "predicted_frame": 2571,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2693,
+        "predicted_frame": 2693,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3052,
+        "predicted_frame": 3052,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3147,
+        "predicted_frame": 3147,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3306,
+        "predicted_frame": 3306,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3447,
+        "predicted_frame": 3447,
+        "offset_frames": 0
+      }
+    ],
+    "missed_frames": [],
+    "extra_frames": [],
+    "correct_no_cuts": false
+  },
+  "exact": {
+    "tp": 18,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "tolerance_frames": 0,
+    "matches": [
+      {
+        "reference_frame": 101,
+        "predicted_frame": 101,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 333,
+        "predicted_frame": 333,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 476,
+        "predicted_frame": 476,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 837,
+        "predicted_frame": 837,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1074,
+        "predicted_frame": 1074,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1141,
+        "predicted_frame": 1141,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1394,
+        "predicted_frame": 1394,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1546,
+        "predicted_frame": 1546,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1731,
+        "predicted_frame": 1731,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2006,
+        "predicted_frame": 2006,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2246,
+        "predicted_frame": 2246,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2430,
+        "predicted_frame": 2430,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2571,
+        "predicted_frame": 2571,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 2693,
+        "predicted_frame": 2693,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3052,
+        "predicted_frame": 3052,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3147,
+        "predicted_frame": 3147,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3306,
+        "predicted_frame": 3306,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 3447,
+        "predicted_frame": 3447,
+        "offset_frames": 0
+      }
+    ],
+    "missed_frames": [],
+    "extra_frames": [],
+    "correct_no_cuts": false
+  },
+  "annotation_sha256": "ac396a1e6471c9541bc355b2ffaa4045ca11f1ffab3721773262484461ff9693",
+  "prediction_sha256": "ba8ee4681e0093b561e51abb35a77ea369f00c106cc07744af72625ac3fc5d39",
+  "reference_provenance": {
+    "reference_method": "user coarse list plus assistant frame localization",
+    "user_reported_seconds": [
+      3.0,
+      11.0,
+      16.0,
+      28.0,
+      36.0,
+      46.0,
+      52.0,
+      58.0,
+      66.0,
+      75.0,
+      81.0,
+      86.0,
+      90.0,
+      102.0,
+      105.0,
+      110.0,
+      115.0
+    ],
+    "full_video_review_context": "User supplied this list in response to instruction to watch the entire Caifang3 clip; approximate times under prior agreed workflow.",
+    "extra_assistant_event_frame": 1141,
+    "extra_event_confirmed_by_user": true,
+    "exact_frame_positions_confirmed_by_user": false,
+    "assistant_independent_full_video_completeness_check": false,
+    "user_extra_event_confirmation": "补入",
+    "assistant_adjacent_frame_visual_check": true,
+    "localization_review": "review-20260929/proposal-review.json",
+    "confirmation_record": "review-20260929/user-confirmation.json",
+    "recorded_at": "2026-09-29T06:33:50.126225+00:00"
+  },
+  "experiment_group": "new_validation"
+}

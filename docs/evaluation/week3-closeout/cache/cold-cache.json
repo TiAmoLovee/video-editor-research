@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "hit": false,
+  "status": "miss",
+  "transcription_executed": true,
+  "reused_stages": [],
+  "key": "766e4761c2732815abc2de530a8d95a00af309fa590a1157da18cfbf7af7748f",
+  "worker_seconds_before_packaging": 187.525713,
+  "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+  "component_elapsed_seconds_are_original": false
+}

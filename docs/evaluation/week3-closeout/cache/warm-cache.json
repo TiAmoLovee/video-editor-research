@@ -1,0 +1,19 @@
+{
+  "format_version": 1,
+  "hit": true,
+  "status": "hit",
+  "transcription_executed": false,
+  "reused_stages": [
+    "normalizing",
+    "analyzing_shots",
+    "analyzing_speech",
+    "transcribing",
+    "combining_analysis",
+    "splitting"
+  ],
+  "key": "766e4761c2732815abc2de530a8d95a00af309fa590a1157da18cfbf7af7748f",
+  "reused_from_task_id": "8cfdcbc8-34e4-4bfd-a3ba-11ba4328fb48",
+  "worker_seconds_before_packaging": 3.604821,
+  "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+  "component_elapsed_seconds_are_original": true
+}

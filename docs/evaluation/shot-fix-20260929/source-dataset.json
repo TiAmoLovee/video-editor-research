@@ -1,0 +1,127 @@
+{
+  "format_version": "1",
+  "tolerance_frames": 3,
+  "scope_note": "12 videos: 9 OBS recordings plus Test1, Test2, Sucai1, classified as Vlog by user.",
+  "videos": [
+    {
+      "id": "caifang1",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "interview",
+      "source_name": "Caifang1.mp4",
+      "source_sha256": "22f2494c450b67c273f3ac4d2ef9cb4de9952911610e6f3b1f4b35b05ac62dd9",
+      "annotation": "Caifang1/annotation.json",
+      "prediction": "Caifang1/prediction.json"
+    },
+    {
+      "id": "caifang2",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "interview",
+      "source_name": "Caifang2.mp4",
+      "source_sha256": "77c35fcec7eda90766107e9442008f7de10621460fbf8a5e0ffaf135d2ba2aa7",
+      "annotation": "Caifang2/annotation.json",
+      "prediction": "Caifang2/prediction.json"
+    },
+    {
+      "id": "caifang3",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "interview",
+      "source_name": "Caifang3.mp4",
+      "source_sha256": "3cfbefe0d28f3f80fe2785b5f9036b81f6688b6b32b0e478c88284c73b49c8e9",
+      "annotation": "Caifang3/annotation.json",
+      "prediction": "Caifang3/prediction.json"
+    },
+    {
+      "id": "kecheng1",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "course",
+      "source_name": "Kecheng1.mp4",
+      "source_sha256": "2c8a4f80ed3140c213eed8851b51f58bd9bf3afd4d6775dbd10c4be9f9abf9b8",
+      "annotation": "Kecheng1/annotation.json",
+      "prediction": "Kecheng1/prediction.json"
+    },
+    {
+      "id": "kecheng2",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "course",
+      "source_name": "Kecheng2.mp4",
+      "source_sha256": "1cde45d228a4dc59ad422ac2f1bd3cc78abc2b56d79d18a84923ede11a41ecc8",
+      "annotation": "Kecheng2/annotation.json",
+      "prediction": "Kecheng2/prediction.json"
+    },
+    {
+      "id": "kecheng3",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "course",
+      "source_name": "Kecheng3.mp4",
+      "source_sha256": "2460027ce5b0330dbea4ab1d114d5fba057a5d2191bb3b12a9d4d9dfdafb382a",
+      "annotation": "Kecheng3/annotation.json",
+      "prediction": "Kecheng3/prediction.json"
+    },
+    {
+      "id": "vlog1",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "vlog",
+      "source_name": "Vlog1.mp4",
+      "source_sha256": "4d4049b5f40bf688a975c7be741239176d2a86979a38ebe6352337b2e32b85da",
+      "annotation": "Vlog1/annotation.json",
+      "prediction": "Vlog1/prediction.json"
+    },
+    {
+      "id": "vlog2",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "vlog",
+      "source_name": "Vlog2.mp4",
+      "source_sha256": "8cdd32380d80c30d3c8c3e2438eb915c9cbb96f71349b7708243157b31b22fee",
+      "annotation": "Vlog2/annotation.json",
+      "prediction": "Vlog2/prediction.json"
+    },
+    {
+      "id": "vlog3",
+      "kind": "real",
+      "split": "evaluation",
+      "category": "vlog",
+      "source_name": "Vlog3.mp4",
+      "source_sha256": "9312378476a9031098790e2c1e55d2e4d694a67ccade81dfc4a7462648995a3d",
+      "annotation": "Vlog3/annotation.json",
+      "prediction": "Vlog3/prediction.json"
+    },
+    {
+      "id": "test1",
+      "kind": "real",
+      "split": "development",
+      "category": "vlog",
+      "source_name": "Test1.mp4",
+      "source_sha256": "23b305c22f0af2ddd81dbcea16faf45da0c42e9a56aaa5f28ffb47e47b0a4545",
+      "annotation": "Test1/annotation.json",
+      "prediction": "Test1/prediction.json"
+    },
+    {
+      "id": "test2",
+      "kind": "real",
+      "split": "development",
+      "category": "vlog",
+      "source_name": "Test2.mp4",
+      "source_sha256": "241f089477cce0be8ff051dcdbe57db677f336c1bb86643eb52639f1f7fea417",
+      "annotation": "Test2/annotation.json",
+      "prediction": "Test2/prediction.json"
+    },
+    {
+      "id": "sucai1",
+      "kind": "real",
+      "split": "development",
+      "category": "vlog",
+      "source_name": "Sucai1.mp4",
+      "source_sha256": "8ef321c445c1f5d0acc4ebf4c59efb200b13428f40d26fb11a2093542aed029e",
+      "annotation": "Sucai1/annotation.json",
+      "prediction": "Sucai1/prediction.json"
+    }
+  ]
+}

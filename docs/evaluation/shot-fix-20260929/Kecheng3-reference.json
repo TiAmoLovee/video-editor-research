@@ -1,0 +1,36 @@
+{
+  "format_version": "1",
+  "annotation_kind": "human_shot_boundaries",
+  "source_name": "Kecheng3.mp4",
+  "source_sha256": "2460027ce5b0330dbea4ab1d114d5fba057a5d2191bb3b12a9d4d9dfdafb382a",
+  "media": {
+    "normalized_sha256": "d2cde49a465dc734dc93068e84497ee201c31977eafd33a24a8e22c2ad886910",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 2142,
+    "duration_seconds": 71.4
+  },
+  "status": "verified",
+  "reviewer": "用户：确认无切换；助手：核对预测位置及上下文抽帧",
+  "reviewed_at": "2026-09-29",
+  "cut_frames": [],
+  "notes": "用户针对Kecheng3明确回复“没有切换”，内容参考切点为空。连续板书写画及OBS窗口显示变化不计内容镜头切换。助手检查预测位置的相邻帧及四个上下文样本；全片无切换结论来源于用户，助手未独立完成全片逐帧审查。",
+  "provenance": {
+    "reference_method": "user_confirmed_no_content_cuts_plus_assistant_prediction_spot_check",
+    "user_confirmation": "没有切换",
+    "confirmation_context": "User replied to the request to annotate Kecheng3.",
+    "no_content_cuts_confirmed_by_user": true,
+    "assistant_checked_prediction_frames": [
+      34
+    ],
+    "assistant_context_sample_frames": [
+      450,
+      1050,
+      1800,
+      2141
+    ],
+    "assistant_independent_full_video_completeness_check": false,
+    "evidence": "review-20260929/prediction-and-context.jpg",
+    "recorded_at": "2026-09-29T06:46:15.503061+00:00"
+  }
+}

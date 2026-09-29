@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1.0",
+  "status": "frozen_week3_baseline",
+  "date": "2026-09-29",
+  "schema_path": "schemas/analysis.schema.json",
+  "canonical_sha256": "f71fd92e8575eb925d3874a73bb497230c51c7bfeab106dea97d1e350e7b3495",
+  "canonicalization": "UTF-8 json.dumps(parsed_json, ensure_ascii=False, sort_keys=True, separators=(comma, colon)); no trailing newline",
+  "validation": "Schema plus backend/clipforge/analysis/validation.py cross-field validation",
+  "compatibility": "Preserve 0.1.0 payloads. Changes to required fields, types, enums, time semantics or cross-field rules require a new version and migration documentation. No field changes under the frozen baseline.",
+  "note": "Historical schema title includes draft; retained unchanged to preserve deployed artifact/cache identity. This manifest and ANALYSIS_CONTRACT.md establish frozen status. Does not freeze model predictions or guarantee quality."
+}

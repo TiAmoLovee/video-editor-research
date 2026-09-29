@@ -1,0 +1,1229 @@
+{
+  "rows": [
+    {
+      "case": "Caifang1",
+      "category": "interview",
+      "group": "development",
+      "score": {
+        "tp": 10,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.7692307692307693,
+        "recall": 1.0,
+        "f1": 0.8695652173913043,
+        "tolerance_frames": 3,
+        "matches": [
+          {
+            "reference_frame": 113,
+            "predicted_frame": 113,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 186,
+            "predicted_frame": 186,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 269,
+            "predicted_frame": 269,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 360,
+            "predicted_frame": 360,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 660,
+            "predicted_frame": 660,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 759,
+            "predicted_frame": 759,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 850,
+            "predicted_frame": 850,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1091,
+            "predicted_frame": 1091,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1476,
+            "predicted_frame": 1476,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1584,
+            "predicted_frame": 1584,
+            "offset_frames": 0
+          }
+        ],
+        "missed_frames": [],
+        "extra_frames": [
+          10,
+          2126,
+          2605
+        ],
+        "correct_no_cuts": false
+      },
+      "context_suppressed_frames": [
+        40,
+        2583
+      ],
+      "seconds": 84.310324
+    },
+    {
+      "case": "Caifang2",
+      "category": "interview",
+      "group": "previous_validation_regression",
+      "score": {
+        "tp": 18,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tolerance_frames": 3,
+        "matches": [
+          {
+            "reference_frame": 87,
+            "predicted_frame": 87,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 225,
+            "predicted_frame": 225,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 307,
+            "predicted_frame": 307,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 400,
+            "predicted_frame": 400,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 503,
+            "predicted_frame": 503,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1217,
+            "predicted_frame": 1217,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1411,
+            "predicted_frame": 1411,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1532,
+            "predicted_frame": 1532,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1604,
+            "predicted_frame": 1604,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1708,
+            "predicted_frame": 1708,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1808,
+            "predicted_frame": 1808,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2026,
+            "predicted_frame": 2026,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2203,
+            "predicted_frame": 2203,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2432,
+            "predicted_frame": 2432,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2519,
+            "predicted_frame": 2519,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2811,
+            "predicted_frame": 2811,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3039,
+            "predicted_frame": 3039,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3376,
+            "predicted_frame": 3376,
+            "offset_frames": 0
+          }
+        ],
+        "missed_frames": [],
+        "extra_frames": [],
+        "correct_no_cuts": false
+      },
+      "context_suppressed_frames": [
+        52,
+        3452
+      ],
+      "seconds": 112.924631
+    },
+    {
+      "case": "Caifang3",
+      "category": "interview",
+      "group": "new_validation",
+      "score": {
+        "tp": 18,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tolerance_frames": 3,
+        "matches": [
+          {
+            "reference_frame": 101,
+            "predicted_frame": 101,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 333,
+            "predicted_frame": 333,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 476,
+            "predicted_frame": 476,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 837,
+            "predicted_frame": 837,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1074,
+            "predicted_frame": 1074,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1141,
+            "predicted_frame": 1141,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1394,
+            "predicted_frame": 1394,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1546,
+            "predicted_frame": 1546,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1731,
+            "predicted_frame": 1731,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2006,
+            "predicted_frame": 2006,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2246,
+            "predicted_frame": 2246,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2430,
+            "predicted_frame": 2430,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2571,
+            "predicted_frame": 2571,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2693,
+            "predicted_frame": 2693,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3052,
+            "predicted_frame": 3052,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3147,
+            "predicted_frame": 3147,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3306,
+            "predicted_frame": 3306,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3447,
+            "predicted_frame": 3447,
+            "offset_frames": 0
+          }
+        ],
+        "missed_frames": [],
+        "extra_frames": [],
+        "correct_no_cuts": false
+      },
+      "context_suppressed_frames": [
+        38,
+        3433
+      ],
+      "seconds": 111.299263
+    },
+    {
+      "case": "Kecheng1",
+      "category": "course",
+      "group": "development",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tolerance_frames": 3,
+        "matches": [],
+        "missed_frames": [],
+        "extra_frames": [],
+        "correct_no_cuts": true
+      },
+      "context_suppressed_frames": [
+        43,
+        3896
+      ],
+      "seconds": 127.244037
+    },
+    {
+      "case": "Kecheng2",
+      "category": "course",
+      "group": "previous_validation_regression",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tolerance_frames": 3,
+        "matches": [],
+        "missed_frames": [],
+        "extra_frames": [],
+        "correct_no_cuts": true
+      },
+      "context_suppressed_frames": [
+        49,
+        1524
+      ],
+      "seconds": 51.415364
+    },
+    {
+      "case": "Kecheng3",
+      "category": "course",
+      "group": "new_validation",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tolerance_frames": 3,
+        "matches": [],
+        "missed_frames": [],
+        "extra_frames": [],
+        "correct_no_cuts": true
+      },
+      "context_suppressed_frames": [
+        34,
+        2093
+      ],
+      "seconds": 69.458679
+    },
+    {
+      "case": "Sucai1",
+      "category": "vlog",
+      "group": "development",
+      "score": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tolerance_frames": 3,
+        "matches": [
+          {
+            "reference_frame": 587,
+            "predicted_frame": 587,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1225,
+            "predicted_frame": 1225,
+            "offset_frames": 0
+          }
+        ],
+        "missed_frames": [
+          607
+        ],
+        "extra_frames": [
+          6
+        ],
+        "correct_no_cuts": false
+      },
+      "context_suppressed_frames": [],
+      "seconds": 9.21345
+    },
+    {
+      "case": "Test1",
+      "category": "vlog",
+      "group": "previous_validation_regression",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tolerance_frames": 3,
+        "matches": [],
+        "missed_frames": [],
+        "extra_frames": [],
+        "correct_no_cuts": true
+      },
+      "context_suppressed_frames": [],
+      "seconds": 86.617607
+    },
+    {
+      "case": "Test2",
+      "category": "vlog",
+      "group": "development",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tolerance_frames": 3,
+        "matches": [],
+        "missed_frames": [],
+        "extra_frames": [],
+        "correct_no_cuts": true
+      },
+      "context_suppressed_frames": [],
+      "seconds": 14.20885
+    },
+    {
+      "case": "Vlog1",
+      "category": "vlog",
+      "group": "development",
+      "score": {
+        "tp": 30,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.967741935483871,
+        "recall": 1.0,
+        "f1": 0.9836065573770492,
+        "tolerance_frames": 3,
+        "matches": [
+          {
+            "reference_frame": 104,
+            "predicted_frame": 104,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 297,
+            "predicted_frame": 297,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 345,
+            "predicted_frame": 345,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 486,
+            "predicted_frame": 486,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 516,
+            "predicted_frame": 516,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 568,
+            "predicted_frame": 568,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 600,
+            "predicted_frame": 600,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 633,
+            "predicted_frame": 633,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 664,
+            "predicted_frame": 664,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 685,
+            "predicted_frame": 685,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 714,
+            "predicted_frame": 714,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1247,
+            "predicted_frame": 1247,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1273,
+            "predicted_frame": 1273,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1293,
+            "predicted_frame": 1293,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1325,
+            "predicted_frame": 1325,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1337,
+            "predicted_frame": 1337,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1357,
+            "predicted_frame": 1357,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1373,
+            "predicted_frame": 1373,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1536,
+            "predicted_frame": 1536,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1575,
+            "predicted_frame": 1575,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1607,
+            "predicted_frame": 1607,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1668,
+            "predicted_frame": 1668,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1718,
+            "predicted_frame": 1718,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1863,
+            "predicted_frame": 1863,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1963,
+            "predicted_frame": 1963,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2028,
+            "predicted_frame": 2028,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2076,
+            "predicted_frame": 2076,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2138,
+            "predicted_frame": 2138,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2215,
+            "predicted_frame": 2215,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2396,
+            "predicted_frame": 2396,
+            "offset_frames": 0
+          }
+        ],
+        "missed_frames": [],
+        "extra_frames": [
+          2273
+        ],
+        "correct_no_cuts": false
+      },
+      "context_suppressed_frames": [
+        36,
+        2462
+      ],
+      "seconds": 81.200471
+    },
+    {
+      "case": "Vlog2",
+      "category": "vlog",
+      "group": "new_validation",
+      "score": {
+        "tp": 48,
+        "fp": 20,
+        "fn": 3,
+        "precision": 0.7058823529411765,
+        "recall": 0.9411764705882353,
+        "f1": 0.8067226890756303,
+        "tolerance_frames": 3,
+        "matches": [
+          {
+            "reference_frame": 222,
+            "predicted_frame": 222,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 327,
+            "predicted_frame": 327,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 355,
+            "predicted_frame": 355,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 373,
+            "predicted_frame": 373,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 386,
+            "predicted_frame": 386,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 399,
+            "predicted_frame": 399,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 418,
+            "predicted_frame": 418,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 445,
+            "predicted_frame": 445,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 481,
+            "predicted_frame": 481,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 510,
+            "predicted_frame": 510,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 533,
+            "predicted_frame": 533,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 561,
+            "predicted_frame": 561,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 601,
+            "predicted_frame": 601,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 650,
+            "predicted_frame": 650,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 675,
+            "predicted_frame": 675,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 686,
+            "predicted_frame": 686,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 735,
+            "predicted_frame": 735,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 756,
+            "predicted_frame": 756,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 830,
+            "predicted_frame": 830,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 898,
+            "predicted_frame": 898,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1156,
+            "predicted_frame": 1156,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1231,
+            "predicted_frame": 1231,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1273,
+            "predicted_frame": 1273,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1508,
+            "predicted_frame": 1508,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1604,
+            "predicted_frame": 1604,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1691,
+            "predicted_frame": 1691,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1746,
+            "predicted_frame": 1746,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1795,
+            "predicted_frame": 1795,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1854,
+            "predicted_frame": 1854,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1873,
+            "predicted_frame": 1874,
+            "offset_frames": 1
+          },
+          {
+            "reference_frame": 1913,
+            "predicted_frame": 1913,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1927,
+            "predicted_frame": 1927,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1974,
+            "predicted_frame": 1974,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1985,
+            "predicted_frame": 1985,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2090,
+            "predicted_frame": 2090,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2109,
+            "predicted_frame": 2109,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2238,
+            "predicted_frame": 2238,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2274,
+            "predicted_frame": 2274,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2325,
+            "predicted_frame": 2325,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2370,
+            "predicted_frame": 2370,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2476,
+            "predicted_frame": 2476,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2551,
+            "predicted_frame": 2551,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2638,
+            "predicted_frame": 2638,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2725,
+            "predicted_frame": 2725,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2890,
+            "predicted_frame": 2890,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2977,
+            "predicted_frame": 2977,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3114,
+            "predicted_frame": 3114,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3398,
+            "predicted_frame": 3398,
+            "offset_frames": 0
+          }
+        ],
+        "missed_frames": [
+          107,
+          874,
+          1932
+        ],
+        "extra_frames": [
+          90,
+          546,
+          699,
+          801,
+          926,
+          1448,
+          1466,
+          1717,
+          1806,
+          1846,
+          1886,
+          2125,
+          2444,
+          2515,
+          2655,
+          2755,
+          2798,
+          2863,
+          3002,
+          3428
+        ],
+        "correct_no_cuts": false
+      },
+      "context_suppressed_frames": [
+        24,
+        3518
+      ],
+      "seconds": 108.249803
+    },
+    {
+      "case": "Vlog3",
+      "category": "vlog",
+      "group": "new_validation",
+      "score": {
+        "tp": 43,
+        "fp": 23,
+        "fn": 4,
+        "precision": 0.6515151515151515,
+        "recall": 0.9148936170212766,
+        "f1": 0.7610619469026548,
+        "tolerance_frames": 3,
+        "matches": [
+          {
+            "reference_frame": 105,
+            "predicted_frame": 105,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 147,
+            "predicted_frame": 147,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 244,
+            "predicted_frame": 244,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 351,
+            "predicted_frame": 351,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 446,
+            "predicted_frame": 446,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 541,
+            "predicted_frame": 541,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 585,
+            "predicted_frame": 585,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 854,
+            "predicted_frame": 854,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 889,
+            "predicted_frame": 889,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 916,
+            "predicted_frame": 916,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 960,
+            "predicted_frame": 960,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1005,
+            "predicted_frame": 1005,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1104,
+            "predicted_frame": 1104,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1124,
+            "predicted_frame": 1124,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1136,
+            "predicted_frame": 1136,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1324,
+            "predicted_frame": 1324,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1387,
+            "predicted_frame": 1387,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1437,
+            "predicted_frame": 1437,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1478,
+            "predicted_frame": 1478,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1557,
+            "predicted_frame": 1557,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1630,
+            "predicted_frame": 1630,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1697,
+            "predicted_frame": 1697,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1796,
+            "predicted_frame": 1796,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1925,
+            "predicted_frame": 1925,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 1987,
+            "predicted_frame": 1987,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2075,
+            "predicted_frame": 2075,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2112,
+            "predicted_frame": 2112,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2136,
+            "predicted_frame": 2136,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2189,
+            "predicted_frame": 2189,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2287,
+            "predicted_frame": 2287,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2428,
+            "predicted_frame": 2428,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2455,
+            "predicted_frame": 2455,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2559,
+            "predicted_frame": 2559,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2587,
+            "predicted_frame": 2587,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2935,
+            "predicted_frame": 2935,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 2996,
+            "predicted_frame": 2996,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3044,
+            "predicted_frame": 3044,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3275,
+            "predicted_frame": 3275,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3692,
+            "predicted_frame": 3692,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3796,
+            "predicted_frame": 3796,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3876,
+            "predicted_frame": 3876,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 3947,
+            "predicted_frame": 3947,
+            "offset_frames": 0
+          },
+          {
+            "reference_frame": 4008,
+            "predicted_frame": 4008,
+            "offset_frames": 0
+          }
+        ],
+        "missed_frames": [
+          1582,
+          1648,
+          1859,
+          2364
+        ],
+        "extra_frames": [
+          23,
+          548,
+          643,
+          773,
+          829,
+          1570,
+          1684,
+          1750,
+          1757,
+          1764,
+          2000,
+          2208,
+          2307,
+          2315,
+          2396,
+          2414,
+          2505,
+          2913,
+          3437,
+          3622,
+          3747,
+          3975,
+          4055
+        ],
+        "correct_no_cuts": false
+      },
+      "context_suppressed_frames": [
+        33,
+        4026
+      ],
+      "seconds": 111.701879
+    }
+  ],
+  "groups": {
+    "all": {
+      "tp": 169,
+      "fp": 48,
+      "fn": 8,
+      "precision": 0.7788018433179723,
+      "recall": 0.9548022598870056,
+      "f1": 0.8578680203045685,
+      "videos": 12
+    },
+    "development": {
+      "tp": 42,
+      "fp": 5,
+      "fn": 1,
+      "precision": 0.8936170212765957,
+      "recall": 0.9767441860465116,
+      "f1": 0.9333333333333333,
+      "videos": 5
+    },
+    "previous_validation_regression": {
+      "tp": 18,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "videos": 3
+    },
+    "new_validation": {
+      "tp": 109,
+      "fp": 43,
+      "fn": 7,
+      "precision": 0.7171052631578947,
+      "recall": 0.9396551724137931,
+      "f1": 0.8134328358208955,
+      "videos": 4
+    }
+  },
+  "week3_complete": false,
+  "scope": "Local diagnostic summary across manual per-video ROIs; includes development data, not an independent 12-video acceptance test.",
+  "reference_correction_pending": "Caifang1 four tail events",
+  "source_manifest_sha256": "c0562602b3624b27ccb46a13dfb69a93730412638713527533842e2a770bc229"
+}

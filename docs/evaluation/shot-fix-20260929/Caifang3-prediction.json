@@ -1,0 +1,154 @@
+{
+  "schema_version": "0.1.0",
+  "artifact_kind": "shot_analysis",
+  "result_kind": "measured",
+  "media": {
+    "normalized_sha256": "664cafe81ef7f5fcad249c568058e40971c65dcddf843ff30b30c6a636064932",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 3489,
+    "duration_seconds": 116.3
+  },
+  "analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": [
+        165,
+        252,
+        1305,
+        897
+      ],
+      "context_guard_requested": true
+    }
+  },
+  "decoder": {
+    "backend": "opencv",
+    "version": "4.12.0.88",
+    "frame_position_checked": true
+  },
+  "cut_frames": [
+    101,
+    333,
+    476,
+    837,
+    1074,
+    1141,
+    1394,
+    1546,
+    1731,
+    2006,
+    2246,
+    2430,
+    2571,
+    2693,
+    3052,
+    3147,
+    3306,
+    3447
+  ],
+  "shots": [
+    {
+      "start": 0.0,
+      "end": 3.3666666666666667
+    },
+    {
+      "start": 3.3666666666666667,
+      "end": 11.1
+    },
+    {
+      "start": 11.1,
+      "end": 15.866666666666667
+    },
+    {
+      "start": 15.866666666666667,
+      "end": 27.9
+    },
+    {
+      "start": 27.9,
+      "end": 35.8
+    },
+    {
+      "start": 35.8,
+      "end": 38.03333333333333
+    },
+    {
+      "start": 38.03333333333333,
+      "end": 46.46666666666667
+    },
+    {
+      "start": 46.46666666666667,
+      "end": 51.53333333333333
+    },
+    {
+      "start": 51.53333333333333,
+      "end": 57.7
+    },
+    {
+      "start": 57.7,
+      "end": 66.86666666666666
+    },
+    {
+      "start": 66.86666666666666,
+      "end": 74.86666666666666
+    },
+    {
+      "start": 74.86666666666666,
+      "end": 81.0
+    },
+    {
+      "start": 81.0,
+      "end": 85.7
+    },
+    {
+      "start": 85.7,
+      "end": 89.76666666666667
+    },
+    {
+      "start": 89.76666666666667,
+      "end": 101.73333333333333
+    },
+    {
+      "start": 101.73333333333333,
+      "end": 104.9
+    },
+    {
+      "start": 104.9,
+      "end": 110.2
+    },
+    {
+      "start": 110.2,
+      "end": 114.9
+    },
+    {
+      "start": 114.9,
+      "end": 116.3
+    }
+  ],
+  "elapsed_seconds": 111.299263,
+  "diagnostics": {
+    "context_guard_suppressed_frames": [
+      38,
+      3433
+    ]
+  }
+}

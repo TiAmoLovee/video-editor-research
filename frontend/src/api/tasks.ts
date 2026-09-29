@@ -41,7 +41,9 @@ export function fileError(file: File | null): string {
 }
 
 export interface UploadReceipt { taskId?: string; warning?: string }
-export function uploadVideo(file: File, onProgress: (value: number) => void): Promise<UploadReceipt> {
+export type ShotRegion = [number, number, number, number];
+export interface ShotOptions { method: 'robust'; region: ShotRegion | null }
+export function uploadVideo(file: File, onProgress: (value: number) => void, shotOptions?: ShotOptions): Promise<UploadReceipt> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/tasks');
@@ -62,6 +64,7 @@ export function uploadVideo(file: File, onProgress: (value: number) => void): Pr
     xhr.onabort = () => reject(new Error('上传已中断，请先查看任务列表确认结果。'));
     const body = new FormData();
     body.append('file', file);
+    if (shotOptions) body.append('shot_options', JSON.stringify(shotOptions));
     xhr.send(body);
   });
 }

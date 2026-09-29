@@ -1,0 +1,37 @@
+{
+  "format_version": "1",
+  "annotation_kind": "human_shot_boundaries",
+  "source_name": "Kecheng1.mp4",
+  "source_sha256": "2c8a4f80ed3140c213eed8851b51f58bd9bf3afd4d6775dbd10c4be9f9abf9b8",
+  "media": {
+    "normalized_sha256": "b130cd4fb634628d2310f3ed55c97a5c65f348b172404738c428f847cf205518",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 3974,
+    "duration_seconds": 132.46666666666667
+  },
+  "status": "verified",
+  "reviewer": "用户：确认全片只有写画、没有切换；助手：核对预测位置与抽帧",
+  "reviewed_at": "2026-09-29",
+  "cut_frames": [],
+  "notes": "用户明确确认“是，只有写画，没有切换”，内容参考切点为空。连续板书写画不算镜头切换，OBS窗口出现或隐藏不计为内容切换。助手检查两个预测切点的相邻帧和四个上下文样本，未独立完成全片逐帧审查；无切换的全片判断来源于用户确认。",
+  "provenance": {
+    "reference_method": "user_confirmed_no_content_cuts_plus_assistant_prediction_spot_check",
+    "user_initial_message": "他全程几乎没什么镜头切换 只是在上面写写画画",
+    "user_confirmation": "是，只有写画，没有切换",
+    "no_content_cuts_confirmed_by_user": true,
+    "assistant_checked_prediction_frames": [
+      43,
+      3896
+    ],
+    "assistant_context_sample_frames": [
+      600,
+      1800,
+      3000,
+      3973
+    ],
+    "assistant_independent_full_video_completeness_check": false,
+    "evidence": "review-20260929/prediction-and-context.jpg",
+    "recorded_at": "2026-09-29T06:40:02.334011+00:00"
+  }
+}

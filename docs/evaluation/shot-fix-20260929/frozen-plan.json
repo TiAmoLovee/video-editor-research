@@ -1,0 +1,46 @@
+{
+  "method": "robust",
+  "parameters": {
+    "feature_width": 384,
+    "max_feature_height": 1024,
+    "feature_interpolation": "AREA",
+    "min_rgb_change": 12.0,
+    "relative_change": 3.0,
+    "window_width_frames": 2,
+    "outside_mean_threshold": 8.0,
+    "outside_fraction_threshold": 0.08,
+    "outside_pixel_threshold": 20.0,
+    "outside_preview_size": [
+      384,
+      216
+    ],
+    "outside_margin_pixels": 2,
+    "selection": "strongest_first_minimum_spacing"
+  },
+  "min_scene_len": 6,
+  "development": [
+    "Caifang1",
+    "Kecheng1",
+    "Vlog1",
+    "Test2",
+    "Sucai1"
+  ],
+  "previous_validation_regression": [
+    "Caifang2",
+    "Kecheng2",
+    "Test1"
+  ],
+  "new_validation": [
+    "Caifang3",
+    "Kecheng3",
+    "Vlog2",
+    "Vlog3"
+  ],
+  "selection": "Best game development micro F1 among 18 settings, zero false positives on two negative controls, preserve original interview recall; ties choose lower absolute threshold then shorter spacing.",
+  "roi": "Fixed inspected browser player rectangle [165,252,1305,897) for nine OBS videos; no ROI for Test1/Test2/Sucai1.",
+  "reference": "Frozen v1; Caifang1 proposed additions not published or used as confirmed labels.",
+  "implementation_sha256": {
+    "shots.py": "34b3671d928829f250c51e94109a110d411b575241898d8af2ac1cd7c0f30c6f",
+    "robust_shots.py": "f77cedeec6200c368be11e9df353cf4de9b85180fcf24ce3ef891ee93d470dc0"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "scope": "synthetic known-boundary smoke test, not real human F1",
+  "backend_unit_tests": 146,
+  "ruff": "passed",
+  "synthetic": {
+    "total_frames": 180,
+    "known_cut_frames": [
+      60,
+      120
+    ],
+    "detected_cut_frames": [
+      60,
+      120
+    ],
+    "score": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tolerance_frames": 3,
+      "matches": [
+        {
+          "reference_frame": 60,
+          "predicted_frame": 60,
+          "offset_frames": 0
+        },
+        {
+          "reference_frame": 120,
+          "predicted_frame": 120,
+          "offset_frames": 0
+        }
+      ],
+      "missed_frames": [],
+      "extra_frames": [],
+      "correct_no_cuts": false
+    },
+    "identity_hashes_checked": true,
+    "blank_draft_template": true,
+    "draft_cli_rejected": true
+  },
+  "real_dataset": {
+    "registered": 4,
+    "scored": 0,
+    "f1": null,
+    "category_confirmation_pending": true
+  },
+  "limits": [
+    "No manual shot labels yet; no real F1 result.",
+    "No ASR word timing or result cache benchmark.",
+    "No Docker, service or frontend changes this step."
+  ],
+  "test3_preparation": {
+    "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+    "media": {
+      "normalized_sha256": "9e95512430dbb045ea18acfcda5f9100e9d5a33b4b4ba9a403682a217eb22ee8",
+      "time_reference": "normalized_video",
+      "fps": 30,
+      "total_frames": 2178,
+      "duration_seconds": 72.6
+    },
+    "status": "draft",
+    "cut_frames": null,
+    "identity_hashes_recomputed": true,
+    "real_human_f1": null
+  }
+}

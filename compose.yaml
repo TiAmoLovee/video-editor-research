@@ -25,6 +25,7 @@ services:
       CLIPFORGE_DATA_DIR: /data
       CLIPFORGE_ASR_MODEL_DIR: /models/faster-whisper-base
       CLIPFORGE_ASR_LANGUAGE: ${CLIPFORGE_ASR_LANGUAGE:-}
+      CLIPFORGE_RESULT_CACHE: ${CLIPFORGE_RESULT_CACHE:-1}
     volumes:
       - media_data:/data
       - ./models:/models:ro

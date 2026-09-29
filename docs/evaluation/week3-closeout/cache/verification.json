@@ -1,0 +1,14 @@
+{
+  "evidence": "User downloaded deployed task cache records",
+  "cold_task_id": "8cfdcbc8-34e4-4bfd-a3ba-11ba4328fb48",
+  "warm_task_id": "ee8face6-b5e4-4fd4-b5f0-7d96c83fe2bf",
+  "keys_match": true,
+  "cold_seconds": 187.525713,
+  "warm_seconds": 3.604821,
+  "reduction_percent": 98.07769241757262,
+  "warm_hit": true,
+  "warm_transcription_executed": false,
+  "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+  "timing_target_passed": true,
+  "limitation": "Processing before ZIP only; end-to-end duration and output hash equality not verified by these two files."
+}

@@ -1,0 +1,19 @@
+{
+  "backend_unit_tests": {
+    "passed": 172,
+    "source": "Actual D-drive repository; PYTHONDONTWRITEBYTECODE=1; CLIPFORGE_RESULT_CACHE=0 for mocked pipeline tests, cache tests override to 1"
+  },
+  "ruff": "passed using project rules",
+  "git_diff_check": "passed before closeout",
+  "frontend": {
+    "passed": 17,
+    "typecheck": "passed",
+    "production_build": "passed",
+    "scope": "Existing isolated workspace; all frontend source/config files compared against D-drive repository ignoring CRLF",
+    "compared_files": 21,
+    "warning": "Vite chunk size over 500 kB; build successful"
+  },
+  "schema_example_and_freeze_hash": "passed",
+  "remote_ci": "not run for this uncommitted state",
+  "installation": "Prepared package; actual D-drive repository not modified by this session because write permission was not granted."
+}

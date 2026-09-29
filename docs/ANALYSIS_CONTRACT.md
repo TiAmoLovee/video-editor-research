@@ -1,12 +1,18 @@
-# 第三周第一步：统一分析结果
+# 分析结果数据契约（第三周冻结基线）
 
-日期：2026-09-28。版本：`0.1.0` 草案。对应需求 FR-03。
+冻结日期：2026-09-29。数据版本：`0.1.0`，状态：**已冻结**。对应需求 FR-03。
 
-阶段说明：本文保留第一步的交付范围。后续镜头模块已接入并单独输出 shots.json，见 [镜头检测说明](SHOT_DETECTION.md)；VAD 已接入并独立输出 vad.json，见 [语音活动检测说明](VAD_DETECTION.md)。三路已在本机接通并在发布前校验，见 [ASR 与汇总说明](ASR_ANALYSIS.md)。本次仍待正式服务验收。
+镜头、VAD、词级转写及中文分句已接入流水线。最终 analysis.json 发布前同时进行 JSON Schema 与跨字段校验。冻结现有字段和时间语义，不将已部署的 0.1.0 输出改写为 1.0.0。
 
-本次交付正式 JSON Schema 文件、手工示例、开发与运行时校验器和测试。
-第一步交付时三路真实分析尚未接入。现已完成本机三路冒烟验证，当前保留 0.1.0 草案；完成正式服务验收后再决定冻结为 1.0.0。
-示例不代表模型输出、精度结果或缓存验证结果。
+冻结凭据：[schema-freeze.json](evaluation/week3-closeout/schema-freeze.json)。Schema 历史 title 中的 draft 字样保留；当前状态以本文与冻结凭据为准，避免仅修改说明就改变已部署缓存身份。语义哈希按解析后 JSON 规范排序计算，不受 Git 换行转换影响。
+
+## 兼容与变更规则
+
+- 0.1.0 字段、类型、必填项、枚举、区间定义及跨字段规则冻结；未来修改需新版本、迁移说明和新旧数据校验。
+- Schema 为封闭对象的地方禁止擅自增加字段；可扩展参数仅限当前 Schema 已允许的区域。
+- 模型、参数、规则变化记录在 analyzers 中；结构兼容不表示预测内容、准确率或耗时一致。
+- 冻结范围为 analysis.json；shots.json、vad.json、asr.json 是组件输出，cache.json 使用独立 format_version，不冒称全部由本 Schema 校验。
+- 所有旧下载与现有示例保留；示例 result_kind=synthetic_example 不充当真实测量。
 
 ## 文件怎么读
 
@@ -57,39 +63,22 @@
 JSON Schema 检查数据结构；标准 Schema 不直接比较任意两个字段的数值。
 所以仅通过 Schema 不代表时间合法，必须同时运行 `validate_analysis` 的跨字段校验。
 
-三路中任一路执行失败时，不能用空数组伪装成功。本草案只描述成功或无音轨跳过的最终结果，
-失败原因由现有任务状态记录；实际接入时再决定是否增加部分成功协议。
+三路中任一路执行失败时，不能用空数组伪装成功。本冻结版本只描述成功或无音轨跳过的最终结果，
+失败原因由现有任务状态记录；未来如增加部分成功协议，必须另行版本化。
 
-## 模块边界和后续缓存设计
+## 流水线与缓存
 
-计划在现有 `归一化 -> 固定切片` 之间加入分析阶段，输出 `analysis.json`。
-本次没有修改任务流水线、下载接口、Docker 服务或前端。
+实际流程：归一化 → 镜头/VAD/ASR → 分句及汇总校验 → 固定时长切片。参数按实际生效值记录。失败任务不发布伪成功分析。
 
-模型和参数应记录实际采用的配置，包括默认参数，不能只保存用户修改过的值。
-ASR 后续还需记录中文分句实现版本，以便区分同一词表经过不同分句逻辑产生的结果。
+结果缓存按内容、选项、代码、Schema、模型与依赖身份区分，详见 [RESULT_CACHE.md](RESULT_CACHE.md)。缓存身份变化后重算；冻结数据结构不冻结模型。
 
-缓存尚未实现。计划使用内容哈希、归一化配置、分析工具/模型版本、全部有效参数、分句版本、Schema 版本
-共同确定缓存身份，不能仅凭同名文件或任务编号命中。
-需验证同一视频二次提交不执行转写，并分别记录分析阶段与端到端耗时；本次不声称达到 80% 降耗目标。
+## 校验与验收
 
-## 本地检查
-
-从仓库根目录执行，先安装新增的开发依赖，再运行示例校验和全部后端测试：
+从项目根目录设置 PYTHONPATH=backend，执行：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r backend\requirements-dev.txt
-$env:PYTHONPATH = (Join-Path (Get-Location) 'backend')
 .\.venv\Scripts\python.exe -m clipforge.analysis.validation docs\samples\analysis.example.json --schema schemas\analysis.schema.json
-.\.venv\Scripts\python.exe -m unittest discover -s backend\tests -p 'test_*.py' -v
-.\.venv\Scripts\python.exe -m ruff check --no-cache .
+.\.venv\Scripts\python.exe -m unittest discover -s backend\tests -p 'test_*.py'
 ```
 
-成功时校验器输出 `VALID` 并注明 synthetic_example；错误数据输出 `INVALID`，退出码为 1。
-`jsonschema` 当前只加入开发依赖，生产任务没有调用此校验器；后续接入 worker 时需补齐运行依赖及 Schema 的部署路径。
-现有 CI 会自动发现新测试。远程 CI 必须推送后另行查看，不能由本地结果替代。
-
-## 本周下一步
-
-1. 接入 PySceneDetect，先对一个真实短视频输出 shots，再对比人工切点。
-2. 准备至少 10 条自有或已获授权素材，访谈、课程、Vlog 每类至少 3 条，并开始人工镜头标注。
-3. 后续接入 VAD、faster-whisper 和中文分句，再完成缓存及首轮评测。
+本地检查与部署证据、限制见 [第三周验收报告](WEEK3_ACCEPTANCE.md)。远程 CI 必须由对应提交的运行结果确认。

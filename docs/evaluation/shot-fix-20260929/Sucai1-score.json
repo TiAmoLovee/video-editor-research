@@ -1,0 +1,146 @@
+{
+  "media": {
+    "normalized_sha256": "8dbac82e2f4ec3ae1081b9e657ead27e7d21c84bff7b17b448b0e94ae6dd6626",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 1238,
+    "duration_seconds": 41.266666666666666
+  },
+  "source_sha256": "8ef321c445c1f5d0acc4ebf4c59efb200b13428f40d26fb11a2093542aed029e",
+  "prediction_analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": null,
+      "context_guard_requested": false
+    }
+  },
+  "primary": {
+    "tp": 2,
+    "fp": 1,
+    "fn": 1,
+    "precision": 0.6666666666666666,
+    "recall": 0.6666666666666666,
+    "f1": 0.6666666666666666,
+    "tolerance_frames": 3,
+    "matches": [
+      {
+        "reference_frame": 587,
+        "predicted_frame": 587,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1225,
+        "predicted_frame": 1225,
+        "offset_frames": 0
+      }
+    ],
+    "missed_frames": [
+      607
+    ],
+    "extra_frames": [
+      6
+    ],
+    "correct_no_cuts": false
+  },
+  "exact": {
+    "tp": 2,
+    "fp": 1,
+    "fn": 1,
+    "precision": 0.6666666666666666,
+    "recall": 0.6666666666666666,
+    "f1": 0.6666666666666666,
+    "tolerance_frames": 0,
+    "matches": [
+      {
+        "reference_frame": 587,
+        "predicted_frame": 587,
+        "offset_frames": 0
+      },
+      {
+        "reference_frame": 1225,
+        "predicted_frame": 1225,
+        "offset_frames": 0
+      }
+    ],
+    "missed_frames": [
+      607
+    ],
+    "extra_frames": [
+      6
+    ],
+    "correct_no_cuts": false
+  },
+  "annotation_sha256": "fa1eecca28656ff636343ae41946a86a430cac596d6b05234f0e74aed6adbfc2",
+  "prediction_sha256": "0fd4c2f606cddd587addca9084db7ab1a4f6afcb32ff5fec8be083fd8077faea",
+  "reference_provenance": {
+    "reference_method": "assistant_boundary_review_after_user_recollection_discrepancy",
+    "user_original_message": "应该是都结束了吧 我记得我Sucai Test1 Test2都是没有切换镜头的 这个你也可以记录一下",
+    "user_confirmed_candidate_frames": true,
+    "assistant_adjacent_frame_visual_check": true,
+    "assistant_independent_full_video_completeness_check": false,
+    "candidate_events": [
+      {
+        "frame": 587,
+        "seconds": 19.566666666666666,
+        "event": "切到另一名选手",
+        "evidence": "observer-switches.jpg"
+      },
+      {
+        "frame": 607,
+        "seconds": 20.233333333333334,
+        "event": "切回原选手",
+        "evidence": "observer-switches.jpg"
+      },
+      {
+        "frame": 1225,
+        "seconds": 40.833333333333336,
+        "event": "新回合开始，画面跳到出生位置",
+        "evidence": "round-transition.jpg"
+      }
+    ],
+    "user_confirmation": "按统一口径记录 3 处",
+    "recorded_at": "2026-09-29T09:26:39.351766+00:00",
+    "round_reset_inclusion_explicitly_confirmed": true,
+    "confirmation_record": "review-20260929/user-confirmation.json",
+    "excluded_prediction": {
+      "frame": 271,
+      "reason": "同一角色连续转向与换弹动作，非内容切点",
+      "visually_reviewed_frames": [
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276
+      ],
+      "evidence": "review-20260929/continuous-motion-check.jpg"
+    }
+  },
+  "experiment_group": "development"
+}

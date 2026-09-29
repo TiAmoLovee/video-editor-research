@@ -1,0 +1,90 @@
+{
+  "media": {
+    "normalized_sha256": "b130cd4fb634628d2310f3ed55c97a5c65f348b172404738c428f847cf205518",
+    "time_reference": "normalized_video",
+    "fps": 30,
+    "total_frames": 3974,
+    "duration_seconds": 132.46666666666667
+  },
+  "source_sha256": "2c8a4f80ed3140c213eed8851b51f58bd9bf3afd4d6775dbd10c4be9f9abf9b8",
+  "prediction_analyzer": {
+    "status": "ok",
+    "tool": "ClipForge.RobustColorDetector",
+    "version": "0.2.0-experimental",
+    "model": null,
+    "parameters": {
+      "feature_width": 384,
+      "max_feature_height": 1024,
+      "feature_interpolation": "AREA",
+      "min_rgb_change": 12.0,
+      "relative_change": 3.0,
+      "window_width_frames": 2,
+      "outside_mean_threshold": 8.0,
+      "outside_fraction_threshold": 0.08,
+      "outside_pixel_threshold": 20.0,
+      "outside_preview_size": [
+        384,
+        216
+      ],
+      "outside_margin_pixels": 2,
+      "selection": "strongest_first_minimum_spacing",
+      "min_scene_len_frames": 6,
+      "frame_skip": 0,
+      "crop_xyxy_exclusive": [
+        165,
+        252,
+        1305,
+        897
+      ],
+      "context_guard_requested": true
+    }
+  },
+  "primary": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "tolerance_frames": 3,
+    "matches": [],
+    "missed_frames": [],
+    "extra_frames": [],
+    "correct_no_cuts": true
+  },
+  "exact": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null,
+    "tolerance_frames": 0,
+    "matches": [],
+    "missed_frames": [],
+    "extra_frames": [],
+    "correct_no_cuts": true
+  },
+  "annotation_sha256": "d4f1750ee5cc9adcc342a1533702bc1fcf46fcf3f138954f807d895ea8ca0ff3",
+  "prediction_sha256": "99e017dd7e22ae01ee61b6963192bea428f5599020b54d31150f05cb7908bf10",
+  "reference_provenance": {
+    "reference_method": "user_confirmed_no_content_cuts_plus_assistant_prediction_spot_check",
+    "user_initial_message": "他全程几乎没什么镜头切换 只是在上面写写画画",
+    "user_confirmation": "是，只有写画，没有切换",
+    "no_content_cuts_confirmed_by_user": true,
+    "assistant_checked_prediction_frames": [
+      43,
+      3896
+    ],
+    "assistant_context_sample_frames": [
+      600,
+      1800,
+      3000,
+      3973
+    ],
+    "assistant_independent_full_video_completeness_check": false,
+    "evidence": "review-20260929/prediction-and-context.jpg",
+    "recorded_at": "2026-09-29T06:40:02.334011+00:00"
+  },
+  "experiment_group": "development"
+}
