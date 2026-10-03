@@ -44,6 +44,7 @@ class CandidateApiTests(unittest.TestCase):
         self.assertEqual(page['items'][0]['id'],self.result['candidates'][1]['id'])
         self.assertNotIn('features',page['items'][0])
         self.assertNotIn('config',page)
+        self.assertEqual(page['scoring_version'],'rule-v1')
         downloaded=self.client.get(f'/tasks/{task}/files/candidates.json').json()
         self.assertEqual(downloaded,self.result)
         self.assertEqual(self.client.get(f'/tasks/{task}/candidates?offset=3').json()['items'],[])
@@ -85,6 +86,7 @@ class CandidateApiTests(unittest.TestCase):
                              transport=lambda *args:response(),limiter=lambda *args:None)
             page=self.client.get(f'/tasks/{self.job(result)}/candidates').json()
             self.assertEqual((page['scorer'],page['requested_scorer']),(expected,'llm'))
+            self.assertEqual(page['scoring_version'],'llm-v1' if key else 'rule-v1')
             self.assertIn('rule_score',page['items'][0])
             self.assertEqual(page['fallback_reason'],None if key else 'missing_key')
 

@@ -56,6 +56,7 @@ export interface CandidatePage {
   has_more: boolean;
   scorer: 'rule' | 'llm';
   requested_scorer?: 'rule' | 'llm';
+  scoring_version?: 'rule-v1' | 'llm-v1' | 'llm-v2';
   fallback_reason?: string | null;
   audio_status: 'measured' | 'unavailable' | 'no_audio';
 }

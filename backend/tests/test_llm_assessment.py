@@ -66,6 +66,7 @@ class AssessmentTests(unittest.TestCase):
         self.assertEqual(self.rule,before)
         self.assertEqual(result['scoring']['version'],'llm-v2')
         self.assertEqual(result['scoring']['llm']['prompt_version'],'llm-v2')
+        self.assertEqual(candidate_page(result,10,0)['scoring_version'],'llm-v2')
         self.assertEqual(candidate_page(result,10,0)['items'][0]['reasons'][-1],
                          '总分由程序相加：15 + 12 + 8 + 6 = 41 分。')
         for c in result['candidates']:

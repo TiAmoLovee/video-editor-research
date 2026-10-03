@@ -18,6 +18,25 @@ const download = `/tasks/${taskId}/files/candidates.json`;
 beforeEach(() => { vi.restoreAllMocks(); useTasks.setState({ task: null, detailError: '', detailLoading: false }); });
 
 describe('candidate results', () => {
+  it('identifies the saved scoring version and never labels an unknown version as new', async () => {
+    const data = page(); data.scorer = 'llm';
+    data.items[0] = { ...data.items[0], scorer: 'llm' };
+    const request = vi.spyOn(api, 'getCandidates');
+    for (const version of ['llm-v1', 'llm-v2', undefined] as const) {
+      request.mockResolvedValue({ ...data, scoring_version: version });
+      const view = render(<CandidateResults taskId={taskId} download={download} />);
+      await screen.findByText('模型分 48.76');
+      expect(!!screen.queryByText('旧版文本评分')).toBe(version === 'llm-v1');
+      expect(!!screen.queryByText('新版分项评分')).toBe(version === 'llm-v2');
+      view.unmount();
+    }
+  });
+  it('explains rejected assessments without presenting the model version as effective', async () => {
+    vi.spyOn(api, 'getCandidates').mockResolvedValue({ ...page(), scoring_version: 'rule-v1', requested_scorer: 'llm', fallback_reason: 'invalid_assessment' });
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText(/分项分数或原文引用未通过校验/)).toBeInTheDocument();
+    expect(screen.queryByText('新版分项评分')).not.toBeInTheDocument();
+  });
   it('distinguishes model scores from the rule baseline', async () => {
     const data = page(); data.scorer = 'llm'; data.requested_scorer = 'llm';
     data.items[0] = { ...data.items[0], scorer: 'llm', score: 81, rule_score: 48.75 };

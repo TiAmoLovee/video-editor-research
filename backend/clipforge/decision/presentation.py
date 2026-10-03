@@ -33,6 +33,9 @@ def candidate_page(data, limit, offset):
         scorer = data['scoring']['scorer']
         if scorer not in ('rule','llm'):
             raise ValueError('不支持的评分器')
+        scoring_version = data['scoring'].get('version')
+        if scoring_version not in ({'rule-v1'} if scorer == 'rule' else {'llm-v1', 'llm-v2'}):
+            raise ValueError('评分版本与实际评分器不一致')
         llm = data['scoring'].get('llm')
         if data['schema_version'] == '0.1.0-draft.3':
             if not isinstance(llm,dict) or llm.get('effective') != scorer or llm.get('requested') != 'llm':
@@ -50,6 +53,7 @@ def candidate_page(data, limit, offset):
             items.append(item.model_dump())
         return {'items': items, 'total': data['candidate_count'], 'limit': limit, 'offset': offset,
                 'has_more': offset + limit < data['candidate_count'], 'scorer': scorer,
+                'scoring_version': scoring_version,
                 'requested_scorer':'llm' if llm else 'rule',
                 'fallback_reason':llm.get('fallback_reason') if llm else None,
                 'audio_status': audio_status}

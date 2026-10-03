@@ -4,6 +4,19 @@ import { DownloadOutlined } from '@ant-design/icons';
 import { downloadUrl, getCandidates } from '../api/tasks';
 import type { CandidatePage } from '../types/tasks';
 
+const fallbackDetails: Record<string, string> = {
+  invalid_assessment: '模型返回的分项分数或原文引用未通过校验。',
+  invalid_output: '模型返回的评分格式未通过校验。',
+  incomplete_or_refused: '模型没有返回完整、可用的评分。',
+  timeout: '模型响应超时。',
+  task_timeout: '模型评分超出本次等待时间。',
+  free_quota_exhausted: '百炼免费额度已耗尽或到期，已停止模型调用。',
+  missing_key: '尚未配置可用的模型密钥。',
+  invalid_key: '模型密钥验证失败。',
+  network_error: '暂时无法连接模型服务。',
+  token_budget: '已达到本次模型用量限制。',
+};
+
 export function CandidateResults({ taskId, download }: { taskId: string; download: string }) {
   const [offset, setOffset] = useState(0);
   const [page, setPage] = useState<CandidatePage | null>(null);
@@ -28,7 +41,9 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
   return <section className="candidate-results" aria-label="候选片段推荐">
     <div className="result-head"><div><h2>候选片段推荐</h2><p className="hint">评分仅用于同一任务内排序。片段可能相互重叠，当前展示推荐时间范围。</p></div><Button href={url} download aria-label="下载评分结果" icon={<DownloadOutlined />}>下载评分结果</Button></div>
     {loading ? <Skeleton active title={false} paragraph={{ rows: 3 }} aria-label="正在加载候选" /> : error ? <Alert type="warning" message="候选暂时加载失败，切片下载仍可使用。" action={<Button size="small" onClick={() => setRetry(value => value + 1)}>重试候选</Button>} /> : page && <>
-      {page.fallback_reason && <Alert type="info" message="模型评分未完成，本次全部候选已使用规则评分。详情见处理记录。" />}
+      {page.fallback_reason && <Alert type="info" message="模型评分未完成，本次全部候选已使用规则评分。" description={`${fallbackDetails[page.fallback_reason] || '详细原因请查看处理记录。'} 未采用部分模型分数。`} />}
+      {page.scorer === 'llm' && page.scoring_version === 'llm-v1' && <Alert type="info" message="旧版文本评分" description="这是此任务生成时保存的结果。更新程序不会改写历史评分；要验证新版，请新建一次任务。" />}
+      {page.scorer === 'llm' && page.scoring_version === 'llm-v2' && <p className="hint"><Tag color="blue">新版分项评分</Tag>总分由四项相加，理由引用原文；评分是否合理仍需人工判断。</p>}
       {page.scorer === 'llm' && <p className="hint">本次使用模型文本评分；未评估画面和声音。规则分保留供对比，两者不能直接当作同一评分标准。</p>}
       {page.total === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="没有符合 15–90 秒条件的完整句子片段。视频可能较短、没有转写内容，或句间停顿较长。" /> : <>
         {page.audio_status === 'unavailable' && <Alert type="info" message="本次没有可用音量证据，音量项记 0 分，其余评分正常。" />}
