@@ -1,0 +1,10 @@
+# Optional: add AFTER compose.yaml and compose.asr-small.yaml, after configuring the provider.
+# Only candidate text/times are sent. Never store the key in tracked JSON or frontend code.
+services:
+  worker:
+    environment:
+      CLIPFORGE_SCORER: llm
+      CLIPFORGE_LLM_CONFIG: /run/clipforge/llm.json
+      CLIPFORGE_LLM_API_KEY: ${CLIPFORGE_LLM_API_KEY:-}
+    volumes:
+      - ${CLIPFORGE_LLM_CONFIG_FILE:-./config/scoring/llm-v1.json}:/run/clipforge/llm.json:ro

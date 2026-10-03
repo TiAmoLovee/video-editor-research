@@ -34,7 +34,7 @@ class ScoringTests(unittest.TestCase):
         registry = default_registry()
         self.assertIsInstance(registry.create('rule'), Scorer)
         with self.assertRaises(ValueError):
-            registry.create('llm')
+            registry.create('unknown')
         with self.assertRaises(ValueError):
             registry.register('rule', RuleScorer)
         registry.register('bad', lambda: object())

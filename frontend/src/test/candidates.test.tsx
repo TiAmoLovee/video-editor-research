@@ -18,6 +18,22 @@ const download = `/tasks/${taskId}/files/candidates.json`;
 beforeEach(() => { vi.restoreAllMocks(); useTasks.setState({ task: null, detailError: '', detailLoading: false }); });
 
 describe('candidate results', () => {
+  it('distinguishes model scores from the rule baseline', async () => {
+    const data = page(); data.scorer = 'llm'; data.requested_scorer = 'llm';
+    data.items[0] = { ...data.items[0], scorer: 'llm', score: 81, rule_score: 48.75 };
+    vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText('模型分 81.00')).toBeInTheDocument();
+    expect(screen.getByText('规则基线 48.75')).toBeInTheDocument();
+    expect(screen.getByText(/未评估画面和声音/)).toBeInTheDocument();
+  });
+  it('explains whole-task fallback without showing a model score', async () => {
+    vi.spyOn(api, 'getCandidates').mockResolvedValue({ ...page(), requested_scorer: 'llm', fallback_reason: 'invalid_key' });
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText(/本次全部候选已使用规则评分/)).toBeInTheDocument();
+    expect(screen.getByText('规则分 48.76')).toBeInTheDocument();
+    expect(screen.queryByText(/模型分 \d/)).not.toBeInTheDocument();
+  });
   it('shows score, original text, explanations and a safe download', async () => {
     vi.spyOn(api, 'getCandidates').mockResolvedValue(page());
     render(<CandidateResults taskId={taskId} download={download} />);

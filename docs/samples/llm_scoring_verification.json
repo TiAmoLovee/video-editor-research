@@ -1,0 +1,29 @@
+{
+  "implementation_base": "ced997b",
+  "backend_tests": 224,
+  "llm_focused_recheck": 14,
+  "frontend_tests": 26,
+  "typecheck": "passed",
+  "production_build": "passed",
+  "ruff": "passed",
+  "compose_config": "passed",
+  "real_provider_tested": false,
+  "external_requests": 0,
+  "docker_llm_deployment": "not performed",
+  "offline_replay": {
+    "kind": "offline_replay_of_deployed_Test3",
+    "candidate_count": 14,
+    "all_rule_scores_text_times_reasons_unchanged": true,
+    "fallback_reason": "missing_configuration",
+    "requests": 0,
+    "preview_task_id": "88d2af3b-71ca-4f1d-9e99-0ca4f6625b32",
+    "real_provider_tested": false
+  },
+  "remaining": [
+    "provider and model selection",
+    "actual provider usage and billing verification",
+    "model versus rule evaluation",
+    "NMS and topic clustering",
+    "human semantic completeness >=85%"
+  ]
+}

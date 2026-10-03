@@ -1,0 +1,31 @@
+{
+  "task_id": "1fd507b5-aa0f-46ba-9c3f-7c3b081dde63",
+  "cache": {
+    "format_version": 1,
+    "hit": true,
+    "status": "hit",
+    "transcription_executed": false,
+    "reused_stages": [
+      "normalizing",
+      "analyzing_shots",
+      "analyzing_speech",
+      "transcribing",
+      "combining_analysis",
+      "scoring_candidates",
+      "splitting"
+    ],
+    "key": "529d5d7e0a966a8aaed911a390ebeed87a2684bd31ab30261bf3bab5fc2b3374",
+    "reused_from_task_id": "0e22a3c0-9fb4-4f73-a6f0-f563671fccde",
+    "worker_seconds_before_packaging": 4.325448,
+    "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+    "component_elapsed_seconds_are_original": true
+  },
+  "same_cache_key": true,
+  "candidate_count": 14,
+  "candidates_byte_identical": true,
+  "candidates_sha256": "E5E7F3B091426CFA822CAC2DAD6CD8E12B469633EF0F2A4895B3B9D0912EF252",
+  "cold_seconds": 207.551349,
+  "warm_seconds": 4.325448,
+  "reduction_percent": 97.91596247346,
+  "scope": "worker before packaging; excludes upload, queue, ZIP and cache publication"
+}

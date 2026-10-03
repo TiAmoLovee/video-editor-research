@@ -42,7 +42,8 @@ export interface Candidate {
   duration_seconds: number;
   text: string;
   score: number;
-  scorer: 'rule';
+  scorer: 'rule' | 'llm';
+  rule_score?: number | null;
   scoring_status: 'scored';
   reasons: string[];
   source_sentences: string[];
@@ -53,7 +54,9 @@ export interface CandidatePage {
   limit: number;
   offset: number;
   has_more: boolean;
-  scorer: 'rule';
+  scorer: 'rule' | 'llm';
+  requested_scorer?: 'rule' | 'llm';
+  fallback_reason?: string | null;
   audio_status: 'measured' | 'unavailable' | 'no_audio';
 }
 export const statusLabels: Record<TaskState, string> = {

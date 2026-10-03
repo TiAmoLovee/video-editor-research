@@ -22,6 +22,7 @@ from clipforge.decision.audio import measure_audio
 from clipforge.decision.candidates import generate_candidates
 from clipforge.decision.scorers import RuleConfig
 from clipforge.decision.scoring import load_config, score_candidates
+from clipforge.decision.llm import apply_llm, safe_settings_snapshot
 from clipforge.services import result_cache
 
 logger = logging.getLogger(__name__)
@@ -75,7 +76,9 @@ def process_video(task_id: str) -> dict:
             # 使用指纹时读取的配置快照，避免处理中改配置而将新分数写入旧键。
             scoring_config = (RuleConfig(**descriptor['scoring_config'])
                               if descriptor and 'scoring_config' in descriptor else None)
-            result = _process_uncached(task_id, info, started, scoring_config=scoring_config)
+            decision_settings = descriptor.get('decision_settings') if descriptor else None
+            result = _process_uncached(task_id, info, started, scoring_config=scoring_config,
+                                       decision_settings=decision_settings)
             if index is not None:
                 try:
                     result_cache.publish(index, descriptor, task_id, source)
@@ -98,6 +101,17 @@ def finish_task(task_id, folder, plan, files, info, started):
     info['component_elapsed_seconds_are_original'] = bool(info['hit'])
     save_json(folder/'cache.json', info)
     files['cache.json'] = 'cache.json'
+    scoring = json.loads((folder/'candidates.json').read_text(encoding='utf-8')).get('scoring',{})
+    llm = scoring.get('llm')
+    usage = {'requested': 'llm' if llm else 'rule','effective':scoring.get('scorer','rule'),
+             'cache_hit':info['hit'],'reused_from_task_id':info.get('reused_from_task_id'),
+             'fallback_reason':llm['fallback_reason'] if llm else None,
+             'current_task_requests':0 if info['hit'] or not llm else llm['usage']['requests'],
+             'current_task_estimated_cost':0 if info['hit'] or not llm else (
+                 llm['usage']['estimated_known_cost'] if llm['usage']['total_cost_known'] else None),
+             'original_scoring_usage':llm['usage'] if llm else None}
+    save_json(folder/'scoring_usage.json',usage)
+    files['scoring_usage.json'] = 'scoring_usage.json'
     try:
         with zipfile.ZipFile(folder / 'result.zip.tmp', 'x', zipfile.ZIP_STORED) as archive:
             for name, relative_path in files.items():
@@ -113,13 +127,14 @@ def finish_task(task_id, folder, plan, files, info, started):
     return {'task_id': task_id, 'clip_count': len(plan['clips']), 'cache_hit': info['hit']}
 
 
-def _process_uncached(task_id, cache_info, started, *, scoring_config=None):
+def _process_uncached(task_id, cache_info, started, *, scoring_config=None, decision_settings=None):
     job = get_job(task_id)
     folder = job_dir(task_id)
     ffmpeg = media_tool("ffmpeg")
     ffprobe = media_tool("ffprobe")
     stage, progress = "probing", 10
     try:
+        decision_settings = decision_settings or safe_settings_snapshot()
         source = folder / job["source_key"]
         original = normalize_metadata(probe_video(str(source), ffprobe), str(source))
         original["source_file"] = job["source_name"]
@@ -160,6 +175,8 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None):
         audio = (measure_audio(folder / 'normalized.mp4', analysis, ffmpeg=ffmpeg, ffprobe=ffprobe)
                  if windows['candidates'] and analysis['media']['has_audio'] else None)
         candidates = score_candidates(windows, analysis, config=config, audio=audio)
+        if decision_settings['mode'] == 'llm':
+            candidates = apply_llm(candidates, analysis, decision_settings)
         save_json(folder / 'candidate_windows.json', windows)
         save_json(folder / 'candidates.json', candidates)
 

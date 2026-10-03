@@ -77,5 +77,16 @@ class CandidateApiTests(unittest.TestCase):
         outside=Path(self.temp.name)/'outside.json';outside.write_text('{}')
         self.assertEqual(self.client.get(f'/tasks/{self.job(mapped="../../outside.json")}/candidates').status_code,404)
 
+    def test_model_and_fallback_projection(self):
+        from clipforge.decision.llm import apply_llm
+        from backend.tests.test_llm_scoring import snapshot,response
+        for key,expected in [('fake','llm'),('','rule')]:
+            result=apply_llm(self.result,self.analysis,snapshot(),api_key=key,
+                             transport=lambda *args:response(),limiter=lambda *args:None)
+            page=self.client.get(f'/tasks/{self.job(result)}/candidates').json()
+            self.assertEqual((page['scorer'],page['requested_scorer']),(expected,'llm'))
+            self.assertIn('rule_score',page['items'][0])
+            self.assertEqual(page['fallback_reason'],None if key else 'missing_key')
+
 
 if __name__=='__main__':unittest.main()

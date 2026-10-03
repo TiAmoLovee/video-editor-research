@@ -41,7 +41,7 @@ class ResultCacheTests(unittest.TestCase):
     def descriptor(self, source, options_path, ffmpeg, ffprobe):
         options = json.loads(options_path.read_text()) if options_path.exists() else None
         d = {'source_sha256': cache.sha256(source), 'shot_options': options, 'test_configuration': 'fixed',
-             'scoring_config': cache.load_config().to_dict()}
+             'scoring_config': cache.load_config().to_dict(),'decision_settings':cache.safe_settings_snapshot()}
         return hashlib.sha256(cache.canonical(d).encode()).hexdigest(), d
 
     def pipeline(self):
@@ -195,6 +195,49 @@ class ResultCacheTests(unittest.TestCase):
         finally:
             child.terminate();child.communicate(timeout=5)
         with cache.key_lock('test-lock',timeout=1):pass
+
+    def test_llm_success_cache_has_zero_new_calls_and_new_usage_report(self):
+        from backend.tests.test_candidates import fixture
+        from backend.tests.test_llm_scoring import snapshot, response
+        self.example=fixture([(0,10),(10,20),(20,30)])
+        self.pipeline()
+        settings=snapshot()
+        with patch.object(cache,'safe_settings_snapshot',return_value=settings), \
+             patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':'fake'}), \
+             patch('clipforge.services.pipeline.measure_audio',return_value=None), \
+             patch('clipforge.decision.llm.http_transport',return_value=response()) as transport, \
+             patch('clipforge.decision.llm.rate_slot'):
+            a=self.job();self.assertFalse(process_video(a)['cache_hit'])
+            b=self.job();self.assertTrue(process_video(b)['cache_hit'])
+            self.assertEqual(transport.call_count,3)
+            info=json.loads((job_dir(b)/'scoring_usage.json').read_text(encoding='utf-8'))
+            self.assertEqual((info['current_task_requests'],info['current_task_estimated_cost']),(0,0))
+            self.assertEqual(info['original_scoring_usage']['requests'],3)
+            with zipfile.ZipFile(job_dir(b)/'result.zip') as z:
+                self.assertEqual(z.read('scoring_usage.json'),(job_dir(b)/'scoring_usage.json').read_bytes())
+            settings['prompt']+=' new version';settings['prompt_sha256']=cache.content_hash(settings['prompt'])
+            self.assertFalse(process_video(self.job())['cache_hit'])
+            self.assertEqual(transport.call_count,6)
+
+    def test_llm_fallback_not_published_then_fixed_key_recovers(self):
+        from backend.tests.test_candidates import fixture
+        from backend.tests.test_llm_scoring import snapshot, response
+        from clipforge.decision.llm import LLMFailure
+        self.example=fixture([(0,10),(10,20),(20,30)])
+        self.pipeline()
+        with patch.object(cache,'safe_settings_snapshot',return_value=snapshot()), \
+             patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':'fake'}), \
+             patch('clipforge.services.pipeline.measure_audio',return_value=None), \
+             patch('clipforge.decision.llm.http_transport',side_effect=LLMFailure('invalid_key')) as transport, \
+             patch('clipforge.decision.llm.rate_slot'):
+            a=self.job();self.assertFalse(process_video(a)['cache_hit'])
+            data=json.loads((job_dir(a)/'candidates.json').read_text(encoding='utf-8'))
+            self.assertEqual(data['scoring']['llm']['fallback_reason'],'invalid_key')
+            self.assertEqual(list((Path(self.temp.name)/'result-cache-v2').glob('*.json')),[])
+            transport.side_effect=None;transport.return_value=response()
+            self.assertFalse(process_video(self.job())['cache_hit'])
+            self.assertTrue(process_video(self.job())['cache_hit'])
+            self.assertEqual(transport.call_count,4)
 
 
 if __name__=='__main__':unittest.main()

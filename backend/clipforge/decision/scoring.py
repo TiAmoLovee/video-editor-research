@@ -61,6 +61,9 @@ def score_candidates(windows, analysis, *, config=None, audio=None):
 
 
 def validate_scored(data, analysis):
+    if isinstance(data,dict) and data.get('schema_version') == '0.1.0-draft.3':
+        from clipforge.decision.llm import validate_llm_result
+        return validate_llm_result(data,analysis)
     _finite(data)
     schema = json.loads((ROOT / 'schemas/scored_candidates.schema.json').read_text(encoding='utf-8'))
     Draft202012Validator.check_schema(schema)

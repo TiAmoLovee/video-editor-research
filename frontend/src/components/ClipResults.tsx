@@ -35,7 +35,7 @@ export function ClipResults({ task, result }: { task: Task; result: TaskResult }
     })}</div>
     {visible < matches.length && <Button className="load-more" onClick={() => setVisible(value => value + 24)}>显示更多切片</Button>}
     {result.downloads['asr.json'] && <p className="hint">自动转写可能有误，请试听核对文字和时间。</p>}
-    <details className="more"><summary>处理记录与参数文件</summary>{Object.entries({ 'media_meta.json': '原视频参数', 'normalized_media_meta.json': '归一化参数', 'clip_plan.json': '切片清单', 'shots.json': '镜头分析结果', 'vad.json': '语音活动分析结果', 'asr.json': '词级转写与分句', 'analysis.json': '完整分析结果', 'candidate_windows.json': '候选生成记录', 'cache.json': '本次处理与复用记录' }).map(([name, label]) => {
+    <details className="more"><summary>处理记录与参数文件</summary>{Object.entries({ 'media_meta.json': '原视频参数', 'normalized_media_meta.json': '归一化参数', 'clip_plan.json': '切片清单', 'shots.json': '镜头分析结果', 'vad.json': '语音活动分析结果', 'asr.json': '词级转写与分句', 'analysis.json': '完整分析结果', 'candidate_windows.json': '候选生成记录', 'cache.json': '本次处理与复用记录', 'scoring_usage.json': '评分方式与调用用量' }).map(([name, label]) => {
       if (!result.downloads[name]) return null;
       try { return <a key={name} href={downloadUrl(result.downloads[name], task.task_id)} download>{label}</a>; }
       catch { return null; }

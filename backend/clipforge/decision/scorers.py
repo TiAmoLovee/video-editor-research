@@ -166,6 +166,8 @@ class RuleScorer(Scorer):
 
 
 def default_registry():
+    from clipforge.decision.llm import LLMScorer
     registry = ScorerRegistry()
     registry.register('rule', RuleScorer)
+    registry.register('llm', LLMScorer)
     return registry
