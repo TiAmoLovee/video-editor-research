@@ -35,6 +35,13 @@ export interface TaskPage {
   offset: number;
 }
 export interface Candidate {
+  selection?: {
+    retained: boolean;
+    suppressed_by: string | null;
+    boundary_status: 'review_required' | 'not_verified';
+    issues: string[];
+    proposal: { start: number; end: number; duration_seconds: number; text: string; score: null; status: 'review_then_rescore' } | null;
+  };
   id: string;
   rank: number;
   start: number;
@@ -49,6 +56,9 @@ export interface Candidate {
   source_sentences: string[];
 }
 export interface CandidatePage {
+  selection_version?: string;
+  selection_summary?: { original_count: number; retained_count: number; suppressed_count: number; retained_review_count: number; proposal_count: number };
+  view?: 'all' | 'retained';
   items: Candidate[];
   total: number;
   limit: number;

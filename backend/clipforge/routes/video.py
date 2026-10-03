@@ -12,6 +12,7 @@ from clipforge.storage.jobs import create_job, get_job, job_dir, list_jobs, subm
 from clipforge.queue.client import QueueUnavailable, submit_video
 from clipforge.analysis.options import parse_options
 from clipforge.decision.presentation import candidate_page
+from clipforge.decision.selection import build_selection
 
 router = APIRouter(prefix="/tasks", tags=["视频任务"])
 MAX_UPLOAD_BYTES = 1024 * 1024 * 1024
@@ -121,14 +122,57 @@ def result_file(job, task_id, filename):
 
 @router.get('/{task_id}/candidates', summary='分页查看候选片段排名及评分原因')
 def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
-                      offset: int = Query(0, ge=0)):
+                      offset: int = Query(0, ge=0), view: str = Query('all', pattern='^(all|retained)$')):
     job = require_job(task_id)
     target = result_file(job, task_id, 'candidates.json')
     try:
         data = json.loads(target.read_text(encoding='utf-8'))
-        return candidate_page(data, limit, offset)
-    except (OSError, ValueError, TypeError) as error:
+        page = candidate_page(data, limit, offset)
+        report = selection_for_task(job, task_id, data)
+        if report is not None:
+            notes = {item['candidate_id']: item for item in report['items']}
+            if view == 'retained':
+                retained = [c for c in data['candidates'] if notes[c['id']]['retained']]
+                # 原排名保留，分页基于全批去重结果，不在当前页内单独去重。
+                page['items'] = [candidate_page(data, 1, c['rank'] - 1)['items'][0]
+                                 for c in retained[offset:offset + limit]]
+                page.update(total=len(retained), has_more=offset + limit < len(retained))
+            for item in page['items']:
+                item['selection'] = notes[item['id']]
+            page['selection_summary'] = report['summary']
+            page['selection_version'] = report['version']
+        elif view == 'retained':
+            raise HTTPException(409, '此历史任务没有可核对的分析记录。')
+        page['view'] = view
+        return page
+    except (OSError, ValueError, TypeError, KeyError) as error:
         raise HTTPException(500, '候选结果暂不可用，请查看后台日志或重新处理视频。') from error
+
+
+def selection_for_task(job, task_id, candidates):
+    if 'analysis.json' not in (job['result'] or {}).get('files', {}):
+        return None
+    analysis = json.loads(result_file(job, task_id, 'analysis.json').read_text(encoding='utf-8'))
+    root = job_dir(str(task_id)).resolve()
+    review_path = root / 'boundary_review.json'
+    if not review_path.resolve().is_relative_to(root):
+        raise ValueError('人工记录路径异常')
+    review = json.loads(review_path.read_text(encoding='utf-8')) if review_path.exists() else None
+    return build_selection(candidates, analysis, review)
+
+
+@router.get('/{task_id}/selection', summary='下载当前边界复核及去重记录；不调用模型')
+def selection_download(task_id: UUID):
+    job = require_job(task_id)
+    try:
+        data = json.loads(result_file(job, task_id, 'candidates.json').read_text(encoding='utf-8'))
+        report = selection_for_task(job, task_id, data)
+        if report is None:
+            raise HTTPException(404, '此任务没有分析记录。')
+        return JSONResponse(report, headers={'Content-Disposition': 'attachment; filename="selection.json"',
+                                             'Cache-Control': 'no-store'})
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        raise HTTPException(500, '边界复核记录暂不可用，请查看后台日志。') from error
 
 
 @router.get("/{task_id}/files/{filename}", summary="下载成品切片、JSON 或 ZIP")

@@ -18,6 +18,19 @@ const download = `/tasks/${taskId}/files/candidates.json`;
 beforeEach(() => { vi.restoreAllMocks(); useTasks.setState({ task: null, detailError: '', detailLoading: false }); });
 
 describe('candidate results', () => {
+  it('separates unscored boundary proposals from original scores and filters globally', async () => {
+    const data = page();
+    data.selection_summary = { original_count: 11, retained_count: 2, suppressed_count: 9, retained_review_count: 1, proposal_count: 1 };
+    data.items[0].selection = { retained: true, suppressed_by: null, boundary_status: 'review_required', issues: ['word_crosses_visual_cut'], proposal: { start: 1.43, end: 17.9, duration_seconds: 16.47, text: '原词保留', score: null, status: 'review_then_rescore' } };
+    const request = vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText('修正草案：1.43–17.90 秒')).toBeInTheDocument();
+    expect(screen.getByText(/没有沿用原分数/)).toBeInTheDocument();
+    expect(screen.getByText(/不能直接按画面截断/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '只看去重保留' }));
+    await waitFor(() => expect(request).toHaveBeenLastCalledWith(taskId, 0, expect.any(AbortSignal), 'retained'));
+    expect(await screen.findByRole('link', { name: '下载边界与去重记录' })).toHaveAttribute('href', `/tasks/${taskId}/selection`);
+  });
   it('identifies the saved scoring version and never labels an unknown version as new', async () => {
     const data = page(); data.scorer = 'llm';
     data.items[0] = { ...data.items[0], scorer: 'llm' };

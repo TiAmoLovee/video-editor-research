@@ -24,7 +24,7 @@ async function request<T>(path: string, signal: AbortSignal): Promise<T> {
 }
 export const getTasks = (offset: number, signal: AbortSignal) => request<TaskPage>(`/tasks?limit=10&offset=${offset}`, signal);
 export const getTask = (id: string, signal: AbortSignal) => request<Task>(`/tasks/${id}`, signal);
-export const getCandidates = (id: string, offset: number, signal: AbortSignal) => request<CandidatePage>(`/tasks/${id}/candidates?limit=10&offset=${offset}`, signal);
+export const getCandidates = (id: string, offset: number, signal: AbortSignal, view: 'all' | 'retained' = 'all') => request<CandidatePage>(`/tasks/${id}/candidates?limit=10&offset=${offset}${view === 'retained' ? '&view=retained' : ''}`, signal);
 
 export function downloadUrl(url: string, taskId: string): string {
   // Only the same task's single filename is accepted, including for media previews.
