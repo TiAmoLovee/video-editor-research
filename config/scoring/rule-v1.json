@@ -1,0 +1,14 @@
+{
+  "version": "rule-v1",
+  "keywords": ["关键", "原因", "方法", "总结", "注意", "为什么", "怎么"],
+  "base_score": 20,
+  "keyword_weight": 35,
+  "pace_weight": 15,
+  "volume_weight": 15,
+  "qa_weight": 15,
+  "duration_penalty_weight": 20,
+  "keyword_density_target": 0.08,
+  "pace_change_target": 0.5,
+  "volume_prominence_db": 12,
+  "target_seconds": 30
+}
