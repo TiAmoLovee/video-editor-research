@@ -1,0 +1,127 @@
+{
+  "scope": "Native real small/base inference; fresh process each run; worker processing including cache key, validation, copying, ZIP and index publication. Excludes upload, queue wait and browser polling. HTTP adapters checked with TestClient, no real Celery/Docker acceptance.",
+  "source": "Test3.mp4; SHA256 28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+  "runs": [
+    {
+      "worker_seconds": 275.94153829995776,
+      "transcription_calls": 1,
+      "result": {
+        "task_id": "1e5e7300-9f65-4772-bb2d-69ae0e717253",
+        "clip_count": 3,
+        "cache_hit": false
+      },
+      "cache": {
+        "format_version": 1,
+        "hit": false,
+        "status": "miss",
+        "transcription_executed": true,
+        "reused_stages": [],
+        "key": "e80d0de42c3b1444ad0e0d5ea9185dc78bc5293faa13f5ff3f79597f60152a11",
+        "worker_seconds_before_packaging": 275.224926,
+        "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+        "component_elapsed_seconds_are_original": false
+      },
+      "words": 200,
+      "analysis_sha256": "5c9b69b23a048e3bb59cc024925919472151e6feb5edf9aeae19c6c5a062bb64",
+      "candidates_sha256": "7759dea070490133e73126329989acc4095f8dc97f2a13672a4af058e862c07b",
+      "candidate_count": 19,
+      "audio_status": "measured",
+      "clip_sha256": {
+        "clip_001.mp4": "1f6e973e7c77e8c536112b2d043809f0d4b25d4e7c7b9013247634d47c3807ae",
+        "clip_002.mp4": "5ff17a2093563b52356a3bb309c9f70de7b2c73cfd532d2d4db3297e539b506b",
+        "clip_003.mp4": "5a7692b87990b14dac6611760d2d683dee820434c41ab4af2160d47d76e7d737"
+      }
+    },
+    {
+      "worker_seconds": 1.3015340000274591,
+      "transcription_calls": 0,
+      "result": {
+        "task_id": "f529d5fd-1c73-4c89-b239-4996e816d3bb",
+        "clip_count": 3,
+        "cache_hit": true
+      },
+      "cache": {
+        "format_version": 1,
+        "hit": true,
+        "status": "hit",
+        "transcription_executed": false,
+        "reused_stages": [
+          "normalizing",
+          "analyzing_shots",
+          "analyzing_speech",
+          "transcribing",
+          "combining_analysis",
+          "scoring_candidates",
+          "splitting"
+        ],
+        "key": "e80d0de42c3b1444ad0e0d5ea9185dc78bc5293faa13f5ff3f79597f60152a11",
+        "reused_from_task_id": "1e5e7300-9f65-4772-bb2d-69ae0e717253",
+        "worker_seconds_before_packaging": 1.116852,
+        "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+        "component_elapsed_seconds_are_original": true
+      },
+      "words": 200,
+      "analysis_sha256": "5c9b69b23a048e3bb59cc024925919472151e6feb5edf9aeae19c6c5a062bb64",
+      "candidates_sha256": "7759dea070490133e73126329989acc4095f8dc97f2a13672a4af058e862c07b",
+      "candidate_count": 19,
+      "audio_status": "measured",
+      "clip_sha256": {
+        "clip_001.mp4": "1f6e973e7c77e8c536112b2d043809f0d4b25d4e7c7b9013247634d47c3807ae",
+        "clip_002.mp4": "5ff17a2093563b52356a3bb309c9f70de7b2c73cfd532d2d4db3297e539b506b",
+        "clip_003.mp4": "5a7692b87990b14dac6611760d2d683dee820434c41ab4af2160d47d76e7d737"
+      }
+    },
+    {
+      "worker_seconds": 1.2371072999667376,
+      "transcription_calls": 0,
+      "result": {
+        "task_id": "bd682c8d-be8b-4587-8001-9ffc3d2365f2",
+        "clip_count": 3,
+        "cache_hit": true
+      },
+      "cache": {
+        "format_version": 1,
+        "hit": true,
+        "status": "hit",
+        "transcription_executed": false,
+        "reused_stages": [
+          "normalizing",
+          "analyzing_shots",
+          "analyzing_speech",
+          "transcribing",
+          "combining_analysis",
+          "scoring_candidates",
+          "splitting"
+        ],
+        "key": "e80d0de42c3b1444ad0e0d5ea9185dc78bc5293faa13f5ff3f79597f60152a11",
+        "reused_from_task_id": "1e5e7300-9f65-4772-bb2d-69ae0e717253",
+        "worker_seconds_before_packaging": 1.043433,
+        "timing_scope": "worker processing before ZIP; excludes upload, queue wait, ZIP and cache publication",
+        "component_elapsed_seconds_are_original": true
+      },
+      "words": 200,
+      "analysis_sha256": "5c9b69b23a048e3bb59cc024925919472151e6feb5edf9aeae19c6c5a062bb64",
+      "candidates_sha256": "7759dea070490133e73126329989acc4095f8dc97f2a13672a4af058e862c07b",
+      "candidate_count": 19,
+      "audio_status": "measured",
+      "clip_sha256": {
+        "clip_001.mp4": "1f6e973e7c77e8c536112b2d043809f0d4b25d4e7c7b9013247634d47c3807ae",
+        "clip_002.mp4": "5ff17a2093563b52356a3bb309c9f70de7b2c73cfd532d2d4db3297e539b506b",
+        "clip_003.mp4": "5a7692b87990b14dac6611760d2d683dee820434c41ab4af2160d47d76e7d737"
+      }
+    }
+  ],
+  "median_warm_worker_reduction": 0.9954000377840276,
+  "passes_80_percent_target": true,
+  "all_analysis_and_clip_hashes_equal": true,
+  "all_download_and_zip_checks_passed": true,
+  "validation": {
+    "frontend_tests": 24,
+    "backend_tests": 207,
+    "browser": "19 candidates, both pages, five reasons, download link",
+    "implementation_base": "429135b",
+    "typecheck": "passed",
+    "docker": "not verified; engine unavailable",
+    "build": "passed"
+  }
+}

@@ -1,6 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import ExitStack
 from copy import deepcopy
+from dataclasses import replace
 import hashlib
 import json
 import os
@@ -39,7 +40,8 @@ class ResultCacheTests(unittest.TestCase):
 
     def descriptor(self, source, options_path, ffmpeg, ffprobe):
         options = json.loads(options_path.read_text()) if options_path.exists() else None
-        d = {'source_sha256': cache.sha256(source), 'shot_options': options, 'test_configuration': 'fixed'}
+        d = {'source_sha256': cache.sha256(source), 'shot_options': options, 'test_configuration': 'fixed',
+             'scoring_config': cache.load_config().to_dict()}
         return hashlib.sha256(cache.canonical(d).encode()).hexdigest(), d
 
     def pipeline(self):
@@ -78,13 +80,15 @@ class ResultCacheTests(unittest.TestCase):
         self.assertFalse(process_video(a)['cache_hit'])
         self.assertTrue(process_video(b)['cache_hit'])
         self.assertEqual((self.asr.call_count,self.normalize.call_count,self.split.call_count),(1,1,1))
-        for name in ['shots.json','vad.json','asr.json','analysis.json','clips/clip_001.mp4']:
+        for name in ['shots.json','vad.json','asr.json','analysis.json','candidate_windows.json','candidates.json','clips/clip_001.mp4']:
             self.assertEqual((job_dir(a)/name).read_bytes(),(job_dir(b)/name).read_bytes())
         self.assertEqual(json.loads((job_dir(b)/'media_meta.json').read_text())['source_file'],'renamed.mp4')
         info=json.loads((job_dir(b)/'cache.json').read_text());self.assertFalse(info['transcription_executed'])
+        self.assertIn('scoring_candidates', info['reused_stages'])
         with zipfile.ZipFile(job_dir(b)/'result.zip') as z:
             self.assertIsNone(z.testzip())
             self.assertEqual(z.read('cache.json'),(job_dir(b)/'cache.json').read_bytes())
+            self.assertEqual(z.read('candidates.json'),(job_dir(b)/'candidates.json').read_bytes())
         # 独立复制，修改新任务切片不会污染缓存源任务。
         (job_dir(b)/'clips/clip_001.mp4').write_bytes(b'changed')
         self.assertEqual((job_dir(a)/'clips/clip_001.mp4').read_bytes(),b'test-clip')
@@ -120,7 +124,7 @@ class ResultCacheTests(unittest.TestCase):
         self.pipeline(); self.asr.side_effect=RuntimeError('inference failed')
         with self.assertLogs('clipforge.services.pipeline',level='ERROR'), self.assertRaises(RuntimeError):
             process_video(self.job())
-        self.assertEqual(list((Path(self.temp.name)/'result-cache-v1').glob('*.json')),[])
+        self.assertEqual(list((Path(self.temp.name)/'result-cache-v2').glob('*.json')),[])
 
     def test_parallel_identical_jobs_run_transcription_once(self):
         self.pipeline();tasks=[self.job(),self.job()]
@@ -144,6 +148,8 @@ class ResultCacheTests(unittest.TestCase):
              patch.object(cache,'version',return_value='1'), \
              patch.object(cache.subprocess,'run',return_value=type('Tool',(),{'stdout':'ffmpeg-test'})()):
             key,_=cache.fingerprint(source,None,'ffmpeg','ffprobe')
+            with patch.object(cache, 'load_config', return_value=replace(cache.load_config(), keyword_weight=20)):
+                self.assertNotEqual(key, cache.fingerprint(source,None,'ffmpeg','ffprobe')[0])
             with patch.dict(os.environ,{'CLIPFORGE_ASR_LANGUAGE':'zh'}):
                 self.assertNotEqual(key,cache.fingerprint(source,None,'ffmpeg','ffprobe')[0])
             verify.return_value={'revision':'two'}
@@ -160,9 +166,21 @@ class ResultCacheTests(unittest.TestCase):
         for name in ['../secret','/secret','C:/secret','clips/../../secret','clips\\secret']:
             with self.assertRaises(ValueError):cache.safe_path(root,name)
         self.pipeline();a=self.job();process_video(a)
-        index=next((root/'result-cache-v1').glob('*.json'));index.write_text('{bad')
+        index=next((root/'result-cache-v2').glob('*.json'));index.write_text('{bad')
         with self.assertLogs('clipforge.services.pipeline',level='WARNING'):
             self.assertFalse(process_video(self.job())['cache_hit'])
+
+    def test_missing_candidates_recomputes_and_configuration_change_misses(self):
+        self.pipeline(); first=self.job();process_video(first)
+        (job_dir(first)/'candidates.json').unlink()
+        with self.assertLogs('clipforge.services.pipeline',level='WARNING'):
+            self.assertFalse(process_video(self.job())['cache_hit'])
+        with patch.object(cache, 'load_config', return_value=replace(cache.load_config(),keyword_weight=20)):
+            changed=self.job();self.assertFalse(process_video(changed)['cache_hit'])
+            result=json.loads((job_dir(changed)/'candidates.json').read_text(encoding='utf-8'))
+            self.assertEqual(result['scoring']['config']['keyword_weight'],20)
+            self.assertTrue(process_video(self.job())['cache_hit'])
+        self.assertEqual(self.asr.call_count,3)
 
     def test_process_lock_is_released_after_termination(self):
         ready=Path(self.temp.name)/'ready'

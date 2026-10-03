@@ -18,6 +18,10 @@ from clipforge.analysis.options import detector_options
 from clipforge.analysis.vad import detect_speech
 from clipforge.analysis.asr import transcribe_video
 from clipforge.analysis.combine import combine_analysis
+from clipforge.decision.audio import measure_audio
+from clipforge.decision.candidates import generate_candidates
+from clipforge.decision.scorers import RuleConfig
+from clipforge.decision.scoring import load_config, score_candidates
 from clipforge.services import result_cache
 
 logger = logging.getLogger(__name__)
@@ -61,14 +65,17 @@ def process_video(task_id: str) -> dict:
                 info.update(hit=True, status='hit', transcription_executed=False,
                             reused_from_task_id=restored['task_id'],
                             reused_stages=['normalizing', 'analyzing_shots', 'analyzing_speech',
-                                           'transcribing', 'combining_analysis', 'splitting'])
+                                           'transcribing', 'combining_analysis', 'scoring_candidates', 'splitting'])
                 meta = json.loads((folder/'media_meta.json').read_text(encoding='utf-8'))
                 meta['source_file'] = job['source_name']
                 save_json(folder/'media_meta.json', meta)
                 previous = restored['result']
                 plan = {'clips': previous['clips'], 'total_frames': previous['total_frames']}
                 return finish_task(task_id, folder, plan, dict(restored['files']), info, started)
-            result = _process_uncached(task_id, info, started)
+            # 使用指纹时读取的配置快照，避免处理中改配置而将新分数写入旧键。
+            scoring_config = (RuleConfig(**descriptor['scoring_config'])
+                              if descriptor and 'scoring_config' in descriptor else None)
+            result = _process_uncached(task_id, info, started, scoring_config=scoring_config)
             if index is not None:
                 try:
                     result_cache.publish(index, descriptor, task_id, source)
@@ -106,7 +113,7 @@ def finish_task(task_id, folder, plan, files, info, started):
     return {'task_id': task_id, 'clip_count': len(plan['clips']), 'cache_hit': info['hit']}
 
 
-def _process_uncached(task_id, cache_info, started):
+def _process_uncached(task_id, cache_info, started, *, scoring_config=None):
     job = get_job(task_id)
     folder = job_dir(task_id)
     ffmpeg = media_tool("ffmpeg")
@@ -146,6 +153,16 @@ def _process_uncached(task_id, cache_info, started):
         analysis = combine_analysis(source, shot_analysis, vad_analysis, asr_analysis)
         save_json(folder / "analysis.json", analysis)
 
+        stage, progress = "scoring_candidates", 68
+        update_job(task_id, 'RUNNING', stage, progress)
+        windows = generate_candidates(analysis)
+        config = scoring_config or load_config()
+        audio = (measure_audio(folder / 'normalized.mp4', analysis, ffmpeg=ffmpeg, ffprobe=ffprobe)
+                 if windows['candidates'] and analysis['media']['has_audio'] else None)
+        candidates = score_candidates(windows, analysis, config=config, audio=audio)
+        save_json(folder / 'candidate_windows.json', windows)
+        save_json(folder / 'candidates.json', candidates)
+
         stage, progress = "splitting", 70
         update_job(task_id, "RUNNING", stage, progress)
         plan = split_video(str(folder / "normalized.mp4"), str(folder / "clips"), ffmpeg, ffprobe)
@@ -160,6 +177,8 @@ def _process_uncached(task_id, cache_info, started):
             "vad.json": "vad.json",
             "asr.json": "asr.json",
             "analysis.json": "analysis.json",
+            "candidate_windows.json": "candidate_windows.json",
+            "candidates.json": "candidates.json",
         }
         if options_path.is_file():
             files["shot_options.json"] = "shot_options.json"

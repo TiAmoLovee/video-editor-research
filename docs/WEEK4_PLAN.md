@@ -49,7 +49,7 @@ python -m unittest discover -s backend/tests -p test_candidates.py -v
 
 ## 后续顺序
 
-2026-10-03 更新：步骤 1 已完成，详情及边界见 RULE_SCORING.md；当前下一步为步骤 2。前文“第一步实现”及首轮结果仍是历史记录。
+2026-10-03 更新：步骤 1 已完成，详情及边界见 RULE_SCORING.md；步骤 2 的任务、缓存、下载和工作台接入已完成本机验证，Docker 部署验收待执行，详见 WEEK4_WORKBENCH.md。部署验收后进入步骤 3。前文“第一步实现”及首轮结果仍是历史记录。
 
 1. 实现 Scorer 接口、注册机制和 RuleScorer。关键词配置化；语速统一文本单位；从归一化音轨提取音量，不能从现有 analysis 虚构；保存各分项证据。
 2. 把规则路径接入任务、下载和前端，完成离线演示。

@@ -14,9 +14,12 @@ from uuid import UUID, uuid4
 from clipforge.analysis.combine import combine_analysis
 from clipforge.analysis.model import model_directory, model_spec, verify_model
 from clipforge.analysis.options import parse_options
+from clipforge.decision.candidates import content_hash
+from clipforge.decision.scoring import load_config, validate_scored
+from clipforge.decision.validation import validate_candidates
 from clipforge.storage.jobs import data_root, get_job, job_dir
 
-FORMAT = 1
+FORMAT = 2
 EXCLUDED = {'cache.json', 'result.zip'}
 
 
@@ -49,6 +52,9 @@ def fingerprint(source, options, ffmpeg, ffprobe):
                   'source_suffix': Path(source).suffix.lower(), 'shot_options': options,
                   'model': identity, 'language': os.environ.get('CLIPFORGE_ASR_LANGUAGE') or None,
                   'implementation': code, 'schema_sha256': sha256(schema),
+                  'decision_schema_sha256': {name: sha256(schema.parent / name) for name in
+                                            ('candidates.schema.json', 'scored_candidates.schema.json')},
+                  'scoring_config': load_config().to_dict(),
                   'dependencies': dependencies, 'tools': tools,
                   'platform': [platform.system(), platform.machine(), platform.python_version()]}
     return hashlib.sha256(canonical(descriptor).encode('utf-8')).hexdigest(), descriptor
@@ -62,7 +68,7 @@ def request_fingerprint(source, options_path, ffmpeg, ffprobe):
 @contextmanager
 def key_lock(key, timeout=900):
     """由操作系统释放进程锁，进程崩溃不会留下永久占用的锁。"""
-    root = data_root() / 'result-cache-v1'
+    root = data_root() / 'result-cache-v2'
     root.mkdir(parents=True, exist_ok=True)
     with (root / (key + '.lock')).open('a+b') as lock:
         if lock.tell() == 0:
@@ -110,7 +116,8 @@ def safe_path(root, relative):
 def artifact_files(result):
     files = {name: path for name, path in result['files'].items() if name not in EXCLUDED}
     required = {'media_meta.json', 'normalized_media_meta.json', 'clip_plan.json',
-                'shots.json', 'vad.json', 'asr.json', 'analysis.json'}
+                'shots.json', 'vad.json', 'asr.json', 'analysis.json',
+                'candidate_windows.json', 'candidates.json'}
     if not required.issubset(files) or len(set(files.values())) != len(files):
         raise ValueError('缓存结果不完整')
     # 只接受流水线的固定 JSON 和切片；永不复制上传原片或缓存状态文件。
@@ -133,6 +140,13 @@ def validate_bundle(folder, source, result, descriptor):
     analysis = combine_analysis(source, read('shots.json'), read('vad.json'), read('asr.json'))
     if analysis != read('analysis.json') or analysis['media']['source_sha256'] != descriptor['source_sha256']:
         raise ValueError('缓存分析身份或内容不匹配')
+    windows, candidates = read('candidate_windows.json'), read('candidates.json')
+    validate_candidates(windows, analysis)
+    validate_scored(candidates, analysis)
+    if candidates['windows_sha256'] != content_hash(windows):
+        raise ValueError('缓存候选及评分不是同一批结果')
+    if 'scoring_config' in descriptor and candidates['scoring']['config'] != descriptor['scoring_config']:
+        raise ValueError('缓存评分配置不匹配')
     plan = read('clips/clip_plan.json')
     if (plan['clips'] != result['clips'] or plan['total_frames'] != result['total_frames']
             or result['clip_count'] != len(result['clips'])):

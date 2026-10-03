@@ -3,6 +3,7 @@ import { Alert, Button, Empty, Input } from 'antd';
 import { DownloadOutlined, PlayCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { downloadUrl } from '../api/tasks';
 import type { Clip, Task, TaskResult } from '../types/tasks';
+import { CandidateResults } from './CandidateResults';
 
 export function ClipResults({ task, result }: { task: Task; result: TaskResult }) {
   const [query, setQuery] = useState('');
@@ -21,6 +22,7 @@ export function ClipResults({ task, result }: { task: Task; result: TaskResult }
   try { zip = downloadUrl(result.downloads['result.zip'], task.task_id); }
   catch { return <Alert type="error" message="结果下载地址异常，请刷新任务或检查后台。" />; }
   return <div className="results">
+    {result.downloads['candidates.json'] ? <CandidateResults key={task.task_id} taskId={task.task_id} download={result.downloads['candidates.json']} /> : <p className="hint">此历史任务没有候选评分记录，原切片仍可下载。重新上传可生成候选推荐。</p>}
     <div className="result-head"><div><h2>{result.clip_count} 个切片已就绪</h2><p className="hint">总时长 {Math.floor(seconds / 60)} 分 {seconds % 60} 秒 · 下载文件见浏览器下载记录</p></div><Button type="primary" href={zip} download icon={<DownloadOutlined />}>下载全部切片 · ZIP</Button></div>
     {preview && <div className="preview" ref={previewPanel}><div className="head"><strong>{preview.file}</strong><Button size="small" onClick={() => setPreview(null)}>关闭预览</Button></div><video key={preview.file} ref={video} src={downloadUrl(preview.download_url, task.task_id)} controls playsInline preload="none" aria-label="切片预览" onError={() => setPlayError(true)} /><p className="hint">{playError ? '预览暂时不可用，请下载后使用本地播放器观看。' : '点击播放预览，也可以下载后用本地播放器观看。'}</p></div>}
     <div className="clip-toolbar"><Input className="clip-search" prefix={<SearchOutlined />} type="search" allowClear placeholder="搜索切片名称或序号" aria-label="搜索切片名称或序号" value={query} onChange={event => { setQuery(event.target.value); setVisible(24); }} /><span className="clip-count" role="status">显示 {Math.min(visible, matches.length)} / {matches.length} 段</span></div>
@@ -33,7 +35,7 @@ export function ClipResults({ task, result }: { task: Task; result: TaskResult }
     })}</div>
     {visible < matches.length && <Button className="load-more" onClick={() => setVisible(value => value + 24)}>显示更多切片</Button>}
     {result.downloads['asr.json'] && <p className="hint">自动转写可能有误，请试听核对文字和时间。</p>}
-    <details className="more"><summary>处理记录与参数文件</summary>{Object.entries({ 'media_meta.json': '原视频参数', 'normalized_media_meta.json': '归一化参数', 'clip_plan.json': '切片清单', 'shots.json': '镜头分析结果', 'vad.json': '语音活动分析结果', 'asr.json': '词级转写与分句', 'analysis.json': '完整分析结果', 'cache.json': '本次处理与复用记录' }).map(([name, label]) => {
+    <details className="more"><summary>处理记录与参数文件</summary>{Object.entries({ 'media_meta.json': '原视频参数', 'normalized_media_meta.json': '归一化参数', 'clip_plan.json': '切片清单', 'shots.json': '镜头分析结果', 'vad.json': '语音活动分析结果', 'asr.json': '词级转写与分句', 'analysis.json': '完整分析结果', 'candidate_windows.json': '候选生成记录', 'cache.json': '本次处理与复用记录' }).map(([name, label]) => {
       if (!result.downloads[name]) return null;
       try { return <a key={name} href={downloadUrl(result.downloads[name], task.task_id)} download>{label}</a>; }
       catch { return null; }

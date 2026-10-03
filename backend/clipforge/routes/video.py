@@ -11,6 +11,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from clipforge.storage.jobs import create_job, get_job, job_dir, list_jobs, submission_unknown
 from clipforge.queue.client import QueueUnavailable, submit_video
 from clipforge.analysis.options import parse_options
+from clipforge.decision.presentation import candidate_page
 
 router = APIRouter(prefix="/tasks", tags=["视频任务"])
 MAX_UPLOAD_BYTES = 1024 * 1024 * 1024
@@ -105,9 +106,7 @@ def video_status(task_id: UUID):
     return response
 
 
-@router.get("/{task_id}/files/{filename}", summary="下载成品切片、JSON 或 ZIP")
-def download_video_file(task_id: UUID, filename: str):
-    job = require_job(task_id)
+def result_file(job, task_id, filename):
     if job["status"] != "SUCCEEDED":
         raise HTTPException(409, "任务尚未成功完成，暂无可下载结果。")
     relative = (job["result"] or {}).get("files", {}).get(filename)
@@ -117,5 +116,23 @@ def download_video_file(task_id: UUID, filename: str):
     target = (folder / relative).resolve()
     if not target.is_relative_to(folder) or not target.is_file():
         raise HTTPException(404, "下载文件不存在。")
+    return target
+
+
+@router.get('/{task_id}/candidates', summary='分页查看候选片段排名及评分原因')
+def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
+                      offset: int = Query(0, ge=0)):
+    job = require_job(task_id)
+    target = result_file(job, task_id, 'candidates.json')
+    try:
+        data = json.loads(target.read_text(encoding='utf-8'))
+        return candidate_page(data, limit, offset)
+    except (OSError, ValueError, TypeError) as error:
+        raise HTTPException(500, '候选结果暂不可用，请查看后台日志或重新处理视频。') from error
+
+
+@router.get("/{task_id}/files/{filename}", summary="下载成品切片、JSON 或 ZIP")
+def download_video_file(task_id: UUID, filename: str):
+    target = result_file(require_job(task_id), task_id, filename)
     media_type = {".mp4": "video/mp4", ".json": "application/json", ".zip": "application/zip"}.get(target.suffix)
     return FileResponse(target, filename=filename, media_type=media_type)

@@ -145,6 +145,8 @@ class VideoJobTests(unittest.TestCase):
              patch("clipforge.services.pipeline.detect_speech", return_value={"speech": [], "silence": []}), \
              patch("clipforge.services.pipeline.transcribe_video", return_value={"words": [], "sentences": []}), \
              patch("clipforge.services.pipeline.combine_analysis", return_value={"result_kind": "measured"}), \
+             patch("clipforge.services.pipeline.generate_candidates", return_value={"candidates": []}), \
+             patch("clipforge.services.pipeline.score_candidates", return_value={"candidate_count": 0}), \
              patch("clipforge.services.pipeline.split_video", side_effect=split):
             process_video(task_id)
         job = self.client.get(f"/tasks/{task_id}").json()
@@ -170,7 +172,7 @@ class VideoJobTests(unittest.TestCase):
             self.assertEqual(new_client.get(f"/tasks/{task_id}").json()["status"], "SUCCEEDED")
 
     def test_asr_or_contract_failure_prevents_publishing(self):
-        for failure_stage in ("transcribing", "combining_analysis"):
+        for failure_stage in ("transcribing", "combining_analysis", "scoring_candidates"):
             with self.subTest(stage=failure_stage):
                 response, _ = self.submit()
                 task_id = response.json()["task_id"]
@@ -181,8 +183,9 @@ class VideoJobTests(unittest.TestCase):
                      patch("clipforge.services.pipeline.detect_speech", return_value={}), \
                      patch("clipforge.services.pipeline.transcribe_video", return_value={}) as asr, \
                      patch("clipforge.services.pipeline.combine_analysis", return_value={}) as combine, \
+                     patch("clipforge.services.pipeline.generate_candidates") as candidates, \
                      patch("clipforge.services.pipeline.split_video") as split:
-                    (asr if failure_stage == "transcribing" else combine).side_effect = ValueError("invalid result")
+                    (asr if failure_stage == "transcribing" else combine if failure_stage == "combining_analysis" else candidates).side_effect = ValueError("invalid result")
                     with self.assertLogs("clipforge.services.pipeline", level="ERROR"), self.assertRaises(ValueError):
                         process_video(task_id)
                 split.assert_not_called()
