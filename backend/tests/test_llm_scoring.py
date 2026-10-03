@@ -72,6 +72,20 @@ class LLMScoringTests(unittest.TestCase):
         for text in bad:
             with self.subTest(text=text),self.assertRaises(LLMFailure):parse_score(text)
 
+    def test_qwen_json_success_and_invalid_output_still_reverts_whole_batch(self):
+        settings = snapshot(request_profile='qwen-json', max_attempts=1)
+        self.assertEqual(self.apply(settings)['scoring']['scorer'], 'llm')
+        sent = self.transport.call_args.args[1]
+        self.assertEqual(sent['response_format'], {'type':'json_object'})
+        self.assertIs(sent['enable_thinking'], False)
+        self.assertEqual(sent['max_tokens'], 512)
+        self.assertNotIn('max_completion_tokens', sent)
+        self.transport.side_effect = [response(80), response(101)]
+        result = self.apply(settings)
+        self.assertEqual(result['scoring']['llm']['fallback_reason'], 'invalid_output')
+        self.assertEqual([(c['id'], c['score']) for c in result['candidates']],
+                         [(c['id'], c['score']) for c in self.rule['candidates']])
+
     def test_partial_success_then_failure_reverts_entire_batch(self):
         self.transport.side_effect=[response(99),LLMFailure('invalid_key')]
         result=self.apply()
@@ -147,7 +161,7 @@ class LLMScoringTests(unittest.TestCase):
                          'https://a/v1/chat/completions?key=secret','https://a:bad/v1/chat/completions']:
             with self.subTest(endpoint=endpoint),self.assertRaises(ValueError):LLMConfig(endpoint=endpoint)
         for kw in [{'max_attempts':0},{'timeout_seconds':float('nan')},{'requests_per_minute':True},
-                   {'input_price_per_million':-1},{'max_task_cost':1}]:
+                   {'input_price_per_million':-1},{'max_task_cost':1},{'request_profile':'unknown'}]:
             with self.assertRaises(ValueError):LLMConfig(**kw)
 
     def test_tampering_model_output_baseline_and_modes_rejected(self):
@@ -211,11 +225,17 @@ class HTTPTransportTests(unittest.TestCase):
         try:
             cfg=LLMConfig(endpoint=f'http://127.0.0.1:{server.server_port}/v1/chat/completions',model='fake')
             self.assertEqual(http_transport(cfg,{'model':'fake'},'fake',1)['usage']['prompt_tokens'],100)
-            for status,code,retry in [(401,'invalid_key',False),(403,'invalid_key',False),(429,'rate_limited',True),
+            for status,code,retry in [(401,'invalid_key',False),(403,'access_denied',False),(429,'rate_limited',True),
                                        (503,'provider_error',True),(302,'provider_error',False)]:
                 server.test_status=status
                 with self.assertRaises(LLMFailure) as raised:http_transport(cfg,{},'fake',1)
                 self.assertEqual((raised.exception.code,raised.exception.retryable),(code,retry))
+            server.test_status=403
+            server.test_body=json.dumps({'error':{'code':'AllocationQuota.FreeTierOnly','message':'private'}}).encode()
+            with self.assertRaises(LLMFailure) as raised:http_transport(cfg,{},'fake',1)
+            self.assertEqual(raised.exception.code,'free_quota_exhausted')
+            self.assertFalse(raised.exception.retryable)
+            self.assertNotIn('private',str(raised.exception))
             server.test_status=200;server.test_body=b'{not-json'
             with self.assertRaisesRegex(LLMFailure,'invalid_response'):http_transport(cfg,{},'fake',1)
             server.test_body=b'X'*262145

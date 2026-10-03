@@ -28,6 +28,7 @@ class LLMConfig:
     version: str = 'llm-v1'
     endpoint: str = ''
     model: str = ''
+    request_profile: str = 'json-schema'
     timeout_seconds: float = 15
     task_timeout_seconds: float = 120
     requests_per_minute: int = 30
@@ -42,6 +43,8 @@ class LLMConfig:
     def __post_init__(self):
         if self.version != 'llm-v1':
             raise ValueError('不支持的 LLM 配置版本')
+        if self.request_profile not in ('json-schema', 'qwen-json'):
+            raise ValueError('不支持的请求配置')
         for key, low, high in [('requests_per_minute',1,600),('max_attempts',1,3),
                                ('max_candidates',1,100),('max_completion_tokens',64,4096),
                                ('max_task_reserved_tokens',1,1000000)]:
@@ -145,7 +148,17 @@ def http_transport(config, payload, api_key, timeout):
                            headers={'Content-Type':'application/json','Authorization':'Bearer '+api_key})
         response = connection.getresponse()
         if response.status != 200:
-            code = 'invalid_key' if response.status in (401,403) else 'rate_limited' if response.status == 429 else 'provider_error'
+            code = 'invalid_key' if response.status == 401 else 'access_denied' if response.status == 403 else 'rate_limited' if response.status == 429 else 'provider_error'
+            if response.status == 403:
+                # 只识别固定错误码；不记录可能含凭据的服务商正文。
+                try:
+                    body = response.read(8193)
+                    error = strict_json(body.decode('utf-8')) if len(body) <= 8192 else {}
+                    if isinstance(error, dict) and isinstance(error.get('error'), dict):
+                        if error['error'].get('code') == 'AllocationQuota.FreeTierOnly':
+                            code = 'free_quota_exhausted'
+                except (ValueError, UnicodeError, RecursionError):
+                    pass
             raise LLMFailure(code,response.status == 429 or 500 <= response.status < 600)
         parts,total = [],0
         while True:
@@ -218,6 +231,11 @@ class LLMScorer(Scorer):
         payload = {'model':cfg.model,'messages':[{'role':'system','content':self.prompt},{'role':'user','content':content}],
                    'stream':False,'max_completion_tokens':cfg.max_completion_tokens,
                    'response_format':{'type':'json_schema','json_schema':{'name':'clip_score','strict':True,'schema':RESPONSE_SCHEMA}}}
+        if cfg.request_profile == 'qwen-json':
+            # qwen-plus 非思考模式支持 JSON Object；结构仍由 parse_score 严格校验。
+            payload.pop('max_completion_tokens')
+            payload.update(max_tokens=cfg.max_completion_tokens, enable_thinking=False,
+                           response_format={'type':'json_object'})
         # UTF-8 字节数加协议余量是本地保守预留，不冒充服务商实际 token 计数。
         input_reserve = len(json.dumps(payload,ensure_ascii=False).encode('utf-8'))+1024
         reserved = input_reserve+cfg.max_completion_tokens

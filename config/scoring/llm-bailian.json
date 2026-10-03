@@ -1,0 +1,16 @@
+{
+  "version": "llm-v1",
+  "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+  "model": "qwen-plus",
+  "request_profile": "qwen-json",
+  "timeout_seconds": 30,
+  "task_timeout_seconds": 300,
+  "requests_per_minute": 20,
+  "max_attempts": 1,
+  "max_candidates": 30,
+  "max_completion_tokens": 512,
+  "max_task_reserved_tokens": 60000,
+  "input_price_per_million": null,
+  "output_price_per_million": null,
+  "max_task_cost": null
+}
