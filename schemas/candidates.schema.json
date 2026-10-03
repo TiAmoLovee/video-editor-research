@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClipForge unscored candidate windows (week 4 step 1 draft)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifact_kind", "stage", "input_result_kind", "analysis_sha256", "media", "generator", "candidate_count", "candidates", "warnings"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-draft.1"},
+    "artifact_kind": {"const": "candidate_windows"},
+    "stage": {"const": "generated"},
+    "input_result_kind": {"enum": ["measured", "synthetic_example"]},
+    "analysis_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "media": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_sha256", "normalized_sha256", "duration_seconds", "time_reference", "has_audio"],
+      "properties": {
+        "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "normalized_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "duration_seconds": {"type": "number", "exclusiveMinimum": 0},
+        "time_reference": {"const": "normalized_video"},
+        "has_audio": {"type": "boolean"}
+      }
+    },
+    "generator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["version", "options"],
+      "properties": {
+        "version": {"const": "sentence-window-v1"},
+        "options": {
+          "type": "object", "additionalProperties": false,
+          "required": ["min_seconds", "max_seconds", "max_gap_seconds", "max_candidates"],
+          "properties": {
+            "min_seconds": {"type": "number", "minimum": 15, "maximum": 90},
+            "max_seconds": {"type": "number", "minimum": 15, "maximum": 90},
+            "max_gap_seconds": {"type": "number", "minimum": 0},
+            "max_candidates": {"type": "integer", "minimum": 1}
+          }
+        }
+      }
+    },
+    "candidate_count": {"type": "integer", "minimum": 0},
+    "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "warnings": {
+      "type": "array", "uniqueItems": true,
+      "items": {"enum": ["no_sentences", "overlong_sentence_unit_skipped", "no_eligible_window"]}
+    }
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "start", "end", "duration_seconds", "text", "source_sentences", "scoring_status", "score", "reasons", "scorer"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^c_[0-9a-f]{64}$"},
+        "start": {"type": "number", "minimum": 0},
+        "end": {"type": "number", "exclusiveMinimum": 0},
+        "duration_seconds": {"type": "number", "minimum": 15, "maximum": 90},
+        "text": {"type": "string", "minLength": 1},
+        "source_sentences": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "scoring_status": {"const": "pending"},
+        "score": {"type": "null"},
+        "reasons": {"type": "array", "maxItems": 0},
+        "scorer": {"type": "null"}
+      }
+    }
+  }
+}
