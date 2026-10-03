@@ -1,5 +1,5 @@
 {
-  "version": "llm-v1",
+  "version": "llm-v2",
   "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
   "model": "qwen-plus",
   "request_profile": "qwen-json",

@@ -19,7 +19,7 @@ def main():
         if args.output.exists() or args.output.resolve() in {p.resolve() for p in (args.analysis,args.rule_candidates,args.config)}:
             raise ValueError('输出已存在或指向输入，请选择新文件')
         cfg=LLMConfig(**json.loads(args.config.read_text(encoding='utf-8-sig')))
-        prompt=(ROOT/'prompts/scoring/llm-v1.txt').read_text(encoding='utf-8')
+        prompt=(ROOT/f'prompts/scoring/{cfg.version}.txt').read_text(encoding='utf-8')
         rule=json.loads(args.rule_candidates.read_text(encoding='utf-8-sig'))
         if rule.get('schema_version') != '0.1.0-draft.2':
             raise ValueError('输入须为 draft.2 规则基线')

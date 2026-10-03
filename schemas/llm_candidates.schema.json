@@ -159,7 +159,8 @@
         "version": {
           "enum": [
             "rule-v1",
-            "llm-v1"
+            "llm-v1",
+            "llm-v2"
           ]
         },
         "config": {
@@ -279,7 +280,7 @@
               "type": "object"
             },
             "prompt_version": {
-              "const": "llm-v1"
+              "enum": ["llm-v1", "llm-v2"]
             },
             "prompt_sha256": {
               "type": "string",
@@ -491,6 +492,9 @@
           "type": "number",
           "minimum": 0,
           "maximum": 100
+        },
+        "llm_assessment": {
+          "type": "object"
         },
         "rule_reasons": {
           "type": "array",

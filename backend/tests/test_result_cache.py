@@ -239,5 +239,37 @@ class ResultCacheTests(unittest.TestCase):
             self.assertTrue(process_video(self.job())['cache_hit'])
             self.assertEqual(transport.call_count,4)
 
+    def test_v2_assessment_cache_reuse_and_v1_version_invalidation(self):
+        from backend.tests.test_candidates import fixture
+        from backend.tests.test_llm_scoring import snapshot, response
+        from backend.tests.test_llm_assessment import assessment
+        self.example=fixture([(0,10),(10,20),(20,30)])
+        self.pipeline()
+        settings=snapshot(version='llm-v2')
+        def reply(cfg,payload,key,timeout):
+            if cfg.version == 'llm-v1':
+                return response()
+            text=json.loads(payload['messages'][1]['content'])['text']
+            result=response()
+            result['choices'][0]['message']['content']=json.dumps(assessment(text),ensure_ascii=False)
+            return result
+        with patch.object(cache,'safe_settings_snapshot',side_effect=lambda:settings), \
+             patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':'fake'}), \
+             patch('clipforge.services.pipeline.measure_audio',return_value=None), \
+             patch('clipforge.decision.llm.http_transport',side_effect=reply) as transport, \
+             patch('clipforge.decision.llm.rate_slot'):
+            a=self.job();self.assertFalse(process_video(a)['cache_hit'])
+            b=self.job();self.assertTrue(process_video(b)['cache_hit'])
+            self.assertEqual(transport.call_count,3)
+            self.assertEqual((job_dir(a)/'candidates.json').read_bytes(),(job_dir(b)/'candidates.json').read_bytes())
+            result=json.loads((job_dir(b)/'candidates.json').read_text(encoding='utf-8'))
+            self.assertEqual(result['scoring']['version'],'llm-v2')
+            self.assertEqual(result['candidates'][0]['score'],41)
+            info=json.loads((job_dir(b)/'scoring_usage.json').read_text(encoding='utf-8'))
+            self.assertEqual(info['current_task_requests'],0)
+            settings=snapshot(version='llm-v1')
+            self.assertFalse(process_video(self.job())['cache_hit'])
+            self.assertEqual(transport.call_count,6)
+
 
 if __name__=='__main__':unittest.main()

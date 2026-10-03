@@ -13,6 +13,7 @@ import time
 from urllib.parse import urlsplit
 
 from clipforge.decision.candidates import ROOT, content_hash
+from clipforge.decision.assessment import ASSESSMENT_SCHEMA, evaluate_assessment
 from clipforge.decision.scorers import Scorer
 from clipforge.storage.jobs import data_root
 
@@ -41,7 +42,7 @@ class LLMConfig:
     max_task_cost: float | None = None
 
     def __post_init__(self):
-        if self.version != 'llm-v1':
+        if self.version not in ('llm-v1', 'llm-v2'):
             raise ValueError('不支持的 LLM 配置版本')
         if self.request_profile not in ('json-schema', 'qwen-json'):
             raise ValueError('不支持的请求配置')
@@ -89,7 +90,7 @@ def settings_snapshot():
         cfg = LLMConfig(**json.loads(path.read_text(encoding='utf-8-sig')))
     except TypeError as error:
         raise ValueError('LLM 配置字段无效') from error
-    prompt = (ROOT/'prompts/scoring/llm-v1.txt').read_text(encoding='utf-8')
+    prompt = (ROOT/f'prompts/scoring/{cfg.version}.txt').read_text(encoding='utf-8')
     return {'mode':'llm','config':cfg.to_dict(),'prompt':prompt,'prompt_sha256':content_hash(prompt)}
 
 
@@ -212,6 +213,7 @@ class LLMScorer(Scorer):
 
     def __init__(self, config, prompt, api_key=None, transport=None, limiter=None):
         self.config,self.prompt = config,prompt
+        self.version = config.version
         self.api_key = api_key if api_key is not None else os.environ.get('CLIPFORGE_LLM_API_KEY','')
         self.transport,self.limiter = transport or http_transport,limiter or rate_slot
         self.deadline = time.monotonic()+config.task_timeout_seconds
@@ -230,7 +232,8 @@ class LLMScorer(Scorer):
             raise LLMFailure('candidate_too_large')
         payload = {'model':cfg.model,'messages':[{'role':'system','content':self.prompt},{'role':'user','content':content}],
                    'stream':False,'max_completion_tokens':cfg.max_completion_tokens,
-                   'response_format':{'type':'json_schema','json_schema':{'name':'clip_score','strict':True,'schema':RESPONSE_SCHEMA}}}
+                   'response_format':{'type':'json_schema','json_schema':{'name':'clip_score','strict':True,
+                       'schema':ASSESSMENT_SCHEMA if cfg.version == 'llm-v2' else RESPONSE_SCHEMA}}}
         if cfg.request_profile == 'qwen-json':
             # qwen-plus 非思考模式支持 JSON Object；结构仍由 parse_score 严格校验。
             payload.pop('max_completion_tokens')
@@ -276,7 +279,13 @@ class LLMScorer(Scorer):
                 choice = response['choices'][0]
                 if choice['finish_reason'] != 'stop' or choice['message'].get('refusal'):
                     raise LLMFailure('incomplete_or_refused')
-                result = parse_score(choice['message']['content'])
+                if cfg.version == 'llm-v2':
+                    try:
+                        result = evaluate_assessment(strict_json(choice['message']['content']), candidate['text'])
+                    except (ValueError, TypeError, RecursionError) as error:
+                        raise LLMFailure('invalid_assessment') from error
+                else:
+                    result = parse_score(choice['message']['content'])
                 event['status'] = 'ok'
                 return {**result,'features':{}}
             except (KeyError,TypeError,IndexError,AttributeError) as error:
@@ -328,15 +337,17 @@ def apply_llm(rule, analysis, snapshot, *, api_key=None, transport=None, limiter
         fallback = error.code
     effective = 'rule' if fallback or not rule['candidates'] else 'llm'
     result['scoring']['scorer'] = effective
-    result['scoring']['version'] = 'llm-v1' if effective == 'llm' else 'rule-v1'
+    result['scoring']['version'] = cfg.version if effective == 'llm' else 'rule-v1'
     result['scoring']['llm'] = {'requested':'llm','effective':effective,'fallback_reason':fallback,
-                              'config':cfg.to_dict(),'prompt_version':'llm-v1',
+                              'config':cfg.to_dict(),'prompt_version':cfg.version,
                               'prompt_sha256':snapshot['prompt_sha256'],'usage':scorer.report()}
     for candidate in result['candidates']:
         candidate.update(rule_score=candidate['score'],rule_reasons=deepcopy(candidate['reasons']),rule_rank=candidate['rank'])
         if effective == 'llm':
             response = responses[candidate['id']]
             candidate.update(score=response['score'],reasons=response['reasons'],scorer='llm')
+            if cfg.version == 'llm-v2':
+                candidate['llm_assessment'] = response['llm_assessment']
     result['candidates'].sort(key=lambda c:(-c['score'],*window_order(c)))
     for rank,candidate in enumerate(result['candidates'],1):
         candidate['rank'] = rank
@@ -354,9 +365,11 @@ def validate_llm_result(data, analysis):
     if error:
         raise ValueError('LLM 评分产物结构无效')
     metadata = data['scoring']['llm']
-    LLMConfig(**metadata['config'])
+    cfg = LLMConfig(**metadata['config'])
     effective = metadata['effective']
-    if (data['scoring']['scorer'] != effective or data['scoring']['version'] != effective+'-v1'
+    if (data['scoring']['scorer'] != effective
+            or data['scoring']['version'] != (cfg.version if effective == 'llm' else 'rule-v1')
+            or metadata['prompt_version'] != cfg.version
             or (effective == 'llm' and metadata['fallback_reason'] is not None)):
         raise ValueError('LLM 评分模式不一致')
     if effective == 'rule' and data['candidate_count'] and metadata['fallback_reason'] is None:
@@ -373,6 +386,13 @@ def validate_llm_result(data, analysis):
             raise ValueError('排名或评分器不一致')
         if effective == 'rule' and (candidate['score'] != candidate['rule_score'] or candidate['reasons'] != candidate['rule_reasons']):
             raise ValueError('降级未保留规则结果')
+        if effective == 'llm' and cfg.version == 'llm-v2':
+            assessed = evaluate_assessment(candidate.get('llm_assessment'), candidate['text'])
+            if candidate['score'] != assessed['score'] or candidate['reasons'] != assessed['reasons']:
+                raise ValueError('分项、总分和展示理由不一致')
+            candidate.pop('llm_assessment')
+        elif 'llm_assessment' in candidate:
+            raise ValueError('旧版或规则降级结果不应包含模型分项')
         candidate.update(score=candidate.pop('rule_score'),reasons=candidate.pop('rule_reasons'),rank=candidate.pop('rule_rank'),scorer='rule')
     baseline['candidates'].sort(key=lambda c:c['rank'])
     validate_scored(baseline,analysis)

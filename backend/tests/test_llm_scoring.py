@@ -27,7 +27,7 @@ def response(score=80, **changes):
 
 def snapshot(**changes):
     cfg = LLMConfig(endpoint='https://model.example/v1/chat/completions',model='test-model',**changes)
-    prompt = (ROOT/'prompts/scoring/llm-v1.txt').read_text(encoding='utf-8')
+    prompt = (ROOT/f'prompts/scoring/{cfg.version}.txt').read_text(encoding='utf-8')
     return {'mode':'llm','config':cfg.to_dict(),'prompt':prompt,'prompt_sha256':content_hash(prompt)}
 
 
