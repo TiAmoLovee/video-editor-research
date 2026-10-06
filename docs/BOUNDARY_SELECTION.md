@@ -37,6 +37,12 @@ New1 回放在 97 个候选中标记 9 个待复核项（不是 9 个已确认�
 
 ## 页面与已有任务（部署接口）
 
+2026-10-06 新版代码：`boundary-nms-v2` 将文本结尾风险并入原候选的 `review_required` 状态，`view=review` 对全批风险项分页，保持原排名；未命中不等于通过。人工验收成品通过 `clipforge.decision.acceptance` 显式导入成功任务的 `accepted/`，页面独立置顶展示，不会因原排名靠后或 NMS 折叠而消失。新下载端点只服务经记录和文件 SHA256 核对的成品，支持浏览器视频范围请求。
+
+导入要求任务、分析、原候选哈希与人工记录一致；同文件重复导入幂等，不覆盖不同结论或损坏视频。支持 New1 原候选的逐帧试听记录，以及 Test3 具有独立 ID、来源和校验过模型重评分的修正版。原分数只对应原范围，修正版显示自己的分数；原始候选不会被标为修正版已验收。历史 `candidates.json`、任务 ZIP 和缓存保持不变，验收清单随新版 `selection` 报告提供。
+
+CLI：`python -m clipforge.decision.acceptance --task-id UUID --acceptance RECORD.json --video ACCEPTED.mp4`；Test3 类型另传 `--reviewed-score REVIEWED.json`。导入与查询均不调用模型。当前 New1 已在独立本机只读预览服务验证（8306）；原 Docker 工作台（8200）尚未部署此次代码，不能把预览当成生产部署成功。
+
 候选接口支持 `view=all|retained`，按全批去重结果分页，保留原排名。现有成功任务可直接使用，不必重新上传或调用百炼。`GET /tasks/{id}/selection` 下载当前算法版本的复核记录；记录包含输入哈希、人工证据和参数，是新生成的独立报告，不冒充原始 ZIP 产物。
 
 人工记录保存在对应任务目录 `boundary_review.json`，不进入原任务完整流程缓存，也不自动传播到别的任务。不存在人工记录时只使用该任务的镜头检测结果。错误的媒体身份或损坏记录使该复核接口明确失败，不静默丢弃问题；原始切片下载仍可用。

@@ -126,7 +126,7 @@ class SelectionApiTests(unittest.TestCase):
         task = self.reviewed_job()
         original = (job_dir(task) / 'candidates.json').read_bytes()
         all_page = self.client.get(f'/tasks/{task}/candidates').json()
-        self.assertEqual(all_page['selection_version'], 'boundary-nms-v1')
+        self.assertEqual(all_page['selection_version'], 'boundary-nms-v2')
         report = self.client.get(f'/tasks/{task}/selection')
         self.assertEqual(report.status_code, 200)
         self.assertIn('attachment', report.headers['content-disposition'])

@@ -41,6 +41,7 @@ export interface Candidate {
     boundary_status: 'review_required' | 'not_verified';
     issues: string[];
     proposal: { start: number; end: number; duration_seconds: number; text: string; score: null; status: 'review_then_rescore' } | null;
+    text_review?: { signal: { quote: string; reason: string }; existing_extension: { id: string; start: number; end: number; score: number; rank: number; scorer: 'rule' | 'llm' } | null } | null;
   };
   id: string;
   rank: number;
@@ -56,9 +57,10 @@ export interface Candidate {
   source_sentences: string[];
 }
 export interface CandidatePage {
+  accepted_versions?: { id: string; candidate_id: string; start: number; end: number; duration_seconds: number; text: string; score: number; scorer: 'rule' | 'llm'; score_scope: 'original_candidate_range' | 'rendered_range'; score_start: number; score_end: number; feedback: string; video_url: string; reasons: string[] }[];
   selection_version?: string;
   selection_summary?: { original_count: number; retained_count: number; suppressed_count: number; retained_review_count: number; proposal_count: number };
-  view?: 'all' | 'retained';
+  view?: 'all' | 'retained' | 'review';
   items: Candidate[];
   total: number;
   limit: number;

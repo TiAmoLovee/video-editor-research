@@ -8,8 +8,9 @@ from pathlib import Path
 
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.scoring import validate_scored
+from clipforge.decision.continuity import review_continuity
 
-VERSION = 'boundary-nms-v1'
+VERSION = 'boundary-nms-v2'
 IOU_THRESHOLD = 0.5
 EDGE_SECONDS = 3.0
 WORD_SNAP_SECONDS = 0.15
@@ -103,6 +104,8 @@ def build_selection(candidates, analysis, review=None, *, iou_threshold=IOU_THRE
             or not math.isfinite(iou_threshold) or not 0 < iou_threshold <= 1):
         raise ValueError('NMS 阈值必须在 (0, 1]')
     validate_scored(candidates, analysis)
+    text_review = review_continuity(candidates, analysis)
+    text_notes = {i['candidate_id']: i for i in text_review['items']}
     reviewed = validate_review(review, analysis)
     by_time = {s['start']: {'seconds': s['start'], 'source': 'shot_detector', 'topic_change': False}
                for s in analysis['shots'][1:]}
@@ -110,6 +113,12 @@ def build_selection(candidates, analysis, review=None, *, iou_threshold=IOU_THRE
     cuts = [by_time[t] for t in sorted(by_time)]
     kept, items = [], []
     for candidate in candidates['candidates']:
+        boundary = boundary_check(candidate, analysis, cuts)
+        text_note = text_notes.get(candidate['id'])
+        if text_note:
+            boundary['boundary_status'] = 'review_required'
+            boundary['issues'].append(text_note['signal']['code'])
+        boundary['text_review'] = text_note
         match = next((other for other in kept if temporal_iou(candidate, other) >= iou_threshold), None)
         if match is None:
             kept.append(candidate)
@@ -117,12 +126,13 @@ def build_selection(candidates, analysis, review=None, *, iou_threshold=IOU_THRE
                       'retained': match is None,
                       'suppressed_by': match['id'] if match else None,
                       'overlap_iou': temporal_iou(candidate, match) if match else None,
-                      **boundary_check(candidate, analysis, cuts)})
+                      **boundary})
     return {'version': VERSION, 'candidates_sha256': content_hash(candidates),
             'analysis_sha256': content_hash(analysis), 'review': deepcopy(review),
             'config': {'iou_threshold': iou_threshold, 'edge_seconds': EDGE_SECONDS,
                        'word_snap_seconds': WORD_SNAP_SECONDS},
-            'scope': 'NMS on original scored ranges; boundary proposals are unscored and unrendered',
+            'scope': 'NMS on original scored ranges; scene proposals unscored; text extensions reference existing scores',
+            'text_review_version': text_review['version'],
             'summary': {'original_count': len(items), 'retained_count': len(kept),
                         'suppressed_count': len(items) - len(kept),
                         'retained_review_count': sum(i['retained'] and i['boundary_status'] == 'review_required' for i in items),

@@ -14,6 +14,7 @@ from clipforge.queue.client import QueueUnavailable, submit_video
 from clipforge.analysis.options import parse_options
 from clipforge.decision.presentation import candidate_page
 from clipforge.decision.selection import build_selection
+from clipforge.decision.acceptance import load_accepted
 
 router = APIRouter(prefix="/tasks", tags=["视频任务"])
 logger = logging.getLogger(__name__)
@@ -124,7 +125,7 @@ def result_file(job, task_id, filename):
 
 @router.get('/{task_id}/candidates', summary='分页查看候选片段排名及评分原因')
 def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
-                      offset: int = Query(0, ge=0), view: str = Query('all', pattern='^(all|retained)$')):
+                      offset: int = Query(0, ge=0), view: str = Query('all', pattern='^(all|retained|review)$')):
     job = require_job(task_id)
     target = result_file(job, task_id, 'candidates.json')
     try:
@@ -133,8 +134,9 @@ def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
         report = selection_for_task(job, task_id, data)
         if report is not None:
             notes = {item['candidate_id']: item for item in report['items']}
-            if view == 'retained':
-                retained = [c for c in data['candidates'] if notes[c['id']]['retained']]
+            if view in ('retained', 'review'):
+                retained = [c for c in data['candidates'] if (notes[c['id']]['retained'] if view == 'retained'
+                            else notes[c['id']]['boundary_status'] == 'review_required')]
                 # 原排名保留，分页基于全批去重结果，不在当前页内单独去重。
                 page['items'] = [candidate_page(data, 1, c['rank'] - 1)['items'][0]
                                  for c in retained[offset:offset + limit]]
@@ -143,7 +145,8 @@ def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
                 item['selection'] = notes[item['id']]
             page['selection_summary'] = report['summary']
             page['selection_version'] = report['version']
-        elif view == 'retained':
+            page['accepted_versions'] = report['accepted_versions']
+        elif view != 'all':
             raise HTTPException(409, '此历史任务没有可核对的分析记录。')
         page['view'] = view
         return page
@@ -161,7 +164,22 @@ def selection_for_task(job, task_id, candidates):
     if not review_path.resolve().is_relative_to(root):
         raise ValueError('人工记录路径异常')
     review = json.loads(review_path.read_text(encoding='utf-8')) if review_path.exists() else None
-    return build_selection(candidates, analysis, review)
+    report = build_selection(candidates, analysis, review)
+    report['accepted_versions'] = load_accepted(root, str(task_id), analysis, candidates)
+    return report
+
+
+@router.get('/{task_id}/accepted/{filename}', summary='播放或下载已核对的人工验收成品')
+def accepted_video(task_id: UUID, filename: str):
+    job = require_job(task_id)
+    try:
+        data = json.loads(result_file(job, task_id, 'candidates.json').read_text(encoding='utf-8'))
+        report = selection_for_task(job, task_id, data)
+        if report is None or not any(filename == item['id']+'.mp4' for item in report['accepted_versions']):
+            raise HTTPException(404, '没有对应的已验收成品。')
+        return FileResponse(job_dir(str(task_id))/'accepted'/filename, media_type='video/mp4', filename=filename)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise HTTPException(500, '验收记录或成品校验失败。') from error
 
 
 @router.get('/{task_id}/selection', summary='下载当前边界复核及去重记录；不调用模型')

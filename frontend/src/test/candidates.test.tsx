@@ -18,6 +18,35 @@ const download = `/tasks/${taskId}/files/candidates.json`;
 beforeEach(() => { vi.restoreAllMocks(); useTasks.setState({ task: null, detailError: '', detailLoading: false }); });
 
 describe('candidate results', () => {
+  it('keeps approved media separate from original scores and guards media URLs', async () => {
+    const data = page();
+    data.accepted_versions = [{ id: 'a'.repeat(64), candidate_id: 'reviewed', start: 1.43, end: 17.83,
+      duration_seconds: 16.4, text: '验收版本', score: 70, scorer: 'llm', score_scope: 'rendered_range',
+      score_start: 1.43, score_end: 17.83, feedback: '结尾完整', reasons: ['分项合计 70'],
+      video_url: `/tasks/${taskId}/accepted/${'a'.repeat(64)}.mp4` }];
+    vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText('已试听通过')).toBeInTheDocument();
+    expect(screen.getByText('此修正版模型分 70.00')).toBeInTheDocument();
+    expect(screen.getByText('规则分 48.76')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '下载已验收成品' })).toHaveAttribute('href', data.accepted_versions[0].video_url);
+    expect(api.acceptedVideoUrl('https://example.com/video.mp4', taskId)).toBeUndefined();
+    expect(api.acceptedVideoUrl(`/tasks/${taskId}/accepted/../../secret.mp4`, taskId)).toBeUndefined();
+  });
+  it('shows tail evidence and requests the global review filter', async () => {
+    const data = page();
+    data.selection_summary = { original_count: 11, retained_count: 2, suppressed_count: 9, retained_review_count: 1, proposal_count: 0 };
+    data.items[0].selection = { retained: true, suppressed_by: null, boundary_status: 'review_required',
+      issues: ['conditional_tail_needs_review'], proposal: null,
+      text_review: { signal: { quote: '如果超出范围', reason: '需核对后文' },
+        existing_extension: { id: 'longer', start: 1, end: 35, score: 42, rank: 6, scorer: 'rule' } } };
+    const request = vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText('结尾待核对：“如果超出范围”')).toBeInTheDocument();
+    expect(screen.getByText(/这个更长版本仍需试听/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '只看待复核' }));
+    await waitFor(() => expect(request).toHaveBeenLastCalledWith(taskId, 0, expect.any(AbortSignal), 'review'));
+  });
   it('separates unscored boundary proposals from original scores and filters globally', async () => {
     const data = page();
     data.selection_summary = { original_count: 11, retained_count: 2, suppressed_count: 9, retained_review_count: 1, proposal_count: 1 };
