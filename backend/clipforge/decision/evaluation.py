@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import json
 import math
 from pathlib import Path
+import re
 import subprocess
 
 from clipforge.decision.candidates import content_hash
@@ -19,9 +20,23 @@ def read(path):
     return json.loads(Path(path).read_text(encoding='utf-8'))
 
 
-def freeze(analysis, scored, source_name):
+def freeze(analysis, scored, source_name, *, candidate_ids=None, followup_of=None):
     report = build_selection(scored, analysis)
     keep = {i['candidate_id'] for i in report['items'] if i['retained']}
+    if candidate_ids is not None:
+        known = {c['id'] for c in scored['candidates']}
+        keys = {'parent_batch_id', 'parent_manifest_sha256', 'parent_review_sha256', 'reason'}
+        if (not isinstance(candidate_ids, list) or not candidate_ids
+                or any(not isinstance(cid, str) for cid in candidate_ids)
+                or len(set(candidate_ids)) != len(candidate_ids) or set(candidate_ids) - known
+                or not isinstance(followup_of, dict) or set(followup_of) != keys
+                or any(not isinstance(followup_of[k], str) or not re.fullmatch('[a-f0-9]{64}', followup_of[k])
+                       for k in keys-{'reason'})
+                or not isinstance(followup_of['reason'], str) or not 1 <= len(followup_of['reason']) <= 2000):
+            raise ValueError('定向复核必须引用有效候选及原批次评审记录')
+        keep = set(candidate_ids)
+    elif followup_of is not None:
+        raise ValueError('定向复核必须显式指定候选')
     selected = sorted((c for c in scored['candidates'] if c['id'] in keep), key=lambda c: c['id'])
     samples = []
     for index, c in enumerate(selected, 1):
@@ -44,6 +59,11 @@ def freeze(analysis, scored, source_name):
             'metric': 'opening_complete=yes AND ending_complete=yes; uncertain is not pass',
             'rounding': 'outward <= one frame; no editorial extension; 540p review copies',
             'samples': samples, 'model_requests': 0}
+    if candidate_ids is not None:
+        plan.update(cohort='editorial_followup_not_baseline', followup_of=followup_of,
+                    scope='targeted human follow-up; cannot replace the frozen baseline denominator',
+                    required_passes=None,
+                    metric='per-clip human follow-up only; no baseline rate or 85-percent claim')
     return {'batch_id': content_hash(plan), **plan}
 
 
@@ -57,12 +77,15 @@ def summary(manifest, reviews):
                    for r in reviews.values())
     usable = sum(all(r['answers'][q] == 'yes' for q in QUESTIONS) for r in reviews.values())
     complete = n > 0 and len(reviews) == n
+    followup = manifest['cohort'] == 'editorial_followup_not_baseline'
+    publish_rate = complete and not followup
     return {'denominator': n, 'reviewed': len(reviews), 'pending': n-len(reviews),
             'boundary_pass': boundary, 'usable_pass': usable,
             'uncertain_reviews': sum('uncertain' in r['answers'].values() for r in reviews.values()),
-            'complete': complete, 'boundary_rate': boundary/n if complete else None,
-            'usable_rate': usable/n if complete else None,
-            'pilot_meets_85_percent': boundary/n >= .85 if complete else None,
+            'complete': complete, 'is_followup': followup,
+            'boundary_rate': boundary/n if publish_rate else None,
+            'usable_rate': usable/n if publish_rate else None,
+            'pilot_meets_85_percent': boundary/n >= .85 if publish_rate else None,
             'overall_week4_acceptance': 'not_established'}
 
 
@@ -79,8 +102,8 @@ def probe(path, ffprobe):
                                      encoding='utf-8', timeout=180).stdout)
 
 
-def prepare(analysis, scored, source, output, source_name, ffmpeg, ffprobe):
-    manifest = freeze(analysis, scored, source_name)
+def prepare(analysis, scored, source, output, source_name, ffmpeg, ffprobe, *, candidate_ids=None, followup_of=None):
+    manifest = freeze(analysis, scored, source_name, candidate_ids=candidate_ids, followup_of=followup_of)
     if not manifest['denominator']:
         raise ValueError('没有可试听的候选，不创建空评测批次')
     if file_hash(source) != manifest['normalized_sha256']:

@@ -59,6 +59,32 @@ class EvaluationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             summary(self.manifest, {'unknown': {'answers': dict.fromkeys(QUESTIONS, 'yes'), 'note': ''}})
 
+    def test_targeted_followup_cannot_replace_baseline_or_claim_85_percent(self):
+        original = deepcopy(self.manifest)
+        link = {'parent_batch_id': original['batch_id'], 'parent_manifest_sha256': content_hash(original),
+                'parent_review_sha256': 'a'*64, 'reason': 'Synthetic follow-up to one failed candidate'}
+        candidate = self.scored['candidates'][-1]
+        self.manifest = freeze(self.analysis, self.scored, 'test.mp4', candidate_ids=[candidate['id']], followup_of=link)
+        self.assertEqual(self.manifest['cohort'], 'editorial_followup_not_baseline')
+        self.assertIsNone(self.manifest['required_passes'])
+        self.assertEqual(self.manifest['samples'][0]['original_score'], candidate['score'])
+        _, client = self.create_batch()
+        response = client.post('/api/review/S01', json={
+            'batch_id': self.manifest['batch_id'], 'revision': 0,
+            'answers': dict.fromkeys(QUESTIONS, 'yes'), 'note': 'synthetic test only'},
+            headers={'Origin': 'http://127.0.0.1:8307'})
+        self.assertEqual(response.status_code, 200)
+        result = response.json()['summary']
+        self.assertTrue(result['complete'])
+        self.assertEqual(result['usable_pass'], 1)
+        self.assertIsNone(result['boundary_rate'])
+        self.assertIsNone(result['pilot_meets_85_percent'])
+        self.assertEqual(original, freeze(self.analysis, self.scored, 'test.mp4'))
+        for ids, parent in [([], link), ([candidate['id']]*2, link), (['unknown'], link),
+                            ([candidate['id']], None), ([candidate['id']], {**link, 'parent_review_sha256':'bad'})]:
+            with self.assertRaises(ValueError):
+                freeze(self.analysis, self.scored, 'test.mp4', candidate_ids=ids, followup_of=parent)
+
     def create_batch(self):
         temp = tempfile.TemporaryDirectory(); self.addCleanup(temp.cleanup)
         root = Path(temp.name)
