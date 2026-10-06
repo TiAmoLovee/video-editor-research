@@ -2,6 +2,7 @@
 
 from pathlib import Path, PureWindowsPath
 import json
+import logging
 import shutil
 from uuid import UUID, uuid4
 
@@ -15,6 +16,7 @@ from clipforge.decision.presentation import candidate_page
 from clipforge.decision.selection import build_selection
 
 router = APIRouter(prefix="/tasks", tags=["视频任务"])
+logger = logging.getLogger(__name__)
 MAX_UPLOAD_BYTES = 1024 * 1024 * 1024
 VIDEO_SUFFIXES = {".mp4", ".mov", ".mkv", ".webm", ".m4v", ".avi"}
 
@@ -146,6 +148,7 @@ def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
         page['view'] = view
         return page
     except (OSError, ValueError, TypeError, KeyError) as error:
+        logger.exception('Candidate read failed for task %s', task_id)
         raise HTTPException(500, '候选结果暂不可用，请查看后台日志或重新处理视频。') from error
 
 
@@ -172,6 +175,7 @@ def selection_download(task_id: UUID):
         return JSONResponse(report, headers={'Content-Disposition': 'attachment; filename="selection.json"',
                                              'Cache-Control': 'no-store'})
     except (OSError, ValueError, TypeError, KeyError) as error:
+        logger.exception('Selection export failed for task %s', task_id)
         raise HTTPException(500, '边界复核记录暂不可用，请查看后台日志。') from error
 
 
