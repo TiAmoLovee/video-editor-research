@@ -18,6 +18,42 @@ def sample(gap=.5):
 
 
 class ContinuityTests(unittest.TestCase):
+    def test_demonstrative_warning_is_not_a_verdict(self):
+        for text in ('主要原因就是这种', '目标是那个。'):
+            result = tail_signal(text)
+            self.assertEqual(result['code'], 'demonstrative_tail_needs_review')
+            self.assertIn(result['quote'], text)
+        for text in ('主要原因就是这种天气', '结果就是这样', '你说的是这种？', '他说“是这种”'):
+            self.assertIsNone(tail_signal(text))
+
+    def test_shorter_option_uses_own_score_and_requires_audition(self):
+        analysis = fixture([(0, 10), (10.5, 20), (20.5, 24)])
+        texts = ['欢迎来到今天的节目', '很高兴参加这次访谈', '主要原因就是这种']
+        for word, sentence, text in zip(analysis['words'], analysis['sentences'], texts):
+            word['text'] = sentence['text'] = text
+        scored = score_candidates(generate_candidates(analysis), analysis)
+        before = content_hash([analysis, scored])
+        report = review_continuity(scored, analysis)
+        original = next(c for c in scored['candidates'] if c['start'] == 0 and c['end'] == 24)
+        item = next(i for i in report['items'] if i['candidate_id'] == original['id'])
+        shorter = item['existing_contraction']
+        self.assertEqual(shorter['end'], 20)
+        saved = next(c for c in scored['candidates'] if c['id'] == shorter['id'])
+        self.assertEqual(shorter['score'], saved['score'])
+        self.assertEqual(shorter['source_sentences'], saved['source_sentences'])
+        self.assertEqual(item['contraction_status'], 'needs_audition')
+        self.assertEqual(before, content_hash([analysis, scored]))
+
+    def test_shorter_option_cannot_cross_a_long_pause_or_invent_short_clips(self):
+        for bounds in ([(0, 8), (12, 20), (20.5, 24)], [(0, 10), (10.5, 20)]):
+            analysis = fixture(bounds)
+            analysis['sentences'][-1]['text'] = analysis['words'][-1]['text'] = '主要原因就是这种'
+            scored = score_candidates(generate_candidates(analysis, WindowOptions(max_gap_seconds=10)), analysis)
+            report = review_continuity(scored, analysis)
+            original = next(c for c in scored['candidates'] if c['start'] == 0 and c['end'] == bounds[-1][1])
+            item = next(i for i in report['items'] if i['candidate_id'] == original['id'])
+            self.assertIsNone(item['existing_contraction'])
+
     def test_narrow_signals_preserve_exact_quote(self):
         for text in ('如果明天下雨', '差距较大如果超出了这个范围。', '它远超人类的话你就'):
             with self.subTest(text=text):

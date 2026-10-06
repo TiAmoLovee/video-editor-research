@@ -42,7 +42,7 @@ export interface Candidate {
     boundary_status: 'review_required' | 'not_verified';
     issues: string[];
     proposal: { start: number; end: number; duration_seconds: number; text: string; score: null; status: 'review_then_rescore' } | null;
-    text_review?: { signal: { quote: string; reason: string }; existing_extension: { id: string; start: number; end: number; score: number; rank: number; scorer: 'rule' | 'llm' } | null } | null;
+    text_review?: { signal: { quote: string; reason: string }; existing_extension: { id: string; start: number; end: number; score: number; rank: number; scorer: 'rule' | 'llm' } | null; existing_contraction?: { id: string; start: number; end: number; score: number; rank: number; scorer: 'rule' | 'llm' } | null } | null;
   };
   id: string;
   rank: number;

@@ -26,6 +26,7 @@ const boundaryDetails: Record<string, string> = {
   proposal_outside_duration_limits: '调整后不足 15 秒或超过 90 秒，暂不采用。',
   conditional_tail_needs_review: '结尾疑似只说了条件，后面的结果或解释可能还没讲完。',
   connective_tail_needs_review: '结尾疑似停在连接表达上，请核对后文。',
+  demonstrative_tail_needs_review: '结尾可能省略了后文，也可能是完整的口语表达，请试听确认。',
 };
 
 export function CandidateResults({ taskId, download }: { taskId: string; download: string }) {
@@ -102,6 +103,7 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
             {candidate.selection.text_review && <Alert type="warning" message={`结尾待核对：“${candidate.selection.text_review.signal.quote}”`} description={<>
               <p>{candidate.selection.text_review.signal.reason}。这是文字线索，需要试听判断。</p>
               {candidate.selection.text_review.existing_extension && <p>可参考已有候选 #{candidate.selection.text_review.existing_extension.rank}：{candidate.selection.text_review.existing_extension.start.toFixed(2)}–{candidate.selection.text_review.existing_extension.end.toFixed(2)} 秒，{candidate.selection.text_review.existing_extension.scorer === 'llm' ? '模型分' : '规则分'} {candidate.selection.text_review.existing_extension.score.toFixed(2)}。这个更长版本仍需试听。</p>}
+              {candidate.selection.text_review.existing_contraction && <p>可参考较短候选 #{candidate.selection.text_review.existing_contraction.rank}：{candidate.selection.text_review.existing_contraction.start.toFixed(2)}–{candidate.selection.text_review.existing_contraction.end.toFixed(2)} 秒，{candidate.selection.text_review.existing_contraction.scorer === 'llm' ? '模型分' : '规则分'} {candidate.selection.text_review.existing_contraction.score.toFixed(2)}。仅供对比，不自动替换原片段，仍需试听确认。</p>}
             </>} />}
             {candidate.selection.proposal && <Alert type="warning" message={`修正草案：${candidate.selection.proposal.start.toFixed(2)}–${candidate.selection.proposal.end.toFixed(2)} 秒`} description={<><p>{candidate.selection.proposal.text}</p><p>上方分数只属于原范围。此草案待试听确认及重新评分，没有沿用原分数。</p></>} />}
           </>}

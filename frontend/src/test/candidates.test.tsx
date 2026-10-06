@@ -67,11 +67,14 @@ describe('candidate results', () => {
     data.items[0].selection = { retained: true, suppressed_by: null, boundary_status: 'review_required',
       issues: ['conditional_tail_needs_review'], proposal: null,
       text_review: { signal: { quote: '如果超出范围', reason: '需核对后文' },
-        existing_extension: { id: 'longer', start: 1, end: 35, score: 42, rank: 6, scorer: 'rule' } } };
+        existing_extension: { id: 'longer', start: 1, end: 35, score: 42, rank: 6, scorer: 'rule' },
+        existing_contraction: { id: 'shorter', start: 1, end: 17, score: 25, rank: 9, scorer: 'rule' } } };
     const request = vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
     render(<CandidateResults taskId={taskId} download={download} />);
     expect(await screen.findByText('结尾待核对：“如果超出范围”')).toBeInTheDocument();
     expect(screen.getByText(/这个更长版本仍需试听/)).toBeInTheDocument();
+    expect(screen.getByText(/较短候选 #9：1.00–17.00 秒，规则分 25.00/)).toBeInTheDocument();
+    expect(screen.getByText(/不自动替换原片段/)).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: '只看待复核' }));
     await waitFor(() => expect(request).toHaveBeenLastCalledWith(taskId, 0, expect.any(AbortSignal), 'review'));
   });
