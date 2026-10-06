@@ -1,4 +1,4 @@
-import type { CandidatePage, Task, TaskPage } from '../types/tasks';
+import type { CandidatePage, CandidateView, Task, TaskPage } from '../types/tasks';
 
 export const validId = (value: string): boolean => /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(value);
 
@@ -24,7 +24,7 @@ async function request<T>(path: string, signal: AbortSignal): Promise<T> {
 }
 export const getTasks = (offset: number, signal: AbortSignal) => request<TaskPage>(`/tasks?limit=10&offset=${offset}`, signal);
 export const getTask = (id: string, signal: AbortSignal) => request<Task>(`/tasks/${id}`, signal);
-export const getCandidates = (id: string, offset: number, signal: AbortSignal, view: 'all' | 'retained' | 'review' = 'all') => request<CandidatePage>(`/tasks/${id}/candidates?limit=10&offset=${offset}${view === 'all' ? '' : `&view=${view}`}`, signal);
+export const getCandidates = (id: string, offset: number, signal: AbortSignal, view: CandidateView = 'all', topic?: string) => request<CandidatePage>(`/tasks/${id}/candidates?limit=10&offset=${offset}${view === 'all' ? '' : `&view=${view}`}${view === 'topics' && topic ? `&topic=${encodeURIComponent(topic)}` : ''}`, signal);
 
 export function acceptedVideoUrl(url: string, taskId: string): string | undefined {
   const prefix = `/tasks/${taskId}/accepted/`;

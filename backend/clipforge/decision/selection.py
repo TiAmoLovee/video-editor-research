@@ -9,6 +9,7 @@ from pathlib import Path
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.scoring import validate_scored
 from clipforge.decision.continuity import review_continuity
+from clipforge.decision.topics import group_topics
 
 VERSION = 'boundary-nms-v2'
 IOU_THRESHOLD = 0.5
@@ -127,6 +128,9 @@ def build_selection(candidates, analysis, review=None, *, iou_threshold=IOU_THRE
                       'suppressed_by': match['id'] if match else None,
                       'overlap_iou': temporal_iou(candidate, match) if match else None,
                       **boundary})
+    topics = group_topics(kept)
+    for item in items:
+        item['topic'] = topics['items'].get(item['candidate_id'])
     return {'version': VERSION, 'candidates_sha256': content_hash(candidates),
             'analysis_sha256': content_hash(analysis), 'review': deepcopy(review),
             'config': {'iou_threshold': iou_threshold, 'edge_seconds': EDGE_SECONDS,
@@ -137,7 +141,7 @@ def build_selection(candidates, analysis, review=None, *, iou_threshold=IOU_THRE
                         'suppressed_count': len(items) - len(kept),
                         'retained_review_count': sum(i['retained'] and i['boundary_status'] == 'review_required' for i in items),
                         'proposal_count': sum(i['proposal'] is not None for i in items)},
-            'items': items, 'model_requests': 0}
+            'topics': topics, 'items': items, 'model_requests': 0}
 
 
 def main():

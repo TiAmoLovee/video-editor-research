@@ -125,7 +125,10 @@ def result_file(job, task_id, filename):
 
 @router.get('/{task_id}/candidates', summary='分页查看候选片段排名及评分原因')
 def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
-                      offset: int = Query(0, ge=0), view: str = Query('all', pattern='^(all|retained|review)$')):
+                      offset: int = Query(0, ge=0), view: str = Query('all', pattern='^(all|retained|review|topics)$'),
+                      topic: str | None = Query(None, pattern='^topic_[a-f0-9]{16}$')):
+    if topic is not None and view != 'topics':
+        raise HTTPException(422, '请在合集分组视图选择分组。')
     job = require_job(task_id)
     target = result_file(job, task_id, 'candidates.json')
     try:
@@ -134,7 +137,16 @@ def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
         report = selection_for_task(job, task_id, data)
         if report is not None:
             notes = {item['candidate_id']: item for item in report['items']}
-            if view in ('retained', 'review'):
+            if view == 'topics':
+                groups = report['topics']['groups']
+                if topic is not None and not any(g['id'] == topic for g in groups):
+                    raise HTTPException(404, '此任务没有对应的文字分组。')
+                ids = [cid for g in groups if topic is None or g['id'] == topic for cid in g['recommended_ids']]
+                by_id = {c['id']: c for c in data['candidates']}
+                page['items'] = [candidate_page(data, 1, by_id[cid]['rank'] - 1)['items'][0]
+                                 for cid in ids[offset:offset + limit]]
+                page.update(total=len(ids), has_more=offset + limit < len(ids))
+            elif view in ('retained', 'review'):
                 retained = [c for c in data['candidates'] if (notes[c['id']]['retained'] if view == 'retained'
                             else notes[c['id']]['boundary_status'] == 'review_required')]
                 # 原排名保留，分页基于全批去重结果，不在当前页内单独去重。
@@ -146,9 +158,11 @@ def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
             page['selection_summary'] = report['summary']
             page['selection_version'] = report['version']
             page['accepted_versions'] = report['accepted_versions']
+            page['topics'] = {key: report['topics'][key] for key in ('version', 'summary', 'groups')}
         elif view != 'all':
             raise HTTPException(409, '此历史任务没有可核对的分析记录。')
         page['view'] = view
+        page['topic'] = topic
         return page
     except (OSError, ValueError, TypeError, KeyError) as error:
         logger.exception('Candidate read failed for task %s', task_id)

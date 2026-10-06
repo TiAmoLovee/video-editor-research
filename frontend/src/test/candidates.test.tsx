@@ -18,13 +18,34 @@ const download = `/tasks/${taskId}/files/candidates.json`;
 beforeEach(() => { vi.restoreAllMocks(); useTasks.setState({ task: null, detailError: '', detailLoading: false }); });
 
 describe('candidate results', () => {
+  it('filters groups globally, resets pagination, and exposes duplicates without changing scores', async () => {
+    const data = page();
+    const groupId = 'topic_0123456789abcdef';
+    data.topics = { version: 'lexical-topics-v1', summary: { input_count: 3, group_count: 2, duplicate_count: 1, recommended_count: 2 },
+      groups: [{ id: groupId, label: '人工智能', member_count: 2, recommended_count: 1, member_ids: ['a', 'b'], recommended_ids: ['a'] }] };
+    data.items[0].selection = { retained: true, suppressed_by: null, boundary_status: 'not_verified', issues: [], proposal: null,
+      topic: { group_id: groupId, group_label: '人工智能', duplicate_of: 'a', duplicate_rank: 1, duplicate_similarity: .96 } };
+    const request = vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText('合集分组（试用）')).toBeInTheDocument();
+    expect(screen.getByText(/疑似重复候选 #1/)).toBeInTheDocument();
+    expect(screen.getByText(/尚未生成合集视频/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '下一页候选' }));
+    await waitFor(() => expect(request).toHaveBeenLastCalledWith(taskId, 10, expect.any(AbortSignal)));
+    fireEvent.click(await screen.findByRole('button', { name: '组 1 · 人工智能（1）' }));
+    await waitFor(() => expect(request).toHaveBeenLastCalledWith(taskId, 0, expect.any(AbortSignal), 'topics', groupId));
+    expect(await screen.findByText('规则分 48.76')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '按组查看 · 折叠疑似重复' }));
+    await waitFor(() => expect(request).toHaveBeenLastCalledWith(taskId, 0, expect.any(AbortSignal), 'topics', undefined));
+  });
   it('keeps approved media separate from original scores and guards media URLs', async () => {
     const data = page();
     data.accepted_versions = [{ id: 'a'.repeat(64), candidate_id: 'reviewed', start: 1.43, end: 17.83,
       duration_seconds: 16.4, text: '验收版本', score: 70, scorer: 'llm', score_scope: 'rendered_range',
       score_start: 1.43, score_end: 17.83, feedback: '结尾完整', reasons: ['分项合计 70'],
       video_url: `/tasks/${taskId}/accepted/${'a'.repeat(64)}.mp4` }];
-    vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    const request = vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    data.selection_summary = { original_count: 11, retained_count: 2, suppressed_count: 9, retained_review_count: 1, proposal_count: 0 };
     render(<CandidateResults taskId={taskId} download={download} />);
     expect(await screen.findByText('已试听通过')).toBeInTheDocument();
     expect(screen.getByText('此修正版模型分 70.00')).toBeInTheDocument();
@@ -32,6 +53,13 @@ describe('candidate results', () => {
     expect(screen.getByRole('link', { name: '下载已验收成品' })).toHaveAttribute('href', data.accepted_versions[0].video_url);
     expect(api.acceptedVideoUrl('https://example.com/video.mp4', taskId)).toBeUndefined();
     expect(api.acceptedVideoUrl(`/tasks/${taskId}/accepted/../../secret.mp4`, taskId)).toBeUndefined();
+    const player = screen.getByLabelText('已验收片段播放器');
+    let finish!: (value: CandidatePage) => void;
+    request.mockImplementationOnce(() => new Promise(resolve => { finish = resolve; }));
+    fireEvent.click(screen.getByRole('button', { name: '只看去重保留' }));
+    expect(screen.getByLabelText('已验收片段播放器')).toBe(player);
+    await act(async () => finish({ ...data, total: 2 }));
+    expect(screen.getByLabelText('已验收片段播放器')).toBe(player);
   });
   it('shows tail evidence and requests the global review filter', async () => {
     const data = page();

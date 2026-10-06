@@ -36,6 +36,7 @@ export interface TaskPage {
 }
 export interface Candidate {
   selection?: {
+    topic?: { group_id: string; group_label: string; duplicate_of: string | null; duplicate_rank: number | null; duplicate_similarity: number | null } | null;
     retained: boolean;
     suppressed_by: string | null;
     boundary_status: 'review_required' | 'not_verified';
@@ -57,10 +58,12 @@ export interface Candidate {
   source_sentences: string[];
 }
 export interface CandidatePage {
+  topics?: { version: string; summary: { input_count: number; group_count: number; duplicate_count: number; recommended_count: number }; groups: { id: string; label: string; member_count: number; recommended_count: number; member_ids: string[]; recommended_ids: string[] }[] };
+  topic?: string | null;
   accepted_versions?: { id: string; candidate_id: string; start: number; end: number; duration_seconds: number; text: string; score: number; scorer: 'rule' | 'llm'; score_scope: 'original_candidate_range' | 'rendered_range'; score_start: number; score_end: number; feedback: string; video_url: string; reasons: string[] }[];
   selection_version?: string;
   selection_summary?: { original_count: number; retained_count: number; suppressed_count: number; retained_review_count: number; proposal_count: number };
-  view?: 'all' | 'retained' | 'review';
+  view?: CandidateView;
   items: Candidate[];
   total: number;
   limit: number;
@@ -72,6 +75,7 @@ export interface CandidatePage {
   fallback_reason?: string | null;
   audio_status: 'measured' | 'unavailable' | 'no_audio';
 }
+export type CandidateView = 'all' | 'retained' | 'review' | 'topics';
 export const statusLabels: Record<TaskState, string> = {
   QUEUED: '等待处理', RUNNING: '处理中', SUCCEEDED: '已完成',
   FAILED: '处理失败', SUBMISSION_UNKNOWN: '提交待确认',

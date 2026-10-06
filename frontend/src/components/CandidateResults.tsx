@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Alert, Button, Empty, Skeleton, Tag } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { acceptedVideoUrl, downloadUrl, getCandidates, validId } from '../api/tasks';
-import type { CandidatePage } from '../types/tasks';
+import type { CandidatePage, CandidateView } from '../types/tasks';
 
 const fallbackDetails: Record<string, string> = {
   invalid_assessment: '模型返回的分项分数或原文引用未通过校验。',
@@ -34,11 +34,12 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [retry, setRetry] = useState(0);
-  const [view, setView] = useState<'all' | 'retained' | 'review'>('all');
+  const [view, setView] = useState<CandidateView>('all');
+  const [topic, setTopic] = useState<string>();
   useEffect(() => {
     const controller = new AbortController();
-    setLoading(true); setError(false); setPage(null);
-    const request = view === 'all' ? getCandidates(taskId, offset, controller.signal) : getCandidates(taskId, offset, controller.signal, view);
+    setLoading(true); setError(false);
+    const request = view === 'all' ? getCandidates(taskId, offset, controller.signal) : view === 'topics' ? getCandidates(taskId, offset, controller.signal, view, topic) : getCandidates(taskId, offset, controller.signal, view);
     request.then(result => {
       if (!controller.signal.aborted) setPage(result);
     }).catch(() => {
@@ -47,13 +48,14 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
       if (!controller.signal.aborted) setLoading(false);
     });
     return () => controller.abort();
-  }, [taskId, offset, retry, view]);
+  }, [taskId, offset, retry, view, topic]);
   let url: string;
   try { url = downloadUrl(download, taskId); }
   catch { return <Alert type="error" message="候选下载地址异常，请刷新任务。" />; }
-  return <section className="candidate-results" aria-label="候选片段推荐">
+  return <section className="candidate-results" aria-label="候选片段推荐" aria-busy={loading}>
     <div className="result-head"><div><h2>候选片段推荐</h2><p className="hint">评分仅用于同一任务内排序。片段可能相互重叠，当前展示推荐时间范围。</p></div><Button href={url} download aria-label="下载评分结果" icon={<DownloadOutlined />}>下载评分结果</Button></div>
-    {loading ? <Skeleton active title={false} paragraph={{ rows: 3 }} aria-label="正在加载候选" /> : error ? <Alert type="warning" message="候选暂时加载失败，切片下载仍可使用。" action={<Button size="small" onClick={() => setRetry(value => value + 1)}>重试候选</Button>} /> : page && <>
+    {loading && page && <p role="status">正在更新候选列表…</p>}
+    {loading && !page ? <Skeleton active title={false} paragraph={{ rows: 3 }} aria-label="正在加载候选" /> : error ? <Alert type="warning" message="候选暂时加载失败，切片下载仍可使用。" action={<Button size="small" onClick={() => setRetry(value => value + 1)}>重试候选</Button>} /> : page && <>
       {!!page.accepted_versions?.length && <section aria-label="已试听通过的成品">
         <h3>已试听通过的成品</h3>
         <p className="hint">这里保留人工确认过的具体版本。下方原始候选的分数与风险记录仍独立保留。</p>
@@ -74,6 +76,14 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
         <div className="candidate-pager"><Button type={view === 'all' ? 'primary' : 'default'} onClick={() => { setOffset(0); setView('all'); }}>全部候选</Button><Button type={view === 'retained' ? 'primary' : 'default'} onClick={() => { setOffset(0); setView('retained'); }}>只看去重保留</Button><Button type={view === 'review' ? 'primary' : 'default'} onClick={() => { setOffset(0); setView('review'); }}>只看待复核</Button>{validId(taskId) && <Button href={`/tasks/${taskId}/selection`} download>下载边界与去重记录</Button>}</div>
       </>}
       {page.fallback_reason && <Alert type="info" message="模型评分未完成，本次全部候选已使用规则评分。" description={`${fallbackDetails[page.fallback_reason] || '详细原因请查看处理记录。'} 未采用部分模型分数。`} />}
+      {page.topics && <section aria-label="合集分组">
+        <h3>合集分组（试用）</h3>
+        <p className="hint">时间去重后的 {page.topics.summary.input_count} 个片段，按文字相似程度分为 {page.topics.summary.group_count} 组；疑似重复 {page.topics.summary.duplicate_count} 个。组名摘自原文，分组仍需人工核对。</p>
+        <div className="candidate-pager"><Button type={view === 'topics' && !topic ? 'primary' : 'default'} onClick={() => { setOffset(0); setTopic(undefined); setView('topics'); }}>按组查看 · 折叠疑似重复</Button>
+          {page.topics.groups.map((group, index) => <Button key={group.id} type={view === 'topics' && topic === group.id ? 'primary' : 'default'} onClick={() => { setOffset(0); setTopic(group.id); setView('topics'); }}>组 {index + 1} · {group.label}（{group.recommended_count}）</Button>)}
+        </div>
+        <p className="hint">同组不代表内容重复，也不代表首尾完整。折叠只影响此视图，可在“只看去重保留”查看全部分组成员；尚未生成合集视频。</p>
+      </section>}
       {page.scorer === 'llm' && page.scoring_version === 'llm-v1' && <Alert type="info" message="旧版文本评分" description="这是此任务生成时保存的结果。更新程序不会改写历史评分；要验证新版，请新建一次任务。" />}
       {page.scorer === 'llm' && page.scoring_version === 'llm-v2' && <p className="hint"><Tag color="blue">新版分项评分</Tag>总分由四项相加，理由引用原文；评分是否合理仍需人工判断。</p>}
       {page.scorer === 'llm' && <p className="hint">本次使用模型文本评分；未评估画面和声音。规则分保留供对比，两者不能直接当作同一评分标准。</p>}
@@ -86,6 +96,7 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
           <p className="hint">时长 {candidate.duration_seconds.toFixed(2)} 秒</p>
           <p className="candidate-text">{candidate.text}</p>
           {candidate.selection && <>
+            {candidate.selection.topic && <p><Tag color="cyan">文字分组：{candidate.selection.topic.group_label}</Tag>{candidate.selection.topic.duplicate_of && <Tag>疑似重复候选 #{candidate.selection.topic.duplicate_rank} · 文字相似度 {Math.round((candidate.selection.topic.duplicate_similarity ?? 0) * 100)}%</Tag>}</p>}
             <p><Tag color={candidate.selection.retained ? 'blue' : 'default'}>{candidate.selection.retained ? '去重保留' : '重叠已折叠'}</Tag><Tag color={candidate.selection.boundary_status === 'review_required' ? 'orange' : 'default'}>{candidate.selection.boundary_status === 'review_required' ? '边界待复核' : '完整性未人工验收'}</Tag></p>
             {candidate.selection.issues.map(issue => <p className="hint" key={issue}>{boundaryDetails[issue] || '请查看边界复核记录。'}</p>)}
             {candidate.selection.text_review && <Alert type="warning" message={`结尾待核对：“${candidate.selection.text_review.signal.quote}”`} description={<>

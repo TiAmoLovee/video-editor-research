@@ -148,6 +148,35 @@ class SelectionApiTests(unittest.TestCase):
         self.assertEqual(self.client.get(f'/tasks/{task}/selection').status_code, 500)
         self.assertEqual(self.client.get(f'/tasks/{task}/candidates?view=bad').status_code, 422)
 
+    def test_topic_filter_folds_repeated_text_globally_and_preserves_originals(self):
+        self.analysis = fixture([(0, 20), (100, 120), (200, 220)])
+        texts = ['人工智能正在改变我们的生活方式也让未来的科技出现更多新的可能性'] * 2 + [
+            '先清洗青菜再把食用油倒入铁锅里面翻炒直到熟透最后加入食盐调味']
+        for sentence, word, text in zip(self.analysis['sentences'], self.analysis['words'], texts):
+            sentence['text'] = word['text'] = text
+        self.result = score_candidates(generate_candidates(self.analysis), self.analysis)
+        task = self.reviewed_job()
+        original = (job_dir(task) / 'candidates.json').read_bytes()
+        report = self.client.get(f'/tasks/{task}/selection').json()
+        self.assertEqual(report['topics']['summary']['duplicate_count'], 1)
+        ids = [cid for g in report['topics']['groups'] for cid in g['recommended_ids']]
+        actual = []
+        for offset in range(len(ids)):
+            response = self.client.get(f'/tasks/{task}/candidates?view=topics&limit=1&offset={offset}')
+            self.assertEqual(response.status_code, 200)
+            page = response.json()
+            self.assertEqual(page['total'], 2)
+            actual.append(page['items'][0]['id'])
+        self.assertEqual(actual, ids)
+        for group in report['topics']['groups']:
+            page = self.client.get(f"/tasks/{task}/candidates?view=topics&topic={group['id']}").json()
+            self.assertEqual([i['id'] for i in page['items']], group['recommended_ids'])
+        self.assertEqual(self.client.get(f'/tasks/{task}/candidates?view=retained').json()['total'], 3)
+        self.assertEqual(self.client.get(f'/tasks/{task}/candidates?view=topics&offset=2').json()['items'], [])
+        self.assertEqual(self.client.get(f'/tasks/{task}/candidates?view=topics&topic=topic_0000000000000000').status_code, 404)
+        self.assertEqual(self.client.get(f'/tasks/{task}/candidates?topic=topic_0000000000000000').status_code, 422)
+        self.assertEqual(original, (job_dir(task) / 'candidates.json').read_bytes())
+
 
 if __name__ == '__main__':
     unittest.main()
