@@ -17,12 +17,71 @@ def read(path):
     return json.loads(Path(path).read_text(encoding='utf-8-sig'))
 
 
+def evaluation_entry(analysis, candidates, acceptance):
+    """Read structured answers directly; do not invent a verbatim user quotation."""
+    from clipforge.decision.evaluation import summary, QUESTIONS
+    exported = acceptance['evaluation']
+    manifest, review = exported['manifest'], exported['human_review']
+    # Validate the frozen artifact, not today's NMS implementation. Future selector
+    # upgrades must not invalidate human approval of unchanged exact media.
+    plan = {k: v for k, v in manifest.items() if k not in ('batch_id', 'renders', 'prepared_at')}
+    if (manifest['version'] != 'human-evaluation-batch-v1'
+            or manifest['cohort'] not in ('editorial_followup_not_baseline', 'all_time_nms_survivors_before_topic_folding')
+            or content_hash(plan) != manifest['batch_id']
+            or manifest['analysis_sha256'] != content_hash(analysis)
+            or manifest['candidates_sha256'] != content_hash(candidates)
+            or any(manifest[k] != analysis['media'][k] for k in ('source_sha256', 'normalized_sha256'))
+            or len({s['id'] for s in manifest['samples']}) != len(manifest['samples'])
+            or len(manifest['samples']) != manifest['denominator']
+            or review['batch_id'] != manifest['batch_id']
+            or review['manifest_sha256'] != content_hash(manifest)
+            or type(review['revision']) is not int or review['revision'] < 1):
+        raise ValueError('表单评审与冻结的候选范围或来源不匹配')
+    summary(manifest, review['reviews'])
+    sid = acceptance['sample_id']
+    sample = next((s for s in manifest['samples'] if s['id'] == sid), None)
+    answer = review['reviews'].get(sid)
+    if (sample is None or not answer or answer['answers'] != dict.fromkeys(QUESTIONS, 'yes')
+            or answer.get('provenance') != 'user_submitted_local_form'):
+        raise ValueError('只有用户四项明确通过的具体版本可以收录')
+    render = manifest['renders'][sid]
+    if (render['file'] != sample['file'] or render['sha256'] != acceptance['selected_sha256']
+            or render['frames'] != sample['end_frame_exclusive']-sample['start_frame']
+            or render['duration_seconds'] != sample['duration_seconds']):
+        raise ValueError('实际试听版本与表单记录不匹配')
+    candidate = next((c for c in candidates['candidates'] if c['id'] == sample['candidate_id']), None)
+    fields = {'original_start':'start', 'original_end':'end', 'original_score':'score', 'original_rank':'rank',
+              'scorer':'scorer', 'text':'text', 'source_sentences':'source_sentences'}
+    if (candidate is None or any(sample[k] != candidate[v] for k, v in fields.items())
+            or sample['start_frame'] != math.floor(candidate['start']*30+1e-8)
+            or sample['end_frame_exclusive'] != math.ceil(candidate['end']*30-1e-8)):
+        raise ValueError('表单中的候选文字、评分或范围与原始记录不符')
+    timing = {k: sample[k] for k in ('start_frame', 'end_frame_exclusive', 'fps', 'duration_seconds')}
+    timing.update(start_seconds=sample['start_frame']/30, end_seconds_exclusive=sample['end_frame_exclusive']/30)
+    feedback = '表单评审：开头完整、结尾完整、能独立理解、无无关内容，四项均选择“是”。'
+    if answer['note']:
+        feedback += ' 用户备注：' + answer['note']
+    provenance = {'kind': 'structured_form', 'batch_id': manifest['batch_id'], 'sample_id': sid,
+                  'revision': review['revision'], 'manifest_sha256': content_hash(manifest),
+                  'review_sha256': content_hash(review), 'cohort': manifest['cohort']}
+    return candidate, timing, feedback, provenance
+
+
 def checked_entry(task_id, analysis, candidates, acceptance, reviewed=None):
     validate_scored(candidates, analysis)
     a = acceptance
-    if a.get('task_id') != task_id or not isinstance(a.get('user_feedback_verbatim'), str) or not a['user_feedback_verbatim'].strip():
+    if a.get('task_id') != task_id:
         raise ValueError('验收任务或用户反馈无效')
-    if a.get('version') == 'human-candidate-acceptance-v1':
+    feedback = a.get('user_feedback_verbatim')
+    provenance = None
+    if a.get('version') != 'human-evaluation-acceptance-v1' and (not isinstance(feedback, str) or not feedback.strip()):
+        raise ValueError('验收任务或用户反馈无效')
+    if a.get('version') == 'human-evaluation-acceptance-v1':
+        candidate, timing, feedback, provenance = evaluation_entry(analysis, candidates, a)
+        first, last = timing['start_frame'], timing['end_frame_exclusive']
+        parent_id = candidate['id']
+        score_scope = 'original_candidate_range'
+    elif a.get('version') == 'human-candidate-acceptance-v1':
         if any(type(value) is not bool for value in a.get('checks', {}).values()):
             raise ValueError('验收检查项必须是明确的布尔结论')
         if (a.get('status') != 'accepted_by_user' or a.get('checks') != {
@@ -93,7 +152,7 @@ def checked_entry(task_id, analysis, candidates, acceptance, reviewed=None):
             'text': candidate['text'], 'score': candidate['score'], 'scorer': candidate['scorer'],
             'reasons': deepcopy(candidate['reasons']), 'score_scope': score_scope,
             'score_start': candidate['start'], 'score_end': candidate['end'],
-            'status': 'accepted_by_user', 'feedback': a['user_feedback_verbatim'],
+            'status': 'accepted_by_user', 'feedback': feedback, 'review_provenance': provenance,
             'video_url': f'/tasks/{task_id}/accepted/{digest}.mp4'}
 
 

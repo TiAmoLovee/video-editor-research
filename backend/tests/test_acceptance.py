@@ -1,6 +1,7 @@
 from copy import deepcopy
 import json
 import unittest
+from unittest.mock import patch
 
 from backend.tests import test_candidate_api as fixtures
 from backend.tests import test_reviewed as reviewed_fixtures
@@ -9,6 +10,7 @@ from clipforge.decision.acceptance import checked_entry, install, load_accepted
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.reviewed import file_hash
 from clipforge.storage.jobs import job_dir, get_job, database
+from clipforge.decision.evaluation import freeze, QUESTIONS
 
 
 class AcceptanceTests(unittest.TestCase):
@@ -76,6 +78,64 @@ class AcceptanceTests(unittest.TestCase):
         (folder/'accepted'/f'{entry["id"]}.mp4').write_bytes(b'corrupt')
         self.assertEqual(self.client.get(entry['video_url']).status_code, 500)
         self.assertEqual(self.client.get(f'/tasks/{task}/candidates').status_code, 500)
+
+    def form_record(self):
+        task, folder, original, media = self.ready()
+        manifest = freeze(self.analysis, self.result, 'example.mp4')
+        sample = manifest['samples'][0]
+        digest = file_hash(media)
+        manifest['renders'] = {sample['id']: {'file':sample['file'], 'sha256':digest,
+            'frames': sample['end_frame_exclusive']-sample['start_frame'], 'duration_seconds':sample['duration_seconds']}}
+        review = {'batch_id':manifest['batch_id'], 'manifest_sha256':content_hash(manifest), 'revision':1,
+                  'reviews':{sample['id']:{'answers':dict.fromkeys(QUESTIONS, 'yes'), 'note':'',
+                                          'provenance':'user_submitted_local_form'}}}
+        a = {'version':'human-evaluation-acceptance-v1','task_id':task,'sample_id':sample['id'],
+             'selected_sha256':digest,'evaluation':{'manifest':manifest,'human_review':review}}
+        return task, folder, a, media
+
+    def test_structured_form_import_keeps_provenance_without_fabricated_quote(self):
+        task, folder, a, media = self.form_record()
+        before = (folder/'candidates.json').read_bytes()
+        item = install(folder, task, self.analysis, self.result, a, media)
+        self.assertTrue(item['feedback'].startswith('表单评审：'))
+        self.assertNotIn('user_feedback_verbatim', a)
+        self.assertEqual(item['review_provenance']['kind'], 'structured_form')
+        self.assertEqual(item['score_scope'], 'original_candidate_range')
+        self.assertEqual(len(load_accepted(folder, task, self.analysis, self.result)), 1)
+        self.assertEqual(self.client.get(item['video_url']).status_code, 200)
+        self.assertEqual(before, (folder/'candidates.json').read_bytes())
+        with patch('clipforge.decision.selection.VERSION', 'future-selector-version'):
+            self.assertEqual(checked_entry(task, self.analysis, self.result, a), item)
+
+    def test_form_import_rejects_failed_uncertain_wrong_candidate_and_changed_media(self):
+        task, folder, a, media = self.form_record()
+        sid = a['sample_id']
+        edits = [lambda x: x['evaluation']['human_review']['reviews'][sid]['answers'].update(ending_complete='no'),
+                 lambda x: x['evaluation']['human_review']['reviews'][sid]['answers'].update(understandable='uncertain'),
+                 lambda x: x['evaluation']['human_review'].update(manifest_sha256='0'*64),
+                 lambda x: x['evaluation']['manifest']['samples'][0].update(candidate_id='other'),
+                 lambda x: x['evaluation']['human_review']['reviews'][sid].update(provenance='automatic'),
+                 lambda x: x.update(selected_sha256='f'*64),
+                 lambda x: x['evaluation']['human_review'].update(revision=True)]
+        for edit in edits:
+            bad=deepcopy(a); edit(bad)
+            with self.assertRaises(ValueError):
+                checked_entry(task,self.analysis,self.result,bad)
+
+    def test_rehashed_form_cannot_relabel_original_text_score_or_timing(self):
+        task, folder, a, media = self.form_record()
+        for edit in (lambda s:s.update(text='a different transcript'),
+                     lambda s:s.update(original_score=99),
+                     lambda s:s.update(original_rank=999),
+                     lambda s:s.update(start_frame=s['start_frame']+1)):
+            bad=deepcopy(a)
+            manifest=bad['evaluation']['manifest']
+            edit(manifest['samples'][0])
+            manifest['batch_id']=content_hash({k:v for k,v in manifest.items() if k not in ('batch_id','renders','prepared_at')})
+            review=bad['evaluation']['human_review']
+            review.update(batch_id=manifest['batch_id'],manifest_sha256=content_hash(manifest))
+            with self.assertRaises(ValueError):
+                checked_entry(task,self.analysis,self.result,bad)
 
     def test_different_feedback_cannot_silently_replace_history(self):
         task, folder, a, media = self.ready()
