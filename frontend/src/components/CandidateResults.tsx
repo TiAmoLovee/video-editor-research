@@ -106,6 +106,18 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
               {candidate.selection.text_review.existing_contraction && <p>可参考较短候选 #{candidate.selection.text_review.existing_contraction.rank}：{candidate.selection.text_review.existing_contraction.start.toFixed(2)}–{candidate.selection.text_review.existing_contraction.end.toFixed(2)} 秒，{candidate.selection.text_review.existing_contraction.scorer === 'llm' ? '模型分' : '规则分'} {candidate.selection.text_review.existing_contraction.score.toFixed(2)}。仅供对比，不自动替换原片段，仍需试听确认。</p>}
             </>} />}
             {candidate.selection.proposal && <Alert type="warning" message={`修正草案：${candidate.selection.proposal.start.toFixed(2)}–${candidate.selection.proposal.end.toFixed(2)} 秒`} description={<><p>{candidate.selection.proposal.text}</p><p>上方分数只属于原范围。此草案待试听确认及重新评分，没有沿用原分数。</p></>} />}
+            {candidate.selection.end_context && <details>
+              <summary>查看结尾上下文</summary>
+              <p className="hint">以下是原转写，可能有错字。后文不在本候选中；间隔和语音检测都不能证明一句话是否说完。</p>
+              <strong>片段内最后两句（不足两句时按实际显示）</strong>
+              {candidate.selection.end_context.ending_sentences.map(sentence => <p key={sentence.id}>{sentence.start.toFixed(2)}–{sentence.end.toFixed(2)} 秒：{sentence.text}</p>)}
+              <strong>片段外后文 · 仅供对照</strong>
+              {candidate.selection.end_context.following_sentences.length ? <>
+                <p>到下一句转写起点的间隔：{candidate.selection.end_context.next_sentence_gap_seconds?.toFixed(2)} 秒（不等于实际静音时长）。</p>
+                {candidate.selection.end_context.following_sentences.map(sentence => <p key={sentence.id}>{sentence.start.toFixed(2)}–{sentence.end.toFixed(2)} 秒：{sentence.text}</p>)}
+              </> : <p>没有后续转写，不能据此判断结尾完整。</p>}
+              <p className="hint">语音检测{candidate.selection.end_context.vad_speech_at_end ? '在切点仍标记了语音' : '在切点未标记语音'}；这是检测结果，不能直接作为裁切依据。</p>
+            </details>}
           </>}
           <details><summary>查看评分原因</summary><ul>{candidate.reasons.map((reason, index) => <li key={index}>{reason}</li>)}</ul></details>
         </li>)}</ol>

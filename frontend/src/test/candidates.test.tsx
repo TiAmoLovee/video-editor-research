@@ -18,6 +18,21 @@ const download = `/tasks/${taskId}/files/candidates.json`;
 beforeEach(() => { vi.restoreAllMocks(); useTasks.setState({ task: null, detailError: '', detailLoading: false }); });
 
 describe('candidate results', () => {
+  it('separates outside context from candidate text and gives no automatic verdict', async () => {
+    const data = page();
+    data.items[0].selection = { retained: true, suppressed_by: null, boundary_status: 'not_verified', issues: [], proposal: null,
+      end_context: { version: 'end-context-v1', candidate_end: 21, ending_sentences: [{ id: 's1', start: 1, end: 21, text: '片段内原文' }],
+        following_sentences: [{ id: 's2', start: 21.62, end: 25, text: '但是后文仍然继续' }], next_sentence_gap_seconds: .62,
+        vad_speech_at_end: false, semantic_completeness: 'not_determined' } };
+    vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    fireEvent.click(await screen.findByText('查看结尾上下文'));
+    expect(screen.getByText('片段外后文 · 仅供对照')).toBeVisible();
+    expect(screen.getByText(/21.62–25.00 秒：但是后文仍然继续/)).toBeVisible();
+    expect(screen.getByText(/0.62 秒（不等于实际静音时长）/)).toBeVisible();
+    expect(screen.getByText(/不能直接作为裁切依据/)).toBeVisible();
+    expect(screen.getByText('规则分 48.76')).toBeInTheDocument();
+  });
   it('filters groups globally, resets pagination, and exposes duplicates without changing scores', async () => {
     const data = page();
     const groupId = 'topic_0123456789abcdef';

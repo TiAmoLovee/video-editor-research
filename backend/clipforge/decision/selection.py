@@ -10,6 +10,7 @@ from clipforge.decision.candidates import content_hash
 from clipforge.decision.scoring import validate_scored
 from clipforge.decision.continuity import review_continuity
 from clipforge.decision.topics import group_topics
+from clipforge.decision.context import EndContext
 
 VERSION = 'boundary-nms-v2'
 IOU_THRESHOLD = 0.5
@@ -105,6 +106,7 @@ def build_selection(candidates, analysis, review=None, *, iou_threshold=IOU_THRE
             or not math.isfinite(iou_threshold) or not 0 < iou_threshold <= 1):
         raise ValueError('NMS 阈值必须在 (0, 1]')
     validate_scored(candidates, analysis)
+    context = EndContext(analysis)
     text_review = review_continuity(candidates, analysis)
     text_notes = {i['candidate_id']: i for i in text_review['items']}
     reviewed = validate_review(review, analysis)
@@ -127,6 +129,7 @@ def build_selection(candidates, analysis, review=None, *, iou_threshold=IOU_THRE
                       'retained': match is None,
                       'suppressed_by': match['id'] if match else None,
                       'overlap_iou': temporal_iou(candidate, match) if match else None,
+                      'end_context': context.for_candidate(candidate),
                       **boundary})
     topics = group_topics(kept)
     for item in items:

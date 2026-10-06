@@ -36,6 +36,7 @@ export interface TaskPage {
 }
 export interface Candidate {
   selection?: {
+    end_context?: { version: string; candidate_end: number; ending_sentences: { id: string; start: number; end: number; text: string }[]; following_sentences: { id: string; start: number; end: number; text: string }[]; next_sentence_gap_seconds: number | null; vad_speech_at_end: boolean; semantic_completeness: 'not_determined' };
     topic?: { group_id: string; group_label: string; duplicate_of: string | null; duplicate_rank: number | null; duplicate_similarity: number | null } | null;
     retained: boolean;
     suppressed_by: string | null;
