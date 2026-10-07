@@ -14,6 +14,14 @@ ENDPOINT = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions'
 MODEL = 'qwen-plus'
 
 
+class ReviewValidationError(ValueError):
+    """Fixed diagnostic codes, never provider text or credential-bearing errors."""
+
+    def __init__(self, code):
+        super().__init__(code)
+        self.code = code
+
+
 def prepare_review(analysis, scored, candidate_id):
     validate_scored(scored, analysis)
     candidate = next((c for c in scored['candidates'] if c['id'] == candidate_id), None)
@@ -72,13 +80,16 @@ def check_plan(plan):
 def validate_review(content, plan):
     """Verify syntax, exact citations and allow-listed ranges, not semantic truth."""
     check_plan(plan)
-    result = strict_json(content)
+    try:
+        result = strict_json(content)
+    except (ValueError, TypeError, RecursionError) as error:
+        raise ReviewValidationError('invalid_json') from error
     keys = {'ending_status', 'reason', 'evidence', 'recommended_candidate_id'}
     if (not isinstance(result, dict) or set(result) != keys
             or result['ending_status'] not in ('complete','incomplete','uncertain')
             or not isinstance(result['reason'], str) or not 1 <= len(result['reason'].strip()) <= 200
             or not isinstance(result['evidence'], list) or not 1 <= len(result['evidence']) <= 3):
-        raise ValueError('边界复核字段无效')
+        raise ReviewValidationError('invalid_assessment_fields')
     inputs = plan['input']
     by_id = {s['id']:s for s in inputs['sentences']}
     cited = set()
@@ -87,20 +98,20 @@ def validate_review(content, plan):
                 or not isinstance(evidence['sentence_id'], str) or evidence['sentence_id'] not in by_id
                 or not isinstance(evidence['quote'], str) or not 2 <= len(evidence['quote'].strip()) <= 80
                 or evidence['quote'] not in by_id[evidence['sentence_id']]['text']):
-            raise ValueError('引用必须来自对应原句，不能改写')
+            raise ReviewValidationError('invalid_source_citation')
         cited.add(evidence['sentence_id'])
     refs = set(inputs['candidate']['source_sentences'])
     if not cited.intersection(refs):
-        raise ValueError('必须引用当前候选中的原文')
+        raise ReviewValidationError('candidate_citation_missing')
     chosen = result['recommended_candidate_id']
     if chosen is not None:
         if not isinstance(chosen, str) or result['ending_status'] == 'complete':
-            raise ValueError('推荐候选与复核状态不一致')
+            raise ReviewValidationError('recommendation_status_conflict')
         option = next((c for c in inputs['allowed_alternatives'] if c['id'] == chosen), None)
         if option is None:
-            raise ValueError('只能推荐请求内列出的已有候选')
+            raise ReviewValidationError('recommendation_not_allowed')
         if not cited.intersection(set(option['source_sentences'])-refs):
-            raise ValueError('推荐延长范围必须引用新增部分的原句')
+            raise ReviewValidationError('extension_citation_missing')
     return {'version':VERSION,'plan_sha256':plan['plan_sha256'],'assessment':deepcopy(result),
             'status':'format_and_citations_verified','semantic_quality':'requires_review',
             'automatic_acceptance':False,'scores_and_ranges_changed':False}

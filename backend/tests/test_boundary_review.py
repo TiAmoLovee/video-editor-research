@@ -119,3 +119,26 @@ class BoundaryReviewTests(unittest.TestCase):
             self.assertEqual(len(results),1)
             self.assertEqual(calls,[1])
             self.assertEqual(results[0]['error'],'free_quota_exhausted')
+
+    def test_invalid_model_text_is_retained_with_fixed_diagnostic_and_key_redacted(self):
+        invalid=self.assessment()
+        invalid['reason']='test-secret'
+        invalid['evidence'][0]['quote']='原文中没有这句话'
+        content=json.dumps(invalid,ensure_ascii=False)
+        def fake(*args):
+            return {'choices':[{'finish_reason':'stop','message':{'content':content}}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            result=execute_once(self.plan,'test-secret',self.plan['plan_sha256'],tmp,transport=fake)
+            self.assertEqual(result['validation_error'],'invalid_source_citation')
+            self.assertEqual(result['status'],'failed')
+            self.assertIn('原文中没有这句话',result['unvalidated_model_text'])
+            self.assertNotIn('test-secret',''.join(p.read_text(encoding='utf-8') for p in Path(tmp).glob('*')))
+            self.assertFalse(result['automatic_acceptance'])
+
+    def test_invalid_json_gets_specific_code_without_provider_error_body(self):
+        def fake(*args):
+            return {'choices':[{'finish_reason':'stop','message':{'content':'not JSON'}}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            result=execute_once(self.plan,'test-secret',self.plan['plan_sha256'],tmp,transport=fake)
+            self.assertEqual(result['validation_error'],'invalid_json')
+            self.assertEqual(result['unvalidated_model_text'],'not JSON')

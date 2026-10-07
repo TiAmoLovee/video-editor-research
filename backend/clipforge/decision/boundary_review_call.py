@@ -4,7 +4,7 @@ import json
 import os
 from pathlib import Path
 
-from clipforge.decision.boundary_review import check_plan, validate_review
+from clipforge.decision.boundary_review import check_plan, validate_review, ReviewValidationError
 from clipforge.decision.llm import LLMConfig, LLMFailure, http_transport
 
 
@@ -52,6 +52,7 @@ def execute_once(plan, api_key, approved_plan_sha256, output_dir, *, transport=N
         os.fsync(stream.fileno())
     result = {'plan_sha256':stem, 'requests':1, 'retries':0, 'usage':None,
               'automatic_acceptance':False, 'scores_and_ranges_changed':False}
+    model_text = None
     try:
         response = (transport or http_transport)(cfg, plan['payload'], api_key, cfg.timeout_seconds)
         usage = response.get('usage')
@@ -63,7 +64,14 @@ def execute_once(plan, api_key, approved_plan_sha256, output_dir, *, transport=N
         choice = response['choices'][0]
         if choice['finish_reason'] != 'stop' or choice['message'].get('refusal'):
             raise LLMFailure('incomplete_or_refused')
-        result.update(validate_review(choice['message']['content'], plan))
+        model_text = choice['message']['content']
+        result.update(validate_review(model_text, plan))
+    except ReviewValidationError as error:
+        result.update(status='failed', error='invalid_output', validation_error=error.code)
+        # Preserve only the model's completed text for local diagnosis, not the HTTP
+        # response, headers, credentials or provider error body. Never retry to recover it.
+        if isinstance(model_text, str) and len(model_text) <= 16384:
+            result['unvalidated_model_text'] = model_text.replace(api_key, '[REDACTED]')
     except LLMFailure as error:
         known = {'invalid_key','access_denied','rate_limited','provider_error','free_quota_exhausted',
                  'timeout','network_error','response_too_large','invalid_response','incomplete_or_refused'}
