@@ -8,8 +8,10 @@ import json
 from clipforge.decision.candidates import ROOT, content_hash
 from clipforge.decision.llm import strict_json
 from clipforge.decision.scoring import validate_scored
+from clipforge.decision.continuity import tail_signal
 
-VERSION = 'boundary-context-review-v1'
+VERSION = 'boundary-context-review-v2'
+VERSIONS = ('boundary-context-review-v1', VERSION)
 ENDPOINT = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions'
 MODEL = 'qwen-plus'
 
@@ -22,7 +24,9 @@ class ReviewValidationError(ValueError):
         self.code = code
 
 
-def prepare_review(analysis, scored, candidate_id):
+def prepare_review(analysis, scored, candidate_id, *, version=VERSION):
+    if version not in VERSIONS:
+        raise ValueError('复核协议版本无效')
     validate_scored(scored, analysis)
     candidate = next((c for c in scored['candidates'] if c['id'] == candidate_id), None)
     if candidate is None:
@@ -35,6 +39,15 @@ def prepare_review(analysis, scored, candidate_id):
                and c['source_sentences'][:len(refs)] == refs
                and all(0 <= by_id[right]['start']-by_id[left]['end'] <= 3
                        for left, right in zip(c['source_sentences'], c['source_sentences'][1:]))]
+    excluded = []
+    if version == VERSION:
+        for option in options:
+            signal = tail_signal(by_id[option['source_sentences'][-1]]['text'])
+            if signal:
+                excluded.append({'candidate_id':option['id'], 'start':option['start'], 'end':option['end'],
+                                 'signal':signal, 'scope':'excluded from model suggestions only; original candidate unchanged'})
+        excluded_ids = {item['candidate_id'] for item in excluded}
+        options = [c for c in options if c['id'] not in excluded_ids]
     options = sorted(options, key=lambda c: (c['end'], c['id']))[:5]
     before = [s for s in sentences if s['end'] <= candidate['start'] and s['id'] not in refs][-2:]
     after = [s for s in sentences if s['start'] >= candidate['end'] and s['id'] not in refs][:2]
@@ -46,23 +59,28 @@ def prepare_review(analysis, scored, candidate_id):
               'sentences': [{k: deepcopy(s[k]) for k in ('id', 'start', 'end', 'text')}
                             for s in sentences if s['id'] in included],
               'limitations': 'ASR text only; no video, audio or human labels; suggestions need separate audition'}
-    prompt = (ROOT/'prompts/boundary/context-v1.txt').read_text(encoding='utf-8')
+    prompt_name = 'context-v1.txt' if version == VERSIONS[0] else 'context-v2.txt'
+    prompt = (ROOT/'prompts/boundary'/prompt_name).read_text(encoding='utf-8')
     payload = {'model': MODEL, 'temperature': 0, 'max_tokens': 512,
                'enable_thinking': False, 'stream': False,
                'response_format': {'type': 'json_object'},
                'messages': [{'role':'system', 'content':prompt},
                             {'role':'user', 'content':json.dumps(inputs, ensure_ascii=False, separators=(',', ':'))}]}
-    plan = {'version': VERSION, 'endpoint': ENDPOINT, 'payload': payload,
+    plan = {'version': version, 'endpoint': ENDPOINT, 'payload': payload,
             'input': inputs, 'analysis_sha256':content_hash(analysis),
             'candidates_sha256':content_hash(scored), 'prompt_sha256':content_hash(prompt),
             'max_requests':1, 'max_attempts':1, 'requires_new_user_authorization':True}
+    if version == VERSION:
+        plan['excluded_alternatives'] = excluded
     return {'plan_sha256':content_hash(plan), **plan}
 
 
 def check_plan(plan):
     expected = {'version','endpoint','payload','input','analysis_sha256','candidates_sha256',
                 'prompt_sha256','max_requests','max_attempts','requires_new_user_authorization','plan_sha256'}
-    if (not isinstance(plan, dict) or set(plan) != expected or plan['version'] != VERSION
+    if isinstance(plan, dict) and plan.get('version') == VERSION:
+        expected.add('excluded_alternatives')
+    if (not isinstance(plan, dict) or set(plan) != expected or plan['version'] not in VERSIONS
             or content_hash({k:v for k,v in plan.items() if k != 'plan_sha256'}) != plan['plan_sha256']):
         raise ValueError('冻结请求已变化')
     payload = plan['payload']
@@ -112,6 +130,6 @@ def validate_review(content, plan):
             raise ReviewValidationError('recommendation_not_allowed')
         if not cited.intersection(set(option['source_sentences'])-refs):
             raise ReviewValidationError('extension_citation_missing')
-    return {'version':VERSION,'plan_sha256':plan['plan_sha256'],'assessment':deepcopy(result),
+    return {'version':plan['version'],'plan_sha256':plan['plan_sha256'],'assessment':deepcopy(result),
             'status':'format_and_citations_verified','semantic_quality':'requires_review',
             'automatic_acceptance':False,'scores_and_ranges_changed':False}

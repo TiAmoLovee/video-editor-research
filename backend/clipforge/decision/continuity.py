@@ -5,13 +5,14 @@ import re
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.scoring import validate_scored
 
-VERSION = 'text-tail-review-v2'
+VERSION = 'text-tail-review-v3'
 # These are review signals, not a parser or proof of semantic incompleteness.
 CONDITIONAL = re.compile(r'(?:如果|假如|倘若|要是)[^，,。.!！?？;；:\n：]{1,24}$')
 CONSEQUENCE = re.compile(r'就|那么|否则|则|便|会|能|可以|应该|该|吗|呢')
 DANGLING = re.compile(r'(?:你就|它就|他就|我们就|他们就|所以|但是|而且|以及|比如|例如)$')
 # Elliptical spoken replies can also match. Flag for review, never auto-reject.
 DEMONSTRATIVE = re.compile(r'是(?:这种|那种|这个|那个)$')
+AUXILIARY = re.compile(r'(?:已经|正在|将要)$')
 
 
 def tail_signal(text):
@@ -33,6 +34,10 @@ def tail_signal(text):
     if match:
         return {'code': 'demonstrative_tail_needs_review', 'quote': match.group(),
                 'reason': '末尾为“是这种”等可能省略后文的表达；口语中也可能完整，需试听确认'}
+    match = AUXILIARY.search(tail)
+    if match:
+        return {'code': 'auxiliary_tail_needs_review', 'quote': match.group(),
+                'reason': '末尾停在“已经／正在／将要”，可能缺少后续谓语，需核对原声和后文'}
     return None
 
 

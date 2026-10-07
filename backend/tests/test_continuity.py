@@ -18,6 +18,12 @@ def sample(gap=.5):
 
 
 class ContinuityTests(unittest.TestCase):
+    def test_auxiliary_tail_keeps_incomplete_signal_separate_from_complete_predicates(self):
+        for text in ('现在系统已经', '此刻正在。', '设备将要'):
+            self.assertEqual(tail_signal(text)['code'],'auxiliary_tail_needs_review')
+        for text in ('现在系统已经完成', '此刻正在运行', '已经？', '他说“正在”'):
+            self.assertIsNone(tail_signal(text))
+
     def test_demonstrative_warning_is_not_a_verdict(self):
         for text in ('主要原因就是这种', '目标是那个。'):
             result = tail_signal(text)

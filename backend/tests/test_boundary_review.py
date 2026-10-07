@@ -37,6 +37,25 @@ class BoundaryReviewTests(unittest.TestCase):
         self.assertEqual(before, content_hash([self.analysis,self.scored]))
         check_plan(self.plan)
 
+    def test_v2_excludes_risky_extension_without_changing_original_candidates(self):
+        analysis=deepcopy(self.analysis)
+        analysis['sentences'][2]['text']=analysis['words'][2]['text']='但是系统已经'
+        scored=score_candidates(generate_candidates(analysis),analysis)
+        original=next(c for c in scored['candidates'] if c['start']==0 and c['end']==20)
+        before=content_hash(scored)
+        plan=prepare_review(analysis,scored,original['id'])
+        self.assertNotIn(25,[c['end'] for c in plan['input']['allowed_alternatives']])
+        self.assertIn(32,[c['end'] for c in plan['input']['allowed_alternatives']])
+        self.assertEqual(plan['excluded_alternatives'][0]['signal']['code'],'auxiliary_tail_needs_review')
+        self.assertEqual(before,content_hash(scored))
+
+    def test_v1_plan_remains_readable_and_preserves_its_original_options(self):
+        legacy=prepare_review(self.analysis,self.scored,self.candidate['id'],version='boundary-context-review-v1')
+        check_plan(legacy)
+        self.assertNotIn('excluded_alternatives',legacy)
+        result=validate_review(json.dumps(self.assessment()),legacy)
+        self.assertEqual(result['version'],'boundary-context-review-v1')
+
     def test_existing_extension_must_not_jump_long_gap(self):
         a=fixture([(0,20),(30,40)])
         scored=score_candidates(generate_candidates(a,WindowOptions(max_gap_seconds=20)),a)

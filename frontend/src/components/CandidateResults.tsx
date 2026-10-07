@@ -27,6 +27,7 @@ const boundaryDetails: Record<string, string> = {
   conditional_tail_needs_review: '结尾疑似只说了条件，后面的结果或解释可能还没讲完。',
   connective_tail_needs_review: '结尾疑似停在连接表达上，请核对后文。',
   demonstrative_tail_needs_review: '结尾可能省略了后文，也可能是完整的口语表达，请试听确认。',
+  auxiliary_tail_needs_review: '结尾停在“已经／正在／将要”等表达，请核对谓语是否还没说完。',
 };
 
 export function CandidateResults({ taskId, download }: { taskId: string; download: string }) {
