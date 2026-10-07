@@ -49,7 +49,19 @@ def evaluation_entry(analysis, candidates, acceptance):
             or render['frames'] != sample['end_frame_exclusive']-sample['start_frame']
             or render['duration_seconds'] != sample['duration_seconds']):
         raise ValueError('实际试听版本与表单记录不匹配')
-    candidate = next((c for c in candidates['candidates'] if c['id'] == sample['candidate_id']), None)
+    word_followup = manifest['selection_version'] == 'editorial-word-boundary-v1'
+    if word_followup:
+        from clipforge.decision.word_followup import freeze_word_followup
+        expected = freeze_word_followup(analysis, candidates, manifest['source_name'],
+                                        manifest['word_edits'], manifest['followup_of'])
+        if expected != {'batch_id': manifest['batch_id'], **plan}:
+            raise ValueError('词语修正计划与原始来源不符')
+        candidate = dict(id=sample['candidate_id'], parent_candidate_id=sample['parent_candidate_id'],
+                         start=sample['original_start'], end=sample['original_end'],
+                         text=sample['text'], source_sentences=sample['source_sentences'],
+                         score=None, rank=None, scorer=None, reasons=[])
+    else:
+        candidate = next((c for c in candidates['candidates'] if c['id'] == sample['candidate_id']), None)
     fields = {'original_start':'start', 'original_end':'end', 'original_score':'score', 'original_rank':'rank',
               'scorer':'scorer', 'text':'text', 'source_sentences':'source_sentences'}
     if (candidate is None or any(sample[k] != candidate[v] for k, v in fields.items())
@@ -79,8 +91,8 @@ def checked_entry(task_id, analysis, candidates, acceptance, reviewed=None):
     if a.get('version') == 'human-evaluation-acceptance-v1':
         candidate, timing, feedback, provenance = evaluation_entry(analysis, candidates, a)
         first, last = timing['start_frame'], timing['end_frame_exclusive']
-        parent_id = candidate['id']
-        score_scope = 'original_candidate_range'
+        parent_id = candidate.get('parent_candidate_id', candidate['id'])
+        score_scope = 'unscored_editorial_range' if candidate['id'].startswith('wc_') else 'original_candidate_range'
     elif a.get('version') == 'human-candidate-acceptance-v1':
         if any(type(value) is not bool for value in a.get('checks', {}).values()):
             raise ValueError('验收检查项必须是明确的布尔结论')
@@ -143,7 +155,7 @@ def checked_entry(task_id, analysis, candidates, acceptance, reviewed=None):
     for name, value in [('start_seconds', first/30), ('end_seconds_exclusive', last/30), ('duration_seconds', (last-first)/30)]:
         if type(timing.get(name)) not in (float, int) or not math.isclose(timing[name], value, abs_tol=1e-8, rel_tol=0):
             raise ValueError('试听秒数与帧数不符')
-    tolerance = 1/30+1e-8 if score_scope == 'original_candidate_range' else 1e-8
+    tolerance = 1/30+1e-8 if score_scope in ('original_candidate_range', 'unscored_editorial_range') else 1e-8
     if abs(first/30-candidate['start']) > tolerance or abs(last/30-candidate['end']) > tolerance:
         raise ValueError('评分范围与试听范围不匹配')
     digest = a['selected_sha256']

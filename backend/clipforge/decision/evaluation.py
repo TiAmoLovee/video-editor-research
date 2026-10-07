@@ -104,6 +104,11 @@ def probe(path, ffprobe):
 
 def prepare(analysis, scored, source, output, source_name, ffmpeg, ffprobe, *, candidate_ids=None, followup_of=None):
     manifest = freeze(analysis, scored, source_name, candidate_ids=candidate_ids, followup_of=followup_of)
+    return render_plan(manifest, source, output, ffmpeg, ffprobe)
+
+
+def render_plan(manifest, source, output, ffmpeg, ffprobe):
+    """Render an internally frozen plan, also used by word-boundary follow-ups."""
     if not manifest['denominator']:
         raise ValueError('没有可试听的候选，不创建空评测批次')
     if file_hash(source) != manifest['normalized_sha256']:

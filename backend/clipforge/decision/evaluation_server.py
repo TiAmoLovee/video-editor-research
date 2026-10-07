@@ -72,6 +72,7 @@ def create_app(folder, port=8307):
         # Original scores and rankings are intentionally omitted from the review UI response.
         return {'batch_id': manifest['batch_id'], 'source_name': manifest['source_name'],
                 'cohort': manifest['cohort'],
+                'selection_version': manifest['selection_version'],
                 'denominator': manifest['denominator'], 'required_passes': manifest['required_passes'],
                 'samples': [{k: v for k, v in s.items() if k not in ('original_rank', 'original_score', 'scorer')}
                             for s in manifest['samples']]}

@@ -58,11 +58,22 @@ def _nearby_pause(group, units, index):
 
 
 def split_sentences(words):
+    return _split_sentences(words, None)
+
+
+def split_sentences_with_trace(words):
+    """Replay identical chunks with separate split reasons; no semantic approval."""
+    trace = []
+    result = _split_sentences(words, trace)
+    return result, trace
+
+
+def _split_sentences(words, trace):
     if not words:
         return []
     result, group = [], []
 
-    def flush(count=None):
+    def flush(count=None, *, reason):
         selected = group[:count] if count is not None else group[:]
         if not selected:
             return
@@ -72,6 +83,9 @@ def split_sentences(words):
                        "end": max(w["end"] for w in members),
                        "text": "".join(w["text"] for w in members).strip(),
                        "word_ids": [w["id"] for w in members]})
+        if trace is not None:
+            trace.append({"sentence_id": result[-1]['id'], "reason": reason,
+                          "last_word_id": members[-1]['id']})
         del group[:len(selected)]
 
     units = _units(words)
@@ -82,11 +96,11 @@ def split_sentences(words):
             if (gap >= SENTENCE_PARAMETERS["gap_seconds"]
                     or (gap >= SENTENCE_PARAMETERS["pause_seconds"]
                         and length >= SENTENCE_PARAMETERS["min_pause_characters"])):
-                flush()
+                flush(reason='pause')
         while group and (sum(len(u["text"]) for u in group) + len(unit["text"]) > SENTENCE_PARAMETERS["max_characters"]
                          or max(unit["end"], *(u["end"] for u in group)) - group[0]["start"] > SENTENCE_PARAMETERS["max_seconds"]):
             if unit["start"] - max(u["end"] for u in group) >= SENTENCE_PARAMETERS["lookahead_pause_seconds"]:
-                flush()
+                flush(reason='limit_at_upcoming_pause')
                 break
             if _nearby_pause(group, units, index):
                 break
@@ -101,9 +115,13 @@ def split_sentences(words):
                         candidates.append((2, i))
                     elif pause >= SENTENCE_PARAMETERS["preferred_pause_seconds"]:
                         candidates.append((1, i))
-            flush(max(candidates)[1] if candidates else len(group))
+            if candidates:
+                priority, count = max(candidates)
+                flush(count, reason='limit_at_soft_mark' if priority == 2 else 'limit_at_pause')
+            else:
+                flush(reason='limit_without_boundary')
         group.append(unit)
         if END_MARK.search(unit["text"].rstrip()):
-            flush()
-    flush()
+            flush(reason='terminal_punctuation')
+    flush(reason='end_of_input')
     return result
