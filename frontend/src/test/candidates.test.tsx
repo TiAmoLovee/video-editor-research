@@ -76,6 +76,20 @@ describe('candidate results', () => {
     await act(async () => finish({ ...data, total: 2 }));
     expect(screen.getByLabelText('已验收片段播放器')).toBe(player);
   });
+  it('plays unscored accepted edits without borrowing scores or hiding original candidates', async () => {
+    const data = page();
+    data.accepted_versions = [{ id: 'b'.repeat(64), candidate_id: 'wc_edit', start: 88.89, end: 112.29,
+      duration_seconds: 23.4, text: '用户确认的词级修正版', score: null, scorer: null,
+      score_scope: 'unscored_editorial_range', score_start: 88.89, score_end: 112.25,
+      feedback: '四项均通过', reasons: [], video_url: `/tasks/${taskId}/accepted/${'b'.repeat(64)}.mp4` }];
+    vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText('此修正版尚未评分，未沿用原候选分数。')).toBeVisible();
+    expect(screen.getByLabelText('已验收片段播放器')).toHaveAttribute('src', data.accepted_versions[0].video_url);
+    expect(screen.getByRole('link', { name: '下载已验收成品' })).toHaveAttribute('href', data.accepted_versions[0].video_url);
+    expect(screen.getByText('规则分 48.76')).toBeVisible();
+    expect(screen.queryByText(/此修正版规则分/)).not.toBeInTheDocument();
+  });
   it('shows tail evidence and requests the global review filter', async () => {
     const data = page();
     data.selection_summary = { original_count: 11, retained_count: 2, suppressed_count: 9, retained_review_count: 1, proposal_count: 0 };

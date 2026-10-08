@@ -66,7 +66,9 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
           return <article key={item.id} className="candidate-card">
             <div className="head"><strong>{item.start.toFixed(2)}–{item.end.toFixed(2)} 秒 · {item.duration_seconds.toFixed(2)} 秒</strong><Tag color="green">已试听通过</Tag></div>
             <p>{item.feedback}</p>
-            <p>{item.score_scope === 'original_candidate_range' ? '原候选' : '此修正版'}{item.scorer === 'llm' ? '模型分' : '规则分'} {item.score.toFixed(2)}</p>
+            {item.score_scope === 'unscored_editorial_range' || item.score == null
+              ? <p className="hint">此修正版尚未评分，未沿用原候选分数。</p>
+              : <p>{item.score_scope === 'original_candidate_range' ? '原候选' : '此修正版'}{item.scorer === 'llm' ? '模型分' : '规则分'} {item.score.toFixed(2)}</p>}
             {item.score_scope === 'original_candidate_range' && <p className="hint">评分范围 {item.score_start.toFixed(2)}–{item.score_end.toFixed(2)} 秒；试听版按视频帧对齐，未另行重评分。</p>}
             {media ? <><video controls preload="metadata" src={media} style={{ width: '100%', maxHeight: 420 }} aria-label="已验收片段播放器" /><Button href={media} download>下载已验收成品</Button></> : <Alert type="warning" message="成品地址异常，请重新加载。" />}
             <details><summary>查看此版本的文字与评分原因</summary><p>{item.text}</p><ul>{item.reasons.map((reason, index) => <li key={index}>{reason}</li>)}</ul></details>
