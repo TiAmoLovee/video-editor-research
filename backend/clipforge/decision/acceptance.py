@@ -3,9 +3,11 @@ import argparse
 from copy import deepcopy
 import json
 import math
+import os
 from pathlib import Path
 import re
 import shutil
+import tempfile
 
 from clipforge.decision.assessment import evaluate_assessment
 from clipforge.decision.candidates import content_hash
@@ -207,12 +209,33 @@ def install(folder, task_id, analysis, candidates, acceptance, video, reviewed=N
     if media.exists():
         if file_hash(media) != entry['id']:
             raise ValueError('已存在不同试听文件，拒绝覆盖')
-    else:
-        with Path(video).open('rb') as src, media.open('xb') as dst:
-            shutil.copyfileobj(src, dst)
-    if not record.exists():
-        with record.open('x', encoding='utf-8') as stream:
+    # Readers only enumerate final JSON records. Stage complete files on the same
+    # filesystem, then publish media first and the record last without overwriting.
+    # A failed record publication can leave valid media, which a retry may reuse.
+    with tempfile.TemporaryDirectory(prefix='.import-', dir=directory) as temporary:
+        staged = Path(temporary)
+        if not media.exists():
+            with Path(video).open('rb') as src, (staged/'media').open('xb') as dst:
+                shutil.copyfileobj(src, dst)
+                dst.flush()
+                os.fsync(dst.fileno())
+            if file_hash(staged/'media') != entry['id']:
+                raise ValueError('复制期间试听文件发生变化，未发布验收记录')
+        with (staged/'record').open('x', encoding='utf-8') as stream:
             stream.write(json.dumps(payload, ensure_ascii=False, indent=2)+'\n')
+            stream.flush()
+            os.fsync(stream.fileno())
+        if (staged/'media').exists():
+            try:
+                os.link(staged/'media', media)
+            except FileExistsError:
+                if file_hash(media) != entry['id']:
+                    raise ValueError('已存在不同试听文件，拒绝覆盖') from None
+        try:
+            os.link(staged/'record', record)
+        except FileExistsError:
+            if read(record) != payload:
+                raise ValueError('已存在不同验收记录，拒绝覆盖') from None
     return entry
 
 

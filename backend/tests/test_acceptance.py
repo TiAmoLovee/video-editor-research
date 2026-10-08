@@ -1,5 +1,6 @@
 from copy import deepcopy
 import json
+import os
 import unittest
 from unittest.mock import patch
 
@@ -143,6 +144,58 @@ class AcceptanceTests(unittest.TestCase):
         a['user_feedback_verbatim'] = 'a different decision'
         with self.assertRaises(ValueError):
             install(folder, task, self.analysis, self.result, a, media)
+
+    def test_interrupted_copy_leaves_import_retryable_and_unpublished(self):
+        task, folder, a, media = self.ready()
+        def interrupted_copy(src, dst):
+            dst.write(b'partial')
+            self.assertEqual(load_accepted(folder, task, self.analysis, self.result), [])
+            raise OSError('simulated interrupted copy')
+        with patch('clipforge.decision.acceptance.shutil.copyfileobj', side_effect=interrupted_copy):
+            with self.assertRaises(OSError):
+                install(folder, task, self.analysis, self.result, a, media)
+        self.assertEqual(list((folder/'accepted').iterdir()), [])
+        item = install(folder, task, self.analysis, self.result, a, media)
+        self.assertEqual(self.client.get(item['video_url']).content, media.read_bytes())
+
+    def test_failed_record_publication_keeps_valid_media_and_allows_retry(self):
+        task, folder, a, media = self.ready()
+        real_link = os.link
+        def fail_record(source, destination):
+            self.assertEqual(load_accepted(folder, task, self.analysis, self.result), [])
+            if destination.suffix == '.json':
+                raise OSError('simulated record publication failure')
+            real_link(source, destination)
+        with patch('clipforge.decision.acceptance.os.link', side_effect=fail_record):
+            with self.assertRaises(OSError):
+                install(folder, task, self.analysis, self.result, a, media)
+        self.assertEqual(list((folder/'accepted').glob('*.json')), [])
+        item = install(folder, task, self.analysis, self.result, a, media)
+        self.assertEqual(len(load_accepted(folder, task, self.analysis, self.result)), 1)
+        self.assertEqual(self.client.get(item['video_url']).content, media.read_bytes())
+
+    def test_copy_changed_during_import_is_not_published(self):
+        task, folder, a, media = self.ready()
+        def changed_copy(src, dst):
+            dst.write(b'changed after original hash check')
+        with patch('clipforge.decision.acceptance.shutil.copyfileobj', side_effect=changed_copy):
+            with self.assertRaisesRegex(ValueError, '复制期间'):
+                install(folder, task, self.analysis, self.result, a, media)
+        self.assertEqual(list((folder/'accepted').iterdir()), [])
+
+    def test_concurrent_record_is_never_overwritten(self):
+        task, folder, a, media = self.ready()
+        real_link = os.link
+        existing = {'acceptance': {**a, 'user_feedback_verbatim': 'another reviewer'}, 'reviewed': None}
+        def race_record(source, destination):
+            if destination.suffix == '.json':
+                destination.write_text(json.dumps(existing), encoding='utf-8')
+            real_link(source, destination)
+        with patch('clipforge.decision.acceptance.os.link', side_effect=race_record):
+            with self.assertRaisesRegex(ValueError, '不同验收记录'):
+                install(folder, task, self.analysis, self.result, a, media)
+        record = folder/'accepted'/f'{a["selected_sha256"]}.json'
+        self.assertEqual(json.loads(record.read_text(encoding='utf-8')), existing)
 
     def test_reviewed_model_version_keeps_new_score_and_rejects_changed_provenance(self):
         fixture = reviewed_fixtures.ReviewedCandidateTests()
