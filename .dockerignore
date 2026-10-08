@@ -12,4 +12,5 @@ outputs
 docs
 backend/tests
 models
+config/scoring/*.local.json
 **/*.egg-info

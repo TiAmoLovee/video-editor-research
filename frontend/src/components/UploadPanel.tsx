@@ -48,7 +48,7 @@ export function UploadPanel() {
         <p className="ant-upload-text">拖拽视频到这里，或点击选择</p>
         <p className="ant-upload-hint">MP4 / MOV / MKV / WebM / M4V / AVI<br />每次一个文件，最大 1 GiB</p>
       </Upload.Dragger>
-      {file && <div className="selection"><div><div className="selected-file">{file.name}</div><small>{(file.size / 1024 ** 2).toFixed(1)} MB · 已准备好上传</small></div><Button type="text" aria-label="移除所选视频" disabled={uploading} onClick={() => { setFile(null); setRegion(null); setNotice(''); }}>×</Button></div>}
+      {file && <div className="selection"><div><div className="selected-file">{file.name}</div><small>{(file.size / 1024 ** 2).toFixed(1)} MB · {uploading ? '正在上传' : '已选择，尚未提交'}</small>{!uploading && <p className="hint">点击下方“上传并开始处理”，才会创建新任务。</p>}</div><Button type="text" aria-label="移除所选视频" disabled={uploading} onClick={() => { setFile(null); setRegion(null); setNotice(''); }}>×</Button></div>}
       <div style={{ margin: '12px 0' }}>
         <Checkbox checked={improvedShots} disabled={uploading} onChange={event => setImprovedShots(event.target.checked)}>改进镜头检测（试用）</Checkbox>
         {improvedShots && file && <ShotRegionPicker file={file} region={region} disabled={uploading} onChange={setRegion} />}

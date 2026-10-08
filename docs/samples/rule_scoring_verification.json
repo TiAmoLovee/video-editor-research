@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-03",
+  "scope": "offline rule scorer; no deployment or remote CI",
+  "backend_unit_and_cli_tests": 201,
+  "new_unit_and_cli_tests": 15,
+  "additional_real_audio_integration_tests": 1,
+  "ruff": "passed",
+  "first_week4_commit": "c248ac5d57049d5cf04f5d796d729f585f685a58",
+  "replay": {
+    "source": "week3 result-cache experiment / Test3 / job 31a7c21c-eae3-4fdd-95ce-da1bd43b4d1a",
+    "sentences": 7,
+    "asr_entries": 200,
+    "candidate_count": 19,
+    "normalized_sha256": "9e95512430dbb045ea18acfcda5f9100e9d5a33b4b4ba9a403682a217eb22ee8",
+    "pcm_sha256": "133e6293dbc7e2906a12d0344bd1f163ce754e2a4a00d1c9abc789969f044ce6",
+    "config_sha256": "63b59fb1a2630476215e79ca66bcd3f8d459ea21154250a715937b9a12863bf1",
+    "repeated_scoring_identical": true,
+    "top_three": [
+      {
+        "rank": 1,
+        "start": 3.73,
+        "end": 21.75,
+        "score": 48.759475,
+        "source_sentences": [
+          "s000002",
+          "s000003"
+        ]
+      },
+      {
+        "rank": 2,
+        "start": 3.73,
+        "end": 35.36,
+        "score": 47.388753,
+        "source_sentences": [
+          "s000002",
+          "s000003",
+          "s000004",
+          "s000005"
+        ]
+      },
+      {
+        "rank": 3,
+        "start": 3.73,
+        "end": 27.81,
+        "score": 47.079384,
+        "source_sentences": [
+          "s000002",
+          "s000003",
+          "s000004"
+        ]
+      }
+    ]
+  },
+  "previous_demo": {
+    "sentences": 6,
+    "candidates": 14,
+    "volume_status": "unavailable",
+    "reason": "No exact-hash normalized video available while Docker engine is stopped; no cross-version audio reuse."
+  },
+  "human_quality_evaluation": null,
+  "limitations": [
+    "heuristic rules; no human quality ground truth",
+    "NMS and semantic dedup not implemented",
+    "No LLM or external network calls",
+    "No API/UI/cache integration",
+    "Not installed into original D drive project"
+  ]
+}

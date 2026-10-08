@@ -1,6 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import ExitStack
 from copy import deepcopy
+from dataclasses import replace
 import hashlib
 import json
 import os
@@ -39,7 +40,8 @@ class ResultCacheTests(unittest.TestCase):
 
     def descriptor(self, source, options_path, ffmpeg, ffprobe):
         options = json.loads(options_path.read_text()) if options_path.exists() else None
-        d = {'source_sha256': cache.sha256(source), 'shot_options': options, 'test_configuration': 'fixed'}
+        d = {'source_sha256': cache.sha256(source), 'shot_options': options, 'test_configuration': 'fixed',
+             'scoring_config': cache.load_config().to_dict(),'decision_settings':cache.safe_settings_snapshot()}
         return hashlib.sha256(cache.canonical(d).encode()).hexdigest(), d
 
     def pipeline(self):
@@ -78,13 +80,15 @@ class ResultCacheTests(unittest.TestCase):
         self.assertFalse(process_video(a)['cache_hit'])
         self.assertTrue(process_video(b)['cache_hit'])
         self.assertEqual((self.asr.call_count,self.normalize.call_count,self.split.call_count),(1,1,1))
-        for name in ['shots.json','vad.json','asr.json','analysis.json','clips/clip_001.mp4']:
+        for name in ['shots.json','vad.json','asr.json','analysis.json','candidate_windows.json','candidates.json','clips/clip_001.mp4']:
             self.assertEqual((job_dir(a)/name).read_bytes(),(job_dir(b)/name).read_bytes())
         self.assertEqual(json.loads((job_dir(b)/'media_meta.json').read_text())['source_file'],'renamed.mp4')
         info=json.loads((job_dir(b)/'cache.json').read_text());self.assertFalse(info['transcription_executed'])
+        self.assertIn('scoring_candidates', info['reused_stages'])
         with zipfile.ZipFile(job_dir(b)/'result.zip') as z:
             self.assertIsNone(z.testzip())
             self.assertEqual(z.read('cache.json'),(job_dir(b)/'cache.json').read_bytes())
+            self.assertEqual(z.read('candidates.json'),(job_dir(b)/'candidates.json').read_bytes())
         # 独立复制，修改新任务切片不会污染缓存源任务。
         (job_dir(b)/'clips/clip_001.mp4').write_bytes(b'changed')
         self.assertEqual((job_dir(a)/'clips/clip_001.mp4').read_bytes(),b'test-clip')
@@ -120,7 +124,7 @@ class ResultCacheTests(unittest.TestCase):
         self.pipeline(); self.asr.side_effect=RuntimeError('inference failed')
         with self.assertLogs('clipforge.services.pipeline',level='ERROR'), self.assertRaises(RuntimeError):
             process_video(self.job())
-        self.assertEqual(list((Path(self.temp.name)/'result-cache-v1').glob('*.json')),[])
+        self.assertEqual(list((Path(self.temp.name)/'result-cache-v2').glob('*.json')),[])
 
     def test_parallel_identical_jobs_run_transcription_once(self):
         self.pipeline();tasks=[self.job(),self.job()]
@@ -144,6 +148,8 @@ class ResultCacheTests(unittest.TestCase):
              patch.object(cache,'version',return_value='1'), \
              patch.object(cache.subprocess,'run',return_value=type('Tool',(),{'stdout':'ffmpeg-test'})()):
             key,_=cache.fingerprint(source,None,'ffmpeg','ffprobe')
+            with patch.object(cache, 'load_config', return_value=replace(cache.load_config(), keyword_weight=20)):
+                self.assertNotEqual(key, cache.fingerprint(source,None,'ffmpeg','ffprobe')[0])
             with patch.dict(os.environ,{'CLIPFORGE_ASR_LANGUAGE':'zh'}):
                 self.assertNotEqual(key,cache.fingerprint(source,None,'ffmpeg','ffprobe')[0])
             verify.return_value={'revision':'two'}
@@ -160,9 +166,21 @@ class ResultCacheTests(unittest.TestCase):
         for name in ['../secret','/secret','C:/secret','clips/../../secret','clips\\secret']:
             with self.assertRaises(ValueError):cache.safe_path(root,name)
         self.pipeline();a=self.job();process_video(a)
-        index=next((root/'result-cache-v1').glob('*.json'));index.write_text('{bad')
+        index=next((root/'result-cache-v2').glob('*.json'));index.write_text('{bad')
         with self.assertLogs('clipforge.services.pipeline',level='WARNING'):
             self.assertFalse(process_video(self.job())['cache_hit'])
+
+    def test_missing_candidates_recomputes_and_configuration_change_misses(self):
+        self.pipeline(); first=self.job();process_video(first)
+        (job_dir(first)/'candidates.json').unlink()
+        with self.assertLogs('clipforge.services.pipeline',level='WARNING'):
+            self.assertFalse(process_video(self.job())['cache_hit'])
+        with patch.object(cache, 'load_config', return_value=replace(cache.load_config(),keyword_weight=20)):
+            changed=self.job();self.assertFalse(process_video(changed)['cache_hit'])
+            result=json.loads((job_dir(changed)/'candidates.json').read_text(encoding='utf-8'))
+            self.assertEqual(result['scoring']['config']['keyword_weight'],20)
+            self.assertTrue(process_video(self.job())['cache_hit'])
+        self.assertEqual(self.asr.call_count,3)
 
     def test_process_lock_is_released_after_termination(self):
         ready=Path(self.temp.name)/'ready'
@@ -177,6 +195,81 @@ class ResultCacheTests(unittest.TestCase):
         finally:
             child.terminate();child.communicate(timeout=5)
         with cache.key_lock('test-lock',timeout=1):pass
+
+    def test_llm_success_cache_has_zero_new_calls_and_new_usage_report(self):
+        from backend.tests.test_candidates import fixture
+        from backend.tests.test_llm_scoring import snapshot, response
+        self.example=fixture([(0,10),(10,20),(20,30)])
+        self.pipeline()
+        settings=snapshot()
+        with patch.object(cache,'safe_settings_snapshot',return_value=settings), \
+             patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':'fake'}), \
+             patch('clipforge.services.pipeline.measure_audio',return_value=None), \
+             patch('clipforge.decision.llm.http_transport',return_value=response()) as transport, \
+             patch('clipforge.decision.llm.rate_slot'):
+            a=self.job();self.assertFalse(process_video(a)['cache_hit'])
+            b=self.job();self.assertTrue(process_video(b)['cache_hit'])
+            self.assertEqual(transport.call_count,3)
+            info=json.loads((job_dir(b)/'scoring_usage.json').read_text(encoding='utf-8'))
+            self.assertEqual((info['current_task_requests'],info['current_task_estimated_cost']),(0,0))
+            self.assertEqual(info['original_scoring_usage']['requests'],3)
+            with zipfile.ZipFile(job_dir(b)/'result.zip') as z:
+                self.assertEqual(z.read('scoring_usage.json'),(job_dir(b)/'scoring_usage.json').read_bytes())
+            settings['prompt']+=' new version';settings['prompt_sha256']=cache.content_hash(settings['prompt'])
+            self.assertFalse(process_video(self.job())['cache_hit'])
+            self.assertEqual(transport.call_count,6)
+
+    def test_llm_fallback_not_published_then_fixed_key_recovers(self):
+        from backend.tests.test_candidates import fixture
+        from backend.tests.test_llm_scoring import snapshot, response
+        from clipforge.decision.llm import LLMFailure
+        self.example=fixture([(0,10),(10,20),(20,30)])
+        self.pipeline()
+        with patch.object(cache,'safe_settings_snapshot',return_value=snapshot()), \
+             patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':'fake'}), \
+             patch('clipforge.services.pipeline.measure_audio',return_value=None), \
+             patch('clipforge.decision.llm.http_transport',side_effect=LLMFailure('invalid_key')) as transport, \
+             patch('clipforge.decision.llm.rate_slot'):
+            a=self.job();self.assertFalse(process_video(a)['cache_hit'])
+            data=json.loads((job_dir(a)/'candidates.json').read_text(encoding='utf-8'))
+            self.assertEqual(data['scoring']['llm']['fallback_reason'],'invalid_key')
+            self.assertEqual(list((Path(self.temp.name)/'result-cache-v2').glob('*.json')),[])
+            transport.side_effect=None;transport.return_value=response()
+            self.assertFalse(process_video(self.job())['cache_hit'])
+            self.assertTrue(process_video(self.job())['cache_hit'])
+            self.assertEqual(transport.call_count,4)
+
+    def test_v2_assessment_cache_reuse_and_v1_version_invalidation(self):
+        from backend.tests.test_candidates import fixture
+        from backend.tests.test_llm_scoring import snapshot, response
+        from backend.tests.test_llm_assessment import assessment
+        self.example=fixture([(0,10),(10,20),(20,30)])
+        self.pipeline()
+        settings=snapshot(version='llm-v2')
+        def reply(cfg,payload,key,timeout):
+            if cfg.version == 'llm-v1':
+                return response()
+            text=json.loads(payload['messages'][1]['content'])['text']
+            result=response()
+            result['choices'][0]['message']['content']=json.dumps(assessment(text),ensure_ascii=False)
+            return result
+        with patch.object(cache,'safe_settings_snapshot',side_effect=lambda:settings), \
+             patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':'fake'}), \
+             patch('clipforge.services.pipeline.measure_audio',return_value=None), \
+             patch('clipforge.decision.llm.http_transport',side_effect=reply) as transport, \
+             patch('clipforge.decision.llm.rate_slot'):
+            a=self.job();self.assertFalse(process_video(a)['cache_hit'])
+            b=self.job();self.assertTrue(process_video(b)['cache_hit'])
+            self.assertEqual(transport.call_count,3)
+            self.assertEqual((job_dir(a)/'candidates.json').read_bytes(),(job_dir(b)/'candidates.json').read_bytes())
+            result=json.loads((job_dir(b)/'candidates.json').read_text(encoding='utf-8'))
+            self.assertEqual(result['scoring']['version'],'llm-v2')
+            self.assertEqual(result['candidates'][0]['score'],41)
+            info=json.loads((job_dir(b)/'scoring_usage.json').read_text(encoding='utf-8'))
+            self.assertEqual(info['current_task_requests'],0)
+            settings=snapshot(version='llm-v1')
+            self.assertFalse(process_video(self.job())['cache_hit'])
+            self.assertEqual(transport.call_count,6)
 
 
 if __name__=='__main__':unittest.main()

@@ -1383,6 +1383,16 @@
       }
 
 /* React + Ant Design integration */
+.candidate-results { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid #e8e3ef; }
+.candidate-list { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 12px; }
+.candidate-card { padding: 16px; border: 1px solid #e6def0; border-radius: 12px; background: #fcfbff; min-width: 0; }
+.candidate-card .head { flex-wrap: wrap; gap: 8px; }
+.candidate-card .head strong { font-size: 14px; }
+.candidate-text { white-space: pre-line; overflow-wrap: anywhere; font-size: 14px; line-height: 1.8; }
+.candidate-card details { font-size: 12px; line-height: 1.8; color: #675b78; }
+.candidate-card summary { cursor: pointer; }
+.candidate-card ul { padding-left: 20px; }
+.candidate-pager { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
 .anticon svg { width: 1em; height: 1em; fill: currentColor; stroke: none; }
 .brand-mark .anticon { font-size: 23px; }
 .nav-link .anticon { font-size: 18px; }

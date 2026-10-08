@@ -1,4 +1,4 @@
-import type { Task, TaskPage } from '../types/tasks';
+import type { CandidatePage, CandidateView, Task, TaskPage } from '../types/tasks';
 
 export const validId = (value: string): boolean => /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(value);
 
@@ -24,6 +24,13 @@ async function request<T>(path: string, signal: AbortSignal): Promise<T> {
 }
 export const getTasks = (offset: number, signal: AbortSignal) => request<TaskPage>(`/tasks?limit=10&offset=${offset}`, signal);
 export const getTask = (id: string, signal: AbortSignal) => request<Task>(`/tasks/${id}`, signal);
+export const getCandidates = (id: string, offset: number, signal: AbortSignal, view: CandidateView = 'all', topic?: string) => request<CandidatePage>(`/tasks/${id}/candidates?limit=10&offset=${offset}${view === 'all' ? '' : `&view=${view}`}${view === 'topics' && topic ? `&topic=${encodeURIComponent(topic)}` : ''}`, signal);
+
+export function acceptedVideoUrl(url: string, taskId: string): string | undefined {
+  const prefix = `/tasks/${taskId}/accepted/`;
+  if (validId(taskId) && typeof url === 'string' && url.startsWith(prefix) && /^[a-f0-9]{64}\.mp4$/.test(url.slice(prefix.length))) return url;
+  return undefined;
+}
 
 export function downloadUrl(url: string, taskId: string): string {
   // Only the same task's single filename is accepted, including for media previews.

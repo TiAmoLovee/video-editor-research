@@ -58,7 +58,7 @@ def main():
             response=client.get('/tasks/'+task);response.raise_for_status();status=response.json()
             assert status['status']=='SUCCEEDED'
             downloads=status['result']['downloads']
-            for name in ['analysis.json','asr.json','cache.json']:
+            for name in ['analysis.json','asr.json','cache.json','candidate_windows.json','candidates.json']:
                 response=client.get(downloads[name]);response.raise_for_status()
                 assert response.content==(folder/name).read_bytes()
             record['cache']=json.loads((folder/'cache.json').read_text(encoding='utf-8'))
@@ -66,16 +66,27 @@ def main():
             assert analysis['words'], '该验收素材需有真实转写词条'
             record['words']=len(analysis['words'])
             record['analysis_sha256']=hashlib.sha256((folder/'analysis.json').read_bytes()).hexdigest()
+            candidates=json.loads((folder/'candidates.json').read_text(encoding='utf-8'))
+            from clipforge.decision.scoring import validate_scored
+            validate_scored(candidates,analysis)
+            record['candidates_sha256']=hashlib.sha256((folder/'candidates.json').read_bytes()).hexdigest()
+            record['candidate_count']=candidates['candidate_count']
+            record['audio_status']=candidates['scoring']['audio']['status']
+            response=client.get('/tasks/'+task+'/candidates?limit=2');response.raise_for_status()
+            page=response.json()
+            assert page['total']==candidates['candidate_count']
+            assert [c['id'] for c in page['items']]==[c['id'] for c in candidates['candidates'][:2]]
             record['clip_sha256']={clip['file']:hashlib.sha256((folder/'clips'/clip['file']).read_bytes()).hexdigest()
                                   for clip in status['result']['clips']}
             with zipfile.ZipFile(folder/'result.zip') as archive:
                 assert archive.testzip() is None
-                for name in ['analysis.json','asr.json','cache.json']:
+                for name in ['analysis.json','asr.json','cache.json','candidate_windows.json','candidates.json']:
                     assert archive.read(name)==(folder/name).read_bytes()
         assert record['result']['cache_hit']==(run>0)
         assert record['transcription_calls']==(1 if run==0 else 0)
         if records:
             assert record['analysis_sha256']==records[0]['analysis_sha256']
+            assert record['candidates_sha256']==records[0]['candidates_sha256']
             assert record['clip_sha256']==records[0]['clip_sha256']
         records.append(record)
         print(json.dumps({'run':run+1,'seconds':record['worker_seconds'],'hit':record['result']['cache_hit'],

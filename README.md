@@ -1,5 +1,7 @@
 # ClipForge 智剪工坊
 
+**第四周阶段性交付：[当前状态与遗留项](docs/WEEK4_PLAN.md) · [人工评测与21个确认版本的证据](docs/HUMAN_EVALUATION.md) · [候选工作台](docs/WEEK4_WORKBENCH.md)**。本分支已增加候选生成、规则／模型评分、去重分组和人工复核流程；自动边界质量仍未达标，正式部署与合并尚未完成。下方第三周介绍及历史验收记录不代表第四周已整体验收通过。
+
 ClipForge 当前流程：**网页上传 → 后台归一化 → 镜头检测 → 语音活动检测 → 词级转写与分析校验 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。第三周新增 PySceneDetect 镜头区间、WebRTC VAD 语音区间，词级转写、中文分句与 analysis.json 汇总，以及 shots.json / vad.json / asr.json 下载；成品仍采用固定帧数切片，镜头结果暂不改变选段。
 
 **第三周进展：[镜头检测](docs/SHOT_DETECTION.md) · [语音活动检测](docs/VAD_DETECTION.md) · [词级转写与分析汇总](docs/ASR_ANALYSIS.md)**。ASR 已完成本地接入，仍待项目环境与 Docker 验收；识别质量、词级时间误差、缓存和镜头 F1 尚未验收。

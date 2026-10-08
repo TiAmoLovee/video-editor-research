@@ -4,7 +4,7 @@ import { stageLabels, statusLabels, type Stage } from '../types/tasks';
 import { ClipResults } from './ClipResults';
 
 const steps: Stage[] = ['probing', 'normalizing', 'analyzing_shots', 'splitting', 'packaging', 'done'];
-const analysisStages: Stage[] = ['analyzing_shots', 'analyzing_speech', 'transcribing', 'combining_analysis'];
+const analysisStages: Stage[] = ['analyzing_shots', 'analyzing_speech', 'transcribing', 'combining_analysis', 'scoring_candidates'];
 export function TaskDetail() {
   const { task, detailLoading, detailError } = useTasks();
   const failure = task?.status === 'FAILED' || task?.status === 'SUBMISSION_UNKNOWN';

@@ -1,5 +1,5 @@
 export type TaskState = 'QUEUED' | 'RUNNING' | 'SUCCEEDED' | 'FAILED' | 'SUBMISSION_UNKNOWN';
-export type Stage = 'queued' | 'probing' | 'normalizing' | 'analyzing_shots' | 'analyzing_speech' | 'transcribing' | 'combining_analysis' | 'splitting' | 'packaging' | 'done';
+export type Stage = 'queued' | 'probing' | 'normalizing' | 'analyzing_shots' | 'analyzing_speech' | 'transcribing' | 'combining_analysis' | 'scoring_candidates' | 'splitting' | 'packaging' | 'done';
 export interface TaskSummary {
   task_id: string;
   source_name: string;
@@ -34,6 +34,49 @@ export interface TaskPage {
   limit: number;
   offset: number;
 }
+export interface Candidate {
+  selection?: {
+    end_context?: { version: string; candidate_end: number; ending_sentences: { id: string; start: number; end: number; text: string }[]; following_sentences: { id: string; start: number; end: number; text: string }[]; next_sentence_gap_seconds: number | null; vad_speech_at_end: boolean; semantic_completeness: 'not_determined' };
+    topic?: { group_id: string; group_label: string; duplicate_of: string | null; duplicate_rank: number | null; duplicate_similarity: number | null } | null;
+    retained: boolean;
+    suppressed_by: string | null;
+    boundary_status: 'review_required' | 'not_verified';
+    issues: string[];
+    proposal: { start: number; end: number; duration_seconds: number; text: string; score: null; status: 'review_then_rescore' } | null;
+    text_review?: { signal: { quote: string; reason: string }; existing_extension: { id: string; start: number; end: number; score: number; rank: number; scorer: 'rule' | 'llm' } | null; existing_contraction?: { id: string; start: number; end: number; score: number; rank: number; scorer: 'rule' | 'llm' } | null } | null;
+  };
+  id: string;
+  rank: number;
+  start: number;
+  end: number;
+  duration_seconds: number;
+  text: string;
+  score: number;
+  scorer: 'rule' | 'llm';
+  rule_score?: number | null;
+  scoring_status: 'scored';
+  reasons: string[];
+  source_sentences: string[];
+}
+export interface CandidatePage {
+  topics?: { version: string; summary: { input_count: number; group_count: number; duplicate_count: number; recommended_count: number }; groups: { id: string; label: string; member_count: number; recommended_count: number; member_ids: string[]; recommended_ids: string[] }[] };
+  topic?: string | null;
+  accepted_versions?: { id: string; candidate_id: string; start: number; end: number; duration_seconds: number; text: string; score: number | null; scorer: 'rule' | 'llm' | null; score_scope: 'original_candidate_range' | 'rendered_range' | 'unscored_editorial_range'; score_start: number; score_end: number; feedback: string; video_url: string; reasons: string[] }[];
+  selection_version?: string;
+  selection_summary?: { original_count: number; retained_count: number; suppressed_count: number; retained_review_count: number; proposal_count: number };
+  view?: CandidateView;
+  items: Candidate[];
+  total: number;
+  limit: number;
+  offset: number;
+  has_more: boolean;
+  scorer: 'rule' | 'llm';
+  requested_scorer?: 'rule' | 'llm';
+  scoring_version?: 'rule-v1' | 'llm-v1' | 'llm-v2';
+  fallback_reason?: string | null;
+  audio_status: 'measured' | 'unavailable' | 'no_audio';
+}
+export type CandidateView = 'all' | 'retained' | 'review' | 'topics';
 export const statusLabels: Record<TaskState, string> = {
   QUEUED: '等待处理', RUNNING: '处理中', SUCCEEDED: '已完成',
   FAILED: '处理失败', SUBMISSION_UNKNOWN: '提交待确认',
@@ -41,5 +84,6 @@ export const statusLabels: Record<TaskState, string> = {
 export const stageLabels: Record<Stage, string> = {
   queued: '等待后台领取', probing: '读取视频参数', normalizing: '归一化视频',
   analyzing_shots: '检测镜头边界', analyzing_speech: '检测语音活动', transcribing: '语音转文字', combining_analysis: '校验分析结果',
+  scoring_candidates: '生成候选并评分',
   splitting: '生成切片', packaging: '整理下载文件', done: '处理完成',
 };
