@@ -86,6 +86,52 @@ class ContextProposalTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 build_context_proposals(a,c,max_context_seconds=value)
 
+    def test_conditional_cue_is_excluded_before_segment_boundaries_are_chosen(self):
+        a,c=case(['请问']+['这是回答。']*8+['如果','你觉得','不方便的话']+
+                 ['可以不作答。']*8+['接下来谈']+['另外一个话题。']*9)
+        old=build_context_proposals(a,c)
+        before=deepcopy((a,c))
+        new=build_context_proposals(a,c,exclude_conditional_cues=True)
+        segments=lambda r:[(p['start'],p['end']) for p in r['proposals']
+                           if any(o['kind']=='discourse_segment' for o in p['origins'])]
+        self.assertIn((0,20),segments(old))
+        self.assertIn((0,40),segments(new))
+        self.assertFalse(any(start==20 for start,end in segments(new)))
+        self.assertEqual([i['anchor']['start'] for i in new['excluded_anchors']],[20])
+        self.assertEqual(new['version'],'context-proposals-v2')
+        self.assertEqual(new['excluded_anchors'][0]['reason']['code'],'question_cue_in_condition')
+        self.assertEqual((a,c),before)
+        self.assertFalse(new['automatic_acceptance'])
+        self.assertTrue(all(p['score'] is None for p in new['proposals']))
+
+    def test_opt_in_is_strict_and_default_retains_legacy_shape(self):
+        a,c=case(['请问']+['完整回答。']*9)
+        old=build_context_proposals(a,c)
+        self.assertEqual(old,build_context_proposals(a,c,exclude_conditional_cues=False))
+        self.assertNotIn('excluded_anchors',old)
+        new=build_context_proposals(a,c,exclude_conditional_cues=True)
+        self.assertEqual(new['excluded_anchors'],[])
+        self.assertEqual([(p['start_frame'],p['end_frame_exclusive']) for p in old['proposals']],
+                         [(p['start_frame'],p['end_frame_exclusive']) for p in new['proposals']])
+        for value in (None,1,'yes'):
+            with self.assertRaises(ValueError):
+                build_context_proposals(a,c,exclude_conditional_cues=value)
+
+    def test_filtering_a_false_boundary_does_not_allow_overlong_or_truncated_segments(self):
+        a,c=case(['请问']+['这是回答。']*22+['如果','你觉得','不方便的话']+['后面仍在解释。']*26)
+        new=build_context_proposals(a,c,exclude_conditional_cues=True)
+        self.assertEqual(len(new['excluded_anchors']),1)
+        self.assertTrue(any(i['kind']=='discourse_segment' and i['reason']=='duration_limit'
+                            for i in new['abstentions']))
+        self.assertFalse(any(o['kind']=='discourse_segment' for p in new['proposals'] for o in p['origins']))
+
+    def test_actual_question_with_later_time_expression_is_not_excluded(self):
+        a,c=case(['请问','你觉得这是什么吗？','我觉得是','需要调整的时候。']+['这里解释原因。']*8)
+        old=build_context_proposals(a,c)
+        new=build_context_proposals(a,c,exclude_conditional_cues=True)
+        self.assertEqual(new['excluded_anchors'],[])
+        self.assertEqual(old['anchors'],new['anchors'])
+
 
 if __name__=='__main__':
     unittest.main()

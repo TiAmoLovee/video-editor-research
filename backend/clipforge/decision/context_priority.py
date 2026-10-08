@@ -8,28 +8,13 @@ import re
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.context_proposals import build_context_proposals
 from clipforge.decision.selection import temporal_iou
+from clipforge.decision.question_cues import question_context
 
 VERSION = 'context-review-priority-v1'
 DEPENDENT_OPENING = re.compile(
     r'^(?:而且|所以|但是|因为|也是|还有|还行|是这样|这个|那个|这种|那种|'
     r'他(?:就是|说|们)|她(?:就是|说|们)|它(?:这个|的|是|们)|'
     r'[\u4e00-\u9fff]{1,5}(?:不出来|不了|不到|不清楚|不明白))')
-
-
-def question_context(words, anchor):
-    """Find evidence that a cue is embedded in a condition, without a verdict."""
-    index = anchor['word_index']
-    before = ''.join(''.join(w['text'].split()) for w in words[max(0,index-10):index])[-16:]
-    following = ''.join(''.join(w['text'].split()) for w in words[index:index+30])[:48]
-    if anchor['kind'] != 'question_prompt':
-        return None
-    prefix = re.search(r'(?:如果|假如|要是|倘若|当)$',before)
-    suffix = re.search(r'(?:的时候|的话)',following[:32])
-    interrogative = bool(re.search(r'[?？]|吗|呢',following[:suffix.start()] if suffix else following))
-    if prefix or (suffix and not interrogative):
-        return dict(code='question_cue_in_condition',before=before,following=following,
-                    reason='提问词附近有条件表达，可能只是句内成分，不能据此认定新问答开始')
-    return None
 
 
 def rank_context_proposals(analysis, scored, *, max_recommendations=3):

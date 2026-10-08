@@ -9,6 +9,7 @@ from clipforge.analysis.sentences import _units
 from clipforge.decision.boundary_audit import audit_boundaries
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.continuity import tail_signal
+from clipforge.decision.question_cues import question_context
 
 VERSION = 'context-proposals-v1'
 # Explicit development heuristics, not a learned semantic boundary detector.
@@ -45,7 +46,9 @@ def discourse_anchors(words):
     return found
 
 
-def build_context_proposals(analysis, scored, *, max_context_seconds=20.0):
+def build_context_proposals(analysis, scored, *, max_context_seconds=20.0, exclude_conditional_cues=False):
+    if type(exclude_conditional_cues) is not bool:
+        raise ValueError('条件句提示过滤必须是明确布尔选项')
     if (isinstance(max_context_seconds, bool) or not isinstance(max_context_seconds, (int,float))
             or not math.isfinite(max_context_seconds) or not 0 < max_context_seconds <= 30):
         raise ValueError('上下文扩展上限须为 (0,30] 秒')
@@ -58,6 +61,17 @@ def build_context_proposals(analysis, scored, *, max_context_seconds=20.0):
     allowed_starts = {u['words'][0]['id'] for u in units}
     allowed_ends = {u['words'][-1]['id'] for u in units}
     anchors = discourse_anchors(words)
+    excluded = []
+    version = 'context-proposals-v2' if exclude_conditional_cues else VERSION
+    if exclude_conditional_cues:
+        active = []
+        for anchor in anchors:
+            reason = question_context(words, anchor)
+            if reason:
+                excluded.append(dict(anchor=anchor,reason=reason))
+            else:
+                active.append(anchor)
+        anchors = active
     proposals, rejected, unique = [], [], {}
 
     def add(lo, hi, kind, trigger, evidence):
@@ -89,7 +103,7 @@ def build_context_proposals(analysis, scored, *, max_context_seconds=20.0):
             return
         refs = [w['id'] for w in selected]
         parent = min(parents, key=lambda c:(c['duration_seconds'],c['id']))
-        identity = dict(version=VERSION,analysis_sha256=content_hash(analysis),
+        identity = dict(version=version,analysis_sha256=content_hash(analysis),
                         source_words=refs,start_frame=first,end_frame=last)
         item = dict(id='cp_'+content_hash(identity),start=start,end=end,
                     start_frame=first,end_frame_exclusive=last,fps=30,duration_seconds=(last-first)/30,
@@ -142,24 +156,33 @@ def build_context_proposals(analysis, scored, *, max_context_seconds=20.0):
         add(lo,hi,'context_expansion',c['id'],dict(original_start=c['start'],original_end=c['end'],
             opening_context=notes[c['id']]['opening_context'],ending_context=notes[c['id']]['ending_context'],
             existing_alternative_id=alternative['id']))
-    return dict(version=VERSION,analysis_sha256=content_hash(analysis),candidates_sha256=content_hash(scored),
+    result = dict(version=version,analysis_sha256=content_hash(analysis),candidates_sha256=content_hash(scored),
                 config=dict(max_context_seconds=max_context_seconds,anchors=[list(a) for a in ANCHORS]),
                 anchors=anchors,proposals=proposals,abstentions=rejected,
                 summary=dict(proposal_count=len(proposals),anchor_count=len(anchors),abstention_count=len(rejected)),
                 automatic_acceptance=False,default_selection_changed=False,model_requests=0,
                 scope='Label-free runtime proposal generation; heuristics developed using prior failures. '
                       'Not a semantic verdict, automatic replacement, or independent quality evaluation.')
+    if exclude_conditional_cues:
+        result['excluded_anchors'] = excluded
+        result['summary']['excluded_anchor_count'] = len(excluded)
+        result['config']['exclude_conditional_cues'] = True
+        result['config']['conditional_cue_filter_version'] = 'question-condition-evidence-v1'
+    return result
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('analysis','candidates','output'):
         parser.add_argument('--'+name,type=Path,required=True)
+    parser.add_argument('--exclude-conditional-cues', action='store_true',
+                        help='启用离线 v2：先排除带条件表达的提问词，仍不自动判断语义完整')
     args = parser.parse_args()
     if args.output.exists():
         parser.error('输出必须是新文件，不覆盖历史记录')
     read = lambda p: json.loads(p.read_text(encoding='utf-8-sig'))
-    result = build_context_proposals(read(args.analysis),read(args.candidates))
+    result = build_context_proposals(read(args.analysis),read(args.candidates),
+                                     exclude_conditional_cues=args.exclude_conditional_cues)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     with args.output.open('x',encoding='utf-8') as stream:
         stream.write(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
