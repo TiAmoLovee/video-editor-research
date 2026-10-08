@@ -1,0 +1,33 @@
+{
+  "version": "boundary-integration-verification-v1",
+  "date": "2026-10-09",
+  "backend_tests": {"passed": 387, "failed": 0},
+  "backend_lint": "passed",
+  "frontend_tests": {"passed": 36, "failed": 0},
+  "frontend_typecheck": "passed",
+  "frontend_production_build": "passed",
+  "build_warning": "JavaScript bundle exceeds the default 500 kB warning limit",
+  "saved_response_replay": {
+    "responses": 20,
+    "identical_frame_ranges": 19,
+    "original_candidates_unchanged": true,
+    "worker_packaging": "passed",
+    "cache_validation": "passed",
+    "api_video_range_status": 206,
+    "first_three_legacy_responses": "equivalent selection codes adapted locally",
+    "remaining_sixteen_requests": "exact message match to approved experiment"
+  },
+  "real_media_render": {
+    "samples": 1,
+    "frames": 755,
+    "video_duration_seconds": 25.166666666666668,
+    "audio_duration_seconds": 25.166,
+    "passed": true
+  },
+  "new_external_requests": 0,
+  "new_external_tokens": 0,
+  "human_review_unchanged": true,
+  "deployed": false,
+  "pushed": false,
+  "scope": "local integration verification; saved-response replay and one real render; not a fresh provider or Docker deployment evaluation"
+}

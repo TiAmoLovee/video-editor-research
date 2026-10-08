@@ -23,6 +23,8 @@ from clipforge.decision.candidates import generate_candidates
 from clipforge.decision.scorers import RuleConfig
 from clipforge.decision.scoring import load_config, score_candidates
 from clipforge.decision.llm import apply_llm, safe_settings_snapshot
+from clipforge.decision.boundary_optimizer import optimize, settings_snapshot as boundary_settings_snapshot
+from clipforge.decision.boundary_media import render as render_boundaries
 from clipforge.services import result_cache
 
 logger = logging.getLogger(__name__)
@@ -78,7 +80,8 @@ def process_video(task_id: str) -> dict:
                               if descriptor and 'scoring_config' in descriptor else None)
             decision_settings = descriptor.get('decision_settings') if descriptor else None
             result = _process_uncached(task_id, info, started, scoring_config=scoring_config,
-                                       decision_settings=decision_settings)
+                                       decision_settings=decision_settings,
+                                       boundary_settings=descriptor.get('boundary_settings') if descriptor else None)
             if index is not None:
                 try:
                     result_cache.publish(index, descriptor, task_id, source)
@@ -110,6 +113,12 @@ def finish_task(task_id, folder, plan, files, info, started):
              'current_task_estimated_cost':0 if info['hit'] or not llm else (
                  llm['usage']['estimated_known_cost'] if llm['usage']['total_cost_known'] else None),
              'original_scoring_usage':llm['usage'] if llm else None}
+    if 'boundary_optimization.json' in files:
+        boundary = json.loads((folder/'boundary_optimization.json').read_text(encoding='utf-8'))
+        usage['boundary_optimization'] = {'status': boundary['status'], 'fallback_reason': boundary['fallback_reason'],
+            'current_task_requests': 0 if info['hit'] else boundary['usage']['requests'],
+            'current_task_charged_tokens': 0 if info['hit'] else boundary['usage'].get('charged_tokens', 0),
+            'original_usage': boundary['usage']}
     save_json(folder/'scoring_usage.json',usage)
     files['scoring_usage.json'] = 'scoring_usage.json'
     try:
@@ -127,7 +136,7 @@ def finish_task(task_id, folder, plan, files, info, started):
     return {'task_id': task_id, 'clip_count': len(plan['clips']), 'cache_hit': info['hit']}
 
 
-def _process_uncached(task_id, cache_info, started, *, scoring_config=None, decision_settings=None):
+def _process_uncached(task_id, cache_info, started, *, scoring_config=None, decision_settings=None, boundary_settings=None):
     job = get_job(task_id)
     folder = job_dir(task_id)
     ffmpeg = media_tool("ffmpeg")
@@ -135,6 +144,7 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
     stage, progress = "probing", 10
     try:
         decision_settings = decision_settings or safe_settings_snapshot()
+        boundary_settings = boundary_settings or boundary_settings_snapshot()
         source = folder / job["source_key"]
         original = normalize_metadata(probe_video(str(source), ffprobe), str(source))
         original["source_file"] = job["source_name"]
@@ -179,6 +189,12 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
             candidates = apply_llm(candidates, analysis, decision_settings)
         save_json(folder / 'candidate_windows.json', windows)
         save_json(folder / 'candidates.json', candidates)
+        boundary_files = {}
+        if boundary_settings['mode'] != 'off':
+            boundary = optimize(candidates, analysis, boundary_settings)
+            boundary_files = render_boundaries(boundary, folder/'normalized.mp4', folder, ffmpeg, ffprobe)
+            save_json(folder/'boundary_optimization.json', boundary)
+            boundary_files['boundary_optimization.json'] = 'boundary_optimization.json'
 
         stage, progress = "splitting", 70
         update_job(task_id, "RUNNING", stage, progress)
@@ -199,6 +215,7 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
         }
         if options_path.is_file():
             files["shot_options.json"] = "shot_options.json"
+        files.update(boundary_files)
         for clip in plan["clips"]:
             files[clip["file"]] = f"clips/{clip['file']}"
         return finish_task(task_id, folder, plan, files, cache_info, started)

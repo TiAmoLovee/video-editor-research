@@ -55,6 +55,7 @@ export function UploadPanel() {
         {improvedShots && !file && <p>选择视频后，可预览并框选要分析的画面区域。</p>}
       </div>
       <Button type="primary" block size="large" icon={<UploadOutlined />} loading={uploading} disabled={!file || uploading} onClick={() => void submit()}>上传并开始处理</Button>
+      <p className="hint">如已开启模型功能，转写文字与候选时间会发送到您配置的模型服务；视频文件由本地程序处理。</p>
       {uploading && <Progress percent={progress} size="small" aria-label="上传进度" />}
       <div role="status" aria-live="polite">{notice && <Alert className="upload-notice" type={failed ? 'warning' : 'info'} message={uploading && progress === 100 ? '上传完毕，正在确认任务…' : notice} showIcon />}</div>
     </div>
