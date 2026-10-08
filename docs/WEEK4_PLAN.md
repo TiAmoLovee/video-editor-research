@@ -8,6 +8,10 @@
 
 ### 合并后的离线问答边界改进
 
+新增范围复核：v2 的三个 New2 范围都跨越 54.35 秒“好第一个问题”，且开头“是这样子”触发既有上下文提示。30.10–60.3333 秒与原批次 revision 8 的 S08 已确认成片完全同帧，四项 yes 保留；另外两个范围没有匹配到已收录通过版本。不能把提示当作确定话题混入，也不能用它推翻 S08。
+
+`rank_context_proposals` 增加与生成器一致的显式 `exclude_conditional_cues` 选项，v2 提案在进入查看队列前使用原有开头／内部转段风险规则。输出版本为 `context-review-priority-v2`，保留生成报告哈希和排除锚点；默认 v1 逐值不变。三个新增范围均为 `deferred_context_risk`，新增自动推荐数为 0；保留所有提案，不写人工标签、不补评分。新增 3 项回归后，20 项生成／优先级测试及 Ruff 通过，63 个保护文件未变，无模型调用或新看片任务。证据：工作区 `outputs/week4-context-cue-v2/new-range-audit.json`。当前决定维持实验状态，未推送、未部署；发现生成器错误得到修正，不等于自动筛选完整率改善。
+
 机械切分风险优先级回放未证明改善：New3 移出 4 个原批次失败时，也移出了 6 个通过，引入 11 个原批次标签未知项，因此未采用、未部署。证据在工作区 `outputs/week4-boundary-policy-study`。
 
 进一步定位到 `context_proposals` 的条件句提示词问题：New2 37.14 秒“你觉得……不想回答的时候”被作为新问答锚点。已有 `context_priority` 只在生成后提示风险，无法撤回该锚点造成的边界。将完全相同的条件表达证据提取到共用 `question_cues`，新增显式选项 `exclude_conditional_cues=True`（CLI `--exclude-conditional-cues`），在分段和上下文扩展前排除这些锚点，输出 `context-proposals-v2` 及排除理由。默认 v1 的结果形状、身份和排序保持不变；v2 仍是不评分、不自动采纳的离线提案，不是完整问答的语义保证。
