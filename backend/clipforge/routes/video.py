@@ -163,6 +163,12 @@ def ranked_candidates(task_id: UUID, limit: int = Query(20, ge=1, le=100),
             raise HTTPException(409, '此历史任务没有可核对的分析记录。')
         page['view'] = view
         page['topic'] = topic
+        if 'boundary_optimization.json' in (job['result'] or {}).get('files', {}):
+            from clipforge.decision.boundary_media import validate_report, public_report
+            boundary = json.loads(result_file(job, task_id, 'boundary_optimization.json').read_text(encoding='utf-8'))
+            analysis = json.loads(result_file(job, task_id, 'analysis.json').read_text(encoding='utf-8'))
+            validate_report(boundary, analysis, data, job_dir(str(task_id)))
+            page['boundary_optimization'] = public_report(boundary, str(task_id))
         return page
     except (OSError, ValueError, TypeError, KeyError) as error:
         logger.exception('Candidate read failed for task %s', task_id)
@@ -213,6 +219,18 @@ def selection_download(task_id: UUID):
 
 @router.get("/{task_id}/files/{filename}", summary="下载成品切片、JSON 或 ZIP")
 def download_video_file(task_id: UUID, filename: str):
-    target = result_file(require_job(task_id), task_id, filename)
+    job = require_job(task_id)
+    target = result_file(job, task_id, filename)
+    if filename.startswith('repair_'):
+        try:
+            from clipforge.decision.boundary_media import validate_report
+            boundary = json.loads(result_file(job, task_id, 'boundary_optimization.json').read_text(encoding='utf-8'))
+            analysis = json.loads(result_file(job, task_id, 'analysis.json').read_text(encoding='utf-8'))
+            candidates = json.loads(result_file(job, task_id, 'candidates.json').read_text(encoding='utf-8'))
+            validate_report(boundary, analysis, candidates, job_dir(str(task_id)))
+            if not any(v['file'] == filename for v in boundary.get('renders', {}).values()):
+                raise ValueError('optimized file not in render manifest')
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            raise HTTPException(409, '优化成片或其记录已改变，请重新处理视频。') from error
     media_type = {".mp4": "video/mp4", ".json": "application/json", ".zip": "application/zip"}.get(target.suffix)
     return FileResponse(target, filename=filename, media_type=media_type)

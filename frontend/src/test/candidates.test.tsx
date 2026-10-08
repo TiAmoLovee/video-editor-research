@@ -18,6 +18,34 @@ const download = `/tasks/${taskId}/files/candidates.json`;
 beforeEach(() => { vi.restoreAllMocks(); useTasks.setState({ task: null, detailError: '', detailLoading: false }); });
 
 describe('candidate results', () => {
+  it('plays optimized ranges while keeping original scores and human approval separate', async () => {
+    const data = page();
+    const media = `/tasks/${taskId}/files/repair_${'c'.repeat(64)}.mp4`;
+    data.boundary_optimization = { status: 'ready', fallback_reason: null, denominator: 1, automatic_acceptance: false,
+      versions: [{ id: 'c'.repeat(64), candidate_id: 'c-0', start: 2, end: 22, duration_seconds: 20,
+        text: '优化范围的原转写', status: 'unverified', score: null, human_pass: null, video_url: media }] };
+    vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    await screen.findByText('查看优化后的片段');
+    fireEvent.click(screen.getByText('查看优化后的片段'));
+    expect(screen.getByLabelText('边界优化片段播放器')).toHaveAttribute('src', media);
+    expect(screen.getByRole('link', { name: '下载优化片段' })).toHaveAttribute('href', media);
+    expect(screen.getByText('尚未人工核对')).toBeInTheDocument();
+    expect(screen.getByText('规则分 48.76')).toBeInTheDocument();
+    expect(screen.queryByText('已试听通过')).not.toBeInTheDocument();
+    expect(api.optimizedVideoUrl('https://example.com/video.mp4', taskId)).toBeUndefined();
+    expect(api.optimizedVideoUrl(`/tasks/${taskId}/files/../secret.mp4`, taskId)).toBeUndefined();
+  });
+  it('keeps original candidates available after boundary optimization fails', async () => {
+    const data = page();
+    data.boundary_optimization = { status: 'fallback', fallback_reason: 'token_budget', denominator: 1,
+      automatic_acceptance: false, versions: [] };
+    vi.spyOn(api, 'getCandidates').mockResolvedValue(data);
+    render(<CandidateResults taskId={taskId} download={download} />);
+    expect(await screen.findByText('本次边界优化未完成，原候选仍可查看。')).toBeInTheDocument();
+    expect(screen.getByText('规则分 48.76')).toBeInTheDocument();
+    expect(screen.queryByLabelText('边界优化片段播放器')).not.toBeInTheDocument();
+  });
   it('separates outside context from candidate text and gives no automatic verdict', async () => {
     const data = page();
     data.items[0].selection = { retained: true, suppressed_by: null, boundary_status: 'not_verified', issues: [], proposal: null,

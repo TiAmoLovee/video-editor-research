@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import platform
+import re
 import subprocess
 import tempfile
 import time
@@ -18,6 +19,8 @@ from clipforge.decision.candidates import content_hash
 from clipforge.decision.scoring import load_config, validate_scored
 from clipforge.decision.validation import validate_candidates
 from clipforge.decision.llm import safe_settings_snapshot
+from clipforge.decision.boundary_optimizer import settings_snapshot as boundary_settings_snapshot
+from clipforge.decision.boundary_media import validate_report
 from clipforge.storage.jobs import data_root, get_job, job_dir
 
 FORMAT = 2
@@ -57,6 +60,7 @@ def fingerprint(source, options, ffmpeg, ffprobe):
                                             ('candidates.schema.json', 'scored_candidates.schema.json', 'llm_candidates.schema.json')},
                   'scoring_config': load_config().to_dict(),
                   'decision_settings': safe_settings_snapshot(),
+                  'boundary_settings': boundary_settings_snapshot(),
                   'dependencies': dependencies, 'tools': tools,
                   'platform': [platform.system(), platform.machine(), platform.python_version()]}
     return hashlib.sha256(canonical(descriptor).encode('utf-8')).hexdigest(), descriptor
@@ -123,11 +127,15 @@ def artifact_files(result):
     if not required.issubset(files) or len(set(files.values())) != len(files):
         raise ValueError('缓存结果不完整')
     # 只接受流水线的固定 JSON 和切片；永不复制上传原片或缓存状态文件。
-    allowed = required | {'shot_options.json'} | {clip['file'] for clip in result['clips']}
+    optimized = {name for name in files if re.fullmatch(r'repair_[a-f0-9]{64}\.mp4', name)}
+    if optimized and 'boundary_optimization.json' not in files:
+        raise ValueError('优化视频缺少边界记录')
+    allowed = required | {'shot_options.json', 'boundary_optimization.json'} | {clip['file'] for clip in result['clips']} | optimized
+    allowed -= {name for name in ('shot_options.json', 'boundary_optimization.json') if name not in files}
     if set(files) != allowed - ({'shot_options.json'} if 'shot_options.json' not in files else set()):
         raise ValueError('缓存下载清单异常')
     for name, relative in files.items():
-        expected = 'clips/' + name if name == 'clip_plan.json' or name.endswith('.mp4') else name
+        expected = 'repaired/'+name if name in optimized else 'clips/' + name if name == 'clip_plan.json' or name.endswith('.mp4') else name
         if relative != expected or Path(name).name != name or '/' in name:
             raise ValueError('缓存文件映射异常')
     return files
@@ -157,6 +165,18 @@ def validate_bundle(folder, source, result, descriptor):
             raise ValueError('LLM 配置、提示词不匹配或结果已降级')
     elif llm:
         raise ValueError('规则缓存不能复用 LLM 模式')
+    boundary_settings = descriptor.get('boundary_settings', {'mode': 'off'})
+    if boundary_settings['mode'] != 'off':
+        boundary = read('boundary_optimization.json')
+        validate_report(boundary, analysis, candidates, folder)
+        if boundary['status'] != 'ready' or boundary['settings_sha256'] != content_hash(boundary_settings):
+            raise ValueError('边界优化配置不匹配或已降级')
+        expected_media = {v['file'] for v in boundary['renders'].values()}
+        actual_media = {n for n in result['files'] if re.fullmatch(r'repair_[a-f0-9]{64}\.mp4', n)}
+        if expected_media != actual_media:
+            raise ValueError('边界优化文件清单不匹配')
+    elif 'boundary_optimization.json' in result['files']:
+        raise ValueError('离线模式不能恢复模型边界结果')
     plan = read('clips/clip_plan.json')
     if (plan['clips'] != result['clips'] or plan['total_frames'] != result['total_frames']
             or result['clip_count'] != len(result['clips'])):
@@ -225,6 +245,9 @@ def publish(index, descriptor, task_id, source):
     scoring = json.loads((folder/'candidates.json').read_text(encoding='utf-8'))['scoring']
     if scoring.get('llm',{}).get('fallback_reason'):
         # 下次恢复网络/密钥后应再次尝试模型，不让临时降级永久成为命中结果。
+        return
+    boundary_path = folder/'boundary_optimization.json'
+    if boundary_path.exists() and json.loads(boundary_path.read_text(encoding='utf-8'))['status'] != 'ready':
         return
     result = job['result']
     files = artifact_files(result)

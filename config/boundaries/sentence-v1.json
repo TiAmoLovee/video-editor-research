@@ -1,0 +1,10 @@
+{
+  "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+  "model": "qwen-plus",
+  "timeout_seconds": 60,
+  "task_timeout_seconds": 600,
+  "max_candidates": 30,
+  "max_task_tokens": 100000,
+  "max_total_tokens": 200000,
+  "initial_used_tokens": 0
+}

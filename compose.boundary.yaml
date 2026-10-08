@@ -1,0 +1,11 @@
+# Explicit opt-in: apply after compose.yaml and compose.asr-small.yaml.
+# Reuses the private model key; sends transcript text and candidate ranges only.
+services:
+  worker:
+    environment:
+      CLIPFORGE_SCORER: rule
+      CLIPFORGE_BOUNDARY_REPAIR: "1"
+      CLIPFORGE_BOUNDARY_CONFIG: /run/clipforge/boundary.json
+      CLIPFORGE_LLM_API_KEY: ${CLIPFORGE_LLM_API_KEY:-}
+    volumes:
+      - ${CLIPFORGE_BOUNDARY_CONFIG_FILE:-./config/boundaries/sentence-v1.json}:/run/clipforge/boundary.json:ro

@@ -1,6 +1,10 @@
 # ClipForge 智剪工坊
 
-**第四周阶段性交付：[当前状态与遗留项](docs/WEEK4_PLAN.md) · [人工评测与21个确认版本的证据](docs/HUMAN_EVALUATION.md) · [候选工作台](docs/WEEK4_WORKBENCH.md)**。本分支已增加候选生成、规则／模型评分、去重分组和人工复核流程；自动边界质量仍未达标，正式部署与合并尚未完成。下方第三周介绍及历史验收记录不代表第四周已整体验收通过。
+**第四周阶段性交付：[当前状态与遗留项](docs/WEEK4_PLAN.md) · [历史人工评测](docs/HUMAN_EVALUATION.md) · [候选工作台](docs/WEEK4_WORKBENCH.md)**。基础候选流程已合并。本分支继续接入可选的自动首尾优化：新任务会使用规则基线筛选候选，再选择词级边界、生成可播放和下载的优化视频。New4 新素材人工评测为 **17/19，89.47%**，达到该单批次的 85% 目标；[完整结果及两个结尾问题](docs/evaluation/new4-20261009/result.json)均保留。此结论不代表所有视频都达到 85%；这次新增接入尚未部署或推送。
+
+边界优化默认关闭。Docker 使用 `compose.yaml`、`compose.asr-small.yaml`、`compose.boundary.yaml` 三个配置，最后一个会选择已验证的规则基线并读取 `CLIPFORGE_BOUNDARY_CONFIG_FILE` 和私下导出的 `CLIPFORGE_LLM_API_KEY`。本机执行需要设置 `CLIPFORGE_BOUNDARY_REPAIR=1` 与 `CLIPFORGE_BOUNDARY_CONFIG`。配置样例为 `config/boundaries/sentence-v1.json`；继续已有实验时，在私有 `.local.json` 中将 `initial_used_tokens` 设置为已用量（本次为 91,987），而非重新获得一份额度。用量账本保存在任务数据目录的 `boundary-budget.sqlite3`，跨任务预留、结算，未知用量会停止后续调用；失败不重试，整批返回原候选。缓存命中不再调用模型。
+
+优化视频与原评分、人工验收分别保存，模型选择不会自动变为人工通过。页面的“边界优化试听”可查看新范围；S02 和 S14 的既有失败记录不会被本次接入改写。源视频本身不会发送给模型，调用包含完整转写和候选边界。
 
 ClipForge 当前流程：**网页上传 → 后台归一化 → 镜头检测 → 语音活动检测 → 词级转写与分析校验 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。第三周新增 PySceneDetect 镜头区间、WebRTC VAD 语音区间，词级转写、中文分句与 analysis.json 汇总，以及 shots.json / vad.json / asr.json 下载；成品仍采用固定帧数切片，镜头结果暂不改变选段。
 

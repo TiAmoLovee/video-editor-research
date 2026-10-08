@@ -29,3 +29,4 @@ frontend/coverage/
 *.egg-info/
 models/
 config/scoring/*.local.json
+config/boundaries/*.local.json

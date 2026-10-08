@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Alert, Button, Empty, Skeleton, Tag } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
-import { acceptedVideoUrl, downloadUrl, getCandidates, validId } from '../api/tasks';
+import { acceptedVideoUrl, optimizedVideoUrl, downloadUrl, getCandidates, validId } from '../api/tasks';
 import type { CandidatePage, CandidateView } from '../types/tasks';
 
 const fallbackDetails: Record<string, string> = {
@@ -58,6 +58,23 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
     <div className="result-head"><div><h2>候选片段推荐</h2><p className="hint">评分仅用于同一任务内排序。片段可能相互重叠，当前展示推荐时间范围。</p></div><Button href={url} download aria-label="下载评分结果" icon={<DownloadOutlined />}>下载评分结果</Button></div>
     {loading && page && <p role="status">正在更新候选列表…</p>}
     {loading && !page ? <Skeleton active title={false} paragraph={{ rows: 3 }} aria-label="正在加载候选" /> : error ? <Alert type="warning" message="候选暂时加载失败，切片下载仍可使用。" action={<Button size="small" onClick={() => setRetry(value => value + 1)}>重试候选</Button>} /> : page && <>
+      {page.boundary_optimization && <section aria-label="边界优化试听">
+        <h3>边界优化试听</h3>
+        {page.boundary_optimization.status === 'fallback' ? <Alert type="warning" message="本次边界优化未完成，原候选仍可查看。" description={fallbackDetails[page.boundary_optimization.fallback_reason ?? ''] || '模型返回结果或用量记录未通过校验，已停止调用。'} /> : <>
+          <p className="hint">已为 {page.boundary_optimization.denominator} 个候选选择首尾。下方视频尚待试听核对；原候选的分数仍对应原始范围。</p>
+          <details><summary>查看优化后的片段</summary>
+            {page.boundary_optimization.versions.map((item, index) => {
+              const media = optimizedVideoUrl(item.video_url, taskId);
+              return <article key={item.id} className="candidate-card">
+                <strong>片段 {index + 1} · {item.start.toFixed(2)}–{item.end.toFixed(2)} 秒</strong>
+                <p><Tag color="orange">尚未人工核对</Tag><span>时长 {item.duration_seconds.toFixed(2)} 秒</span></p>
+                {media && item.status === 'unverified' ? <><video controls preload="metadata" src={media} aria-label="边界优化片段播放器" /><Button href={media} download>下载优化片段</Button></> : <p className="hint">此候选的边界尚未确定，请查看原候选。</p>}
+                <details><summary>查看此范围的转写</summary><p>{item.text}</p></details>
+              </article>;
+            })}
+          </details>
+        </>}
+      </section>}
       {!!page.accepted_versions?.length && <section aria-label="已试听通过的成品">
         <h3>已试听通过的成品</h3>
         <p className="hint">这里保留人工确认过的具体版本。下方原始候选的分数与风险记录仍独立保留。</p>

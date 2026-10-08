@@ -1,0 +1,42 @@
+{
+  "version": "new4-independent-human-result-v1",
+  "source_sha256": "f321276be604040a5df3173f78cf66fb19479ecb5bad524c31d4925ed314cb09",
+  "batch_id": "3571c2c1fa713b1ec48075c4bbec7d062562fb0a1327b60b55c389c01b4cb264",
+  "manifest_sha256": "0f59248f30fa0dca204f222223955e4580fa6c58a22b6d8609701a948e8afe69",
+  "review_revision": 19,
+  "review_sha256": "0c64ca8ea6f858285380b1f5e45664ada4a12d2f2518101d5eb6d6302c021c9c",
+  "denominator": 19,
+  "required_passes": 17,
+  "boundary_pass": 17,
+  "boundary_rate": 0.8947368421052632,
+  "all_four_pass": 17,
+  "all_four_rate": 0.8947368421052632,
+  "meets_85_percent": true,
+  "complete": true,
+  "unique_frame_ranges": 19,
+  "failed_samples": [
+    {
+      "id": "S02",
+      "failed_questions": [
+        "ending_complete"
+      ]
+    },
+    {
+      "id": "S14",
+      "failed_questions": [
+        "ending_complete"
+      ]
+    }
+  ],
+  "question_pass_counts": {
+    "opening_complete": 19,
+    "ending_complete": 17,
+    "understandable": 19,
+    "no_unrelated_content": 19
+  },
+  "scope": "single unseen-source human-evaluated pilot with overlapping windows; not broad multi-source generalization proof",
+  "original_slots_retained": true,
+  "model_self_scores_used": false,
+  "manual_post_review_repairs_used": false,
+  "production_integration": "experimental local implementation; not yet deployed or pushed"
+}

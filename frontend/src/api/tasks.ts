@@ -40,6 +40,12 @@ export function downloadUrl(url: string, taskId: string): string {
   return url;
 }
 
+export function optimizedVideoUrl(url: string | null, taskId: string): string | undefined {
+  const prefix = `/tasks/${taskId}/files/`;
+  if (validId(taskId) && typeof url === 'string' && url.startsWith(prefix) && /^repair_[a-f0-9]{64}\.mp4$/.test(url.slice(prefix.length))) return url;
+  return undefined;
+}
+
 export function fileError(file: File | null): string {
   if (!file) return '请选择一个视频。';
   if (!file.size || file.size > 1024 ** 3) return '请选择非空且不超过 1 GiB 的视频。';

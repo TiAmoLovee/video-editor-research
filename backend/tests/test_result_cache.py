@@ -41,7 +41,8 @@ class ResultCacheTests(unittest.TestCase):
     def descriptor(self, source, options_path, ffmpeg, ffprobe):
         options = json.loads(options_path.read_text()) if options_path.exists() else None
         d = {'source_sha256': cache.sha256(source), 'shot_options': options, 'test_configuration': 'fixed',
-             'scoring_config': cache.load_config().to_dict(),'decision_settings':cache.safe_settings_snapshot()}
+             'scoring_config': cache.load_config().to_dict(),'decision_settings':cache.safe_settings_snapshot(),
+             'boundary_settings':cache.boundary_settings_snapshot()}
         return hashlib.sha256(cache.canonical(d).encode()).hexdigest(), d
 
     def pipeline(self):
@@ -270,6 +271,63 @@ class ResultCacheTests(unittest.TestCase):
             settings=snapshot(version='llm-v1')
             self.assertFalse(process_video(self.job())['cache_hit'])
             self.assertEqual(transport.call_count,6)
+
+
+    def boundary_pipeline(self):
+        from backend.tests.test_candidates import fixture
+        from backend.tests.test_boundary_optimizer import snapshot, response
+        self.example=fixture([(0,10),(10,20),(20,30)])
+        self.pipeline()
+        self.boundary_settings=snapshot()
+        self.boundary_transport=unittest.mock.Mock()
+        def reply(cfg,payload,key,timeout):
+            content=payload['messages'][1]['content']
+            return response({'choice':'keep','reason':'保留原文'} if content.startswith('{') else {'punctuated':content})
+        self.boundary_transport.side_effect=reply
+        stack=ExitStack();self.addCleanup(stack.close)
+        stack.enter_context(patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':'fake'}))
+        stack.enter_context(patch.object(cache,'boundary_settings_snapshot',side_effect=lambda:self.boundary_settings))
+        stack.enter_context(patch('clipforge.services.pipeline.measure_audio',return_value=None))
+        stack.enter_context(patch('clipforge.decision.boundary_optimizer.http_transport',self.boundary_transport))
+        def render(report,source,folder,*args):
+            files={};report['renders']={}
+            if report['status']!='ready':return files
+            for item in report['items']:
+                if item['status']!='unverified':continue
+                name='repair_'+item['id']+'.mp4';target=folder/'repaired'/name
+                target.parent.mkdir(exist_ok=True);target.write_bytes(b'optimized-test')
+                report['renders'][item['id']]={'file':name,'sha256':cache.sha256(target),
+                    'frames':item['end_frame_exclusive']-item['start_frame'],'duration_seconds':item['duration_seconds']}
+                files[name]='repaired/'+name
+            return files
+        stack.enter_context(patch('clipforge.services.pipeline.render_boundaries',side_effect=render))
+
+    def test_boundary_cache_copies_media_and_reports_no_second_model_charge(self):
+        self.boundary_pipeline();a,b=self.job(),self.job()
+        self.assertFalse(process_video(a)['cache_hit']);calls=self.boundary_transport.call_count
+        self.assertGreater(calls,0);self.assertTrue(process_video(b)['cache_hit'])
+        self.assertEqual(self.boundary_transport.call_count,calls)
+        info=json.loads((job_dir(b)/'scoring_usage.json').read_text())['boundary_optimization']
+        self.assertEqual((info['current_task_requests'],info['current_task_charged_tokens']),(0,0))
+        names=list((job_dir(a)/'repaired').glob('*.mp4'));self.assertTrue(names)
+        copy=job_dir(b)/'repaired'/names[0].name;copy.write_bytes(b'changed')
+        self.assertEqual(names[0].read_bytes(),b'optimized-test')
+
+    def test_boundary_fallback_is_not_cached_and_missing_key_can_be_configured(self):
+        self.boundary_pipeline()
+        with patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':''}):
+            a=self.job();process_video(a)
+        report=json.loads((job_dir(a)/'boundary_optimization.json').read_text())
+        self.assertEqual(report['status'],'fallback');self.assertEqual(report['items'],[])
+        self.boundary_transport.assert_not_called()
+        self.assertFalse(process_video(self.job())['cache_hit'])
+        self.assertGreater(self.boundary_transport.call_count,0)
+
+    def test_boundary_configuration_change_invalidates_cache(self):
+        self.boundary_pipeline();process_video(self.job());calls=self.boundary_transport.call_count
+        self.boundary_settings['config']['max_task_tokens']-=1
+        self.assertFalse(process_video(self.job())['cache_hit'])
+        self.assertGreater(self.boundary_transport.call_count,calls)
 
 
 if __name__=='__main__':unittest.main()

@@ -59,6 +59,8 @@ export interface Candidate {
   source_sentences: string[];
 }
 export interface CandidatePage {
+  boundary_optimization?: { status: 'ready' | 'fallback'; fallback_reason: string | null; denominator: number; automatic_acceptance: false;
+    versions: { id: string; candidate_id: string; start: number; end: number; duration_seconds: number; text: string; status: string; score: null; human_pass: null; video_url: string | null }[] };
   topics?: { version: string; summary: { input_count: number; group_count: number; duplicate_count: number; recommended_count: number }; groups: { id: string; label: string; member_count: number; recommended_count: number; member_ids: string[]; recommended_ids: string[] }[] };
   topic?: string | null;
   accepted_versions?: { id: string; candidate_id: string; start: number; end: number; duration_seconds: number; text: string; score: number | null; scorer: 'rule' | 'llm' | null; score_scope: 'original_candidate_range' | 'rendered_range' | 'unscored_editorial_range'; score_start: number; score_end: number; feedback: string; video_url: string; reasons: string[] }[];
