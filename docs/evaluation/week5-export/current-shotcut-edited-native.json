@@ -1,0 +1,200 @@
+{
+  "status": "passed_actual_saved_gui_native_two_line_foreground",
+  "default_v2_recreates_original_GUI_input_byte_exact": true,
+  "byte_serialization": "UTF-8 with this Windows host Path.write_text CRLF newline translation only",
+  "saved_cue_text": "字幕样式\n保持验收",
+  "effective_range_half_open": [
+    3,
+    5
+  ],
+  "profile": {
+    "width": 180,
+    "height": 320,
+    "fps": {
+      "num": 30,
+      "den": 1
+    }
+  },
+  "geometry": [
+    9,
+    269,
+    162,
+    32
+  ],
+  "font_style": {
+    "family": "Microsoft YaHei",
+    "size": "8",
+    "shotcut:pointSize": "6",
+    "shotcut:usePointSize": "1",
+    "fgcolour": "0xffffffff",
+    "halign": "center",
+    "valign": "bottom",
+    "bgcolour": "0x00000080"
+  },
+  "actual_saved_native_frames": 24,
+  "same_graph_control_frames": 24,
+  "native_caption_foreground_on_off_matches_saved_ranges": true,
+  "subtitle_foreground_counts": [
+    0,
+    0,
+    0,
+    201,
+    201,
+    0,
+    0,
+    0,
+    0,
+    0,
+    116,
+    116,
+    116,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    132,
+    132,
+    0,
+    0,
+    0
+  ],
+  "samples": [
+    {
+      "timeline_frame": 3,
+      "image": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\edited-gui\\frame-03.png",
+        "sha256": "1dc0438c5d602c5a1ec3c2651cbf5c3eafef25440e3239571e5b44f5b8a5924b",
+        "bytes": 37729
+      },
+      "foreground_bounds_half_open": [
+        74,
+        281,
+        106,
+        298
+      ],
+      "foreground_row_bands": [
+        [
+          281,
+          288
+        ],
+        [
+          291,
+          298
+        ]
+      ],
+      "bright_foreground_pixels": 201,
+      "inside_saved_geometry_and_image": true
+    },
+    {
+      "timeline_frame": 4,
+      "image": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\edited-gui\\frame-04.png",
+        "sha256": "a21af7ba0cda6903d7ffe5d00fb7cf2ffc7efd5ba5e1a02ae7a98ab922910341",
+        "bytes": 37881
+      },
+      "foreground_bounds_half_open": [
+        74,
+        281,
+        106,
+        298
+      ],
+      "foreground_row_bands": [
+        [
+          281,
+          288
+        ],
+        [
+          291,
+          298
+        ]
+      ],
+      "bright_foreground_pixels": 201,
+      "inside_saved_geometry_and_image": true
+    }
+  ],
+  "inputs": {
+    "original": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\project.mlt",
+      "sha256": "912fcd712c6d737165ccdc0499082de229429c110d88ea629cad27b369b6c9a6",
+      "bytes": 9914
+    },
+    "GUI_saved": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\edited.mlt",
+      "sha256": "d734a6e2b494ef17a0e86c9f9bf27cc595278446ae85ec5f1fd0f158d9dec94e",
+      "bytes": 21328
+    },
+    "edit-audit.json": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\edit-audit.json",
+      "sha256": "08200f2b9d0a2903c02f0cfc8f79c5bae79ef153babe39485e27996ccff0e8c3",
+      "bytes": 2579
+    },
+    "shotcut-edited.jpg": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\shotcut-edited.jpg",
+      "sha256": "12c248181a6bbeb17933ccd893cc0a6867299ca38aa5bfdc066cb986737541a0",
+      "bytes": 104537
+    },
+    "project.edl.json": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\project.edl.json",
+      "sha256": "14b82989d12efbe6b483dfc01babee4d861cfabacd64bfdc170107900c307a14",
+      "bytes": 4029
+    },
+    "subtitles.json": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\subtitles.json",
+      "sha256": "bc01c3dd414c942134dcc4d7649b12ffaf857117c873bb60cf40ced0587e2244",
+      "bytes": 6296
+    },
+    "analyses.json": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\analyses.json",
+      "sha256": "47ca7637044cd93cf85ff5e4f814dc6c4ef5435d6616a39477afd4086cdcf34b",
+      "bytes": 3488
+    },
+    "verify_effects.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\verify_effects.py",
+      "sha256": "f392e89dd1f8d30bbf713c08bddc2b359574b26d3fd699f7c38e5fc14fc31d26",
+      "bytes": 27984
+    },
+    "verify_saved_gui_native.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verify_saved_gui_native.py",
+      "sha256": "14fe5ff65045e8a5fa93cded9c5bab97f2b241cfc2c54c3ff6a83632f8d356bb",
+      "bytes": 8859
+    },
+    "mlt.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\mlt.py",
+      "sha256": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+      "bytes": 15651
+    }
+  },
+  "source_media": [
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+      "sha256": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+      "bytes": 1430793
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\large.mov",
+      "sha256": "0e88181a149ed566e96f1a48e39cf61995656034715904b3add001b862339c2e",
+      "bytes": 1601617
+    }
+  ],
+  "native_outputs": [
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\edited-gui\\actual-edited.mkv",
+      "sha256": "62a91139a7c01f5b41b89efc6e35d34c54b8b35981704332f704280f05ca3cac",
+      "bytes": 753665
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\edited-gui\\same-graph-without-qtext.mkv",
+      "sha256": "7f36e9401669a91b87a7c120baba40271ccb88d61a2c1e7baf19601e1ccaa73e",
+      "bytes": 803793
+    }
+  ],
+  "control_only_removes_qtext_filters": true,
+  "limitations": [
+    "Foreground bands and saved text are checked; no OCR or glyph-shape fidelity claim.",
+    "New text is not expected to have pixels identical to old text.",
+    "Qt offscreen re-render proves actual saved GUI XML renders; GUI action proof is the linked separate audit."
+  ],
+  "new_model_calls": 0
+}

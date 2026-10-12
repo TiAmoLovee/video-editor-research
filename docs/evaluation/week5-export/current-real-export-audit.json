@@ -1,0 +1,193 @@
+{
+  "status": "passed_export_policy_checks_not_human_sync",
+  "human_sync_status": "pending",
+  "no_new_render": true,
+  "source_sha256_verified_by_exporter": true,
+  "cue_count": 21,
+  "text_filter_count": 22,
+  "max_cue_utf16_units": 25,
+  "legacy_v1_byte_equal_frozen_original": true,
+  "output_mlt": {
+    "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week5-subtitle-edit-style/real-sync/real-horizontal-v2.mlt",
+    "sha256": "8d6f7b2260d98ed35eb9d17dad106813e641b0d3eae7f01445e0d2e73507e38e"
+  },
+  "inputs": [
+    {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/source.edl.json",
+      "sha256": "5451a654a7c1cb9c7f8fda320507245d84bc7b1db69859fe03d3de5a650a2a2f"
+    },
+    {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/subtitles.json",
+      "sha256": "ed09bdf8812c4756c13369609f8f425f881839dd6d79c266c6f225639a302bc5"
+    },
+    {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/analysis.json",
+      "sha256": "5c9b69b23a048e3bb59cc024925919472151e6feb5edf9aeae19c6c5a062bb64"
+    },
+    {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/normalized.mp4",
+      "sha256": "9e95512430dbb045ea18acfcda5f9100e9d5a33b4b4ba9a403682a217eb22ee8"
+    },
+    {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week5-mlt-effects/real-task/final/horizontal-subtitles/project.mlt",
+      "sha256": "596786e120ba2276a5ad7e2cdb3d902bd548968d9af2fa3c3b4733c7d1374531"
+    },
+    {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/work/clipforge-week4/backend/clipforge/editing/mlt.py",
+      "sha256": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478"
+    }
+  ],
+  "cues": [
+    {
+      "cue_id": "cue_0001_0001",
+      "utf16_units": 5,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0002",
+      "utf16_units": 23,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0003",
+      "utf16_units": 23,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0004",
+      "utf16_units": 5,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0005",
+      "utf16_units": 25,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0006",
+      "utf16_units": 13,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0007",
+      "utf16_units": 14,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0008",
+      "utf16_units": 5,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0009",
+      "utf16_units": 14,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0010",
+      "utf16_units": 9,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0011",
+      "utf16_units": 17,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0012",
+      "utf16_units": 17,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0013",
+      "utf16_units": 23,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0014",
+      "utf16_units": 3,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0015",
+      "utf16_units": 18,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0001_0016",
+      "utf16_units": 20,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0002_0001",
+      "utf16_units": 23,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0002_0002",
+      "utf16_units": 23,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0002_0003",
+      "utf16_units": 5,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0002_0004",
+      "utf16_units": 25,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    },
+    {
+      "cue_id": "cue_0002_0005",
+      "utf16_units": 13,
+      "size_pixels": 48,
+      "point_size": 36,
+      "geometry": "96 863 1728 152"
+    }
+  ],
+  "limitations": [
+    "Font-derived line spacing and shrink-to-fit; no ASS pixel-equivalence claim.",
+    "These checks validate XML generation, not audible subtitle synchronization."
+  ]
+}

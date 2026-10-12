@@ -1,0 +1,17 @@
+{
+  "status": "failed",
+  "stage": "subtitle_font",
+  "checks": {
+    "non_root_uid": 10001,
+    "package_import_origin": "/app/backend/clipforge/__init__.py"
+  },
+  "http": [],
+  "model_calls": 0,
+  "asr_calls": 0,
+  "worker_started": false,
+  "external_network": false,
+  "seed_scope": "offline technical EDL; does not exercise candidate-generation POST",
+  "error_type": "FileNotFoundError",
+  "error": "[Errno 2] No such file or directory: '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'",
+  "api_left_running": false
+}

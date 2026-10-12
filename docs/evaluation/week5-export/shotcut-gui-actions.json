@@ -1,0 +1,31 @@
+{
+  "operator": "Codex via computer-use @oai/sky",
+  "cases": [
+    {
+      "case": "01-horizontal-reorder-repeat",
+      "title": "…/gui-cases/01-horizontal-reorder-repeat/project.mlt - 160x90 30.00fps 2ch - Shotcut",
+      "screenshot": "gui-cases/01-horizontal-reorder-repeat/shotcut-opened.jpg",
+      "action": "actual GUI open, fit timeline, save as shotcut-check.mlt"
+    },
+    {
+      "case": "02-portrait-single-final",
+      "screenshot": "gui-cases/02-portrait-single-final/shotcut-opened.jpg",
+      "action": "actual GUI open, fit timeline, save as shotcut-check.mlt"
+    },
+    {
+      "case": "03-rational-half-frame",
+      "screenshot": "gui-cases/03-rational-half-frame/shotcut-opened.jpg",
+      "action": "actual GUI open, fit timeline, save as shotcut-check.mlt"
+    },
+    {
+      "case": "04-no-audio-native",
+      "screenshot": "gui-cases/04-no-audio-native/shotcut-opened.jpg",
+      "action": "actual GUI open, fit timeline, save as shotcut-check.mlt"
+    },
+    {
+      "case": "05-portrait-mixed-native",
+      "screenshot": "gui-cases/05-portrait-mixed-native/shotcut-opened.jpg",
+      "action": "actual GUI open, fit timeline, save as shotcut-check.mlt"
+    }
+  ]
+}

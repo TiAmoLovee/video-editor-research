@@ -1,0 +1,74 @@
+# 第五周本地交付核对
+
+2026-10-12。第五周 [草稿 PR #8](https://github.com/TiAmoLovee/video-editor-research/pull/8) 已更新至 `9397f03`。MLT 历史字段修复后，GitHub Linux 后端及两平台前端检查通过；Windows 后端 605 项测试仅 1 项失败：检出时 LF→CRLF 改变了冻结 EDL Schema 的字节 SHA。本次仅增加该 Schema 的 Git 原始字节保留规则，已真实复现原失败，并验证 Windows 换行配置开启及关闭时均保留原件；7 项相关测试及 Ruff 通过，修复后的 GitHub 检查等待推送确认。字幕三处定性同步确认和原隔离容器证据保留，严格 ≤0.3 秒仍未量化。尚未合并或部署。
+
+## 完成的功能与最新验证
+
+沿用第二周 React/TypeScript 前端、后端目录和媒体工具配置，核实真实视频媒体描述。用户明确选择片段与顺序后保存统一 EDL；MP4、MLT、竖屏和字幕都从同一保存版本导出，网页支持历史恢复、下载与播放跳转。
+
+| 要求 | 当前结论与证据 |
+| --- | --- |
+| EDL JSON Schema、选择和排序 | 已实现；整数帧保存半开范围，见 [第二周衔接](WEEK2_TO_WEEK5.md) 和 [任务 EDL](TASK_EDL.md) |
+| EDL → 精确 MP4 | 已核对真实首尾及切点；历史网页样片 1263 帧，第 722 帧准确切换，见 [MP4 渲染](MP4_RENDER.md) |
+| EDL → MLT | 新版五例实际引擎渲染共 87 帧通过，覆盖重排、重复、末帧、分数帧率、无声和多来源；原五例 GUI 打开另存记录保留，见 [MLT 导出](MLT_EFFECTS.md) |
+| 字幕修改后样式保持 | 新版实际 Shotcut 中文全文替换、一行改两行、另存及 24 帧原生渲染通过；字体、字号、白字、对齐、文本框和有效范围保持 |
+| SRT/ASS 与烧录 | 已实现；新版 MLT 同样保持原字词和整数帧范围，新增双行、长行及字面标记三例 36 帧通过，见 [字幕生成](SUBTITLES.md) |
+| 固定中心 9:16 | 输出尺寸、保存裁切和帧序通过；Test3 同帧对照确认说话人被裁掉，该素材建议横屏，不能视为取景合格，见 [实际取景结论](PORTRAIT_RENDER.md) |
+| 三个核心覆盖率 ≥80% | 当前 EDL 98.59%、MLT 98.83%、MP4 88.93%；限定可执行行试测，含工具 mock，非分支覆盖或全量 CI |
+| 人声字幕偏差 ≤0.3 秒 | 用户确认三处无明显提前或滞后；未记录起止时间测量值，≤0.3 秒尚未量化，不能扩展为全部 21 条通过 |
+
+首次提交前的限定后端回归为 219 项：218 通过、1 项平台跳过，无失败。Ruff 通过。三份核心报告和新版原生报告绑定当前源码 SHA；101 份历史 JSON 保持原字节。历史前端 62 项、类型检查、构建及浏览器工作流记录仍保留，本次没有修改前端或重复运行前端检查。
+
+## 字幕修复及历史兼容
+
+旧 RichText 全文替换会带入编辑器默认字号和段落样式。这是已保留的历史失败证据。新版采用纯文字 qtext 与“文本：简易”控件，把字词和样式分别保存。已在 Shotcut 26.8.1／96 DPI 上验证中文一行改成两行，保存后全部字体和布局属性保持；真实保存工程的第 3、4 帧实际显示两行白字，边界位于预留文本框内。
+
+字号向下量化为 4px 的整数倍，行距由字体决定，字幕框预留两行并底部对齐。初始文字超过 256 个 UTF-16 单位或字号无法达到 4px 时明确拒绝导出，保留原词和计划。长行仍可能整体缩小；用户在 GUI 新增超限文字仍可能被 Shotcut 截断。该修复不宣称任意 DPI 或与 ASS 逐像素一致。
+
+新记录使用 format_version=2、text_style_version=2。旧 format_version=1 沿用其原始策略重新核验，未知或不匹配版本拒绝；文件 SHA、完整 EDL、媒体和字幕绑定检查继续保留，不能靠重写 hash 接受错误切点。真实横屏旧工程已按 v1 逐字节重新生成一致，同一 21 条 cue 另生成新版工程。旧工程仍为旧样式；需要新样式时从保存 EDL 重新导出，不改写已有文件。
+
+## 网页与已有 GUI 证据
+
+历史网页实测完成两条片段的选择、排序、EDL 保存、字幕及 MP4/MLT 导出，42.1 秒成片首尾和切点核对通过，原 94 个文件保持。8331 的 HTTP 206 已精确返回请求的 32 字节；播放器从 37.89 秒拖至 11.923 秒并继续播放。见 [网页导出](WEB_EXPORT.md)。
+
+此前五例 Shotcut GUI 打开另存为 5/5 通过，整数切点一致，毫秒时间串最大表示残差约 0.015 帧。裁切控件 Left 70→71 的独立修改及旧 RichText 样式丢失记录仍保留。原五例 GUI 是旧策略证据；新版另有实际编辑保存和原生渲染证据，不混作五例都重新进行了新版 GUI 操作。
+
+## 隔离环境修复记录与通过范围
+
+2026-10-12 首次隔离运行在导入阶段停止：`No module named 'clipforge'`，没有 HTTP 请求、模型调用或现有服务变化。原因是从 `/harness` 执行脚本时，工作目录不会自动成为 Python 的包搜索路径。检查脚本已显式固定 `PYTHONPATH=/app/backend`，并拒绝未审核路径的代码包；本地独立进程已复现原错并核实主进程及子进程导入修复。当时的本地路径检查单独保留，不作为容器通过证据。
+
+第二次运行已通过加载路径检查，在 `subtitle_font` 阶段确认旧镜像缺少 `NotoSansCJK-Regular.ttc`。第三次成功安装字体并生成独立镜像，但能力检查确认该旧 API 镜像也缺少 FFmpeg，真实导出验收仍未开始，原服务没有变化。此前只补字体没有补齐整个第五周渲染环境；现已改为同时安装 `ffmpeg fonts-noto-cjk`，并一次汇总所有缺项：FFmpeg/FFprobe、实际需要的滤镜/编解码器/格式与命令选项、Python 依赖、当前 API 导入、前端文件以及字体 family 和字形。使用当前 context 的本地 Docker builder，不重建前端/Python 依赖，不覆盖原镜像标签或改变服务。
+
+环境修复入口 `Repair-Week5-Runtime.ps1` 固定复用刚刚装好字体的独立镜像 `sha256:663b453f3106c4e5997cb3af3c137f844dc5d16daf596513572d34cdd2ce6b56`，再补视频工具，不重复从旧 API 镜像下载字体。构建成功时隐藏普通 apt 日志，失败时保留完整原因。构建失败、能力检查失败、服务清单变化三个本地模拟均验证会停止并保留失败记录；七项缺失同时报告和五类本地 FFmpeg 能力表解析已验证，无新增渲染。这些本地核对不是 Linux 镜像能力或容器验收通过。
+
+用户随后实际完成构建及隔离验收，最终镜像为 `sha256:de3b36d9f45ed0cf3103e9d4b7c6aaad27b5a35dc5098aa33d64717df0449fd6`。以 UID 10001 验证 Noto CJK、FFmpeg/FFprobe 及全部所需能力后，隔离报告为 `passed/completed`，宿主退出码为 0。93 个当时输入 SHA 与容器逐项一致；24 帧解码顺序为源帧 45–56、90–101，MLT 范围相同，两条字幕绑定相同。三次 HTTP 206 精确字节与响应头检查、一次 HTTP 416 检查通过；保存的导出可在历史列表发现。原测试记录与已有运行服务未变，临时 API 已退出，无 worker 或模型调用。
+
+证据见 [隔离导出报告](evaluation/week5-export/container-run-passed.json)、[宿主记录](evaluation/week5-export/container-host-passed.json)、[环境修复记录](evaluation/week5-export/runtime-repair-passed.json) 和 [镜像能力](evaluation/week5-export/runtime-capabilities-passed.json)。原失败报告仍保留。此次使用合成素材和已写好的 EDL，不覆盖候选生成、ASR、容器内 Shotcut 原生渲染、真实人声同步或浏览器人工历史恢复，也没有部署到 8200 服务。无需重复安装或重复运行已通过的隔离测试。
+
+## 人工检查结果与发布准备
+
+用户已完成约 10、35、59 秒三处的同步抽听，确认没有明显提前或滞后。见 [人工反馈](evaluation/week5-export/real-speech-sync-user-observation.json) 和 [观察清单](evaluation/week5-export/real-speech-sync-checklist.md)。没有提供语音及字幕起止测量值，因此严格 ≤0.3 秒指标仍保留为未量化限制；不要求用户反复抽听同一内容，不把定性反馈改写成精确数值。
+
+第五周首次提交 `293d436` 已发布为草稿 PR #8；本次另补自动检查中发现的历史字段问题。现有运行页面不会自动升级，合并与部署仍未执行。
+
+## 可审阅文件与限制
+
+首次发布前的证据快照位于 `docs/evaluation/week5-export/current-manifest.json`；旧 `manifest.json` 及报告保留为历史。工作区 `outputs/week5-subtitle-edit-style/delivery/ClipForge-week5-reviewed.zip` 为首次提交前的本地源代码快照，不含密钥、任务数据、依赖目录或大型媒体。本次没有新增模型调用或重新转写，没有重复复制原视频。
+
+本地提交准备逐个核对了容器绑定的 85 个后端／Schema 文件与 Git 暂存区字节：其中 34 个只有 Windows CRLF→LF 转换，其余字节相同，映射见 [源文件与暂存区记录](evaluation/week5-export/source-index-normalization.json)。容器验收覆盖当时实测字节；没有以规范化后的提交 SHA 冒充再次通过容器验收。证据目录禁用换行转换，保留报告和历史工程原字节。
+
+继续保留 CFR、方形像素、逐行、BT.709 的明确媒体范围，以及 MLT 含音轨单帧片段的已确认限制；后者使用同一 EDL 的 MP4 导出。主体跟踪、完整画面竖屏留白和复杂转场未在本轮实现。取景适用性与第四周完整事件候选、评分泛化及人工修改量是不同检查；导出验收不改变历史质量标签，也不宣称总体达到 85%。
+
+## PR #8 自动检查修复
+
+新版 MLT 保存记录含 `text_style_version: 2`，历史接口核验后投影时漏掉了该键，导致 `test_verified_artifact_history_and_tamper_detection` 的完整记录比较失败。现在历史接口保留该字段，并同时验证普通 MLT 和带字幕 MLT 的历史记录；旧 v1 记录仍不补造字段。XML、文件哈希、媒体绑定和保存版本核验不变。
+
+35 项相关测试全部通过；与 CI 相同的完整 unittest 命令运行 605 项，597 通过、1 项平台跳过，无业务断言失败，但旧 acceptance 代码的 7 项 os.link 操作遇到 Windows WinError 5；完整运行仍记为失败，不能宣称全量通过。仓库 Ruff 检查通过。首次完整本地诊断另有 24 项临时目录 WinError 5，随后改用工作区临时目录，重命名错误消失，仍有上述 7 项文件链接权限错误。此前 GitHub 前端通过、后端失败的记录保留，修复后的远端检查等待推送后确认。
+
+补充证据见 [历史样式版本修复](evaluation/week5-export/history-style-version-ci-fix.json) 和 [首次 GitHub 检查](evaluation/week5-export/pr8-initial-ci-verification.json)。`current-manifest.json`、源文件换行映射及隔离容器报告继续作为原快照证据；本次未重跑容器，也没有以新字段改动后的源码 SHA 冒充原容器实测 SHA。
+
+## Windows 检出字节修复
+
+`9397f03` 的 Linux 后端与两平台前端 CI 已通过。Windows 日志确认运行 605 项，603 通过、1 项平台跳过、1 个失败、无错误；唯一失败是冻结 v0.1 EDL Schema 的原始字节校验。原件为 4547 字节，SHA `44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8`；Windows 将 85 个 LF 转为 CRLF，得到 4632 字节及 `e9a2fce5977ba72960c4d950a7130c74f84c4af8ad51877625762e9ab761ad4f`，与失败日志完全一致。
+
+`.gitattributes` 仅新增 `schemas/edl.schema.json -text`，让检出保留提交内原始字节。Schema 文件、其 v0.1 尺寸合同、SHA 断言和业务代码没有修改。最小 Git 检出实验先以 `core.autocrlf=true` 真实复现旧规则的 SHA 失败，再验证新规则在 true/false 两种配置下字节均与原件完全一致；7 项竖屏 EDL 测试和仓库 Ruff 通过。见 [Windows 检出验证](evaluation/week5-export/windows-schema-checkout-fix.json)。本次不重复全量本地运行或渲染，也不改写此前容器、人工字幕或失败记录。远端修复 CI 待推送后确认。

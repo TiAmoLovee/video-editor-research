@@ -1,0 +1,733 @@
+{
+  "status": "passed",
+  "scope": "5 bounded synthetic native MLT cases, no Shotcut GUI claim",
+  "cases": [
+    {
+      "case": "01-horizontal-reorder-repeat",
+      "frames": 26,
+      "profile": {
+        "width": 160,
+        "height": 90,
+        "fps": {
+          "num": 30,
+          "den": 1
+        }
+      },
+      "cues": 5,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0003333333333333333,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.249937624750498,
+        "every_frame_native_crop_unique_best": false,
+        "minimum_wrong_crop_minus_correct_mae": null,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "subtitle_positive_foreground_counts": [
+          57,
+          0,
+          213,
+          213,
+          213,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          131,
+          131,
+          131,
+          131,
+          0,
+          0,
+          0,
+          57,
+          0,
+          213,
+          213,
+          213,
+          0,
+          0,
+          0
+        ],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 161,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "has_audio": true,
+        "sync_measured": true,
+        "expected_pulses": 26,
+        "decoded_pulses": 26,
+        "every_marker_code_exact": true,
+        "max_sync_error_frames": 0.0006250000000007638,
+        "decoded_samples_48000hz": 41600,
+        "decoded_audio_length_error_frames": 0.0,
+        "first_markers": [
+          {
+            "centre_seconds": 0.0166875,
+            "code": 128,
+            "measured_frequencies_hz": [
+              899.4140625,
+              7920.41015625
+            ],
+            "pulse_samples": 848
+          },
+          {
+            "centre_seconds": 0.050020833333333334,
+            "code": 129,
+            "measured_frequencies_hz": [
+              1139.6484375,
+              7920.41015625
+            ],
+            "pulse_samples": 844
+          },
+          {
+            "centre_seconds": 0.08335416666666666,
+            "code": 130,
+            "measured_frequencies_hz": [
+              1379.8828125,
+              7920.41015625
+            ],
+            "pulse_samples": 838
+          }
+        ],
+        "last_markers": [
+          {
+            "centre_seconds": 0.7833541666666667,
+            "code": 133,
+            "measured_frequencies_hz": [
+              2100.5859375,
+              7920.41015625
+            ],
+            "pulse_samples": 840
+          },
+          {
+            "centre_seconds": 0.8166875,
+            "code": 134,
+            "measured_frequencies_hz": [
+              2339.35546875,
+              7920.41015625
+            ],
+            "pulse_samples": 844
+          },
+          {
+            "centre_seconds": 0.8500208333333333,
+            "code": 135,
+            "measured_frequencies_hz": [
+              2579.58984375,
+              7920.41015625
+            ],
+            "pulse_samples": 840
+          }
+        ],
+        "decoded_audio_frames": 26,
+        "native_rate": 48000,
+        "decoded_native_samples": 41600,
+        "first_decoded_pts_seconds": 0.0,
+        "sample_timeline_contiguous": true
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one",
+        "cue-time--1-frame",
+        "cue-time-+1-frame",
+        "cue-out-incorrectly-exclusive"
+      ],
+      "literal_HTML_parsed_exact": true,
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\01-horizontal-reorder-repeat\\output.mkv",
+      "output_sha256": "b68f554a01663908837cf15eaa9f9330076f610d99291968685f365e68477cc5",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\01-horizontal-reorder-repeat\\project.mlt",
+      "project_sha256": "0dedde6ceae9f91825ea45a95a1dd662d5f3eecba8847e127969eaf12f6e91f5",
+      "source_edl_sha256": "e9ab629d78add02525d1bec9a1481dfd1c52e6a955edd2e2b6adbccabace441a",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      }
+    },
+    {
+      "case": "02-portrait-single-final",
+      "frames": 9,
+      "profile": {
+        "width": 180,
+        "height": 320,
+        "fps": {
+          "num": 30,
+          "den": 1
+        }
+      },
+      "cues": 2,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0003333333333333333,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.3310364596884947,
+        "every_frame_native_crop_unique_best": true,
+        "minimum_wrong_crop_minus_correct_mae": 6.865282428699393,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "subtitle_positive_foreground_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          92,
+          92,
+          92,
+          92
+        ],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 209,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "has_audio": true,
+        "sync_measured": true,
+        "expected_pulses": 8,
+        "decoded_pulses": 8,
+        "every_marker_code_exact": true,
+        "max_sync_error_frames": 0.0006250000000007638,
+        "decoded_samples_48000hz": 14400,
+        "decoded_audio_length_error_frames": 0.0,
+        "first_markers": [
+          {
+            "centre_seconds": 0.050020833333333334,
+            "code": 234,
+            "measured_frequencies_hz": [
+              3300.29296875,
+              9360.3515625
+            ],
+            "pulse_samples": 842
+          },
+          {
+            "centre_seconds": 0.08335416666666666,
+            "code": 235,
+            "measured_frequencies_hz": [
+              3540.52734375,
+              9360.3515625
+            ],
+            "pulse_samples": 842
+          },
+          {
+            "centre_seconds": 0.1166875,
+            "code": 236,
+            "measured_frequencies_hz": [
+              3779.296875,
+              9360.3515625
+            ],
+            "pulse_samples": 846
+          }
+        ],
+        "last_markers": [
+          {
+            "centre_seconds": 0.2166875,
+            "code": 239,
+            "measured_frequencies_hz": [
+              4500.0,
+              9360.3515625
+            ],
+            "pulse_samples": 844
+          },
+          {
+            "centre_seconds": 0.25002083333333336,
+            "code": 238,
+            "measured_frequencies_hz": [
+              4259.765625,
+              9360.3515625
+            ],
+            "pulse_samples": 846
+          },
+          {
+            "centre_seconds": 0.2833541666666667,
+            "code": 239,
+            "measured_frequencies_hz": [
+              4500.0,
+              9360.3515625
+            ],
+            "pulse_samples": 844
+          }
+        ],
+        "decoded_audio_frames": 9,
+        "native_rate": 48000,
+        "decoded_native_samples": 14400,
+        "first_decoded_pts_seconds": 0.0,
+        "sample_timeline_contiguous": true
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one",
+        "cue-time--1-frame",
+        "cue-time-+1-frame",
+        "cue-out-incorrectly-exclusive"
+      ],
+      "literal_HTML_parsed_exact": true,
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\02-portrait-single-final\\output.mkv",
+      "output_sha256": "fdd369fc350548f511f78a35fbd5ab77f36c5b3fa2c85320a3f615eab2b552b4",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\02-portrait-single-final\\project.mlt",
+      "project_sha256": "632fdb84d20ec46c0731feb754232fe02e2e77eab7b9550ba91e277f4a45c892",
+      "source_edl_sha256": "bbab5e88f997fdb71a91207d23e95b93ed2f5ed4c39ef555e54939f2b6bd4c90",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      }
+    },
+    {
+      "case": "03-rational-half-frame",
+      "frames": 16,
+      "profile": {
+        "width": 180,
+        "height": 320,
+        "fps": {
+          "num": 30000,
+          "den": 1001
+        }
+      },
+      "cues": 3,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0005,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.2850178003884252,
+        "every_frame_native_crop_unique_best": true,
+        "minimum_wrong_crop_minus_correct_mae": 10.755365560416756,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "subtitle_positive_foreground_counts": [
+          191,
+          191,
+          0,
+          190,
+          190,
+          190,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          197,
+          197
+        ],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 209,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "has_audio": true,
+        "sync_measured": true,
+        "expected_pulses": 16,
+        "decoded_pulses": 16,
+        "every_marker_code_exact": true,
+        "max_sync_error_frames": 0.0011238761238751682,
+        "decoded_samples_48000hz": 25626,
+        "decoded_audio_length_error_frames": 0.0002497502497511583,
+        "first_markers": [
+          {
+            "centre_seconds": 0.01671875,
+            "code": 29,
+            "measured_frequencies_hz": [
+              4016.6015625,
+              6234.375
+            ],
+            "pulse_samples": 843
+          },
+          {
+            "centre_seconds": 0.05007291666666667,
+            "code": 30,
+            "measured_frequencies_hz": [
+              4255.37109375,
+              6234.375
+            ],
+            "pulse_samples": 837
+          },
+          {
+            "centre_seconds": 0.08344791666666666,
+            "code": 31,
+            "measured_frequencies_hz": [
+              4495.60546875,
+              6234.375
+            ],
+            "pulse_samples": 849
+          }
+        ],
+        "last_markers": [
+          {
+            "centre_seconds": 0.45047916666666665,
+            "code": 237,
+            "measured_frequencies_hz": [
+              4016.6015625,
+              9350.09765625
+            ],
+            "pulse_samples": 842
+          },
+          {
+            "centre_seconds": 0.48385416666666664,
+            "code": 238,
+            "measured_frequencies_hz": [
+              4255.37109375,
+              9350.09765625
+            ],
+            "pulse_samples": 846
+          },
+          {
+            "centre_seconds": 0.5172083333333334,
+            "code": 239,
+            "measured_frequencies_hz": [
+              4495.60546875,
+              9350.09765625
+            ],
+            "pulse_samples": 846
+          }
+        ],
+        "decoded_audio_frames": 16,
+        "native_rate": 48000,
+        "decoded_native_samples": 25626,
+        "first_decoded_pts_seconds": 0.0,
+        "sample_timeline_contiguous": true
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one",
+        "cue-time--1-frame",
+        "cue-time-+1-frame",
+        "cue-out-incorrectly-exclusive"
+      ],
+      "literal_HTML_parsed_exact": true,
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\03-rational-half-frame\\output.mkv",
+      "output_sha256": "06d44edfe4978b8afeb7b97ab320873323aa7bed2ff379c0e40d2e932b9a6ca5",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\03-rational-half-frame\\project.mlt",
+      "project_sha256": "697669bfea589cee51d6da69d3c33293cf8944655bcb731bb3c50650f0cdc40e",
+      "source_edl_sha256": "1a20b0b53300722cff51383b01ed5c225d59e863cd8dab1e9bd051aaf08d2802",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      }
+    },
+    {
+      "case": "04-no-audio-native",
+      "frames": 12,
+      "profile": {
+        "width": 160,
+        "height": 90,
+        "fps": {
+          "num": 30,
+          "den": 1
+        }
+      },
+      "cues": 0,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0003333333333333333,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.2522455089820335,
+        "every_frame_native_crop_unique_best": false,
+        "minimum_wrong_crop_minus_correct_mae": null,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [],
+        "subtitle_positive_foreground_counts": [],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 161,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "source_has_audio": false,
+        "source_audio_index": -1,
+        "consumer_silence_max_amplitude": 0.0,
+        "note": "MLT avformat consumer emits silent PCM from background track; no source audio exists."
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one"
+      ],
+      "literal_HTML_parsed_exact": true,
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\04-no-audio-native\\output.mkv",
+      "output_sha256": "837752390ead7ec4c3baeb6df5853e66096ca5521ce404d5d2b9fb2bfdc9d885",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\04-no-audio-native\\project.mlt",
+      "project_sha256": "22f5efe48762f384c3cee5fa88b828403313cff5ac039ce652a3265579a4c7e3",
+      "source_edl_sha256": "115a6bd892e915949ff8c7025aad5c197ad8ba65aa3925f5e38495520b599822",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      }
+    },
+    {
+      "case": "05-portrait-mixed-native",
+      "frames": 24,
+      "profile": {
+        "width": 180,
+        "height": 320,
+        "fps": {
+          "num": 30,
+          "den": 1
+        }
+      },
+      "cues": 3,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0003333333333333333,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.310609273395527,
+        "every_frame_native_crop_unique_best": true,
+        "minimum_wrong_crop_minus_correct_mae": 4.630152671755725,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "subtitle_positive_foreground_counts": [
+          0,
+          0,
+          0,
+          233,
+          233,
+          0,
+          0,
+          0,
+          0,
+          0,
+          223,
+          223,
+          223,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          233,
+          233,
+          0,
+          0,
+          0
+        ],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 209,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "has_audio": true,
+        "sync_measured": true,
+        "expected_pulses": 24,
+        "decoded_pulses": 24,
+        "every_marker_code_exact": true,
+        "max_sync_error_frames": 0.0006250000000007638,
+        "decoded_samples_48000hz": 38400,
+        "decoded_audio_length_error_frames": 0.0,
+        "first_markers": [
+          {
+            "centre_seconds": 0.0166875,
+            "code": 45,
+            "measured_frequencies_hz": [
+              4019.53125,
+              6480.46875
+            ],
+            "pulse_samples": 848
+          },
+          {
+            "centre_seconds": 0.050020833333333334,
+            "code": 46,
+            "measured_frequencies_hz": [
+              4259.765625,
+              6480.46875
+            ],
+            "pulse_samples": 842
+          },
+          {
+            "centre_seconds": 0.08335416666666666,
+            "code": 47,
+            "measured_frequencies_hz": [
+              4500.0,
+              6480.46875
+            ],
+            "pulse_samples": 836
+          }
+        ],
+        "last_markers": [
+          {
+            "centre_seconds": 0.7166875,
+            "code": 50,
+            "measured_frequencies_hz": [
+              1379.8828125,
+              6720.703125
+            ],
+            "pulse_samples": 840
+          },
+          {
+            "centre_seconds": 0.7500208333333334,
+            "code": 51,
+            "measured_frequencies_hz": [
+              1620.1171875,
+              6720.703125
+            ],
+            "pulse_samples": 846
+          },
+          {
+            "centre_seconds": 0.7833541666666667,
+            "code": 52,
+            "measured_frequencies_hz": [
+              1860.3515625,
+              6720.703125
+            ],
+            "pulse_samples": 846
+          }
+        ],
+        "decoded_audio_frames": 24,
+        "native_rate": 48000,
+        "decoded_native_samples": 38400,
+        "first_decoded_pts_seconds": 0.0,
+        "sample_timeline_contiguous": true
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one",
+        "cue-time--1-frame",
+        "cue-time-+1-frame",
+        "cue-out-incorrectly-exclusive"
+      ],
+      "literal_HTML_parsed_exact": true,
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\05-portrait-mixed-native\\output.mkv",
+      "output_sha256": "6c6b5a772b5c37b778b5e07efbec33b9a751831f6269d8454157635a1d46874e",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\05-portrait-mixed-native\\project.mlt",
+      "project_sha256": "6a0ca29d70e99f5a5fcf6e8b3dbe54087665faf3abb299dbe66d854bbb8f9784",
+      "source_edl_sha256": "14b82989d12efbe6b483dfc01babee4d861cfabacd64bfdc170107900c307a14",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      }
+    }
+  ],
+  "output_frames_checked": 87,
+  "native_sources": 5,
+  "native_source_frames_ID_checked": 1200,
+  "native_output_encodes_in_this_run": 5,
+  "known_audio_single_frame_constraints_rejected": [
+    {
+      "schema_version": "0.1.0",
+      "error": "MLT cannot reliably preserve audio in a single-frame clip; use the FFmpeg EDL MP4 renderer",
+      "EDL_valid": true,
+      "source_audio_nonzero": true,
+      "MLT_XML_not_published": true
+    },
+    {
+      "schema_version": "0.2.0",
+      "error": "MLT cannot reliably preserve audio in a single-frame clip; use the FFmpeg EDL MP4 renderer",
+      "EDL_valid": true,
+      "source_audio_nonzero": true,
+      "MLT_XML_not_published": true
+    }
+  ],
+  "frozen_product_sha256": {
+    "edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+    "subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+    "mlt.py": "9299f100297e15febf875772ac561b8ee760be81bc0302550704bbd56150d059",
+    "manifest.py": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861"
+  },
+  "verifier_sha256": "928b21e270f7a376f44bf152f20c1d238a3318c158e45aec0fa6aca909ff8f6a",
+  "tools_sha256": {
+    "melt": "716d31a8d6e2509fb0c229e4fc117bb0f16d1071564a09285766eab970990ee4",
+    "ffmpeg_decode": "dc1abf0065c3a28460baacae9868d919fb1bdad9301e668bfe50c7b267debe62"
+  },
+  "limitations": [
+    "Qt offscreen native MLT is not Shotcut GUI open-save verification.",
+    "Authored synthetic word timings do not establish real ASR speech accuracy.",
+    "Pixel cue on/off and literal HTML preservation are checked; no OCR fidelity claim.",
+    "Qtext uses translucent panels; this is not an ASS-identical pixel style."
+  ],
+  "new_model_calls": 0,
+  "production_deployed": false
+}

@@ -1,0 +1,124 @@
+<?xml version="1.0" standalone="no"?>
+<mlt LC_NUMERIC="C" version="7.41.0" title="Shotcut version 26.8.1" producer="main_bin">
+  <profile description="ClipForge explicit CFR profile" width="160" height="90" progressive="1" sample_aspect_num="1" sample_aspect_den="1" display_aspect_num="16" display_aspect_den="9" frame_rate_num="30" frame_rate_den="1" colorspace="709"/>
+  <playlist id="main_bin">
+    <property name="shotcut:colorTransfer">sdr</property>
+    <property name="xml_retain">1</property>
+  </playlist>
+  <producer id="black" in="00:00:00.000" out="00:00:00.367">
+    <property name="length">12</property>
+    <property name="eof">pause</property>
+    <property name="resource">0</property>
+    <property name="aspect_ratio">1</property>
+    <property name="mlt_service">color</property>
+    <property name="mlt_image_format">rgba</property>
+    <property name="set.test_audio">0</property>
+  </producer>
+  <playlist id="background">
+    <entry producer="black" in="00:00:00.000" out="00:00:00.367"/>
+  </playlist>
+  <chain id="chain0" out="00:00:07.967">
+    <property name="length">240</property>
+    <property name="eof">pause</property>
+    <property name="resource">C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week5-mlt-effects/verification/fixtures/silent.mov</property>
+    <property name="mlt_service">avformat</property>
+    <property name="video_index">0</property>
+    <property name="audio_index">-1</property>
+    <property name="seekable">1</property>
+    <property name="ignore_points">0</property>
+    <property name="shotcut:caption">silent.mov</property>
+    <property name="meta.media.nb_streams">1</property>
+    <property name="meta.media.0.stream.type">video</property>
+    <property name="meta.media.0.stream.frame_rate">30</property>
+    <property name="meta.media.0.stream.sample_aspect_ratio">1</property>
+    <property name="meta.media.0.codec.width">160</property>
+    <property name="meta.media.0.codec.height">90</property>
+    <property name="meta.media.0.codec.rotate">0</property>
+    <property name="meta.media.0.codec.pix_fmt">yuv420p</property>
+    <property name="meta.media.0.codec.sample_aspect_ratio">1</property>
+    <property name="meta.media.0.codec.colorspace">709</property>
+    <property name="meta.media.0.codec.color_trc">1</property>
+    <property name="meta.media.0.codec.name">h264</property>
+    <property name="meta.media.0.codec.long_name">H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10</property>
+    <property name="meta.media.0.codec.bit_rate">16170</property>
+    <property name="meta.attr.0.stream.handler_name.markup">VideoHandler</property>
+    <property name="meta.attr.0.stream.vendor_id.markup">FFMP</property>
+    <property name="meta.attr.0.stream.encoder.markup">Lavc61.19.100 libx264</property>
+    <property name="meta.attr.major_brand.markup">qt  </property>
+    <property name="meta.attr.minor_version.markup">512</property>
+    <property name="meta.attr.compatible_brands.markup">qt  </property>
+    <property name="meta.attr.encoder.markup">Lavf61.7.100</property>
+    <property name="meta.media.sample_aspect_num">1</property>
+    <property name="meta.media.sample_aspect_den">1</property>
+    <property name="vstream">0</property>
+    <property name="meta.media.frame_rate_num">30</property>
+    <property name="meta.media.frame_rate_den">1</property>
+    <property name="meta.media.colorspace">709</property>
+    <property name="meta.media.color_trc">1</property>
+    <property name="meta.media.has_b_frames">0</property>
+    <property name="meta.media.width">160</property>
+    <property name="meta.media.height">90</property>
+    <property name="meta.media.aspect_ratio">1</property>
+    <property name="meta.media.color_range">mpeg</property>
+    <property name="shotcut:hash">58e2250bedd0fc2ef6dca21466f0dee0</property>
+    <property name="meta.media.top_field_first">0</property>
+    <property name="meta.media.progressive">1</property>
+  </chain>
+  <playlist id="playlist0">
+    <property name="shotcut:video">1</property>
+    <property name="shotcut:name">V1</property>
+    <entry producer="chain0" in="00:00:00.600" out="00:00:00.933"/>
+    <entry producer="chain0" in="00:00:07.967" out="00:00:07.967"/>
+  </playlist>
+  <tractor id="tractor0" title="Shotcut version 26.8.1" in="00:00:00.000" out="00:00:00.367">
+    <property name="shotcut">1</property>
+    <property name="shotcut:projectAudioChannels">2</property>
+    <property name="shotcut:projectFolder">0</property>
+    <property name="shotcut:processingMode">Native8Cpu</property>
+    <property name="shotcut:colorTransfer">sdr</property>
+    <property name="shotcut:skipConvert">0</property>
+    <property name="shotcut:scaleFactor">27.01</property>
+    <track producer="background"/>
+    <track producer="playlist0"/>
+    <transition id="transition0">
+      <property name="a_track">0</property>
+      <property name="b_track">1</property>
+      <property name="mlt_service">mix</property>
+      <property name="always_active">1</property>
+      <property name="sum">1</property>
+    </transition>
+    <filter id="clipforge_brand" out="00:00:00.367">
+      <property name="argument">AI辅助剪辑</property>
+      <property name="geometry">8 5 144 20</property>
+      <property name="family">Sans</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0x000000ff</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="pad">0</property>
+      <property name="halign">right</property>
+      <property name="valign">top</property>
+      <property name="outline">0</property>
+      <property name="underline">0</property>
+      <property name="strikethrough">0</property>
+      <property name="pixel_ratio">1</property>
+      <property name="opacity">1</property>
+      <property name="typewriter">0</property>
+      <property name="typewriter.step_length">25</property>
+      <property name="typewriter.step_sigma">0</property>
+      <property name="typewriter.random_seed">0</property>
+      <property name="typewriter.macro_type">1</property>
+      <property name="typewriter.cursor">1</property>
+      <property name="typewriter.cursor_blink_rate">25</property>
+      <property name="typewriter.cursor_char">|</property>
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">richText</property>
+      <property name="shotcut:name">AI辅助剪辑</property>
+      <property name="html">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;&lt;p align=&quot;right&quot; style=&quot;margin:0px;line-height:12px;&quot;&gt;&lt;font face=&quot;Microsoft YaHei&quot;&gt;&lt;span style=&quot;font-size:8px;color:#ffffff;&quot;&gt;AI辅助剪辑&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</property>
+      <property name="overflow-y">0</property>
+      <property name="clipforge:cue_id">clipforge_brand</property>
+    </filter>
+  </tractor>
+</mlt>

@@ -1,0 +1,98 @@
+{
+  "status": "passed",
+  "date": "2026-10-12",
+  "scope": "one_real_Shotcut_GUI_open_save_roundtrip",
+  "shotcut_version": "26.8.1",
+  "mlt_version": "7.41.0",
+  "saved_project_path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\real-task\\final\\portrait-subtitles\\shotcut-check.mlt",
+  "saved_project_sha256": "b29369832fbf63c9a93c7d6b0e69699c29258b84ea03253d3c352be5103d7234",
+  "full_static_timeline_checked": true,
+  "clip_count": 2,
+  "duration_frames": 2180,
+  "profile": {
+    "width": 1080,
+    "height": 1920,
+    "fps": {
+      "num": 30,
+      "den": 1
+    }
+  },
+  "source_ranges_half_open": [
+    [
+      43,
+      1682
+    ],
+    [
+      112,
+      653
+    ]
+  ],
+  "cut_frame": 1639,
+  "subtitle_cues": 21,
+  "native_crop": {
+    "x": 662,
+    "y": 12,
+    "width": 594,
+    "height": 1056
+  },
+  "caption_text_font_geometry_and_brand_preserved": true,
+  "static_report": {
+    "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-shotcut-roundtrip\\static-audit.json",
+    "sha256": "1d7b0f603efcee5f78f634424746b7b4429ef4b92703011872be940d8caf345c"
+  },
+  "native_report": {
+    "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-shotcut-roundtrip\\native\\verification.json",
+    "sha256": "72776cd82c0c4eb33a159e8f4466092c7ce5e7a95417bdd12904f7b571126f7e"
+  },
+  "native_sample_frames": 37,
+  "native_sample_ranges_inclusive": [
+    [
+      11,
+      16
+    ],
+    [
+      96,
+      103
+    ],
+    [
+      1629,
+      1648
+    ],
+    [
+      2177,
+      2179
+    ]
+  ],
+  "maximum_gray_mae_by_region": {
+    "whole": 1.3528877314814816,
+    "picture": 2.0853761574074072,
+    "subtitles": 0.7664231509797259,
+    "brand": 0.49564551631735093
+  },
+  "audio_windows": [
+    {
+      "global_start_frame": 1631.0,
+      "duration_frames": 5.0,
+      "best_lag_samples": 0,
+      "best_lag_frames": 0.0,
+      "normalized_correlation": 0.9999000635567508
+    },
+    {
+      "global_start_frame": 1640.0,
+      "duration_frames": 5.0,
+      "best_lag_samples": 0,
+      "best_lag_frames": 0.0,
+      "normalized_correlation": 0.9985649893813254
+    }
+  ],
+  "inputs_preserved": true,
+  "user_action": "User reports saving; actual Shotcut-authored saved file read and rendered independently.",
+  "limitations": [
+    "This checks one actual GUI open/save; five synthetic GUI cases and effect editing controls remain pending.",
+    "Full saved XML was checked; native visual regression covers 37 frames, not another full 2180-frame encode.",
+    "No new human speech-to-caption timing or narrative acceptance claimed."
+  ],
+  "model_requests": 0,
+  "production_deployed": false,
+  "github_published": false
+}

@@ -1,0 +1,226 @@
+{
+  "status": "subtitle_edit_fix_and_container_verified_user_qualitative_sync_accepted",
+  "checked_at": "2026-10-12T12:24:22.642561+00:00",
+  "records": [
+    {
+      "file": "current-core-tests-coverage.json",
+      "sha256": "f8dcb84d0bff993fe8625a58cf878a5c9ce5169b91eb569eba1d7ec6a8acd01b",
+      "bytes": 2169
+    },
+    {
+      "file": "current-native-refresh.json",
+      "sha256": "10f1adc4f234bac0cf8559caf3c6bfa403aa00a5d2a3727be7e5bf5c9a447ed0",
+      "bytes": 3076
+    },
+    {
+      "file": "current-five-native.json",
+      "sha256": "753ca95f345d189729c2b7083258e601e0440518f854d7d04f0d7e8dbe28a00b",
+      "bytes": 53898
+    },
+    {
+      "file": "current-text-edges-native.json",
+      "sha256": "96ee2b23e868a1fe25f3b9302dc9f98f68b1c2ae5c6d9a26ef332dd4a9374004",
+      "bytes": 29123
+    },
+    {
+      "file": "current-shotcut-edit.json",
+      "sha256": "08200f2b9d0a2903c02f0cfc8f79c5bae79ef153babe39485e27996ccff0e8c3",
+      "bytes": 2579
+    },
+    {
+      "file": "current-shotcut-edited.mlt",
+      "sha256": "d734a6e2b494ef17a0e86c9f9bf27cc595278446ae85ec5f1fd0f158d9dec94e",
+      "bytes": 21328
+    },
+    {
+      "file": "current-shotcut-edited.jpg",
+      "sha256": "12c248181a6bbeb17933ccd893cc0a6867299ca38aa5bfdc066cb986737541a0",
+      "bytes": 104537
+    },
+    {
+      "file": "current-shotcut-edited-native.json",
+      "sha256": "d24e69c359e0448b611537167eb1a6d402ead6e0046fa2177330971893c22297",
+      "bytes": 6875
+    },
+    {
+      "file": "current-shotcut-edited-frame-3.png",
+      "sha256": "1dc0438c5d602c5a1ec3c2651cbf5c3eafef25440e3239571e5b44f5b8a5924b",
+      "bytes": 37729
+    },
+    {
+      "file": "current-real-horizontal-v2.mlt",
+      "sha256": "8d6f7b2260d98ed35eb9d17dad106813e641b0d3eae7f01445e0d2e73507e38e",
+      "bytes": 29261
+    },
+    {
+      "file": "current-real-export-audit.json",
+      "sha256": "f3c778c96734d316b0727163a22d14d883aaed942763e2492b167a324c81d1c3",
+      "bytes": 5731
+    },
+    {
+      "file": "framing-suitability.json",
+      "sha256": "1d1c5462c5f0e2074f76bc2b07e3d2a8d5f6c2e55514c34efb3f75bdbe023661",
+      "bytes": 3838
+    },
+    {
+      "file": "framing-comparison.jpg",
+      "sha256": "bd4ba37750f6d163e3a73b107d5e232590cdb93b7387c209f9c0cf9e0ad930d8",
+      "bytes": 500152
+    },
+    {
+      "file": "real-speech-sync-pending.json",
+      "sha256": "8c55e3ca4c6ad570aac149a3b4dfc7cddc6d560cf8865ad298f645731f33a5e1",
+      "bytes": 5565
+    },
+    {
+      "file": "real-speech-sync-user-observation.json",
+      "sha256": "7d02d65c317bcc82e28906021d9f06f78ca778ee8a08af5519db25a0ce33c1ae",
+      "bytes": 3166
+    },
+    {
+      "file": "real-speech-sync-checklist.md",
+      "sha256": "43d73f4adeb575ade537891128346c541a1ebfcaabad53db60f379cee8e2e1f4",
+      "bytes": 2891
+    },
+    {
+      "file": "container-run-failed-import.json",
+      "sha256": "15cfaf60dcec0da574ce67a609c7c4920eda6f7c1a3ee7091e5bfa7faeec470a",
+      "bytes": 345
+    },
+    {
+      "file": "container-host-failed-import.json",
+      "sha256": "44c4c84890f080ce16c8d14f786d24f425a47d069b007d08e3620a6fd18d4e69",
+      "bytes": 439
+    },
+    {
+      "file": "container-runner-path-regression.json",
+      "sha256": "9275dc89eb0d53440464d017c037373199e9f124d601ab7de88ce4f583068f05",
+      "bytes": 998
+    },
+    {
+      "file": "container-run-failed-font.json",
+      "sha256": "2c03b95afd7889d7508d9c1b9dfc3d9713676f0e8736182dc49d9b2c4d4db542",
+      "bytes": 533
+    },
+    {
+      "file": "container-host-failed-font.json",
+      "sha256": "386e3fa870aec2ada75d625edb5d57e697eead001b645d02c5b893d198980f04",
+      "bytes": 439
+    },
+    {
+      "file": "font-repair-local-check.json",
+      "sha256": "3522daaeec5912d1065f25a7313d1cdac27b2736b1ebaf329f5abcc2a11db9b9",
+      "bytes": 1111
+    },
+    {
+      "file": "font-repair-Dockerfile",
+      "sha256": "d36839ee02bbefad3ac9d36ebe10b8d96334bd6d120fe5c4ae5bff9f77a039d6",
+      "bytes": 684
+    },
+    {
+      "file": "font-repair-dockerignore.txt",
+      "sha256": "08bb7a70af4ae5a9c15226f499f2e76055ebd521550f87eb102a1316cdb9df38",
+      "bytes": 14
+    },
+    {
+      "file": "font-repair-check-runtime.py",
+      "sha256": "304754b19228b5fac6076f9e898740640146cf7fa4cf8c9a2fec5369521c314b",
+      "bytes": 4971
+    },
+    {
+      "file": "font-repair-and-test.ps1",
+      "sha256": "b72dab688640b0259a730946c92baf8f99d93100c4df04a4548677e373255f8b",
+      "bytes": 6619
+    },
+    {
+      "file": "font-build-runtime-failed.json",
+      "sha256": "50273490ac3c75d77b0aa185cf110b6708229bd00daab7179cafdfc2262d5e1d",
+      "bytes": 916
+    },
+    {
+      "file": "runtime-preflight-local-check.json",
+      "sha256": "b4d92eba4462e5218e9fc939bdafdd3659758b6b197f7370da382b2390e4b0e3",
+      "bytes": 1880
+    },
+    {
+      "file": "runtime-repair-entry.ps1",
+      "sha256": "ed21f6d18d4487eea2fca77e0babc2a23efd1b2e3a0ac5faa91448dcab51ffee",
+      "bytes": 333
+    },
+    {
+      "file": "container-run-passed.json",
+      "sha256": "8373da3922d6099751c4a11f7c5c3f87ca8287eeecbf504ae7b59fbee5460269",
+      "bytes": 16461
+    },
+    {
+      "file": "container-host-passed.json",
+      "sha256": "9bfbf5d5de7209d741e588d5329d8fa0df7f6ec75c7f838203ea746e51376309",
+      "bytes": 439
+    },
+    {
+      "file": "runtime-repair-passed.json",
+      "sha256": "c3ea4d5f1fb220c05a517bdd9dee96d03825d1057c9b2719bd9bf45cfb679c28",
+      "bytes": 898
+    },
+    {
+      "file": "runtime-capabilities-passed.json",
+      "sha256": "28df0d4af41b3f0ed7df8b1f5fdb0a5602526a8feb8f19a0ac96b7fc875b956d",
+      "bytes": 4275
+    },
+    {
+      "file": "source-index-normalization.json",
+      "sha256": "3c3e71bad770cf178d62dcd06f98afe1b03837344e34288d910158642f8daf8c",
+      "bytes": 24484
+    }
+  ],
+  "historical_records": "Original manifest.json and old reports are retained as prior-version evidence",
+  "isolated_container_acceptance": {
+    "status": "passed",
+    "image_id": "sha256:de3b36d9f45ed0cf3103e9d4b7c6aaad27b5a35dc5098aa33d64717df0449fd6",
+    "report": "container-run-passed.json",
+    "input_manifest_sha256": "166619d625f38dc79f060bda0fff219c2fe29ac57315ff47319059013c860ba7",
+    "input_binding_count": 93,
+    "artifacts": [
+      {
+        "file": "output.mp4",
+        "sha256": "807bbee902e87094b33edca59efe93ccb950e8ebc59bae0b7aab9fd8d62b1ada",
+        "bytes": 136261
+      },
+      {
+        "file": "project.mlt",
+        "sha256": "f8220a74f8affa3157dc3ca68341ef94bb8f2e1bca563426db4cf2442d6ebe30",
+        "bytes": 7445
+      },
+      {
+        "file": "captions.srt",
+        "sha256": "643d08593cdc76a977341cd75669cd3f816a48224ce40c51d080f47d04c2185d",
+        "bytes": 97
+      },
+      {
+        "file": "captions.ass",
+        "sha256": "f022e2b21071b20e721753137c43692abb1a9cbd456801b727c9469302392cde",
+        "bytes": 945
+      }
+    ],
+    "scope": "isolated offline synthetic saved EDL to MP4/MLT/subtitles and real loopback HTTP Range checks",
+    "not_claimed": [
+      "candidate generation or ASR/model calls",
+      "Shotcut native render in container",
+      "real human speech sync",
+      "production deployment",
+      "portrait framing quality"
+    ]
+  },
+  "human_sync_review": {
+    "report": "real-speech-sync-user-observation.json",
+    "qualitative_review_completed": true,
+    "quantitative_tolerance_verified": false
+  },
+  "remaining": [
+    "authorized publication"
+  ],
+  "retained_acceptance_gaps": [
+    "speech-caption <=0.3s not quantitatively measured"
+  ],
+  "framing": "Fixed center is reproducible; sampled Test3 scenes lose speakers, so landscape is recommended"
+}

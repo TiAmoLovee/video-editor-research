@@ -48,13 +48,13 @@ def run_tool(command: list[str], timeout: int) -> str:
 
 
 def read_frame_count(source: Path, stream_index: int, ffprobe: str,
-                     timeout: int, count_frames: bool = False) -> int:
+                     timeout: int, count_frames: bool = False, *, runner=None) -> int:
     """输入优先用帧数元数据；缺失时解码计数，成品可强制解码计数。"""
     command = [ffprobe, "-v", "error", "-select_streams", str(stream_index)]
     if count_frames:
         command += ["-count_frames"]
     command += ["-show_entries", "stream=nb_frames,nb_read_frames", "-of", "json", str(source)]
-    data = json.loads(run_tool(command, timeout))
+    data = json.loads((run_tool if runner is None else runner)(command, timeout))
     streams = data.get("streams", [])
     if not streams:
         raise ValueError("未找到指定视频流。")
@@ -66,7 +66,7 @@ def read_frame_count(source: Path, stream_index: int, ffprobe: str,
         return frames
     except (TypeError, ValueError):
         if not count_frames:
-            return read_frame_count(source, stream_index, ffprobe, timeout, True)
+            return read_frame_count(source, stream_index, ffprobe, timeout, True, runner=runner)
         raise ValueError("无法获得有效视频帧数。")
 
 

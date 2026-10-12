@@ -1,0 +1,84 @@
+﻿{
+    "status":  "passed_image_capabilities_not_export_acceptance",
+    "checks":  {
+                   "non_root_uid":  10001,
+                   "python:fastapi":  "0.141.1",
+                   "python:uvicorn":  "0.53.0",
+                   "python:jsonschema":  "4.26.0",
+                   "python:celery":  "5.6.3",
+                   "python:redis":  "6.4.0",
+                   "python:pydantic":  "2.13.5",
+                   "python:python-multipart":  "0.0.32",
+                   "api_import":  "/app/backend/clipforge/__init__.py",
+                   "frontend_index":  "/app/frontend/dist/index.html",
+                   "font_readable":  true,
+                   "font_family_and_glyphs":  {
+                                                  "file":  "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+                                                  "bytes":  19484784,
+                                                  "sha256":  "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+                                                  "family":  "Noto Sans CJK SC",
+                                                  "glyph_count":  16
+                                              },
+                   "ffmpeg":  "/usr/bin/ffmpeg",
+                   "ffmpeg_version":  "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers",
+                   "ffprobe":  "/usr/bin/ffprobe",
+                   "ffprobe_version":  "ffprobe version 5.1.9-0+deb12u1 Copyright (c) 2007-2026 the FFmpeg developers",
+                   "ffmpeg_filters":  [
+                                          "aformat",
+                                          "anullsrc",
+                                          "apad",
+                                          "aresample",
+                                          "asetpts",
+                                          "ass",
+                                          "atrim",
+                                          "concat",
+                                          "crop",
+                                          "format",
+                                          "scale",
+                                          "setpts",
+                                          "setsar",
+                                          "settb",
+                                          "trim"
+                                      ],
+                   "ffmpeg_encoders":  [
+                                           "aac",
+                                           "libx264",
+                                           "rawvideo"
+                                       ],
+                   "ffmpeg_decoders":  [
+                                           "h264",
+                                           "pcm_s16le"
+                                       ],
+                   "ffmpeg_demuxers":  [
+                                           "mov"
+                                       ],
+                   "ffmpeg_muxers":  [
+                                         "mp4",
+                                         "rawvideo"
+                                     ],
+                   "ffmpeg_cli_options":  [
+                                              "-enc_time_base",
+                                              "-filter_complex_script",
+                                              "-fps_mode"
+                                          ],
+                   "debian:ffmpeg":  "7:5.1.9-0+deb12u1",
+                   "debian:fonts-noto-cjk":  "1:20220127+repack1-1"
+               },
+    "issues":  [
+
+               ],
+    "model_calls":  0,
+    "network":  "none",
+    "renders":  0,
+    "http_requests":  0,
+    "worker_started":  false,
+    "dependency_versions":  {
+                                "fastapi":  "0.141.1",
+                                "uvicorn":  "0.53.0",
+                                "jsonschema":  "4.26.0",
+                                "celery":  "5.6.3",
+                                "redis":  "6.4.0",
+                                "pydantic":  "2.13.5",
+                                "python-multipart":  "0.0.32"
+                            }
+}

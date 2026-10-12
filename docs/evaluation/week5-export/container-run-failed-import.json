@@ -1,0 +1,13 @@
+{
+  "status": "failed",
+  "checks": {},
+  "http": [],
+  "model_calls": 0,
+  "asr_calls": 0,
+  "worker_started": false,
+  "external_network": false,
+  "seed_scope": "offline technical EDL; does not exercise candidate-generation POST",
+  "error_type": "ModuleNotFoundError",
+  "error": "No module named 'clipforge'",
+  "api_left_running": false
+}

@@ -1,0 +1,60 @@
+{
+  "profile": {
+    "width": 180,
+    "height": 320,
+    "fps": "30",
+    "progressive": 1,
+    "sample_aspect": "1",
+    "display_aspect": "9/16",
+    "colorspace": 709
+  },
+  "duration_frames": 24,
+  "qtext_count": 4,
+  "original_cue": "重复原片段",
+  "saved_cue": "字幕样式\n保持验收",
+  "effective_visible_range": [
+    3,
+    5
+  ],
+  "all_font_and_layout_properties_unchanged": true,
+  "other_timeline_source_audio_crop_cues_unchanged": true,
+  "sources": [
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+      "sha256": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+      "bytes": 1430793
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\large.mov",
+      "sha256": "0e88181a149ed566e96f1a48e39cf61995656034715904b3add001b862339c2e",
+      "bytes": 1601617
+    }
+  ],
+  "original_xml_text_matches_current_exporter": true,
+  "newline_comparison": "Windows text write CRLF normalized by read_text; physical input bytes separately SHA-bound",
+  "status": "passed_literal_edit_with_style_preservation",
+  "checked_at": "2026-10-12T11:12:36.690313+00:00",
+  "inputs": {
+    "original": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\project.mlt",
+      "sha256": "912fcd712c6d737165ccdc0499082de229429c110d88ea629cad27b369b6c9a6",
+      "bytes": 9914
+    },
+    "saved": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\edited.mlt",
+      "sha256": "d734a6e2b494ef17a0e86c9f9bf27cc595278446ae85ec5f1fd0f158d9dec94e",
+      "bytes": 21328
+    },
+    "screenshot": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\projects\\production-v2\\shotcut-edited.jpg",
+      "sha256": "12c248181a6bbeb17933ccd893cc0a6867299ca38aa5bfdc066cb986737541a0",
+      "bytes": 104537
+    },
+    "exporter": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\mlt.py",
+      "sha256": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+      "bytes": 15651
+    }
+  },
+  "scope": "One actual Shotcut 26.8.1 editing roundtrip; exact font/layout properties and timeline graph; not a universal DPI or arbitrary length claim"
+}

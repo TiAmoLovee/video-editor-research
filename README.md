@@ -1,5 +1,7 @@
 # ClipForge 智剪工坊
 
+**第五周本地交付：[功能与验收核对](docs/WEEK5_DELIVERY.md) · [统一 EDL 与第二周衔接](docs/WEEK2_TO_WEEK5.md) · [网页导出与历史恢复](docs/WEB_EXPORT.md)**。已打通明确选择候选 → 保存 EDL → 精确 MP4／可继续编辑的 MLT，包含固定中心 9:16、SRT／ASS 和字幕烧录。真实网页导出及播放跳转、五例 Shotcut 实际打开另存与整数切点回读均通过。新 MLT 字幕将文字与样式分开保存，实际中文全文替换、两行编辑、另存及原生渲染通过；旧版导出按保存的策略继续核验。隔离 Linux 的合成 EDL 导出及 HTTP 范围读取已通过，用户已确认三处人声字幕无明显同步问题，≤0.3 秒尚未量化记录。Test3 的固定中心取景会丢失说话人，建议保留横屏；尺寸和帧序通过不代表取景合格。第五周代码仍为本地修改，不能据此称 GitHub 或现有 8200 服务已更新。
+
 **第四周阶段性交付：[当前状态与遗留项](docs/WEEK4_PLAN.md) · [历史人工评测](docs/HUMAN_EVALUATION.md) · [候选工作台](docs/WEEK4_WORKBENCH.md)**。基础候选流程已合并。本分支继续接入可选的自动首尾优化：新任务会使用规则基线筛选候选，再选择词级边界、生成可播放和下载的优化视频。New4 新素材人工评测为 **17/19，89.47%**，达到该单批次的 85% 目标；[完整结果及两个结尾问题](docs/evaluation/new4-20261009/result.json)均保留。此结论不代表所有视频都达到 85%；这次新增接入尚未部署或推送。
 
 边界优化默认关闭。Docker 使用 `compose.yaml`、`compose.asr-small.yaml`、`compose.boundary.yaml` 三个配置，最后一个会选择已验证的规则基线并读取 `CLIPFORGE_BOUNDARY_CONFIG_FILE` 和私下导出的 `CLIPFORGE_LLM_API_KEY`。本机执行需要设置 `CLIPFORGE_BOUNDARY_REPAIR=1` 与 `CLIPFORGE_BOUNDARY_CONFIG`。配置样例为 `config/boundaries/sentence-v1.json`；继续已有实验时，在私有 `.local.json` 中将 `initial_used_tokens` 设置为已用量（本次为 91,987），而非重新获得一份额度。用量账本保存在任务数据目录的 `boundary-budget.sqlite3`，跨任务预留、结算，未知用量会停止后续调用；失败不重试，整批返回原候选。缓存命中不再调用模型。

@@ -1,0 +1,11 @@
+﻿{
+    "image_id":  "sha256:42d8b95159437a58f240623f313a1b5770e034ec1b9da8a59fe7ac24d4d5a2e9",
+    "runner_exit_code":  1,
+    "existing_running_services_identical":  true,
+    "source_file_count":  76,
+    "schema_file_count":  8,
+    "input_manifest_sha256":  "b84d90718e1009c460974b40492fa4bb3eccb5ed7e390b9e9d691218138332f6",
+    "network":  "none",
+    "production_service_actions":  0,
+    "named_volumes_mounted":  0
+}

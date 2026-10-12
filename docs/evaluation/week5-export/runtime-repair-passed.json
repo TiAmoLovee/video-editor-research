@@ -1,0 +1,17 @@
+﻿{
+    "status":  "passed",
+    "stage":  "completed",
+    "error":  null,
+    "original_image_id":  "sha256:663b453f3106c4e5997cb3af3c137f844dc5d16daf596513572d34cdd2ce6b56",
+    "original_image_tag":  "sha256:663b453f3106c4e5997cb3af3c137f844dc5d16daf596513572d34cdd2ce6b56",
+    "local_base_tag":  "clipforge-week5-font-base:844d01e115b14a108036ef579c687ff5",
+    "derived_image_id":  "sha256:de3b36d9f45ed0cf3103e9d4b7c6aaad27b5a35dc5098aa33d64717df0449fd6",
+    "derived_image_tag":  "clipforge-week5-font-check:844d01e115b14a108036ef579c687ff5",
+    "builder":  "desktop-linux",
+    "existing_running_services_identical":  true,
+    "production_service_actions":  0,
+    "model_calls":  0,
+    "build_network":  "Debian package download",
+    "acceptance_network":  "none",
+    "input_manifest_sha256":  "166619d625f38dc79f060bda0fff219c2fe29ac57315ff47319059013c860ba7"
+}

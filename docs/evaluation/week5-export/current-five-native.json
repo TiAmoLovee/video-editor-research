@@ -1,0 +1,1497 @@
+{
+  "status": "passed_five_fresh_native_cases",
+  "scope": "5 bounded synthetic native MLT cases, no Shotcut GUI claim",
+  "cases": [
+    {
+      "case": "01-horizontal-reorder-repeat",
+      "frames": 26,
+      "profile": {
+        "width": 160,
+        "height": 90,
+        "fps": {
+          "num": 30,
+          "den": 1
+        }
+      },
+      "cues": 5,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0003333333333333333,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.2626153402537519,
+        "every_frame_native_crop_unique_best": false,
+        "minimum_wrong_crop_minus_correct_mae": null,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "subtitle_positive_foreground_counts": [
+          50,
+          0,
+          148,
+          148,
+          148,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          103,
+          103,
+          103,
+          103,
+          0,
+          0,
+          0,
+          50,
+          0,
+          148,
+          148,
+          148,
+          0,
+          0,
+          0
+        ],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 156,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "has_audio": true,
+        "sync_measured": true,
+        "expected_pulses": 26,
+        "decoded_pulses": 26,
+        "every_marker_code_exact": true,
+        "max_sync_error_frames": 0.0006250000000007638,
+        "decoded_samples_48000hz": 41600,
+        "decoded_audio_length_error_frames": 0.0,
+        "first_markers": [
+          {
+            "centre_seconds": 0.0166875,
+            "code": 128,
+            "measured_frequencies_hz": [
+              899.4140625,
+              7920.41015625
+            ],
+            "pulse_samples": 848
+          },
+          {
+            "centre_seconds": 0.050020833333333334,
+            "code": 129,
+            "measured_frequencies_hz": [
+              1139.6484375,
+              7920.41015625
+            ],
+            "pulse_samples": 844
+          },
+          {
+            "centre_seconds": 0.08335416666666666,
+            "code": 130,
+            "measured_frequencies_hz": [
+              1379.8828125,
+              7920.41015625
+            ],
+            "pulse_samples": 838
+          }
+        ],
+        "last_markers": [
+          {
+            "centre_seconds": 0.7833541666666667,
+            "code": 133,
+            "measured_frequencies_hz": [
+              2100.5859375,
+              7920.41015625
+            ],
+            "pulse_samples": 840
+          },
+          {
+            "centre_seconds": 0.8166875,
+            "code": 134,
+            "measured_frequencies_hz": [
+              2339.35546875,
+              7920.41015625
+            ],
+            "pulse_samples": 844
+          },
+          {
+            "centre_seconds": 0.8500208333333333,
+            "code": 135,
+            "measured_frequencies_hz": [
+              2579.58984375,
+              7920.41015625
+            ],
+            "pulse_samples": 840
+          }
+        ],
+        "decoded_audio_frames": 26,
+        "native_rate": 48000,
+        "decoded_native_samples": 41600,
+        "first_decoded_pts_seconds": 0.0,
+        "sample_timeline_contiguous": true
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one",
+        "cue-time--1-frame",
+        "cue-time-+1-frame",
+        "cue-out-incorrectly-exclusive"
+      ],
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\01-horizontal-reorder-repeat\\output.mkv",
+      "output_sha256": "06ca1f1089a075067c87fbf3c72337e954a1e49df6eac0218a8fd32c267d7e69",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\01-horizontal-reorder-repeat\\project.mlt",
+      "project_sha256": "8b490d813df7bf291d60363f5839d51f0479a7e1a80173cee9a0adfb992b7c61",
+      "source_edl_sha256": "e9ab629d78add02525d1bec9a1481dfd1c52e6a955edd2e2b6adbccabace441a",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      },
+      "literal_plain_argument_exact": true,
+      "editable_text_contract": {
+        "cues": [
+          {
+            "cue": "cue_0001_0001",
+            "in": 0,
+            "out_inclusive": 0,
+            "geometry": [
+              8,
+              53,
+              144,
+              32
+            ],
+            "text": "首帧",
+            "editable_plain_text_contract": {
+              "requested_size_px": 8,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 2,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "首帧",
+                "geometry": "8 53 144 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "0=1;1=0",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0001_0002",
+            "in": 2,
+            "out_inclusive": 4,
+            "geometry": [
+              8,
+              53,
+              144,
+              32
+            ],
+            "text": "<b>字</b> #timecode# & 中文",
+            "editable_plain_text_contract": {
+              "requested_size_px": 8,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 24,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "<b>字</b> #timecode# & 中文",
+                "geometry": "8 53 144 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0002_0001",
+            "in": 11,
+            "out_inclusive": 14,
+            "geometry": [
+              8,
+              53,
+              144,
+              32
+            ],
+            "text": "重排字幕",
+            "editable_plain_text_contract": {
+              "requested_size_px": 8,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 4,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "重排字幕",
+                "geometry": "8 53 144 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0003_0001",
+            "in": 18,
+            "out_inclusive": 18,
+            "geometry": [
+              8,
+              53,
+              144,
+              32
+            ],
+            "text": "首帧",
+            "editable_plain_text_contract": {
+              "requested_size_px": 8,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 2,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "首帧",
+                "geometry": "8 53 144 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0003_0002",
+            "in": 20,
+            "out_inclusive": 22,
+            "geometry": [
+              8,
+              53,
+              144,
+              32
+            ],
+            "text": "<b>字</b> #timecode# & 中文",
+            "editable_plain_text_contract": {
+              "requested_size_px": 8,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 24,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "<b>字</b> #timecode# & 中文",
+                "geometry": "8 53 144 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          }
+        ],
+        "brand_geometry": [
+          8,
+          5,
+          144,
+          20
+        ],
+        "font_size_policy": "floor requested pixels to a multiple of four; 96 DPI"
+      },
+      "inputs": {
+        "project": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\01-horizontal-reorder-repeat\\project.mlt",
+          "sha256": "8b490d813df7bf291d60363f5839d51f0479a7e1a80173cee9a0adfb992b7c61",
+          "bytes": 10804
+        },
+        "edl": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\01-horizontal-reorder-repeat\\project.edl.json",
+          "sha256": "e9ab629d78add02525d1bec9a1481dfd1c52e6a955edd2e2b6adbccabace441a",
+          "bytes": 3655
+        },
+        "subtitles": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\01-horizontal-reorder-repeat\\subtitles.json",
+          "sha256": "26193888f0da0c56aea81e3df9079821d4239e8d7f2f8166d15b01b3db5312ab",
+          "bytes": 8198
+        },
+        "analyses": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\01-horizontal-reorder-repeat\\analyses.json",
+          "sha256": "191aa0e7412b80e733e8fe0ebc950b84fc3f1293e6453ce93469c438d273573c",
+          "bytes": 3843
+        }
+      },
+      "source_media": [
+        {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-b.mov",
+          "sha256": "3dd407336ca5ea641ebc0b4c1ffd2068940625fbf3d6d7a9aad0459834d40fcd",
+          "bytes": 1552894
+        },
+        {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+          "sha256": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+          "bytes": 1430793
+        }
+      ],
+      "source_implementation_sha256": {
+        "edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+        "subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+        "mlt.py": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+        "manifest.py": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861"
+      }
+    },
+    {
+      "case": "02-portrait-single-final",
+      "frames": 9,
+      "profile": {
+        "width": 180,
+        "height": 320,
+        "fps": {
+          "num": 30,
+          "den": 1
+        }
+      },
+      "cues": 2,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0003333333333333333,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.3310364596884947,
+        "every_frame_native_crop_unique_best": true,
+        "minimum_wrong_crop_minus_correct_mae": 6.865282428699393,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "subtitle_positive_foreground_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          49,
+          49,
+          49
+        ],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 152,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "has_audio": true,
+        "sync_measured": true,
+        "expected_pulses": 8,
+        "decoded_pulses": 8,
+        "every_marker_code_exact": true,
+        "max_sync_error_frames": 0.0006250000000007638,
+        "decoded_samples_48000hz": 14400,
+        "decoded_audio_length_error_frames": 0.0,
+        "first_markers": [
+          {
+            "centre_seconds": 0.050020833333333334,
+            "code": 234,
+            "measured_frequencies_hz": [
+              3300.29296875,
+              9360.3515625
+            ],
+            "pulse_samples": 842
+          },
+          {
+            "centre_seconds": 0.08335416666666666,
+            "code": 235,
+            "measured_frequencies_hz": [
+              3540.52734375,
+              9360.3515625
+            ],
+            "pulse_samples": 842
+          },
+          {
+            "centre_seconds": 0.1166875,
+            "code": 236,
+            "measured_frequencies_hz": [
+              3779.296875,
+              9360.3515625
+            ],
+            "pulse_samples": 846
+          }
+        ],
+        "last_markers": [
+          {
+            "centre_seconds": 0.2166875,
+            "code": 239,
+            "measured_frequencies_hz": [
+              4500.0,
+              9360.3515625
+            ],
+            "pulse_samples": 844
+          },
+          {
+            "centre_seconds": 0.25002083333333336,
+            "code": 238,
+            "measured_frequencies_hz": [
+              4259.765625,
+              9360.3515625
+            ],
+            "pulse_samples": 846
+          },
+          {
+            "centre_seconds": 0.2833541666666667,
+            "code": 239,
+            "measured_frequencies_hz": [
+              4500.0,
+              9360.3515625
+            ],
+            "pulse_samples": 844
+          }
+        ],
+        "decoded_audio_frames": 9,
+        "native_rate": 48000,
+        "decoded_native_samples": 14400,
+        "first_decoded_pts_seconds": 0.0,
+        "sample_timeline_contiguous": true
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one",
+        "cue-time--1-frame",
+        "cue-time-+1-frame",
+        "cue-out-incorrectly-exclusive"
+      ],
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\02-portrait-single-final\\output.mkv",
+      "output_sha256": "e38e9b1e7d6beaee55f2e2e4c55e463842dfb84cc263f3beca4d5ab28905eb5d",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\02-portrait-single-final\\project.mlt",
+      "project_sha256": "9a441473a19c3413d69d67af71c54b27f86f2cae0ef37489df1ee6af7ad3a735",
+      "source_edl_sha256": "bbab5e88f997fdb71a91207d23e95b93ed2f5ed4c39ef555e54939f2b6bd4c90",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      },
+      "literal_plain_argument_exact": true,
+      "editable_text_contract": {
+        "cues": [
+          {
+            "cue": "cue_0002_0001",
+            "in": 5,
+            "out_inclusive": 6,
+            "geometry": [
+              9,
+              269,
+              162,
+              32
+            ],
+            "text": "末帧",
+            "editable_plain_text_contract": {
+              "requested_size_px": 11,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 2,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "末帧",
+                "geometry": "9 269 162 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0003_0001",
+            "in": 7,
+            "out_inclusive": 8,
+            "geometry": [
+              9,
+              269,
+              162,
+              32
+            ],
+            "text": "末帧",
+            "editable_plain_text_contract": {
+              "requested_size_px": 11,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 2,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "末帧",
+                "geometry": "9 269 162 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          }
+        ],
+        "brand_geometry": [
+          9,
+          19,
+          162,
+          20
+        ],
+        "font_size_policy": "floor requested pixels to a multiple of four; 96 DPI"
+      },
+      "inputs": {
+        "project": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\02-portrait-single-final\\project.mlt",
+          "sha256": "9a441473a19c3413d69d67af71c54b27f86f2cae0ef37489df1ee6af7ad3a735",
+          "bytes": 8722
+        },
+        "edl": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\02-portrait-single-final\\project.edl.json",
+          "sha256": "bbab5e88f997fdb71a91207d23e95b93ed2f5ed4c39ef555e54939f2b6bd4c90",
+          "bytes": 4024
+        },
+        "subtitles": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\02-portrait-single-final\\subtitles.json",
+          "sha256": "6118f74577cb8c3324b73edc9760c6bed4cf328120e35c3931ebacf0ed8537eb",
+          "bytes": 5289
+        },
+        "analyses": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\02-portrait-single-final\\analyses.json",
+          "sha256": "df4fed3390de762629a1416aa97fabd36c59028ed4f3ccab1d698664be8adb72",
+          "bytes": 2977
+        }
+      },
+      "source_media": [
+        {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+          "sha256": "177cfd3440c2f6cb60013bbc90eb028e48480d1f49a9e34a569ce6d6152d5099",
+          "bytes": 17954
+        },
+        {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+          "sha256": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+          "bytes": 1430793
+        }
+      ],
+      "source_implementation_sha256": {
+        "edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+        "subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+        "mlt.py": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+        "manifest.py": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861"
+      }
+    },
+    {
+      "case": "03-rational-half-frame",
+      "frames": 16,
+      "profile": {
+        "width": 180,
+        "height": 320,
+        "fps": {
+          "num": 30000,
+          "den": 1001
+        }
+      },
+      "cues": 3,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0005,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.2850178003884252,
+        "every_frame_native_crop_unique_best": true,
+        "minimum_wrong_crop_minus_correct_mae": 10.755365560416756,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "subtitle_positive_foreground_counts": [
+          106,
+          106,
+          0,
+          95,
+          95,
+          95,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          109,
+          109
+        ],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 152,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "has_audio": true,
+        "sync_measured": true,
+        "expected_pulses": 16,
+        "decoded_pulses": 16,
+        "every_marker_code_exact": true,
+        "max_sync_error_frames": 0.0011238761238751682,
+        "decoded_samples_48000hz": 25626,
+        "decoded_audio_length_error_frames": 0.0002497502497511583,
+        "first_markers": [
+          {
+            "centre_seconds": 0.01671875,
+            "code": 29,
+            "measured_frequencies_hz": [
+              4016.6015625,
+              6234.375
+            ],
+            "pulse_samples": 843
+          },
+          {
+            "centre_seconds": 0.05007291666666667,
+            "code": 30,
+            "measured_frequencies_hz": [
+              4255.37109375,
+              6234.375
+            ],
+            "pulse_samples": 837
+          },
+          {
+            "centre_seconds": 0.08344791666666666,
+            "code": 31,
+            "measured_frequencies_hz": [
+              4495.60546875,
+              6234.375
+            ],
+            "pulse_samples": 849
+          }
+        ],
+        "last_markers": [
+          {
+            "centre_seconds": 0.45047916666666665,
+            "code": 237,
+            "measured_frequencies_hz": [
+              4016.6015625,
+              9350.09765625
+            ],
+            "pulse_samples": 842
+          },
+          {
+            "centre_seconds": 0.48385416666666664,
+            "code": 238,
+            "measured_frequencies_hz": [
+              4255.37109375,
+              9350.09765625
+            ],
+            "pulse_samples": 846
+          },
+          {
+            "centre_seconds": 0.5172083333333334,
+            "code": 239,
+            "measured_frequencies_hz": [
+              4495.60546875,
+              9350.09765625
+            ],
+            "pulse_samples": 846
+          }
+        ],
+        "decoded_audio_frames": 16,
+        "native_rate": 48000,
+        "decoded_native_samples": 25626,
+        "first_decoded_pts_seconds": 0.0,
+        "sample_timeline_contiguous": true
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one",
+        "cue-time--1-frame",
+        "cue-time-+1-frame",
+        "cue-out-incorrectly-exclusive"
+      ],
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\03-rational-half-frame\\output.mkv",
+      "output_sha256": "66a2a565006be1caf7da92aa429d3263f01fc9c7f91ef842e4ac55a79ff83d8e",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\03-rational-half-frame\\project.mlt",
+      "project_sha256": "b1cbb669a136c348a500686fe7b36efc6cfaf84fc994a665e8916f13cebd6023",
+      "source_edl_sha256": "1a20b0b53300722cff51383b01ed5c225d59e863cd8dab1e9bd051aaf08d2802",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      },
+      "literal_plain_argument_exact": true,
+      "editable_text_contract": {
+        "cues": [
+          {
+            "cue": "cue_0001_0001",
+            "in": 0,
+            "out_inclusive": 1,
+            "geometry": [
+              9,
+              269,
+              162,
+              32
+            ],
+            "text": "分数帧率",
+            "editable_plain_text_contract": {
+              "requested_size_px": 11,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 4,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "分数帧率",
+                "geometry": "9 269 162 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0001_0002",
+            "in": 3,
+            "out_inclusive": 5,
+            "geometry": [
+              9,
+              269,
+              162,
+              32
+            ],
+            "text": "半帧量化",
+            "editable_plain_text_contract": {
+              "requested_size_px": 11,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 4,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "半帧量化",
+                "geometry": "9 269 162 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0002_0001",
+            "in": 14,
+            "out_inclusive": 15,
+            "geometry": [
+              9,
+              269,
+              162,
+              32
+            ],
+            "text": "最后字幕",
+            "editable_plain_text_contract": {
+              "requested_size_px": 11,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 4,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "最后字幕",
+                "geometry": "9 269 162 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          }
+        ],
+        "brand_geometry": [
+          9,
+          19,
+          162,
+          20
+        ],
+        "font_size_policy": "floor requested pixels to a multiple of four; 96 DPI"
+      },
+      "inputs": {
+        "project": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\03-rational-half-frame\\project.mlt",
+          "sha256": "b1cbb669a136c348a500686fe7b36efc6cfaf84fc994a665e8916f13cebd6023",
+          "bytes": 8786
+        },
+        "edl": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\03-rational-half-frame\\project.edl.json",
+          "sha256": "1a20b0b53300722cff51383b01ed5c225d59e863cd8dab1e9bd051aaf08d2802",
+          "bytes": 2563
+        },
+        "subtitles": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\03-rational-half-frame\\subtitles.json",
+          "sha256": "acc206319693431b5a5bb7fc4ad5c60c27b045ab4206dd20e203427e1846264e",
+          "bytes": 5532
+        },
+        "analyses": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\03-rational-half-frame\\analyses.json",
+          "sha256": "7af7aef775d3019ad2a5edab07e2ee50cbb0d2013b0dff17c83ee92b939600b5",
+          "bytes": 2445
+        }
+      },
+      "source_media": [
+        {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-r.mov",
+          "sha256": "87bc88d5d94ab72c3f02f4b27b9620253c69fe773f6aece4c7bf48460992ad5a",
+          "bytes": 1557241
+        }
+      ],
+      "source_implementation_sha256": {
+        "edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+        "subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+        "mlt.py": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+        "manifest.py": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861"
+      }
+    },
+    {
+      "case": "04-no-audio-native",
+      "frames": 12,
+      "profile": {
+        "width": 160,
+        "height": 90,
+        "fps": {
+          "num": 30,
+          "den": 1
+        }
+      },
+      "cues": 0,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0003333333333333333,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.2522455089820335,
+        "every_frame_native_crop_unique_best": false,
+        "minimum_wrong_crop_minus_correct_mae": null,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [],
+        "subtitle_positive_foreground_counts": [],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 156,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "source_has_audio": false,
+        "source_audio_index": -1,
+        "consumer_silence_max_amplitude": 0.0,
+        "note": "MLT avformat consumer emits silent PCM from background track; no source audio exists."
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one"
+      ],
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\04-no-audio-native\\output.mkv",
+      "output_sha256": "876818ac1e00b624002e0bed6f0dea857724b7a38f9f55de44c0ac0b6b26dfc2",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\04-no-audio-native\\project.mlt",
+      "project_sha256": "7d5e3fa1c474f918ad7ad555017f1d0a2dea6a58da3f7fd199fee7482e042163",
+      "source_edl_sha256": "115a6bd892e915949ff8c7025aad5c197ad8ba65aa3925f5e38495520b599822",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      },
+      "literal_plain_argument_exact": true,
+      "editable_text_contract": {
+        "cues": [],
+        "brand_geometry": [
+          8,
+          5,
+          144,
+          20
+        ],
+        "font_size_policy": "floor requested pixels to a multiple of four; 96 DPI"
+      },
+      "inputs": {
+        "project": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\04-no-audio-native\\project.mlt",
+          "sha256": "7d5e3fa1c474f918ad7ad555017f1d0a2dea6a58da3f7fd199fee7482e042163",
+          "bytes": 3748
+        },
+        "edl": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\04-no-audio-native\\project.edl.json",
+          "sha256": "115a6bd892e915949ff8c7025aad5c197ad8ba65aa3925f5e38495520b599822",
+          "bytes": 2401
+        },
+        "subtitles": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\04-no-audio-native\\subtitles.json",
+          "sha256": "f1fed0df7f614980e2fabced588358edf2702a02bff8bd2fcbeece5144287d6d",
+          "bytes": 2531
+        },
+        "analyses": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\04-no-audio-native\\analyses.json",
+          "sha256": "7af169977eaf034fc88784cc4bc09e4671643da4614aaff6bc0f69ae8fa35085",
+          "bytes": 1291
+        }
+      },
+      "source_media": [
+        {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+          "sha256": "177cfd3440c2f6cb60013bbc90eb028e48480d1f49a9e34a569ce6d6152d5099",
+          "bytes": 17954
+        }
+      ],
+      "source_implementation_sha256": {
+        "edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+        "subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+        "mlt.py": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+        "manifest.py": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861"
+      }
+    },
+    {
+      "case": "05-portrait-mixed-native",
+      "frames": 24,
+      "profile": {
+        "width": 180,
+        "height": 320,
+        "fps": {
+          "num": 30,
+          "den": 1
+        }
+      },
+      "cues": 3,
+      "every_native_frame_ID_exact": true,
+      "CFR_PTS_exact_within_container_tick": true,
+      "max_pts_error_seconds": 0.0003333333333333333,
+      "geometry_and_cues": {
+        "every_frame_source_roi_matches": true,
+        "max_source_roi_rgb_mae": 1.310609273395527,
+        "every_frame_native_crop_unique_best": true,
+        "minimum_wrong_crop_minus_correct_mae": 4.630152671755725,
+        "every_frame_integer_cue_on_off_exact": true,
+        "subtitle_state": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "subtitle_positive_foreground_counts": [
+          0,
+          0,
+          0,
+          132,
+          132,
+          0,
+          0,
+          0,
+          0,
+          0,
+          117,
+          117,
+          117,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          132,
+          132,
+          0,
+          0,
+          0
+        ],
+        "whole_timeline_ai_brand_visible": true,
+        "minimum_ai_positive_foreground_pixels": 152,
+        "foreground_threshold": 20,
+        "source_roi_mae_limit": 7
+      },
+      "audio": {
+        "has_audio": true,
+        "sync_measured": true,
+        "expected_pulses": 24,
+        "decoded_pulses": 24,
+        "every_marker_code_exact": true,
+        "max_sync_error_frames": 0.0006250000000007638,
+        "decoded_samples_48000hz": 38400,
+        "decoded_audio_length_error_frames": 0.0,
+        "first_markers": [
+          {
+            "centre_seconds": 0.0166875,
+            "code": 45,
+            "measured_frequencies_hz": [
+              4019.53125,
+              6480.46875
+            ],
+            "pulse_samples": 848
+          },
+          {
+            "centre_seconds": 0.050020833333333334,
+            "code": 46,
+            "measured_frequencies_hz": [
+              4259.765625,
+              6480.46875
+            ],
+            "pulse_samples": 842
+          },
+          {
+            "centre_seconds": 0.08335416666666666,
+            "code": 47,
+            "measured_frequencies_hz": [
+              4500.0,
+              6480.46875
+            ],
+            "pulse_samples": 836
+          }
+        ],
+        "last_markers": [
+          {
+            "centre_seconds": 0.7166875,
+            "code": 50,
+            "measured_frequencies_hz": [
+              1379.8828125,
+              6720.703125
+            ],
+            "pulse_samples": 840
+          },
+          {
+            "centre_seconds": 0.7500208333333334,
+            "code": 51,
+            "measured_frequencies_hz": [
+              1620.1171875,
+              6720.703125
+            ],
+            "pulse_samples": 846
+          },
+          {
+            "centre_seconds": 0.7833541666666667,
+            "code": 52,
+            "measured_frequencies_hz": [
+              1860.3515625,
+              6720.703125
+            ],
+            "pulse_samples": 846
+          }
+        ],
+        "decoded_audio_frames": 24,
+        "native_rate": 48000,
+        "decoded_native_samples": 38400,
+        "first_decoded_pts_seconds": 0.0,
+        "sample_timeline_contiguous": true
+      },
+      "negative_controls_rejected": [
+        "source-ID-plus-one",
+        "source-ID-minus-one",
+        "frame-order-rotate-one",
+        "cue-time--1-frame",
+        "cue-time-+1-frame",
+        "cue-out-incorrectly-exclusive"
+      ],
+      "output": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\05-portrait-mixed-native\\output.mkv",
+      "output_sha256": "512378c22609132401ec3bcf2466680b1cb726c000b2a778174a2125d75a66ed",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\05-portrait-mixed-native\\project.mlt",
+      "project_sha256": "912fcd712c6d737165ccdc0499082de229429c110d88ea629cad27b369b6c9a6",
+      "source_edl_sha256": "14b82989d12efbe6b483dfc01babee4d861cfabacd64bfdc170107900c307a14",
+      "native_encode_provenance": {
+        "native_encode_in_this_run": true,
+        "reused_from": null
+      },
+      "literal_plain_argument_exact": true,
+      "editable_text_contract": {
+        "cues": [
+          {
+            "cue": "cue_0001_0001",
+            "in": 3,
+            "out_inclusive": 4,
+            "geometry": [
+              9,
+              269,
+              162,
+              32
+            ],
+            "text": "重复原片段",
+            "editable_plain_text_contract": {
+              "requested_size_px": 11,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 5,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "重复原片段",
+                "geometry": "9 269 162 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0002_0001",
+            "in": 10,
+            "out_inclusive": 12,
+            "geometry": [
+              9,
+              269,
+              162,
+              32
+            ],
+            "text": "不同尺寸素材",
+            "editable_plain_text_contract": {
+              "requested_size_px": 11,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 6,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "不同尺寸素材",
+                "geometry": "9 269 162 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          },
+          {
+            "cue": "cue_0003_0001",
+            "in": 19,
+            "out_inclusive": 20,
+            "geometry": [
+              9,
+              269,
+              162,
+              32
+            ],
+            "text": "重复原片段",
+            "editable_plain_text_contract": {
+              "requested_size_px": 11,
+              "quantized_size_px": 8,
+              "point_size_at_96_dpi": 6,
+              "utf16_units": 5,
+              "line_count": 1,
+              "style_properties": {
+                "mlt_service": "qtext",
+                "shotcut:filter": "dynamicText",
+                "argument": "重复原片段",
+                "geometry": "9 269 162 32",
+                "family": "Microsoft YaHei",
+                "size": "8",
+                "weight": "400",
+                "style": "normal",
+                "fgcolour": "0xffffffff",
+                "outline": "0",
+                "pad": "0",
+                "typewriter": "0",
+                "shotcut:usePointSize": "1",
+                "shotcut:pointSize": "6",
+                "opacity": "1",
+                "bgcolour": "0x00000080",
+                "halign": "center",
+                "valign": "bottom"
+              }
+            }
+          }
+        ],
+        "brand_geometry": [
+          9,
+          19,
+          162,
+          20
+        ],
+        "font_size_policy": "floor requested pixels to a multiple of four; 96 DPI"
+      },
+      "inputs": {
+        "project": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\05-portrait-mixed-native\\project.mlt",
+          "sha256": "912fcd712c6d737165ccdc0499082de229429c110d88ea629cad27b369b6c9a6",
+          "bytes": 9914
+        },
+        "edl": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\05-portrait-mixed-native\\project.edl.json",
+          "sha256": "14b82989d12efbe6b483dfc01babee4d861cfabacd64bfdc170107900c307a14",
+          "bytes": 4029
+        },
+        "subtitles": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\05-portrait-mixed-native\\subtitles.json",
+          "sha256": "bc01c3dd414c942134dcc4d7649b12ffaf857117c873bb60cf40ced0587e2244",
+          "bytes": 6296
+        },
+        "analyses": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\runs\\20261012T111621Z-c59707d5\\05-portrait-mixed-native\\analyses.json",
+          "sha256": "47ca7637044cd93cf85ff5e4f814dc6c4ef5435d6616a39477afd4086cdcf34b",
+          "bytes": 3488
+        }
+      },
+      "source_media": [
+        {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+          "sha256": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+          "bytes": 1430793
+        },
+        {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\large.mov",
+          "sha256": "0e88181a149ed566e96f1a48e39cf61995656034715904b3add001b862339c2e",
+          "bytes": 1601617
+        }
+      ],
+      "source_implementation_sha256": {
+        "edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+        "subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+        "mlt.py": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+        "manifest.py": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861"
+      }
+    }
+  ],
+  "output_frames_checked": 87,
+  "native_sources": 5,
+  "native_source_frames_ID_checked": 1200,
+  "native_output_encodes_in_this_run": 5,
+  "known_audio_single_frame_constraints_rejected": [
+    {
+      "schema_version": "0.1.0",
+      "error": "MLT cannot reliably preserve audio in a single-frame clip; use the FFmpeg EDL MP4 renderer",
+      "EDL_valid": true,
+      "source_audio_nonzero": true,
+      "MLT_XML_not_published": true
+    },
+    {
+      "schema_version": "0.2.0",
+      "error": "MLT cannot reliably preserve audio in a single-frame clip; use the FFmpeg EDL MP4 renderer",
+      "EDL_valid": true,
+      "source_audio_nonzero": true,
+      "MLT_XML_not_published": true
+    }
+  ],
+  "frozen_product_sha256": {
+    "edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+    "subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+    "mlt.py": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+    "manifest.py": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861"
+  },
+  "verifier_sha256": "f392e89dd1f8d30bbf713c08bddc2b359574b26d3fd699f7c38e5fc14fc31d26",
+  "tools_sha256": {
+    "melt": "716d31a8d6e2509fb0c229e4fc117bb0f16d1071564a09285766eab970990ee4",
+    "ffmpeg_decode": "dc1abf0065c3a28460baacae9868d919fb1bdad9301e668bfe50c7b267debe62"
+  },
+  "limitations": [
+    "Qt offscreen native MLT is separate from actual Shotcut GUI editing acceptance.",
+    "Native cue foreground and exact saved literal arguments are checked; this is not OCR fidelity proof.",
+    "Authored synthetic word timings do not establish real ASR accuracy or human speech synchronization.",
+    "The new qtext font/panel/background can differ from historical rich-text pixels.",
+    "Point/pixel size stability is scoped to the tested 96 DPI installation."
+  ],
+  "new_model_calls": 0,
+  "production_deployed": false,
+  "inputs": {
+    "independent_xml_checker": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\verify_effects.py",
+      "sha256": "f392e89dd1f8d30bbf713c08bddc2b359574b26d3fd699f7c38e5fc14fc31d26",
+      "bytes": 27984
+    },
+    "verification_runner": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verify_current_effects.py",
+      "sha256": "74b4bf01cf3565af78551ca92ea30b24d6a408897e5c0b26b9794a8aba4e931d",
+      "bytes": 9626
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-10-12T13:40:51.034727+00:00",
+  "status": "passed",
+  "follows_commit": "9397f0398aa1cf4978ab2afc789f11ac75ddbd2d",
+  "change": "Only .gitattributes adds byte preservation for the frozen v0.1 EDL schema",
+  "schema_sha256": "44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8",
+  "schema_bytes_unchanged": true,
+  "gitattributes_sha256": "a3dc9caf42e640cce5f5f252aedf28058b0e01c8a93f4ceff5b486011c72c7c5",
+  "checkout_cases": [
+    {
+      "attributes": "prior",
+      "core_autocrlf": true,
+      "bytes": 4632,
+      "sha256": "e9a2fce5977ba72960c4d950a7130c74f84c4af8ad51877625762e9ab761ad4f",
+      "result": "reproduced_remote_failure"
+    },
+    {
+      "attributes": "fixed",
+      "core_autocrlf": true,
+      "bytes": 4547,
+      "sha256": "44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8",
+      "result": "passed"
+    },
+    {
+      "attributes": "fixed",
+      "core_autocrlf": false,
+      "bytes": 4547,
+      "sha256": "44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8",
+      "result": "passed"
+    }
+  ],
+  "portrait_tests": {
+    "run": 7,
+    "passed": 7,
+    "log_sha256": "6235a1fb7c0c4b64898f38dee176c96b8f5d65592846732e4db907ad15c4e8f9"
+  },
+  "ruff": {
+    "exit_code": 0,
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source_windows_ci_log": {
+    "job": 114832922215,
+    "bytes": 175436,
+    "sha256": "6a9890b4cd5cb80b31ac49cc88bf81f19fa224aedbba009071b9094796293dff",
+    "run": 605,
+    "passed": 603,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 1
+  },
+  "remote_fix_ci": "pending publication and verification",
+  "production_deployed": false,
+  "historical_container_evidence": "Retained unchanged; no render or Docker rerun"
+}

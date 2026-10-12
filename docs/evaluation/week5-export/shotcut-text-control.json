@@ -1,0 +1,545 @@
+{
+  "status": "passed_text_edit_saved_with_style_changes",
+  "recorded_at": "2026-10-12T10:38:32.290015+00:00",
+  "scope": "GUI first-cue RichText edit/save demonstrated; other cues and non-text semantics compared independently. Not a style-preserving or rendered-pixel acceptance.",
+  "inputs": {
+    "baseline_crop_project": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-crop-controls.mlt",
+      "sha256": "fb8e507b4684ee30fa9c7d82227f8e4cebc572866d4bb46d8d751f6704ef36ca",
+      "bytes": 22668
+    },
+    "text_control_project": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-text-controls.mlt",
+      "sha256": "892734d25b4bd30b5c5187b5c986c191869bd83e9252dd9c8f8b2e849dfafacb",
+      "bytes": 23141
+    },
+    "text_control_screenshot": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-text-controls.jpg",
+      "sha256": "b1275cad1df80b8c8171b83248125dfd7f5ec11bd7fbb80f6ec5380a3fbc6699",
+      "bytes": 107625
+    },
+    "crop_control_report": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\crop-control-audit.json",
+      "sha256": "2a78176ca6979a9516d99143ad9752e07340b8f3f7ee3a4231d49a1fee729d37",
+      "bytes": 14488
+    },
+    "five_case_roundtrip": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-roundtrip.json",
+      "sha256": "dd1b9a6d0096447d63061e669c68f63ccaefc89a96b8531bb7ffbb40ec795c47",
+      "bytes": 152587
+    },
+    "semantic_parser_source": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\audit_gui_roundtrip.py",
+      "sha256": "eed01b17abd93c1a96bb57f250d2fcbb89e4df6be1391056b5a63122f4782a38",
+      "bytes": 24664
+    }
+  },
+  "operator_action": "Root reports output selected, first RichText filter, actual TextArea click/Ctrl+A/type 字幕编辑验收, Ctrl+Shift+S to independent text-controls file.",
+  "gui_screenshot": {
+    "visually_inspected": true,
+    "observed": "Output selected, four RichText filters, first selected with on-screen edit rectangle; saved-project notice visible; title is text-controls file without dirty asterisk.",
+    "operator_accessibility_observation": "TextArea Value 字幕编辑验收",
+    "does_not_depend_on_window_title_cache": true
+  },
+  "acceptance": {
+    "requested_HTML_text_saved": true,
+    "target_cue_range_unchanged": true,
+    "all_cue_and_brand_ranges_unchanged": true,
+    "timeline_sources_clip_order_ranges_crop_audio_profile_transitions_unchanged": true,
+    "unedited_cues_and_brand_properties_HTML_styles_unchanged": true,
+    "crop_control_original_preserved": true,
+    "all_five_original_and_saved_project_SHA_unchanged": true,
+    "edited_cue_styling_unchanged": false,
+    "legacy_argument_updated_with_HTML": false
+  },
+  "edited_cue": {
+    "key": [
+      "caption",
+      [
+        3,
+        5
+      ]
+    ],
+    "original": {
+      "ordinal": 0,
+      "role": "caption",
+      "range": [
+        3,
+        5
+      ],
+      "rich_text": {
+        "text": "重复原片段",
+        "runs": [
+          {
+            "text": "重复原片段",
+            "style": {
+              "font-family": "Microsoft YaHei",
+              "font-size": "11px",
+              "color": "#ffffff"
+            }
+          }
+        ],
+        "paragraphs": [
+          {
+            "align": "center",
+            "style": {
+              "margin": "0px",
+              "line-height": "17px"
+            }
+          }
+        ]
+      },
+      "literal_text": "重复原片段",
+      "properties": {
+        "argument": "重复原片段",
+        "geometry": "9 276 162 25",
+        "family": "Sans",
+        "size": "48",
+        "weight": "400",
+        "style": "normal",
+        "fgcolour": "0x000000ff",
+        "bgcolour": "0x00000080",
+        "olcolour": "0x00000000",
+        "pad": "0",
+        "halign": "center",
+        "valign": "top",
+        "outline": "0",
+        "underline": "0",
+        "strikethrough": "0",
+        "pixel_ratio": "1",
+        "opacity": "1",
+        "typewriter": "0",
+        "typewriter.step_length": "25",
+        "typewriter.step_sigma": "0",
+        "typewriter.random_seed": "0",
+        "typewriter.macro_type": "1",
+        "typewriter.cursor": "1",
+        "typewriter.cursor_blink_rate": "25",
+        "typewriter.cursor_char": "|",
+        "mlt_service": "qtext",
+        "shotcut:filter": "richText",
+        "shotcut:name": "ClipForge 字幕",
+        "html": "<html><head><meta name=\"qrichtext\" content=\"1\" /></head><body><p align=\"center\" style=\"margin:0px;line-height:17px;\"><font face=\"Microsoft YaHei\"><span style=\"font-size:11px;color:#ffffff;\">重复原片段</span></font></p></body></html>",
+        "overflow-y": "0",
+        "clipforge:cue_id": "subtitle0"
+      },
+      "legacy_argument_matches_html": true
+    },
+    "saved": {
+      "ordinal": 0,
+      "role": "caption",
+      "range": [
+        3,
+        5
+      ],
+      "rich_text": {
+        "text": "字幕编辑验收",
+        "runs": [
+          {
+            "text": "字幕编辑验收",
+            "style": {
+              "font-family": "'Microsoft YaHei UI'",
+              "font-size": "9pt",
+              "font-weight": "400",
+              "font-style": "normal"
+            }
+          }
+        ],
+        "paragraphs": [
+          {
+            "align": "",
+            "style": {
+              "margin-top": "0px",
+              "margin-bottom": "0px",
+              "margin-left": "0px",
+              "margin-right": "0px",
+              "-qt-block-indent": "0",
+              "text-indent": "0px"
+            }
+          }
+        ]
+      },
+      "literal_text": "字幕编辑验收",
+      "properties": {
+        "argument": "重复原片段",
+        "geometry": "9 276 162 25 1",
+        "family": "Sans",
+        "size": "48",
+        "weight": "400",
+        "style": "normal",
+        "fgcolour": "0x000000ff",
+        "bgcolour": "0x00000080",
+        "olcolour": "0x00000000",
+        "pad": "0",
+        "halign": "center",
+        "valign": "top",
+        "outline": "0",
+        "underline": "0",
+        "strikethrough": "0",
+        "pixel_ratio": "1",
+        "opacity": "1",
+        "typewriter": "0",
+        "typewriter.step_length": "25",
+        "typewriter.step_sigma": "0",
+        "typewriter.random_seed": "0",
+        "typewriter.macro_type": "1",
+        "typewriter.cursor": "1",
+        "typewriter.cursor_blink_rate": "25",
+        "typewriter.cursor_char": "|",
+        "mlt_service": "qtext",
+        "shotcut:filter": "richText",
+        "shotcut:name": "ClipForge 字幕",
+        "html": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">字幕编辑验收</p></body></html>",
+        "overflow-y": "0",
+        "clipforge:cue_id": "subtitle0"
+      },
+      "legacy_argument_matches_html": false
+    },
+    "raw_property_changes": [
+      {
+        "property": "geometry",
+        "original": "9 276 162 25",
+        "saved": "9 276 162 25 1"
+      },
+      {
+        "property": "html",
+        "original": "<html><head><meta name=\"qrichtext\" content=\"1\" /></head><body><p align=\"center\" style=\"margin:0px;line-height:17px;\"><font face=\"Microsoft YaHei\"><span style=\"font-size:11px;color:#ffffff;\">重复原片段</span></font></p></body></html>",
+        "saved": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">字幕编辑验收</p></body></html>"
+      }
+    ],
+    "rich_text_semantic_changes": [
+      {
+        "field": "paragraphs[0].align",
+        "original": "center",
+        "saved": ""
+      },
+      {
+        "field": "paragraphs[0].style.-qt-block-indent",
+        "original": null,
+        "saved": "0"
+      },
+      {
+        "field": "paragraphs[0].style.line-height",
+        "original": "17px",
+        "saved": null
+      },
+      {
+        "field": "paragraphs[0].style.margin",
+        "original": "0px",
+        "saved": null
+      },
+      {
+        "field": "paragraphs[0].style.margin-bottom",
+        "original": null,
+        "saved": "0px"
+      },
+      {
+        "field": "paragraphs[0].style.margin-left",
+        "original": null,
+        "saved": "0px"
+      },
+      {
+        "field": "paragraphs[0].style.margin-right",
+        "original": null,
+        "saved": "0px"
+      },
+      {
+        "field": "paragraphs[0].style.margin-top",
+        "original": null,
+        "saved": "0px"
+      },
+      {
+        "field": "paragraphs[0].style.text-indent",
+        "original": null,
+        "saved": "0px"
+      },
+      {
+        "field": "runs[0].style.color",
+        "original": "#ffffff",
+        "saved": null
+      },
+      {
+        "field": "runs[0].style.font-family",
+        "original": "Microsoft YaHei",
+        "saved": "'Microsoft YaHei UI'"
+      },
+      {
+        "field": "runs[0].style.font-size",
+        "original": "11px",
+        "saved": "9pt"
+      },
+      {
+        "field": "runs[0].style.font-style",
+        "original": null,
+        "saved": "normal"
+      },
+      {
+        "field": "runs[0].style.font-weight",
+        "original": null,
+        "saved": "400"
+      },
+      {
+        "field": "runs[0].text",
+        "original": "重复原片段",
+        "saved": "字幕编辑验收"
+      },
+      {
+        "field": "text",
+        "original": "重复原片段",
+        "saved": "字幕编辑验收"
+      }
+    ],
+    "actual_qtext_fallback_fgcolour": "0x000000ff",
+    "color_note": "Saved edited HTML no longer overrides color explicitly; qtext retains 0x000000ff fallback. Exact rendered text color not measured."
+  },
+  "explicit_flags_and_incidental_changes": [
+    {
+      "kind": "stale_legacy_argument",
+      "severity": "needs_note",
+      "detail": "HTML contains the edited text; argument remains 重复原片段. Static audit reports both and does not equate argument with actual rich-text HTML."
+    },
+    {
+      "kind": "font_and_paragraph_style_changed",
+      "severity": "material_style_drift",
+      "detail": "Original HTML declares Microsoft YaHei, 11px, #ffffff, centered paragraph and 17px line-height. Saved Qt HTML declares Microsoft YaHei UI, 9pt, weight400/normal, default paragraph; explicit white color, center alignment and line-height are absent."
+    },
+    {
+      "kind": "geometry_serialization_changed",
+      "severity": "needs_note",
+      "detail": "Geometry changed from 9 276 162 25 to 9 276 162 25 1. First four position/size values are preserved; an explicit fifth value 1 is added. Pixel-equivalent rendering is not inferred."
+    }
+  ],
+  "unexpected_non_text_changes": [],
+  "unexpected_unedited_cue_or_brand_changes": [],
+  "five_case_project_sha_checks": [
+    {
+      "case": "01-horizontal-reorder-repeat",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    },
+    {
+      "case": "02-portrait-single-final",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    },
+    {
+      "case": "03-rational-half-frame",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    },
+    {
+      "case": "04-no-audio-native",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    },
+    {
+      "case": "05-portrait-mixed-native",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    }
+  ],
+  "total_frames": 24,
+  "clips": 3,
+  "caption_cues": 3,
+  "brand_filters": 1,
+  "time_serialization": {
+    "max_absolute_residual_frames": 0.01,
+    "records": [
+      {
+        "label": "timeline.in",
+        "serialized": "00:00:00.000",
+        "frame": 0,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "timeline.out",
+        "serialized": "00:00:00.767",
+        "frame": 23,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "qtext0.in",
+        "serialized": "00:00:00.100",
+        "frame": 3,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "qtext0.out",
+        "serialized": "00:00:00.133",
+        "frame": 4,
+        "signed_residual_frames": -0.01,
+        "signed_residual_seconds": -0.0003333333333333333
+      },
+      {
+        "label": "qtext1.in",
+        "serialized": "00:00:00.333",
+        "frame": 10,
+        "signed_residual_frames": -0.01,
+        "signed_residual_seconds": -0.0003333333333333333
+      },
+      {
+        "label": "qtext1.out",
+        "serialized": "00:00:00.400",
+        "frame": 12,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "qtext2.in",
+        "serialized": "00:00:00.633",
+        "frame": 19,
+        "signed_residual_frames": -0.01,
+        "signed_residual_seconds": -0.0003333333333333333
+      },
+      {
+        "label": "qtext2.out",
+        "serialized": "00:00:00.667",
+        "frame": 20,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "qtext3.out",
+        "serialized": "00:00:00.767",
+        "frame": 23,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "timeline.in",
+        "serialized": "00:00:00.000",
+        "frame": 0,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "timeline.out",
+        "serialized": "00:00:00.767",
+        "frame": 23,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track0.entry0.source.in",
+        "serialized": "00:00:00.000",
+        "frame": 0,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "track0.entry0.source.out",
+        "serialized": "00:00:00.767",
+        "frame": 23,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track0.entry0.in",
+        "serialized": "00:00:00.000",
+        "frame": 0,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "track0.entry0.out",
+        "serialized": "00:00:00.767",
+        "frame": 23,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track1.entry2.source.out",
+        "serialized": "00:00:07.967",
+        "frame": 239,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track1.entry2.source.filter.out",
+        "serialized": "00:00:07.967",
+        "frame": 239,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track1.entry2.in",
+        "serialized": "00:00:01.500",
+        "frame": 45,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "track1.entry2.out",
+        "serialized": "00:00:01.733",
+        "frame": 52,
+        "signed_residual_frames": -0.01,
+        "signed_residual_seconds": -0.0003333333333333333
+      },
+      {
+        "label": "track1.entry3.source.out",
+        "serialized": "00:00:07.967",
+        "frame": 239,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track1.entry3.source.filter.out",
+        "serialized": "00:00:07.967",
+        "frame": 239,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track1.entry3.in",
+        "serialized": "00:00:00.000",
+        "frame": 0,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "track1.entry3.out",
+        "serialized": "00:00:00.233",
+        "frame": 7,
+        "signed_residual_frames": -0.01,
+        "signed_residual_seconds": -0.0003333333333333333
+      },
+      {
+        "label": "track1.entry4.source.out",
+        "serialized": "00:00:07.967",
+        "frame": 239,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track1.entry4.source.filter.out",
+        "serialized": "00:00:07.967",
+        "frame": 239,
+        "signed_residual_frames": 0.01,
+        "signed_residual_seconds": 0.0003333333333333333
+      },
+      {
+        "label": "track1.entry4.in",
+        "serialized": "00:00:01.500",
+        "frame": 45,
+        "signed_residual_frames": 0.0,
+        "signed_residual_seconds": 0.0
+      },
+      {
+        "label": "track1.entry4.out",
+        "serialized": "00:00:01.733",
+        "frame": 52,
+        "signed_residual_frames": -0.01,
+        "signed_residual_seconds": -0.0003333333333333333
+      }
+    ]
+  },
+  "limits": [
+    "No new native rendering or pixel/style equivalence claimed.",
+    "No real-speech subtitle synchronization, audible playback or general RichText editing guarantee.",
+    "The edited copy contains intentional user text changes and is not claimed to match the immutable original EDL subtitle content.",
+    "Crop-control report and five-case report were not rewritten."
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "recorded_at": "2026-10-12T13:16:27.798487+00:00",
+  "follows_commit": "293d4363c7efe62888bf08bfc7ca8d4c4ed41495",
+  "pr": "https://github.com/TiAmoLovee/video-editor-research/pull/8",
+  "change": "Preserve verified v2 MLT text_style_version in editing-history exports",
+  "code_files": [
+    "backend/clipforge/services/editing_history.py",
+    "backend/tests/test_editing_history_service.py"
+  ],
+  "source_sha256": {
+    "backend/clipforge/services/editing_history.py": "9365c778f26070a1213f4bc107684d1b8107c224df0aeada0fea7d3cf97f589c",
+    "backend/tests/test_editing_history_service.py": "83a2cff961a9f73f3ea00be0dd72e3547321e228c3bb422a831c2b991851e06e"
+  },
+  "local_verification_status": "related_passed_full_environment_limited",
+  "scope": "Windows Python 3.11; same Ruff and unittest commands as CI; workspace-owned temporary directory",
+  "checks": {
+    "ruff": {
+      "exit_code": 0,
+      "seconds": 0.406,
+      "command": [
+        "-m",
+        "ruff",
+        "check",
+        "--no-cache",
+        "--output-format=github",
+        "."
+      ],
+      "log": "history-fix-ruff.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "unittest": {
+      "exit_code": 1,
+      "seconds": 418.078,
+      "command": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "backend/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "log": "history-fix-unittest.log",
+      "log_sha256": "9f967342707f8de97ed4f735fb6328456a9703230bc3bd8a3d0b099d89284c41"
+    }
+  },
+  "full_suite": {
+    "run": 605,
+    "passed": 597,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 7,
+    "status": "failed",
+    "environment_error_cases": [
+      "test_changed_stored_media_is_not_served_or_labeled_accepted (test_acceptance.AcceptanceTests.test_changed_stored_media_is_not_served_or_labeled_accepted)",
+      "test_concurrent_record_is_never_overwritten (test_acceptance.AcceptanceTests.test_concurrent_record_is_never_overwritten)",
+      "test_different_feedback_cannot_silently_replace_history (test_acceptance.AcceptanceTests.test_different_feedback_cannot_silently_replace_history)",
+      "test_failed_record_publication_keeps_valid_media_and_allows_retry (test_acceptance.AcceptanceTests.test_failed_record_publication_keeps_valid_media_and_allows_retry)",
+      "test_import_is_idempotent_and_api_media_and_pagination_keep_acceptance (test_acceptance.AcceptanceTests.test_import_is_idempotent_and_api_media_and_pagination_keep_acceptance)",
+      "test_interrupted_copy_leaves_import_retryable_and_unpublished (test_acceptance.AcceptanceTests.test_interrupted_copy_leaves_import_retryable_and_unpublished)",
+      "test_structured_form_import_keeps_provenance_without_fabricated_quote (test_acceptance.AcceptanceTests.test_structured_form_import_keeps_provenance_without_fabricated_quote)"
+    ],
+    "error_type": "WinError 5 at os.link in pre-existing acceptance code"
+  },
+  "focused_suite": {
+    "run": 35,
+    "passed": 35,
+    "log_sha256": "f419a12bf21ec84f621819dc739fccc131db948939562dc374aaf99b751db988"
+  },
+  "verification_source_sha256": "d36ecfe6512e438a45f40af1b102b52441496222b02c0a89b35b3941133117bf",
+  "initial_remote_checks": {
+    "head": "293d4363c7efe62888bf08bfc7ca8d4c4ed41495",
+    "evidence": "pr8-initial-ci-verification.json",
+    "sha256": "6b72f3240a1291ef5901e0e3f30cc76f7e575c1917adeb9349ccfe3d2e15173e",
+    "frontend": "passed",
+    "backend": "failed"
+  },
+  "initial_local_run": {
+    "log_sha256": "45a3f7b470b08e24cc8210f4eacac46e3a4e759b7978c2b7c638afb54cf94091",
+    "run": 605,
+    "failures": 1,
+    "errors": "24 WinError 5 file-publication failures in sandbox temporary directory; retained as a failed run",
+    "skipped": 1,
+    "failure": "test_verified_artifact_history_and_tamper_detection: missing text_style_version"
+  },
+  "preserved_behavior": [
+    "v1 records omit the missing field",
+    "v2 records retain the validated field",
+    "MLT XML/hash/version validation unchanged",
+    "no render, deployment or model policy change"
+  ],
+  "remote_fix_ci": "pending publication and verification",
+  "historical_container_evidence": "Retained for the initial Week 5 snapshot; not rerun or rebound to this source change",
+  "production_deployed": false
+}

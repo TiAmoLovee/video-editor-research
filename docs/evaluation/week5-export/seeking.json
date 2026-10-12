@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "recorded_at": "2026-10-12T09:57:21.992Z",
+  "browser_url": "http://127.0.0.1:8331/#task=1e5e7300-9f65-4772-bb2d-69ae0e717253",
+  "initial": {
+    "time": 0,
+    "paused": true,
+    "readyState": 4,
+    "seekable": [
+      [
+        0,
+        42.1
+      ]
+    ]
+  },
+  "observed_steps": [
+    {
+      "operation": "slider_keyboard_forward",
+      "time": 0.842
+    },
+    {
+      "operation": "slider_keyboard_end_then_back",
+      "time": 37.89
+    },
+    {
+      "operation": "mouse_drag_backward",
+      "time": 11.923057
+    },
+    {
+      "operation": "resume_after_drag",
+      "time": 12.402686,
+      "paused": false,
+      "readyState": 4
+    },
+    {
+      "operation": "final_paused_poster",
+      "duration": 42.1,
+      "error": null,
+      "height": 1080,
+      "paused": true,
+      "readyState": 4,
+      "seekable": [
+        [
+          0,
+          42.1
+        ]
+      ],
+      "source": "http://127.0.0.1:8331/tasks/1e5e7300-9f65-4772-bb2d-69ae0e717253/edl/47a7980c-1381-455f-93ca-fb585f130c30/renders/b51f6b6f-e150-43dc-b7f3-6924855c928c/files/output.mp4",
+      "time": 37.89,
+      "width": 1920
+    }
+  ],
+  "final": {
+    "duration": 42.1,
+    "error": null,
+    "height": 1080,
+    "paused": true,
+    "readyState": 4,
+    "seekable": [
+      [
+        0,
+        42.1
+      ]
+    ],
+    "source": "http://127.0.0.1:8331/tasks/1e5e7300-9f65-4772-bb2d-69ae0e717253/edl/47a7980c-1381-455f-93ca-fb585f130c30/renders/b51f6b6f-e150-43dc-b7f3-6924855c928c/files/output.mp4",
+    "time": 37.89,
+    "width": 1920
+  },
+  "screenshot": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week5-web-export/browser-verification/seeking-verified.jpg",
+  "new_posts": 0,
+  "model_calls": 0
+}

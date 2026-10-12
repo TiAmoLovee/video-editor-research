@@ -1,0 +1,412 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClipForge immutable EDL subtitles 0.1.0",
+  "description": "Derived original-word evidence and half-open frame cues. Full validation rebuilds from the saved EDL and complete analyses; this does not measure ASR accuracy against real speech. Horizontal policy remains compatible; portrait policy constrains grouping and ASS font sizes to the output canvas.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact_kind",
+    "edl_sha256",
+    "profile",
+    "fps",
+    "duration_frames",
+    "sources",
+    "policy",
+    "brand",
+    "cues",
+    "clip_reports"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "artifact_kind": {
+      "const": "edl_subtitles"
+    },
+    "edl_sha256": {
+      "$ref": "#/$defs/sha"
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width",
+        "height",
+        "fps"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "fps": {
+          "$ref": "#/$defs/fps"
+        }
+      }
+    },
+    "fps": {
+      "$ref": "#/$defs/fps"
+    },
+    "duration_frames": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "policy": {
+      "anyOf": [
+        {
+          "const": {
+            "max_lines": 2,
+            "target_cjk_characters_per_line": 18,
+            "max_cue_seconds": 4,
+            "pause_seconds": 0.45,
+            "duration_tolerance_frames": 1,
+            "frame_quantization": "nearest_half_up_clip_clamped_min_one_frame",
+            "serialization_quantization": "ceil_start_floor_end",
+            "overlap_policy": "merge_overlapping_groups_report_exceptions",
+            "ass_literal_policy": "fullwidth_ascii_braces_backslash",
+            "srt_literal_policy": "fullwidth_ascii_angle_brackets",
+            "orphan_tail_max_cjk_characters": 2,
+            "orphan_tail_max_seconds": 0.3,
+            "orphan_merge_max_seconds": 4.5,
+            "orphan_tail_policy": "same_sentence_same_pause_merge_or_rebalance_without_retiming",
+            "text_policy": "original_words_layout_only"
+          }
+        },
+        {
+          "const": {
+            "max_lines": 2,
+            "target_cjk_characters_per_line": 12,
+            "max_cue_seconds": 4,
+            "pause_seconds": 0.45,
+            "duration_tolerance_frames": 1,
+            "frame_quantization": "nearest_half_up_clip_clamped_min_one_frame",
+            "serialization_quantization": "ceil_start_floor_end",
+            "overlap_policy": "merge_overlapping_groups_report_exceptions",
+            "ass_literal_policy": "fullwidth_ascii_braces_backslash",
+            "srt_literal_policy": "fullwidth_ascii_angle_brackets",
+            "orphan_tail_max_cjk_characters": 2,
+            "orphan_tail_max_seconds": 0.3,
+            "orphan_merge_max_seconds": 4.5,
+            "orphan_tail_policy": "same_sentence_same_pause_merge_or_rebalance_without_retiming",
+            "text_policy": "original_words_layout_only",
+            "layout": "portrait_9_16",
+            "font_sizing": "width_height_and_cue_constrained"
+          }
+        }
+      ]
+    },
+    "brand": {
+      "const": {
+        "text": "AI辅助剪辑",
+        "position": "top_right",
+        "scope": "whole_timeline"
+      }
+    },
+    "cues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/cue"
+      }
+    },
+    "clip_reports": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/clip_report"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "frame": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "fps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "num",
+        "den"
+      ],
+      "properties": {
+        "num": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "den": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_sha256",
+        "analysis_sha256",
+        "has_audio",
+        "analysis_result_kind"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha"
+        },
+        "analysis_sha256": {
+          "$ref": "#/$defs/sha"
+        },
+        "has_audio": {
+          "type": "boolean"
+        },
+        "analysis_result_kind": {
+          "enum": [
+            "measured",
+            "synthetic_example"
+          ]
+        }
+      }
+    },
+    "word_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "word_id",
+        "text",
+        "original_start_seconds",
+        "original_end_seconds",
+        "source_start_seconds",
+        "source_end_seconds",
+        "timeline_in_frame",
+        "timeline_out_frame",
+        "clipped_start",
+        "clipped_end",
+        "short_expanded",
+        "overlaps_previous"
+      ],
+      "properties": {
+        "word_id": {
+          "$ref": "#/$defs/id"
+        },
+        "text": {
+          "$ref": "#/$defs/id"
+        },
+        "original_start_seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "original_end_seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "source_start_seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "source_end_seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "timeline_in_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "timeline_out_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "clipped_start": {
+          "type": "boolean"
+        },
+        "clipped_end": {
+          "type": "boolean"
+        },
+        "short_expanded": {
+          "type": "boolean"
+        },
+        "overlaps_previous": {
+          "type": "boolean"
+        }
+      }
+    },
+    "cue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "clip_id",
+        "source_id",
+        "word_ids",
+        "source_start_seconds",
+        "source_end_seconds",
+        "timeline_in_frame",
+        "timeline_out_frame",
+        "text",
+        "word_mappings",
+        "flags"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^cue_[0-9]+_[0-9]+$"
+        },
+        "clip_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "word_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "source_start_seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "source_end_seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "timeline_in_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "timeline_out_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "text": {
+          "$ref": "#/$defs/id"
+        },
+        "word_mappings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/word_mapping"
+          }
+        },
+        "flags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "source_linebreak_reflowed",
+              "line_width_exception",
+              "word_layout_split",
+              "duration_limit_exception",
+              "duration_target_exception",
+              "overlap_merged",
+              "orphan_tail_merged",
+              "orphan_tail_rebalanced",
+              "short_cue_exception"
+            ]
+          }
+        }
+      }
+    },
+    "clip_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clip_id",
+        "source_id",
+        "source_in_frame",
+        "source_out_frame",
+        "timeline_in_frame",
+        "timeline_out_frame",
+        "status",
+        "selected_word_ids",
+        "excluded_word_ids",
+        "clipped_word_ids",
+        "short_expanded_word_ids",
+        "overlapping_word_ids",
+        "cue_ids",
+        "ass_unrepresentable_cue_ids"
+      ],
+      "properties": {
+        "clip_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_in_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "source_out_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "timeline_in_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "timeline_out_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "status": {
+          "enum": [
+            "cues",
+            "no_audio",
+            "no_words_in_clip"
+          ]
+        },
+        "selected_word_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "excluded_word_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "clipped_word_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "short_expanded_word_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "overlapping_word_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "cue_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "ass_unrepresentable_cue_ids": {
+          "$ref": "#/$defs/ids"
+        }
+      }
+    }
+  }
+}
