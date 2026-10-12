@@ -196,6 +196,10 @@ class EditingHistoryServiceTests(unittest.TestCase):
         self.assertEqual(result["renders"], [render])
         self.assertEqual({item["export_id"] for item in result["mlt_exports"]},
                          {plain_mlt["export_id"], subtitled_mlt["export_id"]})
+        exports_by_id = {item["export_id"]: item for item in result["mlt_exports"]}
+        self.assertEqual(exports_by_id[plain_mlt["export_id"]], plain_mlt)
+        self.assertEqual(exports_by_id[subtitled_mlt["export_id"]], subtitled_mlt)
+        self.assertTrue(all(item["text_style_version"] == 2 for item in result["mlt_exports"]))
         self.assertEqual(result["unavailable_count"], 0)
         self.assertEqual({path.relative_to(self.folder).as_posix(): path.read_bytes()
                           for path in self.folder.rglob("*") if path.is_file()}, before)

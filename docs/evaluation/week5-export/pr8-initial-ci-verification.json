@@ -1,0 +1,58 @@
+{
+  "status": "public_github_publication_verified",
+  "checked_at": "2026-10-12T12:47:52.979091+00:00",
+  "pr_url": "https://github.com/TiAmoLovee/video-editor-research/pull/8",
+  "pr_number": 8,
+  "head": "293d4363c7efe62888bf08bfc7ca8d4c4ed41495",
+  "branch": "feat/week5-edl-export",
+  "base": "main",
+  "draft": true,
+  "merged": false,
+  "github_published": true,
+  "production_deployed": false,
+  "checks": [
+    {
+      "name": "Python 3.11 / ubuntu-latest",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    {
+      "name": "Python 3.11 / windows-latest",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    {
+      "name": "Frontend / ubuntu-latest",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frontend / windows-latest",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Python 3.11 / windows-latest",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    {
+      "name": "Python 3.11 / ubuntu-latest",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    {
+      "name": "Frontend / ubuntu-latest",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frontend / windows-latest",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "commit_statuses": [],
+  "changed_files": 129,
+  "read_only": true
+}
