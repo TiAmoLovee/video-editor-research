@@ -1,0 +1,15 @@
+ARG BASE_IMAGE=clipforge-api
+FROM ${BASE_IMAGE}
+USER root
+RUN set -eu; \
+    test -f /etc/debian_version; command -v apt-get >/dev/null; \
+    if ! (apt-get -o APT::Update::Error-Mode=any update \
+        && apt-get install -y --no-install-recommends ffmpeg fonts-noto-cjk) \
+        >/tmp/clipforge-runtime-apt.log 2>&1; then \
+        cat /tmp/clipforge-runtime-apt.log; exit 1; \
+    fi; \
+    rm -f /tmp/clipforge-runtime-apt.log; rm -rf /var/lib/apt/lists/*; \
+    command -v ffmpeg >/dev/null; command -v ffprobe >/dev/null; \
+    test -r /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
+USER 10001:10001
+RUN test -r /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc

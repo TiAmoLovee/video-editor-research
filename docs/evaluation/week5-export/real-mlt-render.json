@@ -1,0 +1,336 @@
+{
+  "status": "passed",
+  "output_path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\real-task\\native-final\\output.mp4",
+  "output_sha256": "14d87ac8d5e342fb7d66957f34cf8c6afff353e5d82bc6210ec10cd1b4e23784",
+  "output_profile": {
+    "width": 1080,
+    "height": 1920,
+    "fps": {
+      "num": 30,
+      "den": 1
+    }
+  },
+  "total_frames": 2180,
+  "cue_count": 21,
+  "native_encode_attempts": 1,
+  "native_crop": {
+    "x": 662,
+    "y": 12,
+    "width": 594,
+    "height": 1056
+  },
+  "cut_landmarks": [
+    {
+      "output_frame": 0,
+      "source_frame": 43,
+      "expected_source_frame": 43,
+      "candidate_source_frames": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "extraction_absolute_pts_verified": true,
+      "exact_masked_picture_duplicates": [
+        43
+      ],
+      "metrics": {
+        "masked_full_rgb": {
+          "distances": [
+            3.70282244682312,
+            3.7067904472351074,
+            3.715085506439209,
+            3.6324820518493652,
+            3.7141225337982178,
+            3.8409488201141357,
+            3.8499748706817627
+          ],
+          "nearest_source_frame": 43,
+          "expected_mae": 3.6324820518493652,
+          "best_competitor_minus_expected_mae": 0.07034039497375488
+        },
+        "large_middle_rgb": {
+          "distances": [
+            0.7298184037208557,
+            0.7341980338096619,
+            0.7433587908744812,
+            0.6521777510643005,
+            0.7423225045204163,
+            0.8823598027229309,
+            0.8923261165618896
+          ],
+          "nearest_source_frame": 43,
+          "expected_mae": 0.6521777510643005,
+          "best_competitor_minus_expected_mae": 0.07764065265655518
+        }
+      },
+      "picture_identity_status": "passed"
+    },
+    {
+      "output_frame": 1638,
+      "source_frame": 1681,
+      "expected_source_frame": 1681,
+      "candidate_source_frames": [
+        1678,
+        1679,
+        1680,
+        1681,
+        1682,
+        1683,
+        1684
+      ],
+      "extraction_absolute_pts_verified": true,
+      "exact_masked_picture_duplicates": [
+        1681
+      ],
+      "metrics": {
+        "masked_full_rgb": {
+          "distances": [
+            19.423843383789062,
+            18.480846405029297,
+            15.515286445617676,
+            5.814916133880615,
+            15.225305557250977,
+            15.881760597229004,
+            17.6494197845459
+          ],
+          "nearest_source_frame": 1681,
+          "expected_mae": 5.814916133880615,
+          "best_competitor_minus_expected_mae": 9.410389423370361
+        },
+        "large_middle_rgb": {
+          "distances": [
+            18.09703254699707,
+            17.055809020996094,
+            13.781328201293945,
+            3.0705082416534424,
+            13.461134910583496,
+            14.185976028442383,
+            16.137773513793945
+          ],
+          "nearest_source_frame": 1681,
+          "expected_mae": 3.0705082416534424,
+          "best_competitor_minus_expected_mae": 10.390626668930054
+        }
+      },
+      "picture_identity_status": "passed"
+    },
+    {
+      "output_frame": 1639,
+      "source_frame": 112,
+      "expected_source_frame": 112,
+      "candidate_source_frames": [
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "extraction_absolute_pts_verified": true,
+      "exact_masked_picture_duplicates": [
+        112
+      ],
+      "metrics": {
+        "masked_full_rgb": {
+          "distances": [
+            7.2188849449157715,
+            6.960958957672119,
+            6.81614351272583,
+            4.379556655883789,
+            6.819842338562012,
+            7.138214111328125,
+            7.529404163360596
+          ],
+          "nearest_source_frame": 112,
+          "expected_mae": 4.379556655883789,
+          "best_competitor_minus_expected_mae": 2.436586856842041
+        },
+        "large_middle_rgb": {
+          "distances": [
+            4.6070709228515625,
+            4.322277069091797,
+            4.162379264831543,
+            1.471976637840271,
+            4.166460037231445,
+            4.518001079559326,
+            4.949930191040039
+          ],
+          "nearest_source_frame": 112,
+          "expected_mae": 1.471976637840271,
+          "best_competitor_minus_expected_mae": 2.690402626991272
+        }
+      },
+      "picture_identity_status": "passed"
+    },
+    {
+      "output_frame": 2179,
+      "source_frame": 652,
+      "expected_source_frame": 652,
+      "candidate_source_frames": [
+        649,
+        650,
+        651,
+        652,
+        653,
+        654,
+        655
+      ],
+      "extraction_absolute_pts_verified": true,
+      "exact_masked_picture_duplicates": [
+        652
+      ],
+      "metrics": {
+        "masked_full_rgb": {
+          "distances": [
+            17.64197540283203,
+            15.018013954162598,
+            11.845817565917969,
+            4.929409980773926,
+            9.406425476074219,
+            13.721420288085938,
+            13.814674377441406
+          ],
+          "nearest_source_frame": 652,
+          "expected_mae": 4.929409980773926,
+          "best_competitor_minus_expected_mae": 4.477015495300293
+        },
+        "large_middle_rgb": {
+          "distances": [
+            16.125715255737305,
+            13.228419303894043,
+            9.725800514221191,
+            2.088931083679199,
+            7.032371997833252,
+            11.796842575073242,
+            11.899802207946777
+          ],
+          "nearest_source_frame": 652,
+          "expected_mae": 2.088931083679199,
+          "best_competitor_minus_expected_mae": 4.943440914154053
+        }
+      },
+      "picture_identity_status": "passed"
+    }
+  ],
+  "whole_sequence": {
+    "frames": 2180,
+    "fixed_independent_source_ranges": [
+      [
+        43,
+        1682
+      ],
+      [
+        112,
+        653
+      ]
+    ],
+    "roi_output": "1080x640@(0,640), reduced64x36 area gray",
+    "max_roi_mae": 0.7738715410232544,
+    "mean_roi_mae": 0.3825685977935791,
+    "passed": true,
+    "all_frames_outside_new_text_effects": true
+  },
+  "audio": {
+    "reference": "Existing independently verified FFmpeg portrait MP4 PCM decode",
+    "reference_sha256": "034a41d9b7fa62cde0ccbdf65f16d3cd02c0a2dfdd2d109e0ab2064cd72ad513",
+    "sample_rate": 48000,
+    "aac_codec_difference_expected": true,
+    "native_decoded_samples": 3488768,
+    "reference_decoded_samples": 3488768,
+    "windows": [
+      {
+        "reference_seconds": 2,
+        "best_lag_samples": 0,
+        "lag_frames": 0.0,
+        "best_normalized_correlation": 0.9994121541560612
+      },
+      {
+        "reference_seconds": 15,
+        "best_lag_samples": 0,
+        "lag_frames": 0.0,
+        "best_normalized_correlation": 0.9998151741514423
+      },
+      {
+        "reference_seconds": 40,
+        "best_lag_samples": 0,
+        "lag_frames": 0.0,
+        "best_normalized_correlation": 0.9999632323247842
+      },
+      {
+        "reference_seconds": 54.5,
+        "best_lag_samples": 0,
+        "lag_frames": 0.0,
+        "best_normalized_correlation": 0.9997051259685192
+      },
+      {
+        "reference_seconds": 55,
+        "best_lag_samples": 0,
+        "lag_frames": 0.0,
+        "best_normalized_correlation": 0.9999974559603031
+      },
+      {
+        "reference_seconds": 65,
+        "best_lag_samples": 0,
+        "lag_frames": 0.0,
+        "best_normalized_correlation": 0.9992176850835073
+      },
+      {
+        "reference_seconds": 71,
+        "best_lag_samples": 0,
+        "lag_frames": 0.0,
+        "best_normalized_correlation": 0.9998929250145951
+      }
+    ],
+    "max_abs_lag_frames": 0.0,
+    "passed": true,
+    "scope": "PCM waveform alignment at seven audio windows, including both sides of the cut; not raw ASR speech timing."
+  },
+  "preserved": {
+    "old_files_verified_unchanged": 79,
+    "task_row_unchanged": true,
+    "source_unchanged": true,
+    "three_saved_exports_revalidated": true
+  },
+  "actual_project_sha256": "afee9f845e0c1933e9f41f5d12b728ef158f9122825c4067e8c79f16459de074",
+  "code_sha256_at_encode": {
+    "backend\\clipforge\\editing\\edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+    "backend\\clipforge\\editing\\mlt.py": "9299f100297e15febf875772ac561b8ee760be81bc0302550704bbd56150d059",
+    "backend\\clipforge\\editing\\subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+    "backend\\clipforge\\services\\editing.py": "141ffc4d6e2fa4c304a45df30a927efa9934ed60b64f7d1e6d3a478085c6551b",
+    "backend\\clipforge\\services\\subtitling.py": "a2c13140ab3934607ebb1df09ec20ed901d1caf2730a91b1af2209b035a308e5",
+    "backend\\clipforge\\services\\mlt_exporting.py": "a312fc66b299204fb8673cd6bec032fe6f393d5690b010d6366a8abbe1738914"
+  },
+  "current_code_sha256_with_identical_export_revalidation": {
+    "backend\\clipforge\\editing\\edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+    "backend\\clipforge\\editing\\mlt.py": "9299f100297e15febf875772ac561b8ee760be81bc0302550704bbd56150d059",
+    "backend\\clipforge\\editing\\subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+    "backend\\clipforge\\services\\editing.py": "141ffc4d6e2fa4c304a45df30a927efa9934ed60b64f7d1e6d3a478085c6551b",
+    "backend\\clipforge\\services\\subtitling.py": "a2c13140ab3934607ebb1df09ec20ed901d1caf2730a91b1af2209b035a308e5",
+    "backend\\clipforge\\services\\mlt_exporting.py": "a312fc66b299204fb8673cd6bec032fe6f393d5690b010d6366a8abbe1738914"
+  },
+  "gui_shotcut_verified": false,
+  "model_requests": 0,
+  "production_changed": false,
+  "limitations": [
+    "MLT Qt text uses editable dark panels; FFmpeg ASS uses glyph outlines. Pixel-identical typography is not claimed.",
+    "Integer mapped subtitle ranges are distinct from ASS centisecond serialization; no new ASR-speech-alignment claim.",
+    "Same fixed-center crop retains previously observed loss of edge subjects."
+  ],
+  "visual_inspection": {
+    "images": [
+      "frame-100.png",
+      "frame-1639.png"
+    ],
+    "observations": [
+      "Chinese new captions and AI branding are visible within image bounds with a dark panel.",
+      "All new subtitles in inspected frames are legible, one or two lines; captured browser controls and prior source comments remain.",
+      "Fixed center crop still places edge subjects partially outside output; this is not subject following."
+    ],
+    "raw_asr_semantics_reassessed": false
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "status": "passed_local_failure_simulation_actual_font_image_execution_pending",
+  "cases": [
+    {
+      "scenario": "build_fail",
+      "failed_stage": "install_runtime_layer",
+      "failure_report_preserved": true,
+      "simulated_export_calls": 0
+    },
+    {
+      "scenario": "capabilities_fail",
+      "failed_stage": "image_capabilities",
+      "failure_report_preserved": true,
+      "simulated_export_calls": 0
+    },
+    {
+      "scenario": "service_changed",
+      "failed_stage": "service_inventory",
+      "failure_report_preserved": true,
+      "simulated_export_calls": 1
+    }
+  ],
+  "powershell_syntax": [
+    "Fix-Font-And-Test.ps1",
+    "Test-IsolatedWeek5.ps1",
+    "verify_font_repair.ps1",
+    "Repair-Week5-Runtime.ps1"
+  ],
+  "actual_docker_calls": 0,
+  "model_calls": 0,
+  "builder_sha256": "b72dab688640b0259a730946c92baf8f99d93100c4df04a4548677e373255f8b",
+  "dockerfile_sha256": "d36839ee02bbefad3ac9d36ebe10b8d96334bd6d120fe5c4ae5bff9f77a039d6",
+  "runtime_check_sha256": "304754b19228b5fac6076f9e898740640146cf7fa4cf8c9a2fec5369521c314b"
+}

@@ -1,0 +1,210 @@
+{
+  "scope": "unaltered copies of verification evidence; local media paths remain local references",
+  "core_and_web_source_hashes_matched": {
+    "backend/clipforge/editing/edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+    "backend/clipforge/editing/mlt.py": "9299f100297e15febf875772ac561b8ee760be81bc0302550704bbd56150d059",
+    "backend/clipforge/editing/render.py": "f870aa71899b2fff6323e1525e6c6110c07f0bae080556ae37ab7cdd9ba6de37",
+    "frontend/src/api/editing.ts": "6e37d4ae9e63cf5b32418688088efca9a3a7bf5b223325326337916724eecc56",
+    "frontend/src/types/editing.ts": "bc3dfc6db972da5e1207207fb4d6cc031dd71874a68d1e46d61a70cc0d7142a0",
+    "frontend/src/components/ExportWorkbench.tsx": "586548effb83aa8b593721f1e37cc855359c76c0346358c90dfa4d909e789388",
+    "frontend/src/components/CandidateResults.tsx": "8b82df110649cd49a4f0f40221f04b1c6d58ef52e52f595761b7efd4aa68f30e",
+    "frontend/src/App.tsx": "4ef954e09f20985ea3687577f70fbf1ffaa27222bc690fe6556851987acece66",
+    "frontend/src/styles.css": "e4631406d4d4bc4233ce73078282af3b2dc1611267d8d66cd0b2076cf814bfba",
+    "frontend/src/test/editing-api.test.ts": "61c20be87aee14d3e07299b1743be2335cc61cb5c73c4bf12839001c3508a657",
+    "frontend/src/test/export-selection.test.tsx": "1f455150463ecc8d27320d8ca2eece30c0865dbb50683eb9e1f7c2e64679054f",
+    "frontend/src/test/export-workbench.test.tsx": "1513dc62c1f3444d8a34d9baa0bb3f8439fd11fca8e3c0cb418044d7b751cb3e",
+    "backend/clipforge/services/editing_history.py": "9b5859a9f1d99d85e1be56e69eb2bbcbf2ee843c1f026b57ab0d58df27db4c0b",
+    "backend/clipforge/routes/editing.py": "71cd47e26a0fd46b41b5def241820a69195d2ec7d98d33c6bcbf11ae95bd8b61"
+  },
+  "records": [
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\related-tests-and-core-coverage.json",
+      "file": "core-tests-coverage.json",
+      "bytes": 2126,
+      "sha256": "2d1d800ab81580b5d6fd879da9b979f7b98125fd3bb9f512dfbfbabd5b1c1e5b"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\verification.json",
+      "file": "mlt-five-cases.json",
+      "bytes": 23205,
+      "sha256": "c6a0c2b46e24335e80d67e408ae67d26c18d5a368561499b0f04e60c7199e24a"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\real-task\\native-final\\verification.json",
+      "file": "real-mlt-render.json",
+      "bytes": 10950,
+      "sha256": "46307a4c59744eb766c6346646b06dcb5a223e9b3dcd0e2ec671c548c29bf8fc"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-shotcut-roundtrip\\verification.json",
+      "file": "shotcut-one-roundtrip.json",
+      "bytes": 2814,
+      "sha256": "268fef0a8eca5e9d800103f541b4750d1834bb4174f552410c7c140c71fd8faf"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\result.json",
+      "file": "web-export.json",
+      "bytes": 4255,
+      "sha256": "d8890767d9723e5def359f2a4ce1ba0778b70f6ce177571bf898abce90d88d2f"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\browser-verification\\result.json",
+      "file": "browser-workflow.json",
+      "bytes": 5402,
+      "sha256": "8e01aa50ae6224686571b2231b8c1277f0d43dd98833908024564ea00d04c294"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\browser-verification\\new-export-audit.json",
+      "file": "new-export-audit.json",
+      "bytes": 12287,
+      "sha256": "55868751966dedf061fa4dca505ea21cbc028c5b314f4477fdd7fe04970f91a1"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\browser-verification\\seeking.json",
+      "file": "seeking.json",
+      "bytes": 1738,
+      "sha256": "d8761916e43700ca0d1493fd9ffa76d1972cd8bc24d5005ad0eaa7273000125e"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\browser-verification\\seeking-verified.jpg",
+      "file": "seeking-verified.jpg",
+      "bytes": 65625,
+      "sha256": "5c81d3cf115806a6e256fb3e5dce36174389b78b065c00f42f13282fa44eca39"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-roundtrip.json",
+      "file": "shotcut-five-gui-roundtrip.json",
+      "bytes": 152587,
+      "sha256": "dd1b9a6d0096447d63061e669c68f63ccaefc89a96b8531bb7ffbb40ec795c47"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-actions.json",
+      "file": "shotcut-gui-actions.json",
+      "bytes": 1201,
+      "sha256": "2e4b75ac719e1d015e97610a2a22d0b444d341d8c69f27991f582e0db375fc84"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\crop-control-audit.json",
+      "file": "shotcut-crop-control.json",
+      "bytes": 14488,
+      "sha256": "2a78176ca6979a9516d99143ad9752e07340b8f3f7ee3a4231d49a1fee729d37"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\text-control-audit.json",
+      "file": "shotcut-text-control.json",
+      "bytes": 19366,
+      "sha256": "b8ccca2f642ec52d96c0aedf6c7216dc823270cb8bde00b005df8e51739c74ec"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases.json",
+      "file": "shotcut-case-inputs.json",
+      "bytes": 4955,
+      "sha256": "e1a226bca252620a7716b03ae79180b7e9238ad413a2a12856098aba312023cd"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\audit_gui_roundtrip.py",
+      "file": "audit_gui_roundtrip.py",
+      "bytes": 24664,
+      "sha256": "eed01b17abd93c1a96bb57f250d2fcbb89e4df6be1391056b5a63122f4782a38"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\01-horizontal-reorder-repeat\\shotcut-check.mlt",
+      "file": "01-horizontal-reorder-repeat-saved.mlt",
+      "bytes": 25543,
+      "sha256": "4e50161c9e497a206f450077e27876e11cb5b97b949f4544a3053b35a09036b4"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\01-horizontal-reorder-repeat\\shotcut-opened.jpg",
+      "file": "01-horizontal-reorder-repeat-opened.jpg",
+      "bytes": 101664,
+      "sha256": "562af9fd4894be2d0ef0bedfb5c3be0e24aa0e09b33eb0c23f144a6502fcc666"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\02-portrait-single-final\\shotcut-check.mlt",
+      "file": "02-portrait-single-final-saved.mlt",
+      "bytes": 19924,
+      "sha256": "afb8c599a038990ad43cf054e5bc5533afba2ef7775afee653da4b066c2f492e"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\02-portrait-single-final\\shotcut-opened.jpg",
+      "file": "02-portrait-single-final-opened.jpg",
+      "bytes": 85237,
+      "sha256": "7b685cef8ce24a92c15c6db3b9eb8bc8d9f90fddbb169bbf47bdf3ab5fd2068a"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\03-rational-half-frame\\shotcut-check.mlt",
+      "file": "03-rational-half-frame-saved.mlt",
+      "bytes": 18543,
+      "sha256": "cb07cd7bd51b5b58e36d434ccc76bb162677c94d3a40ebfb5a5b4c4ce5cc8bac"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\03-rational-half-frame\\shotcut-opened.jpg",
+      "file": "03-rational-half-frame-opened.jpg",
+      "bytes": 91953,
+      "sha256": "4312b1741237ed9e0a6173a581e5b9626f8b65c48c18946197992d020a5bba0e"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\04-no-audio-native\\shotcut-check.mlt",
+      "file": "04-no-audio-native-saved.mlt",
+      "bytes": 7127,
+      "sha256": "9b426ccc512fadd093a07291e9706470aaf4857de4a698827d371e23455556bc"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\04-no-audio-native\\shotcut-opened.jpg",
+      "file": "04-no-audio-native-opened.jpg",
+      "bytes": 90892,
+      "sha256": "6780f0ada91296089fe85b2bccb35f6cd5d9046203f828f6ef37d9761f09cdaf"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-check.mlt",
+      "file": "05-portrait-mixed-native-saved.mlt",
+      "bytes": 22668,
+      "sha256": "a12f4261c403a3c5aea33e396da35811c1fbf515aada57b6d6fde76efac48fda"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-opened.jpg",
+      "file": "05-portrait-mixed-native-opened.jpg",
+      "bytes": 96594,
+      "sha256": "149ee245c34db9743a3918d65c2cb69d5a4507c80fef741471469c8d2ad125ba"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-crop-controls.mlt",
+      "file": "shotcut-crop-controls.mlt",
+      "bytes": 22668,
+      "sha256": "fb8e507b4684ee30fa9c7d82227f8e4cebc572866d4bb46d8d751f6704ef36ca"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-crop-controls.jpg",
+      "file": "shotcut-crop-controls.jpg",
+      "bytes": 103437,
+      "sha256": "17b1629ddcaff17565fdb1b5df23d576376b7b6b2125d7575a7cdb9195c3c4e2"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-text-controls.mlt",
+      "file": "shotcut-text-controls.mlt",
+      "bytes": 23141,
+      "sha256": "892734d25b4bd30b5c5187b5c986c191869bd83e9252dd9c8f8b2e849dfafacb"
+    },
+    {
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-text-controls.jpg",
+      "file": "shotcut-text-controls.jpg",
+      "bytes": 107625,
+      "sha256": "b1275cad1df80b8c8171b83248125dfd7f5ec11bd7fbb80f6ec5380a3fbc6699"
+    }
+  ],
+  "review": "No confirmed new blocking defect found in scoped read-only delivery review.",
+  "shotcut_gui_roundtrip": {
+    "passed": 5,
+    "pending": 0,
+    "failed": 0
+  },
+  "crop_control_edit_saved": true,
+  "richtext_control_edit_saved": true,
+  "richtext_edit_preserves_style": false,
+  "remaining": [
+    "RichText editing style preservation",
+    "human speech-caption <=0.3s",
+    "container regression",
+    "authorized publication"
+  ]
+}

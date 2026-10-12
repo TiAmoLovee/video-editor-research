@@ -1,0 +1,24 @@
+{
+  "status": "passed_local_import_regression_container_execution_pending",
+  "checks": {
+    "original_failure_reproduced": true,
+    "explicit_pythonpath_fixes_parent_and_child": true,
+    "missing_package_rejected": true,
+    "unreviewed_package_rejected": true,
+    "reviewed_package_accepted": true,
+    "harness_python_syntax": true
+  },
+  "actual_imports": {
+    "parent_import": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\__init__.py",
+    "child_import": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\__init__.py"
+  },
+  "runner_sha256": "881e3c91bcf8c8b02dd0d7282c334ff1730838a0a76eadcc578d37f5eb9a24e8",
+  "harness_sha256": "5d51218c983f0594ccf21ff27e66e5742012414cf0ad3dff628baf2df1df5cac",
+  "docker_calls": 0,
+  "model_calls": 0,
+  "media_renders": 0,
+  "not_claimed": [
+    "Linux container acceptance",
+    "installed image font availability"
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "status": "workflow_and_browser_seek_passed",
+  "recorded_at": "2026-10-12T09:48:49.379914+00:00",
+  "task_id": "1e5e7300-9f65-4772-bb2d-69ae0e717253",
+  "browser_url": "http://127.0.0.1:8330/#task=1e5e7300-9f65-4772-bb2d-69ae0e717253",
+  "ui_checks": {
+    "horizontal_portrait_history_switch": true,
+    "candidate_selection": true,
+    "reorder": true,
+    "selection_preserved_across_pagination": true,
+    "save_edl": true,
+    "create_subtitles": true,
+    "create_subtitled_mlt": true,
+    "create_subtitled_mp4": true,
+    "history_retained_on_fresh_page": true,
+    "playback_loaded": true,
+    "old_edl_srt_mlt_download_hashes_match": true,
+    "browser_seeking": true
+  },
+  "new_artifacts": {
+    "revision_id": "47a7980c-1381-455f-93ca-fb585f130c30",
+    "subtitle_id": "4fc23cf7-3609-4170-841f-08aff16eb7a6",
+    "mlt_export_id": "1943d5ea-a7ba-47d1-92e9-5363327141a3",
+    "render_id": "b51f6b6f-e150-43dc-b7f3-6924855c928c",
+    "duration_frames": 1263,
+    "duration_seconds": 42.1,
+    "subtitle_cue_count": 12
+  },
+  "actual_output_frame_checks": [
+    {
+      "output_frame": 0,
+      "expected_source_frame": 112,
+      "source_neighbor_psnr_db": {
+        "111": 28.8443,
+        "112": 49.3141,
+        "113": 29.012
+      },
+      "best_source_frame": 112,
+      "expected_psnr_db": 49.3141
+    },
+    {
+      "output_frame": 721,
+      "expected_source_frame": 833,
+      "source_neighbor_psnr_db": {
+        "832": 24.464,
+        "833": 43.4945,
+        "834": 22.5586
+      },
+      "best_source_frame": 833,
+      "expected_psnr_db": 43.4945
+    },
+    {
+      "output_frame": 722,
+      "expected_source_frame": 112,
+      "source_neighbor_psnr_db": {
+        "111": 28.845,
+        "112": 49.2222,
+        "113": 29.0062
+      },
+      "best_source_frame": 112,
+      "expected_psnr_db": 49.2222
+    },
+    {
+      "output_frame": 723,
+      "expected_source_frame": 113,
+      "source_neighbor_psnr_db": {
+        "112": 29.0071,
+        "113": 49.4186,
+        "114": 28.8023
+      },
+      "best_source_frame": 113,
+      "expected_psnr_db": 49.4186
+    },
+    {
+      "output_frame": 1262,
+      "expected_source_frame": 652,
+      "source_neighbor_psnr_db": {
+        "651": 24.1186,
+        "652": 44.9704,
+        "653": 25.8138
+      },
+      "best_source_frame": 652,
+      "expected_psnr_db": 44.9704
+    }
+  ],
+  "old_files_unchanged": true,
+  "new_mp4_bytes": 38326099,
+  "new_mp4_sha256": "e50549d7fa7adae03d77204c6ef9500a44d8172d88ae227b040eb71f9b23a61b",
+  "range_fix": {
+    "direct_asgi_tests_passed": 11,
+    "existing_route_regression_passed": 25,
+    "http_206_32_bytes_content_range_verified": true,
+    "http_scope": "new temporary preview on port8331 via PowerShell launcher",
+    "browser_seek_verified": true,
+    "prior_browser_blocker": "Codex-started service not accessible from IAB; user-started8330 works",
+    "browser_seek_scope": "user-started corrected preview on port8331; existing saved MP4; native player keyboard and mouse seek plus resumed playback",
+    "temporary_service_stopped": true,
+    "corrected_preview_command": "& 'C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week5-web-export/Start-Week5Preview.ps1' -Port 8331 -VerifySeeking"
+  },
+  "seeking_verification": {
+    "status": "passed",
+    "recorded_at": "2026-10-12T09:57:21.992Z",
+    "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week5-web-export/browser-verification/seeking.json",
+    "sha256": "d8761916e43700ca0d1493fd9ffa76d1972cd8bc24d5005ad0eaa7273000125e",
+    "browser_url": "http://127.0.0.1:8331/#task=1e5e7300-9f65-4772-bb2d-69ae0e717253",
+    "seekable_seconds": [0, 42.1],
+    "mouse_drag_backward_time_seconds": 11.923057,
+    "resume_after_drag_time_seconds": 12.402686,
+    "resume_paused": false,
+    "ready_state": 4,
+    "final_error": null,
+    "new_posts": 0,
+    "model_calls": 0
+  },
+  "screenshots": [
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\browser-verification\\export-workbench.jpg",
+      "sha256": "1dca97abb1b83150c7c472952b1728898e88b0f70590ec12010e0a81d8a7bc01"
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\browser-verification\\export-workbench-reopened.jpg",
+      "sha256": "6a930f238802d2660b9df7da6c291f969b7f85737b579f756347965ad58b2dfb"
+    },
+    {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week5-web-export/browser-verification/seeking-verified.jpg",
+      "sha256": "5c81d3cf115806a6e256fb3e5dce36174389b78b065c00f42f13282fa44eca39"
+    }
+  ],
+  "audit_path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\browser-verification\\new-export-audit.json",
+  "audit_sha256": "55868751966dedf061fa4dca505ea21cbc028c5b314f4477fdd7fe04970f91a1",
+  "model_calls": 0,
+  "video_uploads": 0,
+  "new_media_renders": 1,
+  "quality_labels_added": 0,
+  "github_published": false,
+  "scope_note": "One technical export-flow sample; overlapping source selections intentionally exercise order. No quality acceptance claim; new MLT XML checked, not newly opened/rendered in Shotcut.",
+  "deliverable_tab_url": "http://127.0.0.1:8331/#task=1e5e7300-9f65-4772-bb2d-69ae0e717253"
+}

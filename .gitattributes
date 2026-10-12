@@ -1,0 +1,2 @@
+# Preserve verification files byte-for-byte so archived SHA256 evidence stays valid.
+docs/evaluation/week5-export/** -text

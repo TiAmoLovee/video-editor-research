@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Alert, Button, Empty, Skeleton, Tag } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { acceptedVideoUrl, optimizedVideoUrl, downloadUrl, getCandidates, validId } from '../api/tasks';
-import type { CandidatePage, CandidateView } from '../types/tasks';
+import type { Candidate, CandidatePage, CandidateView } from '../types/tasks';
+import { ExportWorkbench } from './ExportWorkbench';
 
 const fallbackDetails: Record<string, string> = {
   invalid_assessment: '模型返回的分项分数或原文引用未通过校验。',
@@ -31,6 +32,10 @@ const boundaryDetails: Record<string, string> = {
 };
 
 export function CandidateResults({ taskId, download }: { taskId: string; download: string }) {
+  return <CandidateResultsForTask key={taskId} taskId={taskId} download={download} />;
+}
+
+function CandidateResultsForTask({ taskId, download }: { taskId: string; download: string }) {
   const [offset, setOffset] = useState(0);
   const [page, setPage] = useState<CandidatePage | null>(null);
   const [loading, setLoading] = useState(true);
@@ -38,6 +43,22 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
   const [retry, setRetry] = useState(0);
   const [view, setView] = useState<CandidateView>('all');
   const [topic, setTopic] = useState<string>();
+  const [selected, setSelected] = useState<Candidate[]>([]);
+  const [exportBusy, setExportBusy] = useState(false);
+  function toggle(candidate: Candidate) {
+    setSelected(items => items.some(item => item.id === candidate.id)
+      ? items.filter(item => item.id !== candidate.id)
+      : items.length < 100 ? [...items, candidate] : items);
+  }
+  function move(id: string, direction: -1 | 1) {
+    setSelected(items => {
+      const index = items.findIndex(item => item.id === id), target = index + direction;
+      if (index < 0 || target < 0 || target >= items.length) return items;
+      const next = [...items];
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  }
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true); setError(false);
@@ -56,6 +77,7 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
   catch { return <Alert type="error" message="候选下载地址异常，请刷新任务。" />; }
   return <section className="candidate-results" aria-label="候选片段推荐" aria-busy={loading}>
     <div className="result-head"><div><h2>候选片段推荐</h2><p className="hint">评分仅用于同一任务内排序。片段可能相互重叠，当前展示推荐时间范围。</p></div><Button href={url} download aria-label="下载评分结果" icon={<DownloadOutlined />}>下载评分结果</Button></div>
+    <ExportWorkbench taskId={taskId} selected={selected} onRemove={id => setSelected(items => items.filter(item => item.id !== id))} onMove={move} onBusyChange={setExportBusy} />
     {loading && page && <p role="status">正在更新候选列表…</p>}
     {loading && !page ? <Skeleton active title={false} paragraph={{ rows: 3 }} aria-label="正在加载候选" /> : error ? <Alert type="warning" message="候选暂时加载失败，切片下载仍可使用。" action={<Button size="small" onClick={() => setRetry(value => value + 1)}>重试候选</Button>} /> : page && <>
       {page.boundary_optimization && <section aria-label="边界优化试听">
@@ -113,6 +135,7 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
         <p className="hint" role="status">显示 {page.offset + 1}–{page.offset + page.items.length} / {page.total} 个候选</p>
         <ol className="candidate-list" start={page.offset + 1}>{page.items.map(candidate => <li key={candidate.id} className="candidate-card">
           <div className="head"><strong>#{candidate.rank} · {candidate.start.toFixed(2)}–{candidate.end.toFixed(2)} 秒</strong><Tag color="purple">{candidate.scorer === 'llm' ? '模型分' : '规则分'} {candidate.score.toFixed(2)}</Tag></div>
+          <Button size="small" type={selected.some(item => item.id === candidate.id) ? 'primary' : 'default'} disabled={loading || exportBusy || (selected.length >= 100 && !selected.some(item => item.id === candidate.id))} aria-label={`${selected.some(item => item.id === candidate.id) ? '取消' : '加入'}候选 #${candidate.rank}`} onClick={() => toggle(candidate)}>{selected.some(item => item.id === candidate.id) ? '已加入成片 · 点击取消' : '加入成片'}</Button>
           {candidate.scorer === 'llm' && candidate.rule_score != null && <p className="hint">规则基线 {candidate.rule_score.toFixed(2)}</p>}
           <p className="hint">时长 {candidate.duration_seconds.toFixed(2)} 秒</p>
           <p className="candidate-text">{candidate.text}</p>

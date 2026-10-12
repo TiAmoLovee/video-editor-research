@@ -1,0 +1,77 @@
+{
+  "status": "workflow_and_browser_seek_passed",
+  "recorded_at": "2026-10-12T09:48:49.379914+00:00",
+  "scope": "React_saved_EDL_selection_order_subtitles_MP4_MLT_exports_and_server_history",
+  "frontend_tests": {
+    "files": 6,
+    "passed": 62,
+    "failed": 0,
+    "runner": "vitest5 threads; final full frontend run"
+  },
+  "backend_related_tests": {
+    "passed": 50,
+    "failed": 0,
+    "report": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-editing-history-tests.txt"
+  },
+  "typecheck": "passed after final frontend changes",
+  "production_build": "passed",
+  "build_warning": "623.93 kB shared JS chunk exceeds Vite 500 kB notice; build succeeded",
+  "independent_review": "no blocking or major findings in current scoped changes",
+  "real_saved_history": {
+    "status": "passed",
+    "report": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\real-history.json",
+    "sha256": "8971a92604abe4383982436f1c080357c6761f53a114897defa772c64f411ea8",
+    "task_id": "1e5e7300-9f65-4772-bb2d-69ae0e717253",
+    "scope": "one saved Test3 task; direct service GET-equivalent reads; no HTTP or POST",
+    "elapsed_seconds": 41.391
+  },
+  "code_sha256": {
+    "frontend/src/api/editing.ts": "6e37d4ae9e63cf5b32418688088efca9a3a7bf5b223325326337916724eecc56",
+    "frontend/src/types/editing.ts": "bc3dfc6db972da5e1207207fb4d6cc031dd71874a68d1e46d61a70cc0d7142a0",
+    "frontend/src/components/ExportWorkbench.tsx": "586548effb83aa8b593721f1e37cc855359c76c0346358c90dfa4d909e789388",
+    "frontend/src/components/CandidateResults.tsx": "8b82df110649cd49a4f0f40221f04b1c6d58ef52e52f595761b7efd4aa68f30e",
+    "frontend/src/App.tsx": "4ef954e09f20985ea3687577f70fbf1ffaa27222bc690fe6556851987acece66",
+    "frontend/src/styles.css": "e4631406d4d4bc4233ce73078282af3b2dc1611267d8d66cd0b2076cf814bfba",
+    "frontend/src/test/editing-api.test.ts": "61c20be87aee14d3e07299b1743be2335cc61cb5c73c4bf12839001c3508a657",
+    "frontend/src/test/export-selection.test.tsx": "1f455150463ecc8d27320d8ca2eece30c0865dbb50683eb9e1f7c2e64679054f",
+    "frontend/src/test/export-workbench.test.tsx": "1513dc62c1f3444d8a34d9baa0bb3f8439fd11fca8e3c0cb418044d7b751cb3e",
+    "backend/clipforge/services/editing_history.py": "9b5859a9f1d99d85e1be56e69eb2bbcbf2ee843c1f026b57ab0d58df27db4c0b",
+    "backend/clipforge/routes/editing.py": "71cd47e26a0fd46b41b5def241820a69195d2ec7d98d33c6bcbf11ae95bd8b61"
+  },
+  "build_sha256": {
+    "assets\\index-CToC8abj.css": "fc197d363e68c24d5a97a8cfd193a3a877272518ed31ee505e39753636f29347",
+    "assets\\index-D7gJYUR7.js": "f9a5d6fce9b6bef3bc4b1e53385f6e12b743f947757be922f508a7f0af497831",
+    "index.html": "80a92fcf0ee5a8166709d189e514cd941569448b32e8caae4be366486f9c25e6"
+  },
+  "preview_launcher": {
+    "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\Start-Week5Preview.ps1",
+    "sha256": "8222e56dd8bb1dd89178eaa85dd32fddb7f17c8df38a6e66069f2c3ad12290d1",
+    "syntax_checked": true,
+    "UTF8_BOM_for_Windows_PowerShell_5_1": true,
+    "default_port": 8330
+  },
+  "http_status": "user-context8330 browser workflow passed; temporary8331 exact206 passed; user-context corrected8331 exact206 and real browser seeking passed",
+  "browser_visual_and_http_playback_verified": true,
+  "model_requests": 0,
+  "new_media_renders": 1,
+  "new_video_uploads": 0,
+  "production_deployed": false,
+  "github_published": false,
+  "remaining": [
+    "Five-case Shotcut GUI acceptance and effect editing controls",
+    "Human speech-caption timing spot checks",
+    "Container regression and authorized publication"
+  ],
+  "prior_http_status": "blocked_by_local_socket_WinError10013_even_after_network_permission_grant",
+  "browser_seek_verified": true,
+  "range_regression": {
+    "direct_asgi_passed": 11,
+    "existing_route_passed": 25,
+    "ruff": "passed"
+  },
+  "browser_verification": {
+    "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-web-export\\browser-verification\\result.json",
+    "sha256": "8e01aa50ae6224686571b2231b8c1277f0d43dd98833908024564ea00d04c294",
+    "status": "workflow_and_browser_seek_passed"
+  }
+}

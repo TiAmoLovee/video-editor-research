@@ -1,0 +1,72 @@
+{
+  "status": "passed_local_preflight_regression_actual_linux_runtime_pending",
+  "simulated_gaps_reported_together": [
+    "api_import",
+    "ffmpeg",
+    "ffprobe",
+    "font_readable",
+    "frontend_index",
+    "python:celery",
+    "python:jsonschema"
+  ],
+  "actual_native_cli_tables_parsed": {
+    "filters": {
+      "required": [
+        "aformat",
+        "anullsrc",
+        "apad",
+        "aresample",
+        "asetpts",
+        "ass",
+        "atrim",
+        "concat",
+        "crop",
+        "format",
+        "scale",
+        "setpts",
+        "setsar",
+        "settb",
+        "trim"
+      ],
+      "output_sha256": "1eb562c3ee5b7e465930b235931655f6c20e1e4a9a50c283fdcc3747948eaa1d"
+    },
+    "encoders": {
+      "required": [
+        "aac",
+        "libx264",
+        "rawvideo"
+      ],
+      "output_sha256": "027e0c8bf53a3717e4e7aac8ef1577bc69c7d396a7edf992632049cd27701c50"
+    },
+    "decoders": {
+      "required": [
+        "h264",
+        "pcm_s16le"
+      ],
+      "output_sha256": "fb5f4c2b6f70cca485825aa4cda8712afdc5da71b0a805ae146ef2daca516845"
+    },
+    "demuxers": {
+      "required": [
+        "mov"
+      ],
+      "output_sha256": "d76bc2202f14027ef456f417d04597818082e161a138030c4c156a097c68a2ac"
+    },
+    "muxers": {
+      "required": [
+        "mp4",
+        "rawvideo"
+      ],
+      "output_sha256": "82eea4cbc795d87f1acf0ec512c83808d52aa116ed807fa5aac0ee3b9f572728"
+    }
+  },
+  "native_tool_queries": 5,
+  "new_renders": 0,
+  "docker_calls": 0,
+  "model_calls": 0,
+  "runtime_check_sha256": "304754b19228b5fac6076f9e898740640146cf7fa4cf8c9a2fec5369521c314b",
+  "capability_query_executable": "C:\\Users\\asus\\Documents\\Codex\\2026-09-22\\wo-x\\work\\ffmpeg.exe",
+  "not_claimed": [
+    "Linux FFmpeg codec capabilities",
+    "new Docker image acceptance"
+  ]
+}

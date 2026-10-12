@@ -1,0 +1,67 @@
+{
+  "artifact_kind": "user_qualitative_caption_sync_review",
+  "status": "user_accepted_no_obvious_early_or_late_captions",
+  "recorded_at": "2026-10-12T12:17:38.143117+00:00",
+  "observer": "user",
+  "user_quote": "并没有我检查过了",
+  "context": "Reply to the three-point check at approximately 10, 35 and 59 seconds for obvious early or late captions.",
+  "inputs": {
+    "output_mp4": {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/output.mp4",
+      "sha256": "98fcf4bbd0081295249f42e529e74eac68217fb79b84cb58d37484f587c034eb"
+    },
+    "subtitles_json": {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/subtitles.json",
+      "sha256": "ed09bdf8812c4756c13369609f8f425f881839dd6d79c266c6f225639a302bc5"
+    },
+    "source_edl_json": {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/source.edl.json",
+      "sha256": "5451a654a7c1cb9c7f8fda320507245d84bc7b1db69859fe03d3de5a650a2a2f"
+    },
+    "render_json": {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/render.json",
+      "sha256": "bba87dc5fa53074da46f4bb3e7f6ed3a6580828e1baee266a2f32d056fd66c47"
+    }
+  },
+  "original_checklist_sha256": "8c55e3ca4c6ad570aac149a3b4dfc7cddc6d560cf8865ad298f645731f33a5e1",
+  "checkpoints": [
+    {
+      "cue_id": "cue_0001_0004",
+      "playback_window_seconds": [
+        9.033333333333333,
+        11.8
+      ],
+      "status": "user_reported_no_obvious_offset",
+      "start_delta_seconds": null,
+      "end_delta_seconds": null
+    },
+    {
+      "cue_id": "cue_0001_0011",
+      "playback_window_seconds": [
+        33.5,
+        39.5
+      ],
+      "status": "user_reported_no_obvious_offset",
+      "start_delta_seconds": null,
+      "end_delta_seconds": null
+    },
+    {
+      "cue_id": "cue_0002_0002",
+      "playback_window_seconds": [
+        53.63333333333333,
+        62.9
+      ],
+      "status": "user_reported_no_obvious_offset",
+      "start_delta_seconds": null,
+      "end_delta_seconds": null
+    }
+  ],
+  "reviewed_checkpoint_count": 3,
+  "qualitative_review_completed": true,
+  "tolerance_seconds": 0.3,
+  "quantitative_tolerance_verified": false,
+  "all_21_cues_verified": false,
+  "no_new_render": true,
+  "new_model_calls": 0,
+  "limitation": "The user reported no obvious offset; no measured speech/caption entry or exit times were supplied. Do not convert the observation into a numeric <=0.3s claim."
+}

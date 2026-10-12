@@ -1,0 +1,521 @@
+{
+  "status": "verified_tested_input_to_git_index_mapping",
+  "scope": "85 current backend package and schema files bound by the isolated container report",
+  "input_manifest_sha256": "166619d625f38dc79f060bda0fff219c2fe29ac57315ff47319059013c860ba7",
+  "file_count": 85,
+  "normalized_file_count": 34,
+  "bindings": [
+    {
+      "path": "backend/clipforge/__init__.py",
+      "tested_sha256": "22500e001efad6822d6337be5b8baf09b529a26150b5422e5e085cdddb1e58fe",
+      "index_sha256": "1d4016fdae5cff00b236261b761d9ae68cd170e3f0485857551ab5b1fc78bb13",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/__init__.py",
+      "tested_sha256": "edbee99c2791bf78cc6ad9586aa531b38960c5f32fd36e9aeee5b99836edaca8",
+      "index_sha256": "b313095afa42992b81617ec6d69058fd7758165436206d126715d8b983b13324",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/asr.py",
+      "tested_sha256": "4d9b304d7fe2cc1f3feb382789fc1d3cfd3754c6618b99fde1a491142c06928f",
+      "index_sha256": "bbd2b6c6cd07015344e95ca3eca9ca0c831dea86b49c09e322c7b25084ae9e5f",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/chinese.py",
+      "tested_sha256": "00a30b35fda1d4a1baaf598852df192410fc6545fbba58f7fbed415e4691920c",
+      "index_sha256": "01ed7e65f25895b73581582bdf9a884ab78757de465ae116093f2825824445f8",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/combine.py",
+      "tested_sha256": "3a17887c9a1c863f05f0ec5d4497e07ac6844f27ab72e51a690d726a5032df06",
+      "index_sha256": "f43430c3888579613c67d3a596836d2fe10bdc703e6d0ea920a88097efe2b92e",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/model.py",
+      "tested_sha256": "7b1796c38062266e78e741d27e41dd71862e2c656351dcc55bfceb6a6fc55d6a",
+      "index_sha256": "4f29961cf573274f0c7be592ac53a253c98dff954fd80ec2acd79341c113a6a9",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/options.py",
+      "tested_sha256": "fc959989780e9f3f09fcb648c0e033807dd3cfb0a19379a6d18d01f8696190a7",
+      "index_sha256": "a5da7ecfb6e6a021b2b21f3c3badeee940fda9a67a91e9ebcbb3345f0d0a0e1f",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/robust_shots.py",
+      "tested_sha256": "6c02af489e85f5655b021e8099223ae5502fa67ea36618ca5f9b727e4d10ddbb",
+      "index_sha256": "f77cedeec6200c368be11e9df353cf4de9b85180fcf24ce3ef891ee93d470dc0",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/sentences.py",
+      "tested_sha256": "dbcdce6b8f0edc6a0778c7e46df9938797d0ee9ff125c9bce418543203f775bf",
+      "index_sha256": "011eae3d8c187c647457873136b93b98d13625dd747f0d307ae796c3575e9b4c",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/shots.py",
+      "tested_sha256": "ba73ec3ac69ce2e233a4020575f2444fa5ccbf7d0733b692bbbe09420c9241b9",
+      "index_sha256": "34b3671d928829f250c51e94109a110d411b575241898d8af2ac1cd7c0f30c6f",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/speech_gate.py",
+      "tested_sha256": "6bbf4c11515886bbe9c2b8aeda9fadee3118dd79855a2350d271d6b44c1cb011",
+      "index_sha256": "88ded4844abe50b11e012e1bd971f3472f13cfebd11b619690e0b60a7645df1a",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/vad.py",
+      "tested_sha256": "9a48b0a79b558b4a42d0abe7a50bc055c5867e0e71b41c9ff0e74ef371117513",
+      "index_sha256": "9ac37be53ded793e38207a94c9fcf23552b2c331a3836ac5aedb8ddf2f2cf24f",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/analysis/validation.py",
+      "tested_sha256": "e67422ab8be8b8abed3edc3da1eae70894275b0e90f2f77c0067809d3beb1d97",
+      "index_sha256": "d653f56f5fcd38845d465708c08f48da1a4160b942df1eaf895fd19a6dbb6f2f",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/api.py",
+      "tested_sha256": "b4599596372620567b2951fffe47b39c4478fc080919d87195bbc974b66abf1b",
+      "index_sha256": "1e56e194debed4ad817e16c43826f074ad2c0aafacbc4b27ac83ddcfc04fd523",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/config.py",
+      "tested_sha256": "b92644e65c186e81b692e41db8e05f124701805145a49af8b0d4a417e5abc3db",
+      "index_sha256": "2194818d6f4aee0f37a1a91a69c27575a2a1fe571cf87965a4cc7823e1e3c736",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/decision/__init__.py",
+      "tested_sha256": "5224dee0f9b4ce15e0a4b83ff4892616a9156c9c6865609fbc4d33c11af95f99",
+      "index_sha256": "5224dee0f9b4ce15e0a4b83ff4892616a9156c9c6865609fbc4d33c11af95f99",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/acceptance.py",
+      "tested_sha256": "89a26abc73119d8b65e542fa9bf8014ae4173ebd56925ca8e4c873d2913ca031",
+      "index_sha256": "89a26abc73119d8b65e542fa9bf8014ae4173ebd56925ca8e4c873d2913ca031",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/assessment.py",
+      "tested_sha256": "3f65a35394a7af13e54c4c6a6ba31faae8608c88b0f437ad85bf6e2127e3008e",
+      "index_sha256": "3f65a35394a7af13e54c4c6a6ba31faae8608c88b0f437ad85bf6e2127e3008e",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/audio.py",
+      "tested_sha256": "da92ce4f5554de8f91838b7db9742cfb17f5f2f5fdd6a5964fcbd6dc9a44ddcc",
+      "index_sha256": "da92ce4f5554de8f91838b7db9742cfb17f5f2f5fdd6a5964fcbd6dc9a44ddcc",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/boundary_audit.py",
+      "tested_sha256": "2340ac4c747fd08902d629da81f0e937446b3f9a91e8b41e5289cfa7b5069cde",
+      "index_sha256": "2340ac4c747fd08902d629da81f0e937446b3f9a91e8b41e5289cfa7b5069cde",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/boundary_media.py",
+      "tested_sha256": "94b3a3335bb1c17f09d28cc71c35fbbd9b1d17bb393483ea5965080aa12e8c84",
+      "index_sha256": "94b3a3335bb1c17f09d28cc71c35fbbd9b1d17bb393483ea5965080aa12e8c84",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/boundary_optimizer.py",
+      "tested_sha256": "d46b59654dd43b578298ba77a8824f0ad9ffd60e62248e6aae95e11b61b624e1",
+      "index_sha256": "d46b59654dd43b578298ba77a8824f0ad9ffd60e62248e6aae95e11b61b624e1",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/boundary_review.py",
+      "tested_sha256": "32c8b903298eac7a1649b33628985e715c9ebde8e54a33cea0a100abc028f76f",
+      "index_sha256": "32c8b903298eac7a1649b33628985e715c9ebde8e54a33cea0a100abc028f76f",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/boundary_review_call.py",
+      "tested_sha256": "9d2a108df0dbd3b0b01963bdb3bf1b6267dfd53dd9650b12a0241ddb46725dd3",
+      "index_sha256": "9d2a108df0dbd3b0b01963bdb3bf1b6267dfd53dd9650b12a0241ddb46725dd3",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/candidates.py",
+      "tested_sha256": "eae72fb56bba82055a9e84b2a48960d86b6b989e2db11f76341152eb8b45d03a",
+      "index_sha256": "eae72fb56bba82055a9e84b2a48960d86b6b989e2db11f76341152eb8b45d03a",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/context.py",
+      "tested_sha256": "6484123844ac15f41640af7149c56e4c9e84c3fe413219b9abc4701e7195a70b",
+      "index_sha256": "6484123844ac15f41640af7149c56e4c9e84c3fe413219b9abc4701e7195a70b",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/context_priority.py",
+      "tested_sha256": "da2815bcdf0e4514ee4565b0690333b6e668185bd4617b615095f111f29a60cd",
+      "index_sha256": "da2815bcdf0e4514ee4565b0690333b6e668185bd4617b615095f111f29a60cd",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/context_proposals.py",
+      "tested_sha256": "b02da65dbedd87998eff94b67aef09114707cab86dfba0ca986840d713727d72",
+      "index_sha256": "b02da65dbedd87998eff94b67aef09114707cab86dfba0ca986840d713727d72",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/continuity.py",
+      "tested_sha256": "4233333d0396bbe863715c07ef58620f2a6ea6acd5857a3a91ed6603409d0572",
+      "index_sha256": "4233333d0396bbe863715c07ef58620f2a6ea6acd5857a3a91ed6603409d0572",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/evaluation.html",
+      "tested_sha256": "22b6f23dd3ac47f744a3ef9ed02bd6b6ddf2074a30b2979554c9feb58e9c6a38",
+      "index_sha256": "71027213c5953b25c5b02d9b7b74e804de48b1d710706c2a9aaea02111a71402",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/decision/evaluation.py",
+      "tested_sha256": "923528c813d1d559695c17f40bd2fabe8d46b390cd356b057ca49fc17717b96e",
+      "index_sha256": "923528c813d1d559695c17f40bd2fabe8d46b390cd356b057ca49fc17717b96e",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/evaluation_server.py",
+      "tested_sha256": "252f3ce449e9da740e5f7d13411287b76629bc4f9f7e811a540da62222d9e15a",
+      "index_sha256": "252f3ce449e9da740e5f7d13411287b76629bc4f9f7e811a540da62222d9e15a",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/llm.py",
+      "tested_sha256": "447e2ef76177f388378909949142030d6d815ad4623c7ccaf47adc72e3df92de",
+      "index_sha256": "447e2ef76177f388378909949142030d6d815ad4623c7ccaf47adc72e3df92de",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/llm_cli.py",
+      "tested_sha256": "93645d409e67b537ca38925fbbca58f102a294d307d06f45bc1926b56c1ab72d",
+      "index_sha256": "93645d409e67b537ca38925fbbca58f102a294d307d06f45bc1926b56c1ab72d",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/presentation.py",
+      "tested_sha256": "b69f26c36db8489ffd1ec14136bac7a47f7797d0f0792d64f35fb24b20f53340",
+      "index_sha256": "b69f26c36db8489ffd1ec14136bac7a47f7797d0f0792d64f35fb24b20f53340",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/question_cues.py",
+      "tested_sha256": "9a48f4d10b8d5153a2c485bbb276ebff3a9ae4264cf837cd2a5779c13734b763",
+      "index_sha256": "9a48f4d10b8d5153a2c485bbb276ebff3a9ae4264cf837cd2a5779c13734b763",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/reviewed.py",
+      "tested_sha256": "d3c7ec17bbdc62804ccf8d8f8ee5e017c0539ee7ab56b81a7e378f058dc0f584",
+      "index_sha256": "d3c7ec17bbdc62804ccf8d8f8ee5e017c0539ee7ab56b81a7e378f058dc0f584",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/risk_selection.py",
+      "tested_sha256": "d34e6fdec45ed7d5b7fb32490ee119c16dd81bcda3c9400b5a71e7759e502427",
+      "index_sha256": "d34e6fdec45ed7d5b7fb32490ee119c16dd81bcda3c9400b5a71e7759e502427",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/scorers.py",
+      "tested_sha256": "e50d7c064a5842aac850e5043bb2d2d4d08a1e450e832fe6e467c7ee1e65fc9e",
+      "index_sha256": "e50d7c064a5842aac850e5043bb2d2d4d08a1e450e832fe6e467c7ee1e65fc9e",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/scoring.py",
+      "tested_sha256": "ede7481cc10a393c479b0de4809825c3aea03e486b847a5633245f44555fc7b5",
+      "index_sha256": "ede7481cc10a393c479b0de4809825c3aea03e486b847a5633245f44555fc7b5",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/selection.py",
+      "tested_sha256": "64f23275d5e5e6f148b7081a1f9aa1b5c29cf3bb3930420db2b7726390ef6d97",
+      "index_sha256": "64f23275d5e5e6f148b7081a1f9aa1b5c29cf3bb3930420db2b7726390ef6d97",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/semantic_boundary_review.py",
+      "tested_sha256": "362812979fc80b3601c96f50a9a89d2f1f51e04b12a7f0908d03adeba1a9c7ce",
+      "index_sha256": "362812979fc80b3601c96f50a9a89d2f1f51e04b12a7f0908d03adeba1a9c7ce",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/semantic_comparison.py",
+      "tested_sha256": "15fef9b4258adbce9a88e5781d8987eef7512441b6c35b1bef5d66b525ee122f",
+      "index_sha256": "15fef9b4258adbce9a88e5781d8987eef7512441b6c35b1bef5d66b525ee122f",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/sentence_repair.py",
+      "tested_sha256": "9538f37906c2c2ca0035f4a5458132329f91ecb4a38bd79d2ab61e164e47b6e8",
+      "index_sha256": "9538f37906c2c2ca0035f4a5458132329f91ecb4a38bd79d2ab61e164e47b6e8",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/short_boundary_choices.py",
+      "tested_sha256": "9fbd93e8bd4725ede47c0dc9eee216f8ca1c2e5c4f15b133e00ffea58c504955",
+      "index_sha256": "9fbd93e8bd4725ede47c0dc9eee216f8ca1c2e5c4f15b133e00ffea58c504955",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/topics.py",
+      "tested_sha256": "0b00c8a264dc0b3e50b9fcc7e0e443c9238c4f68d89161855ffa7720bceae500",
+      "index_sha256": "0b00c8a264dc0b3e50b9fcc7e0e443c9238c4f68d89161855ffa7720bceae500",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/validation.py",
+      "tested_sha256": "a346ac5cbfba6c879f9812fe30b6569d113a679f0434fe070a62fbf48a66c5d9",
+      "index_sha256": "a346ac5cbfba6c879f9812fe30b6569d113a679f0434fe070a62fbf48a66c5d9",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/decision/word_followup.py",
+      "tested_sha256": "9f988e6f5a67dfad93d0f0ca027856d4561114362e8b45d1fa19e5303e498f2a",
+      "index_sha256": "9f988e6f5a67dfad93d0f0ca027856d4561114362e8b45d1fa19e5303e498f2a",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/editing/__init__.py",
+      "tested_sha256": "5bdac543854d9790ac12374aba06107f4b9f3fdfd4da4275b36615094f6640e1",
+      "index_sha256": "5bdac543854d9790ac12374aba06107f4b9f3fdfd4da4275b36615094f6640e1",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/editing/edl.py",
+      "tested_sha256": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+      "index_sha256": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/editing/manifest.py",
+      "tested_sha256": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861",
+      "index_sha256": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/editing/mlt.py",
+      "tested_sha256": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+      "index_sha256": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/editing/render.py",
+      "tested_sha256": "f870aa71899b2fff6323e1525e6c6110c07f0bae080556ae37ab7cdd9ba6de37",
+      "index_sha256": "f870aa71899b2fff6323e1525e6c6110c07f0bae080556ae37ab7cdd9ba6de37",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/editing/subtitles.py",
+      "tested_sha256": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+      "index_sha256": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/evaluation/__init__.py",
+      "tested_sha256": "aa64794cc0d0362285a4ce4806503e7342012873048b08ca3ef46f73389e14bd",
+      "index_sha256": "a7c04e8c7aeb1ecae5d7750a28a2158762780c24b34209a4dc9cf44ebdfb3887",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/evaluation/shots.py",
+      "tested_sha256": "6740fcff9dc830e75f78c19a78362b39a68f59219c2b77de49cfd76886701442",
+      "index_sha256": "94ccdd34b085069de54405891b1cbcd047d0a0245b5b245f0768b1a173a1f4b3",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/media/__init__.py",
+      "tested_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "index_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/media/normalize.py",
+      "tested_sha256": "c009ff4288496f2060e037a186b73dc1761485b3172515a0851113b91e8b9bed",
+      "index_sha256": "72ae2ff149eecdb1e8d8906eef730ab1e328d37a5938e2508bd2c0a690a00abd",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/media/probe.py",
+      "tested_sha256": "afc1614f6ef532711852b801c81df310a3794dc88d110cb1fcb71f0f26995ff5",
+      "index_sha256": "f57343ab22647aeea4aa2a8b3ddea2c019b06ed176343f41009d5e1c8c8296d0",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/media/split.py",
+      "tested_sha256": "9280ff10991a3d1c8421dbaf07357bfb9bfe14a317d6795a71972e48971ec20a",
+      "index_sha256": "4a1e2a74d100990dff03232e893e04e094bf71b0bb13c6ecb2c98740485ae5d1",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/queue/__init__.py",
+      "tested_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "index_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/queue/client.py",
+      "tested_sha256": "fdc3082c0f195fe162c8917719d7495022835764f61764e5556dd4a0d78cb84a",
+      "index_sha256": "f7159710376608b0504faf6d843a3b441159f97c2a42e351f6917df0756c08f2",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/queue/demo.py",
+      "tested_sha256": "11ab392384bf07edd5d14301b8d9309e3811e953f2dfb33d3592786fef737002",
+      "index_sha256": "b46884b8546ec2a0418417ffcf5c74fb858b0cebd0de01eac9b84131022dfb1f",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/queue/tasks.py",
+      "tested_sha256": "cdf26aee254bd84c0144dd26d688496bf81eea573072842077ccd647ee82e484",
+      "index_sha256": "bf0fe8f1ec08a779a22ee0c91a61504fa0bb6aec8b990afecca18ff863df3739",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/routes/__init__.py",
+      "tested_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "index_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/routes/editing.py",
+      "tested_sha256": "71cd47e26a0fd46b41b5def241820a69195d2ec7d98d33c6bcbf11ae95bd8b61",
+      "index_sha256": "71cd47e26a0fd46b41b5def241820a69195d2ec7d98d33c6bcbf11ae95bd8b61",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/routes/video.py",
+      "tested_sha256": "b4612dac4cddcbbadd9084da4f97fbaa52778ee1ed6923e47bd02529a64fd48d",
+      "index_sha256": "4b5e92133ecddf1c20c2c64477a845eaea9ad696a788136c7785ea35d897077e",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/services/__init__.py",
+      "tested_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "index_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/services/editing.py",
+      "tested_sha256": "141ffc4d6e2fa4c304a45df30a927efa9934ed60b64f7d1e6d3a478085c6551b",
+      "index_sha256": "141ffc4d6e2fa4c304a45df30a927efa9934ed60b64f7d1e6d3a478085c6551b",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/services/editing_history.py",
+      "tested_sha256": "9b5859a9f1d99d85e1be56e69eb2bbcbf2ee843c1f026b57ab0d58df27db4c0b",
+      "index_sha256": "9b5859a9f1d99d85e1be56e69eb2bbcbf2ee843c1f026b57ab0d58df27db4c0b",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/services/mlt_exporting.py",
+      "tested_sha256": "4481ef2238c97d75b52bdfabf19e94f95921acdbe4a4428fe9ce93562a0aa305",
+      "index_sha256": "4481ef2238c97d75b52bdfabf19e94f95921acdbe4a4428fe9ce93562a0aa305",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/services/pipeline.py",
+      "tested_sha256": "3207913dc3ab35b952e35fcd6bf245086f13a4a7a88982d8b9175b0fc72ced5c",
+      "index_sha256": "90761efdaecc8e6aaf966812bcc6bdfb803b92e50835585e596fecb9d3ec04ff",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/services/rendering.py",
+      "tested_sha256": "a023c015cf7a4ed7d0fad7b8a0db4cfb1c5c1830a437a8df4062ea499a785d28",
+      "index_sha256": "a023c015cf7a4ed7d0fad7b8a0db4cfb1c5c1830a437a8df4062ea499a785d28",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/services/result_cache.py",
+      "tested_sha256": "be368f2c6a28f526a554ca996b65269ee1c818de25452c5003c9fd0d6e7e781a",
+      "index_sha256": "2149f9e2d559180d6dd9eca2b245bdbc7eacf6240aa79fd994cf19caa75d6929",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "backend/clipforge/services/subtitling.py",
+      "tested_sha256": "a2c13140ab3934607ebb1df09ec20ed901d1caf2730a91b1af2209b035a308e5",
+      "index_sha256": "a2c13140ab3934607ebb1df09ec20ed901d1caf2730a91b1af2209b035a308e5",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/storage/__init__.py",
+      "tested_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "index_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "change": "none"
+    },
+    {
+      "path": "backend/clipforge/storage/jobs.py",
+      "tested_sha256": "342c2f6b4f4c346af1929335008d44354169b8c55323cf16dc9a71387debf3e1",
+      "index_sha256": "8681f625c7940dcecb5817dab7f9ec52e76f894d05094f70981f63f4aa88c66e",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "schemas/analysis.schema.json",
+      "tested_sha256": "86f7e752f4ed0241bc23d3a25f5742a71ffe3caca384162905f0b9f23940d4cb",
+      "index_sha256": "a26345d420cfa3a30c0c94420a07ffdff0dc3fefa4a935b0bf80226dc6bfeba6",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "schemas/candidates.schema.json",
+      "tested_sha256": "612208e7cdd2477cb4d1dfa32cd3fae0fc1caa58b422e52f767761cc4131fc32",
+      "index_sha256": "612208e7cdd2477cb4d1dfa32cd3fae0fc1caa58b422e52f767761cc4131fc32",
+      "change": "none"
+    },
+    {
+      "path": "schemas/edl-v0.2.schema.json",
+      "tested_sha256": "1a5b5921d5681ad998ecb2755697c6fcafaa25f185becfa0cc97db1ee5ca77ff",
+      "index_sha256": "fe5b54e1ac01fa10664d36b9ce505509db43a43ece4607395b54c73af8d748fe",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "schemas/edl.schema.json",
+      "tested_sha256": "44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8",
+      "index_sha256": "44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8",
+      "change": "none"
+    },
+    {
+      "path": "schemas/llm_candidates.schema.json",
+      "tested_sha256": "9de91c19d1af5343cdf590414aa6d34a62173dbb28580c707612fec7d83f6550",
+      "index_sha256": "43b0dbfc2b79801ad7ed925eb0969fcdf0ecb7ad0c009b968c84b1c1c1f59718",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "schemas/media_meta.schema.json",
+      "tested_sha256": "aadbde01435d6e8f676725902d001f8bc1b5ef08e131cd140d9b7bd2920f4d4e",
+      "index_sha256": "dfc6b89a1b9b1c0f6f99805daef8137d0ffd76ece46c9ebb728a17058b0c1c40",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "schemas/scored_candidates.schema.json",
+      "tested_sha256": "34e3b20a00c69b9625a47c24fc622193ff682a4ec16334407fceef734e11fbf7",
+      "index_sha256": "7065212a78912e79adc0b77002a50c5aec635c7e59b239457d4ba60f5f49f9bb",
+      "change": "crlf_to_lf"
+    },
+    {
+      "path": "schemas/subtitles.schema.json",
+      "tested_sha256": "3e796eeff63900651a13129e598a0cd2deef96e12dcc8cde0a567541cd6b725a",
+      "index_sha256": "1bf60ccdd441b2a9e1534ba0436358ce448f69b379c1eab64ee288c3218476de",
+      "change": "crlf_to_lf"
+    }
+  ],
+  "container_rerun": false,
+  "note": "Container acceptance covers tested checkout bytes. Index bytes were individually verified as identical or CRLF-to-LF only; do not claim identical SHA for normalized files or a new container test of index bytes."
+}

@@ -1,0 +1,96 @@
+{
+  "status": "matched_frame_contact_sheet_created",
+  "checked_at": "2026-10-12T10:46:30.438810+00:00",
+  "scope": "Six decoded frame pairs from one existing Test3 technical comparison; not a whole-video subject suitability score",
+  "source": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week4-workbench\\real-pipeline\\data\\jobs\\1e5e7300-9f65-4772-bb2d-69ae0e717253\\normalized.mp4",
+  "portrait": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week4-workbench\\real-pipeline\\data\\jobs\\1e5e7300-9f65-4772-bb2d-69ae0e717253\\edits\\2cc51a19-007b-468f-a834-c84ea96b6168\\renders\\68200f6b-9374-4196-9e67-bfbb2821f4d3\\output.mp4",
+  "media_hashes": {
+    "source": "9e95512430dbb045ea18acfcda5f9100e9d5a33b4b4ba9a403682a217eb22ee8",
+    "portrait": "034a41d9b7fa62cde0ccbdf65f16d3cd02c0a2dfdd2d109e0ab2064cd72ad513"
+  },
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "crop": {
+    "x": 662,
+    "y": 12,
+    "width": 594,
+    "height": 1056
+  },
+  "retained_width_fraction": 0.309375,
+  "retained_area_fraction": 0.3025,
+  "output_dimensions": [
+    1080,
+    1920
+  ],
+  "output_scale_factor": 1.8181818181818181,
+  "frames": [
+    {
+      "source_frame": 43,
+      "output_frame": 0,
+      "source_image": "source-01.png",
+      "portrait_image": "portrait-01.png"
+    },
+    {
+      "source_frame": 112,
+      "output_frame": 69,
+      "source_image": "source-02.png",
+      "portrait_image": "portrait-02.png"
+    },
+    {
+      "source_frame": 400,
+      "output_frame": 357,
+      "source_image": "source-03.png",
+      "portrait_image": "portrait-03.png"
+    },
+    {
+      "source_frame": 700,
+      "output_frame": 657,
+      "source_image": "source-04.png",
+      "portrait_image": "portrait-04.png"
+    },
+    {
+      "source_frame": 1200,
+      "output_frame": 1157,
+      "source_image": "source-05.png",
+      "portrait_image": "portrait-05.png"
+    },
+    {
+      "source_frame": 1681,
+      "output_frame": 1638,
+      "source_image": "source-06.png",
+      "portrait_image": "portrait-06.png"
+    }
+  ],
+  "media_unchanged": true,
+  "no_video_rendered": true,
+  "visual_review": {
+    "reviewer": "Codex visual inspection of the six actual matched frame pairs",
+    "observations": [
+      {
+        "source_frame": 43,
+        "output_frame": 0,
+        "finding": "Interview guest is pushed against the left border; part of the head/body is outside the crop. Browser chrome and taskbar remain."
+      },
+      {
+        "source_frame": 400,
+        "output_frame": 357,
+        "finding": "Full source shows two seated people talking. The left guest is absent from the cropped output, while the interviewer on the right remains."
+      },
+      {
+        "source_frame": 1200,
+        "output_frame": 1157,
+        "finding": "Full source shows a white-shirt speaker at left. The crop excludes that speaker and keeps the sign and people on the right."
+      },
+      {
+        "source_frame": 1681,
+        "output_frame": 1638,
+        "finding": "Outdoor vlogger is against the left border. Existing scrolling comments and original subtitles remain."
+      }
+    ],
+    "conclusion": "Exact fixed-center crop is technically reproducible, but this real screen recording is not suitable for automatic publishing with this framing. It loses speaking subjects/context in sampled scenes.",
+    "limitation": "Six frames are evidence of specific failures; they do not measure whole-video subject retention or generic suitability.",
+    "recommended_default_for_this_source": "Keep the landscape export. If portrait is required, prefer a whole-picture fit/pad layout or explicitly preview and confirm each crop; neither adaptive crop nor fit/pad mode has been added here."
+  }
+}

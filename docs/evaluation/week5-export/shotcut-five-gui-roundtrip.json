@@ -1,0 +1,5118 @@
+{
+  "status": "passed",
+  "recorded_at": "2026-10-12T10:25:50.025231+00:00",
+  "scope": "five-case saved Shotcut XML semantic roundtrip; no render or playback claim",
+  "case_manifest": {
+    "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases.json",
+    "sha256": "e1a226bca252620a7716b03ae79180b7e9238ad413a2a12856098aba312023cd",
+    "bytes": 4955
+  },
+  "source_code": {
+    "audit_script": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\audit_gui_roundtrip.py",
+      "sha256": "eed01b17abd93c1a96bb57f250d2fcbb89e4df6be1391056b5a63122f4782a38",
+      "bytes": 24664
+    },
+    "backend/clipforge/editing/edl.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\edl.py",
+      "sha256": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+      "bytes": 16974
+    },
+    "backend/clipforge/editing/mlt.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\mlt.py",
+      "sha256": "9299f100297e15febf875772ac561b8ee760be81bc0302550704bbd56150d059",
+      "bytes": 13411
+    },
+    "backend/clipforge/editing/subtitles.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\subtitles.py",
+      "sha256": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+      "bytes": 23922
+    }
+  },
+  "summary": {
+    "passed": 5,
+    "pending": 0,
+    "failed": 0
+  },
+  "source_media": [
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-b.mov",
+      "sha256": "3dd407336ca5ea641ebc0b4c1ffd2068940625fbf3d6d7a9aad0459834d40fcd",
+      "bytes": 1552894
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+      "sha256": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+      "bytes": 1430793
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+      "sha256": "177cfd3440c2f6cb60013bbc90eb028e48480d1f49a9e34a569ce6d6152d5099",
+      "bytes": 17954
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-r.mov",
+      "sha256": "87bc88d5d94ab72c3f02f4b27b9620253c69fe773f6aece4c7bf48460992ad5a",
+      "bytes": 1557241
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\large.mov",
+      "sha256": "0e88181a149ed566e96f1a48e39cf61995656034715904b3add001b862339c2e",
+      "bytes": 1601617
+    }
+  ],
+  "cases": [
+    {
+      "case": "01-horizontal-reorder-repeat",
+      "label": "横屏重排与重复素材",
+      "status": "passed",
+      "original_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\01-horizontal-reorder-repeat\\project.mlt",
+        "sha256": "0dedde6ceae9f91825ea45a95a1dd662d5f3eecba8847e127969eaf12f6e91f5",
+        "bytes": 10256
+      },
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\01-horizontal-reorder-repeat\\shotcut-check.mlt",
+      "saved_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\01-horizontal-reorder-repeat\\shotcut-check.mlt",
+        "sha256": "4e50161c9e497a206f450077e27876e11cb5b97b949f4544a3053b35a09036b4",
+        "bytes": 25543
+      },
+      "semantic_changes": [],
+      "original_semantic": {
+        "profile": {
+          "width": 160,
+          "height": 90,
+          "fps": "30",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "16/9",
+          "colorspace": 709
+        },
+        "duration_frames": 26,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  26
+                ],
+                "source_range": [
+                  0,
+                  26
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    26
+                  ],
+                  "length": 26,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  8
+                ],
+                "source_range": [
+                  0,
+                  8
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-b.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": []
+                }
+              },
+              {
+                "timeline_range": [
+                  8,
+                  18
+                ],
+                "source_range": [
+                  45,
+                  55
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": []
+                }
+              },
+              {
+                "timeline_range": [
+                  18,
+                  26
+                ],
+                "source_range": [
+                  0,
+                  8
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-b.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": []
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "rich_text": {
+              "text": "首帧",
+              "runs": [
+                {
+                  "text": "首帧",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": [
+              [
+                0,
+                "",
+                "1"
+              ],
+              [
+                1,
+                "",
+                "0"
+              ]
+            ],
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                26
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "8",
+              "5",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                11,
+                15
+              ]
+            ],
+            "rich_text": {
+              "text": "重排字幕",
+              "runs": [
+                {
+                  "text": "重排字幕",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                18,
+                19
+              ]
+            ],
+            "rich_text": {
+              "text": "首帧",
+              "runs": [
+                {
+                  "text": "首帧",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                2,
+                5
+              ]
+            ],
+            "rich_text": {
+              "text": "<b>字</b> #timecode# & 中文",
+              "runs": [
+                {
+                  "text": "<b>字</b> #timecode# & 中文",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                20,
+                23
+              ]
+            ],
+            "rich_text": {
+              "text": "<b>字</b> #timecode# & 中文",
+              "runs": [
+                {
+                  "text": "<b>字</b> #timecode# & 中文",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "saved_semantic": {
+        "profile": {
+          "width": 160,
+          "height": 90,
+          "fps": "30",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "16/9",
+          "colorspace": 709
+        },
+        "duration_frames": 26,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  26
+                ],
+                "source_range": [
+                  0,
+                  26
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    26
+                  ],
+                  "length": 26,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  8
+                ],
+                "source_range": [
+                  0,
+                  8
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-b.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": []
+                }
+              },
+              {
+                "timeline_range": [
+                  8,
+                  18
+                ],
+                "source_range": [
+                  45,
+                  55
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": []
+                }
+              },
+              {
+                "timeline_range": [
+                  18,
+                  26
+                ],
+                "source_range": [
+                  0,
+                  8
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-b.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": []
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "rich_text": {
+              "text": "首帧",
+              "runs": [
+                {
+                  "text": "首帧",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": [
+              [
+                0,
+                "",
+                "1"
+              ],
+              [
+                1,
+                "",
+                "0"
+              ]
+            ],
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                26
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "8",
+              "5",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                11,
+                15
+              ]
+            ],
+            "rich_text": {
+              "text": "重排字幕",
+              "runs": [
+                {
+                  "text": "重排字幕",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                18,
+                19
+              ]
+            ],
+            "rich_text": {
+              "text": "首帧",
+              "runs": [
+                {
+                  "text": "首帧",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                2,
+                5
+              ]
+            ],
+            "rich_text": {
+              "text": "<b>字</b> #timecode# & 中文",
+              "runs": [
+                {
+                  "text": "<b>字</b> #timecode# & 中文",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                20,
+                23
+              ]
+            ],
+            "rich_text": {
+              "text": "<b>字</b> #timecode# & 中文",
+              "runs": [
+                {
+                  "text": "<b>字</b> #timecode# & 中文",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "8",
+              "65",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "clip_count": 3,
+      "caption_count": 5,
+      "brand_count": 1,
+      "saved_title": "Shotcut version 26.8.1",
+      "saved_mlt_version": "7.41.0",
+      "has_shotcut_save_signature": true,
+      "time_serialization": {
+        "method": "rational fps; nearest integer half-up; residual strictly below 0.5 frame",
+        "max_absolute_residual_frames": 0.01,
+        "records": [
+          {
+            "label": "timeline.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.out",
+            "serialized": "00:00:00.833",
+            "frame": 25,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "track0.entry0.source.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.source.out",
+            "serialized": "00:00:00.833",
+            "frame": 25,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "track0.entry0.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.out",
+            "serialized": "00:00:00.833",
+            "frame": 25,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry2.out",
+            "serialized": "00:00:00.233",
+            "frame": 7,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.in",
+            "serialized": "00:00:01.500",
+            "frame": 45,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry3.out",
+            "serialized": "00:00:01.800",
+            "frame": 54,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry4.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry4.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry4.out",
+            "serialized": "00:00:00.233",
+            "frame": 7,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.opacity.key",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.opacity.key",
+            "serialized": "00:00:00.033",
+            "frame": 1,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.067",
+            "frame": 2,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.133",
+            "frame": 4,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.133",
+            "frame": 4,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.367",
+            "frame": 11,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.467",
+            "frame": 14,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.467",
+            "frame": 14,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.600",
+            "frame": 18,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.600",
+            "frame": 18,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.600",
+            "frame": 18,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.667",
+            "frame": 20,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.733",
+            "frame": 22,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.733",
+            "frame": 22,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.833",
+            "frame": 25,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.833",
+            "frame": 25,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          }
+        ]
+      },
+      "qtext_declared_runtime_and_effective_ranges": {
+        "original": [
+          {
+            "text": "首帧",
+            "declared_range": [
+              0,
+              1
+            ],
+            "runtime_range": [
+              0,
+              26
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "opacity": [
+              [
+                0,
+                "",
+                "1"
+              ],
+              [
+                1,
+                "",
+                "0"
+              ]
+            ]
+          },
+          {
+            "text": "<b>字</b> #timecode# & 中文",
+            "declared_range": [
+              2,
+              5
+            ],
+            "runtime_range": [
+              2,
+              5
+            ],
+            "effective_visible_ranges": [
+              [
+                2,
+                5
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "重排字幕",
+            "declared_range": [
+              11,
+              15
+            ],
+            "runtime_range": [
+              11,
+              15
+            ],
+            "effective_visible_ranges": [
+              [
+                11,
+                15
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "首帧",
+            "declared_range": [
+              18,
+              19
+            ],
+            "runtime_range": [
+              18,
+              19
+            ],
+            "effective_visible_ranges": [
+              [
+                18,
+                19
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "<b>字</b> #timecode# & 中文",
+            "declared_range": [
+              20,
+              23
+            ],
+            "runtime_range": [
+              20,
+              23
+            ],
+            "effective_visible_ranges": [
+              [
+                20,
+                23
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              26
+            ],
+            "runtime_range": [
+              0,
+              26
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                26
+              ]
+            ],
+            "opacity": "1"
+          }
+        ],
+        "saved": [
+          {
+            "text": "首帧",
+            "declared_range": [
+              0,
+              26
+            ],
+            "runtime_range": [
+              0,
+              26
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "opacity": [
+              [
+                0,
+                "",
+                "1"
+              ],
+              [
+                1,
+                "",
+                "0"
+              ]
+            ]
+          },
+          {
+            "text": "<b>字</b> #timecode# & 中文",
+            "declared_range": [
+              2,
+              5
+            ],
+            "runtime_range": [
+              2,
+              5
+            ],
+            "effective_visible_ranges": [
+              [
+                2,
+                5
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "重排字幕",
+            "declared_range": [
+              11,
+              15
+            ],
+            "runtime_range": [
+              11,
+              15
+            ],
+            "effective_visible_ranges": [
+              [
+                11,
+                15
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "首帧",
+            "declared_range": [
+              18,
+              19
+            ],
+            "runtime_range": [
+              18,
+              19
+            ],
+            "effective_visible_ranges": [
+              [
+                18,
+                19
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "<b>字</b> #timecode# & 中文",
+            "declared_range": [
+              20,
+              23
+            ],
+            "runtime_range": [
+              20,
+              23
+            ],
+            "effective_visible_ranges": [
+              [
+                20,
+                23
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              26
+            ],
+            "runtime_range": [
+              0,
+              26
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                26
+              ]
+            ],
+            "opacity": "1"
+          }
+        ]
+      },
+      "opacity_gate_method": "Every integer output frame evaluated; out=0 is unset in MLT; linear/hold numeric opacity gates preserved.",
+      "input_xml_unchanged_during_audit": true
+    },
+    {
+      "case": "02-portrait-single-final",
+      "label": "竖屏单帧与末帧",
+      "status": "passed",
+      "original_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\02-portrait-single-final\\project.mlt",
+        "sha256": "632fdb84d20ec46c0731feb754232fe02e2e77eab7b9550ba91e277f4a45c892",
+        "bytes": 8392
+      },
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\02-portrait-single-final\\shotcut-check.mlt",
+      "saved_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\02-portrait-single-final\\shotcut-check.mlt",
+        "sha256": "afb8c599a038990ad43cf054e5bc5533afba2ef7775afee653da4b066c2f492e",
+        "bytes": 19924
+      },
+      "semantic_changes": [],
+      "original_semantic": {
+        "profile": {
+          "width": 180,
+          "height": 320,
+          "fps": "30",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "9/16",
+          "colorspace": 709
+        },
+        "duration_frames": 9,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  9
+                ],
+                "source_range": [
+                  0,
+                  9
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    9
+                  ],
+                  "length": 9,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  1
+                ],
+                "source_range": [
+                  0,
+                  1
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+                  "video_index": 0,
+                  "audio_index": -1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  1,
+                  7
+                ],
+                "source_range": [
+                  234,
+                  240
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  7,
+                  9
+                ],
+                "source_range": [
+                  238,
+                  240
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                9
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "9px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "14px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "9",
+              "19",
+              "162",
+              "22"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                5,
+                7
+              ]
+            ],
+            "rich_text": {
+              "text": "末帧",
+              "runs": [
+                {
+                  "text": "末帧",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                7,
+                9
+              ]
+            ],
+            "rich_text": {
+              "text": "末帧",
+              "runs": [
+                {
+                  "text": "末帧",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "saved_semantic": {
+        "profile": {
+          "width": 180,
+          "height": 320,
+          "fps": "30",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "9/16",
+          "colorspace": 709
+        },
+        "duration_frames": 9,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  9
+                ],
+                "source_range": [
+                  0,
+                  9
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    9
+                  ],
+                  "length": 9,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  1
+                ],
+                "source_range": [
+                  0,
+                  1
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+                  "video_index": 0,
+                  "audio_index": -1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  1,
+                  7
+                ],
+                "source_range": [
+                  234,
+                  240
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  7,
+                  9
+                ],
+                "source_range": [
+                  238,
+                  240
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                9
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "9px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "14px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "9",
+              "19",
+              "162",
+              "22"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                5,
+                7
+              ]
+            ],
+            "rich_text": {
+              "text": "末帧",
+              "runs": [
+                {
+                  "text": "末帧",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                7,
+                9
+              ]
+            ],
+            "rich_text": {
+              "text": "末帧",
+              "runs": [
+                {
+                  "text": "末帧",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "clip_count": 3,
+      "caption_count": 2,
+      "brand_count": 1,
+      "saved_title": "Shotcut version 26.8.1",
+      "saved_mlt_version": "7.41.0",
+      "has_shotcut_save_signature": true,
+      "time_serialization": {
+        "method": "rational fps; nearest integer half-up; residual strictly below 0.5 frame",
+        "max_absolute_residual_frames": 0.01,
+        "records": [
+          {
+            "label": "timeline.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.out",
+            "serialized": "00:00:00.267",
+            "frame": 8,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track0.entry0.source.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.source.out",
+            "serialized": "00:00:00.267",
+            "frame": 8,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track0.entry0.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.out",
+            "serialized": "00:00:00.267",
+            "frame": 8,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.source.filter.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry2.out",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry3.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.source.filter.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.in",
+            "serialized": "00:00:07.800",
+            "frame": 234,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry3.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry4.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry4.source.filter.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry4.in",
+            "serialized": "00:00:07.933",
+            "frame": 238,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "track1.entry4.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.167",
+            "frame": 5,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.200",
+            "frame": 6,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.200",
+            "frame": 6,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.233",
+            "frame": 7,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.267",
+            "frame": 8,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.267",
+            "frame": 8,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.267",
+            "frame": 8,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.267",
+            "frame": 8,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          }
+        ]
+      },
+      "qtext_declared_runtime_and_effective_ranges": {
+        "original": [
+          {
+            "text": "末帧",
+            "declared_range": [
+              5,
+              7
+            ],
+            "runtime_range": [
+              5,
+              7
+            ],
+            "effective_visible_ranges": [
+              [
+                5,
+                7
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "末帧",
+            "declared_range": [
+              7,
+              9
+            ],
+            "runtime_range": [
+              7,
+              9
+            ],
+            "effective_visible_ranges": [
+              [
+                7,
+                9
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              9
+            ],
+            "runtime_range": [
+              0,
+              9
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                9
+              ]
+            ],
+            "opacity": "1"
+          }
+        ],
+        "saved": [
+          {
+            "text": "末帧",
+            "declared_range": [
+              5,
+              7
+            ],
+            "runtime_range": [
+              5,
+              7
+            ],
+            "effective_visible_ranges": [
+              [
+                5,
+                7
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "末帧",
+            "declared_range": [
+              7,
+              9
+            ],
+            "runtime_range": [
+              7,
+              9
+            ],
+            "effective_visible_ranges": [
+              [
+                7,
+                9
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              9
+            ],
+            "runtime_range": [
+              0,
+              9
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                9
+              ]
+            ],
+            "opacity": "1"
+          }
+        ]
+      },
+      "opacity_gate_method": "Every integer output frame evaluated; out=0 is unset in MLT; linear/hold numeric opacity gates preserved.",
+      "input_xml_unchanged_during_audit": true
+    },
+    {
+      "case": "03-rational-half-frame",
+      "label": "有理数帧率",
+      "status": "passed",
+      "original_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\03-rational-half-frame\\project.mlt",
+        "sha256": "697669bfea589cee51d6da69d3c33293cf8944655bcb731bb3c50650f0cdc40e",
+        "bytes": 8361
+      },
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\03-rational-half-frame\\shotcut-check.mlt",
+      "saved_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\03-rational-half-frame\\shotcut-check.mlt",
+        "sha256": "cb07cd7bd51b5b58e36d434ccc76bb162677c94d3a40ebfb5a5b4c4ce5cc8bac",
+        "bytes": 18543
+      },
+      "semantic_changes": [],
+      "original_semantic": {
+        "profile": {
+          "width": 180,
+          "height": 320,
+          "fps": "30000/1001",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "9/16",
+          "colorspace": 709
+        },
+        "duration_frames": 16,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  16
+                ],
+                "source_range": [
+                  0,
+                  16
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    16
+                  ],
+                  "length": 16,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  8
+                ],
+                "source_range": [
+                  29,
+                  37
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-r.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  8,
+                  16
+                ],
+                "source_range": [
+                  232,
+                  240
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-r.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                16
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "9px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "14px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "9",
+              "19",
+              "162",
+              "22"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                2
+              ]
+            ],
+            "rich_text": {
+              "text": "分数帧率",
+              "runs": [
+                {
+                  "text": "分数帧率",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                14,
+                16
+              ]
+            ],
+            "rich_text": {
+              "text": "最后字幕",
+              "runs": [
+                {
+                  "text": "最后字幕",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                3,
+                6
+              ]
+            ],
+            "rich_text": {
+              "text": "半帧量化",
+              "runs": [
+                {
+                  "text": "半帧量化",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "saved_semantic": {
+        "profile": {
+          "width": 180,
+          "height": 320,
+          "fps": "30000/1001",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "9/16",
+          "colorspace": 709
+        },
+        "duration_frames": 16,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  16
+                ],
+                "source_range": [
+                  0,
+                  16
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    16
+                  ],
+                  "length": 16,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  8
+                ],
+                "source_range": [
+                  29,
+                  37
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-r.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  8,
+                  16
+                ],
+                "source_range": [
+                  232,
+                  240
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-r.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                16
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "9px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "14px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "9",
+              "19",
+              "162",
+              "22"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                2
+              ]
+            ],
+            "rich_text": {
+              "text": "分数帧率",
+              "runs": [
+                {
+                  "text": "分数帧率",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                14,
+                16
+              ]
+            ],
+            "rich_text": {
+              "text": "最后字幕",
+              "runs": [
+                {
+                  "text": "最后字幕",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                3,
+                6
+              ]
+            ],
+            "rich_text": {
+              "text": "半帧量化",
+              "runs": [
+                {
+                  "text": "半帧量化",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "clip_count": 2,
+      "caption_count": 3,
+      "brand_count": 1,
+      "saved_title": "Shotcut version 26.8.1",
+      "saved_mlt_version": "7.41.0",
+      "has_shotcut_save_signature": true,
+      "time_serialization": {
+        "method": "rational fps; nearest integer half-up; residual strictly below 0.5 frame",
+        "max_absolute_residual_frames": 0.014985014985014986,
+        "records": [
+          {
+            "label": "timeline.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.out",
+            "serialized": "00:00:00.501",
+            "frame": 15,
+            "signed_residual_frames": 0.014985014985014986,
+            "signed_residual_seconds": 0.0005
+          },
+          {
+            "label": "track0.entry0.source.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.source.out",
+            "serialized": "00:00:00.501",
+            "frame": 15,
+            "signed_residual_frames": 0.014985014985014986,
+            "signed_residual_seconds": 0.0005
+          },
+          {
+            "label": "track0.entry0.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.out",
+            "serialized": "00:00:00.501",
+            "frame": 15,
+            "signed_residual_frames": 0.014985014985014986,
+            "signed_residual_seconds": 0.0005
+          },
+          {
+            "label": "track1.entry2.source.out",
+            "serialized": "00:00:07.975",
+            "frame": 239,
+            "signed_residual_frames": 0.01098901098901099,
+            "signed_residual_seconds": 0.00036666666666666667
+          },
+          {
+            "label": "track1.entry2.source.filter.out",
+            "serialized": "00:00:07.975",
+            "frame": 239,
+            "signed_residual_frames": 0.01098901098901099,
+            "signed_residual_seconds": 0.00036666666666666667
+          },
+          {
+            "label": "track1.entry2.in",
+            "serialized": "00:00:00.968",
+            "frame": 29,
+            "signed_residual_frames": 0.01098901098901099,
+            "signed_residual_seconds": 0.00036666666666666667
+          },
+          {
+            "label": "track1.entry2.out",
+            "serialized": "00:00:01.201",
+            "frame": 36,
+            "signed_residual_frames": -0.005994005994005994,
+            "signed_residual_seconds": -0.0002
+          },
+          {
+            "label": "track1.entry3.source.out",
+            "serialized": "00:00:07.975",
+            "frame": 239,
+            "signed_residual_frames": 0.01098901098901099,
+            "signed_residual_seconds": 0.00036666666666666667
+          },
+          {
+            "label": "track1.entry3.source.filter.out",
+            "serialized": "00:00:07.975",
+            "frame": 239,
+            "signed_residual_frames": 0.01098901098901099,
+            "signed_residual_seconds": 0.00036666666666666667
+          },
+          {
+            "label": "track1.entry3.in",
+            "serialized": "00:00:07.741",
+            "frame": 232,
+            "signed_residual_frames": -0.001998001998001998,
+            "signed_residual_seconds": -6.666666666666667e-05
+          },
+          {
+            "label": "track1.entry3.out",
+            "serialized": "00:00:07.975",
+            "frame": 239,
+            "signed_residual_frames": 0.01098901098901099,
+            "signed_residual_seconds": 0.00036666666666666667
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.033",
+            "frame": 1,
+            "signed_residual_frames": -0.01098901098901099,
+            "signed_residual_seconds": -0.00036666666666666667
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.033",
+            "frame": 1,
+            "signed_residual_frames": -0.01098901098901099,
+            "signed_residual_seconds": -0.00036666666666666667
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.100",
+            "frame": 3,
+            "signed_residual_frames": -0.002997002997002997,
+            "signed_residual_seconds": -0.0001
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.167",
+            "frame": 5,
+            "signed_residual_frames": 0.004995004995004995,
+            "signed_residual_seconds": 0.00016666666666666666
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.167",
+            "frame": 5,
+            "signed_residual_frames": 0.004995004995004995,
+            "signed_residual_seconds": 0.00016666666666666666
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.467",
+            "frame": 14,
+            "signed_residual_frames": -0.003996003996003996,
+            "signed_residual_seconds": -0.00013333333333333334
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.501",
+            "frame": 15,
+            "signed_residual_frames": 0.014985014985014986,
+            "signed_residual_seconds": 0.0005
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.501",
+            "frame": 15,
+            "signed_residual_frames": 0.014985014985014986,
+            "signed_residual_seconds": 0.0005
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.501",
+            "frame": 15,
+            "signed_residual_frames": 0.014985014985014986,
+            "signed_residual_seconds": 0.0005
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.501",
+            "frame": 15,
+            "signed_residual_frames": 0.014985014985014986,
+            "signed_residual_seconds": 0.0005
+          }
+        ]
+      },
+      "qtext_declared_runtime_and_effective_ranges": {
+        "original": [
+          {
+            "text": "分数帧率",
+            "declared_range": [
+              0,
+              2
+            ],
+            "runtime_range": [
+              0,
+              2
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                2
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "半帧量化",
+            "declared_range": [
+              3,
+              6
+            ],
+            "runtime_range": [
+              3,
+              6
+            ],
+            "effective_visible_ranges": [
+              [
+                3,
+                6
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "最后字幕",
+            "declared_range": [
+              14,
+              16
+            ],
+            "runtime_range": [
+              14,
+              16
+            ],
+            "effective_visible_ranges": [
+              [
+                14,
+                16
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              16
+            ],
+            "runtime_range": [
+              0,
+              16
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                16
+              ]
+            ],
+            "opacity": "1"
+          }
+        ],
+        "saved": [
+          {
+            "text": "分数帧率",
+            "declared_range": [
+              0,
+              2
+            ],
+            "runtime_range": [
+              0,
+              2
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                2
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "半帧量化",
+            "declared_range": [
+              3,
+              6
+            ],
+            "runtime_range": [
+              3,
+              6
+            ],
+            "effective_visible_ranges": [
+              [
+                3,
+                6
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "最后字幕",
+            "declared_range": [
+              14,
+              16
+            ],
+            "runtime_range": [
+              14,
+              16
+            ],
+            "effective_visible_ranges": [
+              [
+                14,
+                16
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              16
+            ],
+            "runtime_range": [
+              0,
+              16
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                16
+              ]
+            ],
+            "opacity": "1"
+          }
+        ]
+      },
+      "opacity_gate_method": "Every integer output frame evaluated; out=0 is unset in MLT; linear/hold numeric opacity gates preserved.",
+      "input_xml_unchanged_during_audit": true
+    },
+    {
+      "case": "04-no-audio-native",
+      "label": "无声原素材",
+      "status": "passed",
+      "original_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\04-no-audio-native\\project.mlt",
+        "sha256": "22f5efe48762f384c3cee5fa88b828403313cff5ac039ce652a3265579a4c7e3",
+        "bytes": 3644
+      },
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\04-no-audio-native\\shotcut-check.mlt",
+      "saved_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\04-no-audio-native\\shotcut-check.mlt",
+        "sha256": "9b426ccc512fadd093a07291e9706470aaf4857de4a698827d371e23455556bc",
+        "bytes": 7127
+      },
+      "semantic_changes": [],
+      "original_semantic": {
+        "profile": {
+          "width": 160,
+          "height": 90,
+          "fps": "30",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "16/9",
+          "colorspace": 709
+        },
+        "duration_frames": 12,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  12
+                ],
+                "source_range": [
+                  0,
+                  12
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    12
+                  ],
+                  "length": 12,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  11
+                ],
+                "source_range": [
+                  18,
+                  29
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+                  "video_index": 0,
+                  "audio_index": -1,
+                  "filters": []
+                }
+              },
+              {
+                "timeline_range": [
+                  11,
+                  12
+                ],
+                "source_range": [
+                  239,
+                  240
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+                  "video_index": 0,
+                  "audio_index": -1,
+                  "filters": []
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                12
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "8",
+              "5",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "saved_semantic": {
+        "profile": {
+          "width": 160,
+          "height": 90,
+          "fps": "30",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "16/9",
+          "colorspace": 709
+        },
+        "duration_frames": 12,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  12
+                ],
+                "source_range": [
+                  0,
+                  12
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    12
+                  ],
+                  "length": 12,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  11
+                ],
+                "source_range": [
+                  18,
+                  29
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+                  "video_index": 0,
+                  "audio_index": -1,
+                  "filters": []
+                }
+              },
+              {
+                "timeline_range": [
+                  11,
+                  12
+                ],
+                "source_range": [
+                  239,
+                  240
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\silent.mov",
+                  "video_index": 0,
+                  "audio_index": -1,
+                  "filters": []
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                12
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "8px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "12px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "8",
+              "5",
+              "144",
+              "20"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "clip_count": 2,
+      "caption_count": 0,
+      "brand_count": 1,
+      "saved_title": "Shotcut version 26.8.1",
+      "saved_mlt_version": "7.41.0",
+      "has_shotcut_save_signature": true,
+      "time_serialization": {
+        "method": "rational fps; nearest integer half-up; residual strictly below 0.5 frame",
+        "max_absolute_residual_frames": 0.01,
+        "records": [
+          {
+            "label": "timeline.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.out",
+            "serialized": "00:00:00.367",
+            "frame": 11,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track0.entry0.source.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.source.out",
+            "serialized": "00:00:00.367",
+            "frame": 11,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track0.entry0.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.out",
+            "serialized": "00:00:00.367",
+            "frame": 11,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.in",
+            "serialized": "00:00:00.600",
+            "frame": 18,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry2.out",
+            "serialized": "00:00:00.933",
+            "frame": 28,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.in",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.367",
+            "frame": 11,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.367",
+            "frame": 11,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          }
+        ]
+      },
+      "qtext_declared_runtime_and_effective_ranges": {
+        "original": [
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              12
+            ],
+            "runtime_range": [
+              0,
+              12
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                12
+              ]
+            ],
+            "opacity": "1"
+          }
+        ],
+        "saved": [
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              12
+            ],
+            "runtime_range": [
+              0,
+              12
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                12
+              ]
+            ],
+            "opacity": "1"
+          }
+        ]
+      },
+      "opacity_gate_method": "Every integer output frame evaluated; out=0 is unset in MLT; linear/hold numeric opacity gates preserved.",
+      "input_xml_unchanged_during_audit": true
+    },
+    {
+      "case": "05-portrait-mixed-native",
+      "label": "竖屏多来源",
+      "status": "passed",
+      "original_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\project.mlt",
+        "sha256": "6a0ca29d70e99f5a5fcf6e8b3dbe54087665faf3abb299dbe66d854bbb8f9784",
+        "bytes": 9501
+      },
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-check.mlt",
+      "saved_project": {
+        "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-check.mlt",
+        "sha256": "a12f4261c403a3c5aea33e396da35811c1fbf515aada57b6d6fde76efac48fda",
+        "bytes": 22668
+      },
+      "semantic_changes": [],
+      "original_semantic": {
+        "profile": {
+          "width": 180,
+          "height": 320,
+          "fps": "30",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "9/16",
+          "colorspace": 709
+        },
+        "duration_frames": 24,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  24
+                ],
+                "source_range": [
+                  0,
+                  24
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    24
+                  ],
+                  "length": 24,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  8
+                ],
+                "source_range": [
+                  45,
+                  53
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  8,
+                  16
+                ],
+                "source_range": [
+                  0,
+                  8
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\large.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "114",
+                        "top": "10",
+                        "right": "116",
+                        "bottom": "10"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  16,
+                  24
+                ],
+                "source_range": [
+                  45,
+                  53
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                24
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "9px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "14px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "9",
+              "19",
+              "162",
+              "22"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                10,
+                13
+              ]
+            ],
+            "rich_text": {
+              "text": "不同尺寸素材",
+              "runs": [
+                {
+                  "text": "不同尺寸素材",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                19,
+                21
+              ]
+            ],
+            "rich_text": {
+              "text": "重复原片段",
+              "runs": [
+                {
+                  "text": "重复原片段",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                3,
+                5
+              ]
+            ],
+            "rich_text": {
+              "text": "重复原片段",
+              "runs": [
+                {
+                  "text": "重复原片段",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "saved_semantic": {
+        "profile": {
+          "width": 180,
+          "height": 320,
+          "fps": "30",
+          "progressive": 1,
+          "sample_aspect": "1",
+          "display_aspect": "9/16",
+          "colorspace": 709
+        },
+        "duration_frames": 24,
+        "tracks": [
+          {
+            "role": "background",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  24
+                ],
+                "source_range": [
+                  0,
+                  24
+                ],
+                "source": {
+                  "service": "color",
+                  "range": [
+                    0,
+                    24
+                  ],
+                  "length": 24,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "0",
+                  "filters": []
+                }
+              }
+            ]
+          },
+          {
+            "role": "video",
+            "hide": "0",
+            "entries": [
+              {
+                "timeline_range": [
+                  0,
+                  8
+                ],
+                "source_range": [
+                  45,
+                  53
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  8,
+                  16
+                ],
+                "source_range": [
+                  0,
+                  8
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\large.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "114",
+                        "top": "10",
+                        "right": "116",
+                        "bottom": "10"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "timeline_range": [
+                  16,
+                  24
+                ],
+                "source_range": [
+                  45,
+                  53
+                ],
+                "source": {
+                  "service": "avformat",
+                  "range": [
+                    0,
+                    240
+                  ],
+                  "length": 240,
+                  "eof": "pause",
+                  "ignore_points": "0",
+                  "test_audio": "0",
+                  "test_image": "0",
+                  "mute_on_pause": "0",
+                  "resource": "c:\\users\\asus\\documents\\codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+                  "video_index": 0,
+                  "audio_index": 1,
+                  "filters": [
+                    {
+                      "service": "crop",
+                      "range": [
+                        0,
+                        240
+                      ],
+                      "disable": "0",
+                      "crop": {
+                        "active": "0",
+                        "center": "0",
+                        "use_profile": "0",
+                        "left": "62",
+                        "top": "12",
+                        "right": "62",
+                        "bottom": "14"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "a_track": "0",
+            "b_track": "1",
+            "always_active": "1",
+            "sum": "1",
+            "disable": "0"
+          }
+        ],
+        "qtexts": [
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                0,
+                24
+              ]
+            ],
+            "rich_text": {
+              "text": "AI辅助剪辑",
+              "runs": [
+                {
+                  "text": "AI辅助剪辑",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "9px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "right",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "14px"
+                  }
+                }
+              ]
+            },
+            "role": "brand",
+            "geometry": [
+              "9",
+              "19",
+              "162",
+              "22"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "right",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                10,
+                13
+              ]
+            ],
+            "rich_text": {
+              "text": "不同尺寸素材",
+              "runs": [
+                {
+                  "text": "不同尺寸素材",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                19,
+                21
+              ]
+            ],
+            "rich_text": {
+              "text": "重复原片段",
+              "runs": [
+                {
+                  "text": "重复原片段",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          },
+          {
+            "service": "qtext",
+            "disable": "0",
+            "effective_visible_ranges": [
+              [
+                3,
+                5
+              ]
+            ],
+            "rich_text": {
+              "text": "重复原片段",
+              "runs": [
+                {
+                  "text": "重复原片段",
+                  "style": {
+                    "font-family": "Microsoft YaHei",
+                    "font-size": "11px",
+                    "color": "#ffffff"
+                  }
+                }
+              ],
+              "paragraphs": [
+                {
+                  "align": "center",
+                  "style": {
+                    "margin": "0px",
+                    "line-height": "17px"
+                  }
+                }
+              ]
+            },
+            "role": "caption",
+            "geometry": [
+              "9",
+              "276",
+              "162",
+              "25"
+            ],
+            "opacity": "1",
+            "typewriter": "0",
+            "pixel_ratio": "1",
+            "overflow_y": "0",
+            "background": "0x00000080",
+            "halign": "center",
+            "valign": "top",
+            "editor_filter": "richText"
+          }
+        ]
+      },
+      "clip_count": 3,
+      "caption_count": 3,
+      "brand_count": 1,
+      "saved_title": "Shotcut version 26.8.1",
+      "saved_mlt_version": "7.41.0",
+      "has_shotcut_save_signature": true,
+      "time_serialization": {
+        "method": "rational fps; nearest integer half-up; residual strictly below 0.5 frame",
+        "max_absolute_residual_frames": 0.01,
+        "records": [
+          {
+            "label": "timeline.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.out",
+            "serialized": "00:00:00.767",
+            "frame": 23,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track0.entry0.source.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.source.out",
+            "serialized": "00:00:00.767",
+            "frame": 23,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track0.entry0.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track0.entry0.out",
+            "serialized": "00:00:00.767",
+            "frame": 23,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.source.filter.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry2.in",
+            "serialized": "00:00:01.500",
+            "frame": 45,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry2.out",
+            "serialized": "00:00:01.733",
+            "frame": 52,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.source.filter.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry3.in",
+            "serialized": "00:00:00.000",
+            "frame": 0,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry3.out",
+            "serialized": "00:00:00.233",
+            "frame": 7,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "track1.entry4.source.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry4.source.filter.out",
+            "serialized": "00:00:07.967",
+            "frame": 239,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "track1.entry4.in",
+            "serialized": "00:00:01.500",
+            "frame": 45,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "track1.entry4.out",
+            "serialized": "00:00:01.733",
+            "frame": 52,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.100",
+            "frame": 3,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.133",
+            "frame": 4,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.133",
+            "frame": 4,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.333",
+            "frame": 10,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.400",
+            "frame": 12,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.400",
+            "frame": 12,
+            "signed_residual_frames": 0.0,
+            "signed_residual_seconds": 0.0
+          },
+          {
+            "label": "timeline.text.in",
+            "serialized": "00:00:00.633",
+            "frame": 19,
+            "signed_residual_frames": -0.01,
+            "signed_residual_seconds": -0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.667",
+            "frame": 20,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.667",
+            "frame": 20,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.out",
+            "serialized": "00:00:00.767",
+            "frame": 23,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          },
+          {
+            "label": "timeline.text.zero_out",
+            "serialized": "00:00:00.767",
+            "frame": 23,
+            "signed_residual_frames": 0.01,
+            "signed_residual_seconds": 0.0003333333333333333
+          }
+        ]
+      },
+      "qtext_declared_runtime_and_effective_ranges": {
+        "original": [
+          {
+            "text": "重复原片段",
+            "declared_range": [
+              3,
+              5
+            ],
+            "runtime_range": [
+              3,
+              5
+            ],
+            "effective_visible_ranges": [
+              [
+                3,
+                5
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "不同尺寸素材",
+            "declared_range": [
+              10,
+              13
+            ],
+            "runtime_range": [
+              10,
+              13
+            ],
+            "effective_visible_ranges": [
+              [
+                10,
+                13
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "重复原片段",
+            "declared_range": [
+              19,
+              21
+            ],
+            "runtime_range": [
+              19,
+              21
+            ],
+            "effective_visible_ranges": [
+              [
+                19,
+                21
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              24
+            ],
+            "runtime_range": [
+              0,
+              24
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                24
+              ]
+            ],
+            "opacity": "1"
+          }
+        ],
+        "saved": [
+          {
+            "text": "重复原片段",
+            "declared_range": [
+              3,
+              5
+            ],
+            "runtime_range": [
+              3,
+              5
+            ],
+            "effective_visible_ranges": [
+              [
+                3,
+                5
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "不同尺寸素材",
+            "declared_range": [
+              10,
+              13
+            ],
+            "runtime_range": [
+              10,
+              13
+            ],
+            "effective_visible_ranges": [
+              [
+                10,
+                13
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "重复原片段",
+            "declared_range": [
+              19,
+              21
+            ],
+            "runtime_range": [
+              19,
+              21
+            ],
+            "effective_visible_ranges": [
+              [
+                19,
+                21
+              ]
+            ],
+            "opacity": "1"
+          },
+          {
+            "text": "AI辅助剪辑",
+            "declared_range": [
+              0,
+              24
+            ],
+            "runtime_range": [
+              0,
+              24
+            ],
+            "effective_visible_ranges": [
+              [
+                0,
+                24
+              ]
+            ],
+            "opacity": "1"
+          }
+        ]
+      },
+      "opacity_gate_method": "Every integer output frame evaluated; out=0 is unset in MLT; linear/hold numeric opacity gates preserved.",
+      "input_xml_unchanged_during_audit": true
+    }
+  ],
+  "limits": [
+    "Pair this structural audit with actual GUI operator evidence; a file signature alone does not prove GUI actions.",
+    "This does not prove that effect controls were edited, fonts rendered correctly, audible sync, or real speech-caption alignment.",
+    "No XML byte-equivalence, stable graph-ID assumption, source copies, native encoding, network, or model calls."
+  ]
+}

@@ -1,0 +1,17 @@
+﻿{
+    "status":  "failed",
+    "stage":  "image_capabilities",
+    "error":  "New image capability check failed. Export acceptance was not started.",
+    "original_image_id":  "sha256:42d8b95159437a58f240623f313a1b5770e034ec1b9da8a59fe7ac24d4d5a2e9",
+    "original_image_tag":  "clipforge-api",
+    "local_base_tag":  "clipforge-week5-font-base:a8a2b9a1a60b4679b2036152d5aa4df0",
+    "derived_image_id":  "sha256:663b453f3106c4e5997cb3af3c137f844dc5d16daf596513572d34cdd2ce6b56",
+    "derived_image_tag":  "clipforge-week5-font-check:a8a2b9a1a60b4679b2036152d5aa4df0",
+    "builder":  "desktop-linux",
+    "existing_running_services_identical":  true,
+    "production_service_actions":  0,
+    "model_calls":  0,
+    "build_network":  "Debian package download",
+    "acceptance_network":  "none",
+    "input_manifest_sha256":  "ebe35c6381460a1ec6f1e63cfb8ae74cbd09bd923b72c5c88f3030adfe98d7f1"
+}

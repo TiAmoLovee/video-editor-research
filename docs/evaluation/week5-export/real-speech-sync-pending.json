@@ -1,0 +1,110 @@
+{
+  "artifact_kind": "real_caption_sync_observation_checklist",
+  "status": "pending_human_observation",
+  "human_pass_claimed": false,
+  "tolerance_seconds": 0.3,
+  "scope": "Observe subtitle entry and exit against audible speech in three short windows of the existing horizontal burned-caption MP4. This does not grade clip quality or certify all 21 cues.",
+  "no_new_render": true,
+  "timing_source": "Existing saved subtitles.json and source.edl.json; expected times are frame / 30, not a human listening measurement.",
+  "inputs": {
+    "output_mp4": {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/output.mp4",
+      "sha256": "98fcf4bbd0081295249f42e529e74eac68217fb79b84cb58d37484f587c034eb"
+    },
+    "subtitles_json": {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/subtitles.json",
+      "sha256": "ed09bdf8812c4756c13369609f8f425f881839dd6d79c266c6f225639a302bc5"
+    },
+    "source_edl_json": {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/source.edl.json",
+      "sha256": "5451a654a7c1cb9c7f8fda320507245d84bc7b1db69859fe03d3de5a650a2a2f"
+    },
+    "render_json": {
+      "path": "C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/edits/f5e2d366-9bf8-4702-8f7b-bc440975039e/renders/89ad1929-d53e-4e51-b6d1-8569731af2ff/render.json",
+      "sha256": "bba87dc5fa53074da46f4bb3e7f6ed3a6580828e1baee266a2f32d056fd66c47"
+    }
+  },
+  "saved_profile": {"width": 1920, "height": 1080, "fps": {"num": 30, "den": 1}},
+  "duration_frames": 2180,
+  "cue_count": 21,
+  "cut_frame": 1639,
+  "cut_seconds": 54.63333333333333,
+  "observation_rule": {
+    "start": "Record visible target-caption entry and audible first-word onset; absolute difference must be <= 0.3 seconds.",
+    "end": "Record target-caption exit or replacement and audible last-word end; absolute difference must be <= 0.3 seconds.",
+    "inconclusive": "If the sound, transition or timing cannot be identified, record inconclusive and keep pending; do not infer a pass from ASR or frame timings.",
+    "delta_definition": "subtitle_time - speech_time; negative means caption early, positive means caption late."
+  },
+  "checkpoints": [
+    {
+      "position": "beginning",
+      "cue_id": "cue_0001_0004",
+      "clip_id": "clip_c_e044de0cee4df245280e0955e17e88429796304ac04d3cbfb9ae27c9f5c6df6c",
+      "text": "判断不出来",
+      "listen_for_start": "判",
+      "listen_for_end": "出来",
+      "timeline_in_frame": 301,
+      "timeline_out_frame_exclusive": 324,
+      "expected_caption_start_seconds": 10.033333333333333,
+      "expected_caption_end_seconds": 10.8,
+      "playback_window_seconds": [9.033333333333333, 11.8],
+      "status": "pending",
+      "observed_caption_start_seconds": null,
+      "observed_speech_start_seconds": null,
+      "observed_caption_end_seconds": null,
+      "observed_speech_end_seconds": null,
+      "start_delta_seconds": null,
+      "end_delta_seconds": null,
+      "observer": null,
+      "observed_at": null,
+      "notes": null
+    },
+    {
+      "position": "middle",
+      "cue_id": "cue_0001_0011",
+      "clip_id": "clip_c_e044de0cee4df245280e0955e17e88429796304ac04d3cbfb9ae27c9f5c6df6c",
+      "text": "然后呢给咱小伙伴抽奖用的今天啊赶着",
+      "listen_for_start": "然后",
+      "listen_for_end": "着",
+      "timeline_in_frame": 1035,
+      "timeline_out_frame_exclusive": 1155,
+      "expected_caption_start_seconds": 34.5,
+      "expected_caption_end_seconds": 38.5,
+      "playback_window_seconds": [33.5, 39.5],
+      "status": "pending",
+      "observed_caption_start_seconds": null,
+      "observed_speech_start_seconds": null,
+      "observed_caption_end_seconds": null,
+      "observed_speech_end_seconds": null,
+      "start_delta_seconds": null,
+      "end_delta_seconds": null,
+      "observer": null,
+      "observed_at": null,
+      "notes": null
+    },
+    {
+      "position": "after_cut",
+      "cue_id": "cue_0002_0002",
+      "clip_id": "clip_c_4238b3005c08baed3b3105186865fad15d239017f37ec1ac0764afacb14d5b79",
+      "text": "你往桌子上放一个蚂蚁他\n能判断我们俩是有智能的",
+      "listen_for_start": "你",
+      "listen_for_end": "的",
+      "timeline_in_frame": 1754,
+      "timeline_out_frame_exclusive": 1857,
+      "expected_caption_start_seconds": 58.46666666666667,
+      "expected_caption_end_seconds": 61.9,
+      "playback_window_seconds": [53.63333333333333, 62.9],
+      "selection_note": "The window includes the cut at 54.633333 seconds. This target is the next complete cue after the cut; its first word is not clipped, unlike cue_0002_0001.",
+      "status": "pending",
+      "observed_caption_start_seconds": null,
+      "observed_speech_start_seconds": null,
+      "observed_caption_end_seconds": null,
+      "observed_speech_end_seconds": null,
+      "start_delta_seconds": null,
+      "end_delta_seconds": null,
+      "observer": null,
+      "observed_at": null,
+      "notes": null
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "status": "passed_current_source_bound_regression_and_native",
+  "scoped_checks": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\related-tests-and-core-coverage.json",
+  "native_reports": {
+    "five-native": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\five-native\\verification.json",
+    "text-edges": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verification\\text-edges\\verification.json"
+  },
+  "five_native_frames": 87,
+  "extra_native_frames": 36,
+  "native_encodes_in_this_refresh": 8,
+  "historical_json_unchanged": true,
+  "historical_json_checked": 101,
+  "source_implementation": {
+    "edl.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\edl.py",
+      "sha256": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+      "bytes": 16974
+    },
+    "subtitles.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\subtitles.py",
+      "sha256": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+      "bytes": 23922
+    },
+    "mlt.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\mlt.py",
+      "sha256": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+      "bytes": 15651
+    },
+    "manifest.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\manifest.py",
+      "sha256": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861",
+      "bytes": 21106
+    },
+    "render.py": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\editing\\render.py",
+      "sha256": "f870aa71899b2fff6323e1525e6c6110c07f0bae080556ae37ab7cdd9ba6de37",
+      "bytes": 35791
+    },
+    "mlt_exporting_service": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\work\\clipforge-week4\\backend\\clipforge\\services\\mlt_exporting.py",
+      "sha256": "4481ef2238c97d75b52bdfabf19e94f95921acdbe4a4428fe9ce93562a0aa305",
+      "bytes": 12738
+    }
+  },
+  "inputs": {
+    "runner": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-subtitle-edit-style\\verify_current_effects.py",
+      "sha256": "74b4bf01cf3565af78551ca92ea30b24d6a408897e5c0b26b9794a8aba4e931d",
+      "bytes": 9626
+    },
+    "independent_xml_checker": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\verify_effects.py",
+      "sha256": "f392e89dd1f8d30bbf713c08bddc2b359574b26d3fd699f7c38e5fc14fc31d26",
+      "bytes": 27984
+    }
+  },
+  "new_model_calls": 0,
+  "Shotcut_GUI_claimed": false,
+  "OCR_claimed": false
+}

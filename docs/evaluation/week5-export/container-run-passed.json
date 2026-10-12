@@ -1,0 +1,268 @@
+{
+  "status": "passed",
+  "stage": "completed",
+  "checks": {
+    "non_root_uid": 10001,
+    "package_import_origin": "/app/backend/clipforge/__init__.py",
+    "schemas_validated": 8,
+    "font_name": "Noto Sans CJK SC",
+    "font_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+    "font_glyph_count": 16,
+    "fixture_sha256": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+    "source_file_count": 76,
+    "source_bindings_sha256": {
+      "/app/backend/clipforge/__init__.py": "22500e001efad6822d6337be5b8baf09b529a26150b5422e5e085cdddb1e58fe",
+      "/app/backend/clipforge/analysis/__init__.py": "edbee99c2791bf78cc6ad9586aa531b38960c5f32fd36e9aeee5b99836edaca8",
+      "/app/backend/clipforge/analysis/asr.py": "4d9b304d7fe2cc1f3feb382789fc1d3cfd3754c6618b99fde1a491142c06928f",
+      "/app/backend/clipforge/analysis/chinese.py": "00a30b35fda1d4a1baaf598852df192410fc6545fbba58f7fbed415e4691920c",
+      "/app/backend/clipforge/analysis/combine.py": "3a17887c9a1c863f05f0ec5d4497e07ac6844f27ab72e51a690d726a5032df06",
+      "/app/backend/clipforge/analysis/model.py": "7b1796c38062266e78e741d27e41dd71862e2c656351dcc55bfceb6a6fc55d6a",
+      "/app/backend/clipforge/analysis/options.py": "fc959989780e9f3f09fcb648c0e033807dd3cfb0a19379a6d18d01f8696190a7",
+      "/app/backend/clipforge/analysis/robust_shots.py": "6c02af489e85f5655b021e8099223ae5502fa67ea36618ca5f9b727e4d10ddbb",
+      "/app/backend/clipforge/analysis/sentences.py": "dbcdce6b8f0edc6a0778c7e46df9938797d0ee9ff125c9bce418543203f775bf",
+      "/app/backend/clipforge/analysis/shots.py": "ba73ec3ac69ce2e233a4020575f2444fa5ccbf7d0733b692bbbe09420c9241b9",
+      "/app/backend/clipforge/analysis/speech_gate.py": "6bbf4c11515886bbe9c2b8aeda9fadee3118dd79855a2350d271d6b44c1cb011",
+      "/app/backend/clipforge/analysis/vad.py": "9a48b0a79b558b4a42d0abe7a50bc055c5867e0e71b41c9ff0e74ef371117513",
+      "/app/backend/clipforge/analysis/validation.py": "e67422ab8be8b8abed3edc3da1eae70894275b0e90f2f77c0067809d3beb1d97",
+      "/app/backend/clipforge/api.py": "b4599596372620567b2951fffe47b39c4478fc080919d87195bbc974b66abf1b",
+      "/app/backend/clipforge/config.py": "b92644e65c186e81b692e41db8e05f124701805145a49af8b0d4a417e5abc3db",
+      "/app/backend/clipforge/decision/__init__.py": "5224dee0f9b4ce15e0a4b83ff4892616a9156c9c6865609fbc4d33c11af95f99",
+      "/app/backend/clipforge/decision/acceptance.py": "89a26abc73119d8b65e542fa9bf8014ae4173ebd56925ca8e4c873d2913ca031",
+      "/app/backend/clipforge/decision/assessment.py": "3f65a35394a7af13e54c4c6a6ba31faae8608c88b0f437ad85bf6e2127e3008e",
+      "/app/backend/clipforge/decision/audio.py": "da92ce4f5554de8f91838b7db9742cfb17f5f2f5fdd6a5964fcbd6dc9a44ddcc",
+      "/app/backend/clipforge/decision/boundary_audit.py": "2340ac4c747fd08902d629da81f0e937446b3f9a91e8b41e5289cfa7b5069cde",
+      "/app/backend/clipforge/decision/boundary_media.py": "94b3a3335bb1c17f09d28cc71c35fbbd9b1d17bb393483ea5965080aa12e8c84",
+      "/app/backend/clipforge/decision/boundary_optimizer.py": "d46b59654dd43b578298ba77a8824f0ad9ffd60e62248e6aae95e11b61b624e1",
+      "/app/backend/clipforge/decision/boundary_review.py": "32c8b903298eac7a1649b33628985e715c9ebde8e54a33cea0a100abc028f76f",
+      "/app/backend/clipforge/decision/boundary_review_call.py": "9d2a108df0dbd3b0b01963bdb3bf1b6267dfd53dd9650b12a0241ddb46725dd3",
+      "/app/backend/clipforge/decision/candidates.py": "eae72fb56bba82055a9e84b2a48960d86b6b989e2db11f76341152eb8b45d03a",
+      "/app/backend/clipforge/decision/context.py": "6484123844ac15f41640af7149c56e4c9e84c3fe413219b9abc4701e7195a70b",
+      "/app/backend/clipforge/decision/context_priority.py": "da2815bcdf0e4514ee4565b0690333b6e668185bd4617b615095f111f29a60cd",
+      "/app/backend/clipforge/decision/context_proposals.py": "b02da65dbedd87998eff94b67aef09114707cab86dfba0ca986840d713727d72",
+      "/app/backend/clipforge/decision/continuity.py": "4233333d0396bbe863715c07ef58620f2a6ea6acd5857a3a91ed6603409d0572",
+      "/app/backend/clipforge/decision/evaluation.html": "22b6f23dd3ac47f744a3ef9ed02bd6b6ddf2074a30b2979554c9feb58e9c6a38",
+      "/app/backend/clipforge/decision/evaluation.py": "923528c813d1d559695c17f40bd2fabe8d46b390cd356b057ca49fc17717b96e",
+      "/app/backend/clipforge/decision/evaluation_server.py": "252f3ce449e9da740e5f7d13411287b76629bc4f9f7e811a540da62222d9e15a",
+      "/app/backend/clipforge/decision/llm.py": "447e2ef76177f388378909949142030d6d815ad4623c7ccaf47adc72e3df92de",
+      "/app/backend/clipforge/decision/llm_cli.py": "93645d409e67b537ca38925fbbca58f102a294d307d06f45bc1926b56c1ab72d",
+      "/app/backend/clipforge/decision/presentation.py": "b69f26c36db8489ffd1ec14136bac7a47f7797d0f0792d64f35fb24b20f53340",
+      "/app/backend/clipforge/decision/question_cues.py": "9a48f4d10b8d5153a2c485bbb276ebff3a9ae4264cf837cd2a5779c13734b763",
+      "/app/backend/clipforge/decision/reviewed.py": "d3c7ec17bbdc62804ccf8d8f8ee5e017c0539ee7ab56b81a7e378f058dc0f584",
+      "/app/backend/clipforge/decision/risk_selection.py": "d34e6fdec45ed7d5b7fb32490ee119c16dd81bcda3c9400b5a71e7759e502427",
+      "/app/backend/clipforge/decision/scorers.py": "e50d7c064a5842aac850e5043bb2d2d4d08a1e450e832fe6e467c7ee1e65fc9e",
+      "/app/backend/clipforge/decision/scoring.py": "ede7481cc10a393c479b0de4809825c3aea03e486b847a5633245f44555fc7b5",
+      "/app/backend/clipforge/decision/selection.py": "64f23275d5e5e6f148b7081a1f9aa1b5c29cf3bb3930420db2b7726390ef6d97",
+      "/app/backend/clipforge/decision/semantic_boundary_review.py": "362812979fc80b3601c96f50a9a89d2f1f51e04b12a7f0908d03adeba1a9c7ce",
+      "/app/backend/clipforge/decision/semantic_comparison.py": "15fef9b4258adbce9a88e5781d8987eef7512441b6c35b1bef5d66b525ee122f",
+      "/app/backend/clipforge/decision/sentence_repair.py": "9538f37906c2c2ca0035f4a5458132329f91ecb4a38bd79d2ab61e164e47b6e8",
+      "/app/backend/clipforge/decision/short_boundary_choices.py": "9fbd93e8bd4725ede47c0dc9eee216f8ca1c2e5c4f15b133e00ffea58c504955",
+      "/app/backend/clipforge/decision/topics.py": "0b00c8a264dc0b3e50b9fcc7e0e443c9238c4f68d89161855ffa7720bceae500",
+      "/app/backend/clipforge/decision/validation.py": "a346ac5cbfba6c879f9812fe30b6569d113a679f0434fe070a62fbf48a66c5d9",
+      "/app/backend/clipforge/decision/word_followup.py": "9f988e6f5a67dfad93d0f0ca027856d4561114362e8b45d1fa19e5303e498f2a",
+      "/app/backend/clipforge/editing/__init__.py": "5bdac543854d9790ac12374aba06107f4b9f3fdfd4da4275b36615094f6640e1",
+      "/app/backend/clipforge/editing/edl.py": "d6b202b86b729ca4023fe410a24c4c0623958101258d842d236efcebdba2cd56",
+      "/app/backend/clipforge/editing/manifest.py": "e75a6193225c136c88f38151476914370fff3ddbe9e2953b4f2340ffe31c1861",
+      "/app/backend/clipforge/editing/mlt.py": "f65e4ce7cb64cca33da84a8229db529baa4aa48014e9feb4ff588e137ede8478",
+      "/app/backend/clipforge/editing/render.py": "f870aa71899b2fff6323e1525e6c6110c07f0bae080556ae37ab7cdd9ba6de37",
+      "/app/backend/clipforge/editing/subtitles.py": "86d7c23f10c6bccd376a8d5c91103fdb6126be8ee9e7a107b1ed6ea08056d975",
+      "/app/backend/clipforge/evaluation/__init__.py": "aa64794cc0d0362285a4ce4806503e7342012873048b08ca3ef46f73389e14bd",
+      "/app/backend/clipforge/evaluation/shots.py": "6740fcff9dc830e75f78c19a78362b39a68f59219c2b77de49cfd76886701442",
+      "/app/backend/clipforge/media/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/app/backend/clipforge/media/normalize.py": "c009ff4288496f2060e037a186b73dc1761485b3172515a0851113b91e8b9bed",
+      "/app/backend/clipforge/media/probe.py": "afc1614f6ef532711852b801c81df310a3794dc88d110cb1fcb71f0f26995ff5",
+      "/app/backend/clipforge/media/split.py": "9280ff10991a3d1c8421dbaf07357bfb9bfe14a317d6795a71972e48971ec20a",
+      "/app/backend/clipforge/queue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/app/backend/clipforge/queue/client.py": "fdc3082c0f195fe162c8917719d7495022835764f61764e5556dd4a0d78cb84a",
+      "/app/backend/clipforge/queue/demo.py": "11ab392384bf07edd5d14301b8d9309e3811e953f2dfb33d3592786fef737002",
+      "/app/backend/clipforge/queue/tasks.py": "cdf26aee254bd84c0144dd26d688496bf81eea573072842077ccd647ee82e484",
+      "/app/backend/clipforge/routes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/app/backend/clipforge/routes/editing.py": "71cd47e26a0fd46b41b5def241820a69195d2ec7d98d33c6bcbf11ae95bd8b61",
+      "/app/backend/clipforge/routes/video.py": "b4612dac4cddcbbadd9084da4f97fbaa52778ee1ed6923e47bd02529a64fd48d",
+      "/app/backend/clipforge/services/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/app/backend/clipforge/services/editing.py": "141ffc4d6e2fa4c304a45df30a927efa9934ed60b64f7d1e6d3a478085c6551b",
+      "/app/backend/clipforge/services/editing_history.py": "9b5859a9f1d99d85e1be56e69eb2bbcbf2ee843c1f026b57ab0d58df27db4c0b",
+      "/app/backend/clipforge/services/mlt_exporting.py": "4481ef2238c97d75b52bdfabf19e94f95921acdbe4a4428fe9ce93562a0aa305",
+      "/app/backend/clipforge/services/pipeline.py": "3207913dc3ab35b952e35fcd6bf245086f13a4a7a88982d8b9175b0fc72ced5c",
+      "/app/backend/clipforge/services/rendering.py": "a023c015cf7a4ed7d0fad7b8a0db4cfb1c5c1830a437a8df4062ea499a785d28",
+      "/app/backend/clipforge/services/result_cache.py": "be368f2c6a28f526a554ca996b65269ee1c818de25452c5003c9fd0d6e7e781a",
+      "/app/backend/clipforge/services/subtitling.py": "a2c13140ab3934607ebb1df09ec20ed901d1caf2730a91b1af2209b035a308e5",
+      "/app/backend/clipforge/storage/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/app/backend/clipforge/storage/jobs.py": "342c2f6b4f4c346af1929335008d44354169b8c55323cf16dc9a71387debf3e1",
+      "/app/schemas/analysis.schema.json": "86f7e752f4ed0241bc23d3a25f5742a71ffe3caca384162905f0b9f23940d4cb",
+      "/app/schemas/candidates.schema.json": "612208e7cdd2477cb4d1dfa32cd3fae0fc1caa58b422e52f767761cc4131fc32",
+      "/app/schemas/edl-v0.2.schema.json": "1a5b5921d5681ad998ecb2755697c6fcafaa25f185becfa0cc97db1ee5ca77ff",
+      "/app/schemas/edl.schema.json": "44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8",
+      "/app/schemas/llm_candidates.schema.json": "9de91c19d1af5343cdf590414aa6d34a62173dbb28580c707612fec7d83f6550",
+      "/app/schemas/media_meta.schema.json": "aadbde01435d6e8f676725902d001f8bc1b5ef08e131cd140d9b7bd2920f4d4e",
+      "/app/schemas/scored_candidates.schema.json": "34e3b20a00c69b9625a47c24fc622193ff682a4ec16334407fceef734e11fbf7",
+      "/app/schemas/subtitles.schema.json": "3e796eeff63900651a13129e598a0cd2deef96e12dcc8cde0a567541cd6b725a",
+      "/fixture/v1-a.mov": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+      "/harness/container_acceptance.py": "5d51218c983f0594ccf21ff27e66e5742012414cf0ad3dff628baf2df1df5cac",
+      "/harness/Test-IsolatedWeek5.ps1": "881e3c91bcf8c8b02dd0d7282c334ff1730838a0a76eadcc578d37f5eb9a24e8",
+      "/harness/Fix-Font-And-Test.ps1": "b72dab688640b0259a730946c92baf8f99d93100c4df04a4548677e373255f8b",
+      "/harness/font-image/Dockerfile": "d36839ee02bbefad3ac9d36ebe10b8d96334bd6d120fe5c4ae5bff9f77a039d6",
+      "/harness/font-image/check_runtime.py": "304754b19228b5fac6076f9e898740640146cf7fa4cf8c9a2fec5369521c314b",
+      "/harness/font-image/.dockerignore": "08bb7a70af4ae5a9c15226f499f2e76055ebd521550f87eb102a1316cdb9df38",
+      "/harness/Repair-Week5-Runtime.ps1": "ed21f6d18d4487eea2fca77e0babc2a23efd1b2e3a0ac5faa91448dcab51ffee"
+    },
+    "edl_duration_frames": 24,
+    "decoded_frame_ids": [
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101
+    ],
+    "subtitle_cues": 2,
+    "mlt_clip_ranges": [
+      [
+        45,
+        56
+      ],
+      [
+        90,
+        101
+      ]
+    ],
+    "same_edl_and_subtitle_bindings": true,
+    "actual_http_range_checks": 4,
+    "original_seed_unchanged": true,
+    "mp4_sha256": "807bbee902e87094b33edca59efe93ccb950e8ebc59bae0b7aab9fd8d62b1ada",
+    "mlt_sha256": "f8220a74f8affa3157dc3ca68341ef94bb8f2e1bca563426db4cf2442d6ebe30"
+  },
+  "http": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200,
+      "bytes": 479
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/00000000-0000-4000-8000-000000000052",
+      "status": 200,
+      "bytes": 2941
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/00000000-0000-4000-8000-000000000052/portrait",
+      "status": 201,
+      "bytes": 807
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5",
+      "status": 200,
+      "bytes": 3283
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/subtitles",
+      "status": 201,
+      "bytes": 875
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/subtitles/882136c7-e512-47c6-aab3-a53dfa0a3d24",
+      "status": 200,
+      "bytes": 4303
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/subtitles/882136c7-e512-47c6-aab3-a53dfa0a3d24/renders",
+      "status": 201,
+      "bytes": 1191
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/renders/e2c8943d-2265-4329-9d58-0f32afbe9e8c",
+      "status": 200,
+      "bytes": 3547
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/subtitles/882136c7-e512-47c6-aab3-a53dfa0a3d24/exports/mlt",
+      "status": 201,
+      "bytes": 1458
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/exports/mlt/cb58645f-1afc-4372-8cdd-a366cf81caad/files/captions.srt",
+      "status": 200,
+      "bytes": 97
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/exports/mlt/cb58645f-1afc-4372-8cdd-a366cf81caad/files/captions.ass",
+      "status": 200,
+      "bytes": 945
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/exports/mlt/cb58645f-1afc-4372-8cdd-a366cf81caad/files/project.mlt",
+      "status": 200,
+      "bytes": 7445
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/renders/e2c8943d-2265-4329-9d58-0f32afbe9e8c/files/output.mp4",
+      "status": 200,
+      "bytes": 136261
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/renders/e2c8943d-2265-4329-9d58-0f32afbe9e8c/files/output.mp4",
+      "status": 206,
+      "bytes": 64
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/renders/e2c8943d-2265-4329-9d58-0f32afbe9e8c/files/output.mp4",
+      "status": 206,
+      "bytes": 64
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/renders/e2c8943d-2265-4329-9d58-0f32afbe9e8c/files/output.mp4",
+      "status": 206,
+      "bytes": 64
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/renders/e2c8943d-2265-4329-9d58-0f32afbe9e8c/files/output.mp4",
+      "status": 416,
+      "bytes": 52
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/00000000-0000-4000-8000-000000000051/edl/02b4f986-0a1e-4b4c-9fe4-b0bdd74d4ac5/artifacts",
+      "status": 200,
+      "bytes": 3569
+    }
+  ],
+  "model_calls": 0,
+  "asr_calls": 0,
+  "worker_started": false,
+  "external_network": false,
+  "seed_scope": "offline technical EDL; does not exercise candidate-generation POST",
+  "api_left_running": false
+}

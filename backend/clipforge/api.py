@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from clipforge.queue.client import QueueUnavailable, read_result, submit_add
+from clipforge.routes.editing import router as editing_router
 from clipforge.routes.video import router as video_router
 
 app = FastAPI(
@@ -18,6 +19,7 @@ app = FastAPI(
     version="0.5.0",
 )
 app.include_router(video_router)
+app.include_router(editing_router)
 
 
 def frontend_dir() -> Path:

@@ -1,0 +1,578 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mlt LC_NUMERIC="C" producer="main_bin" title="Shotcut project (ClipForge EDL 0.1.0)">
+  <profile description="ClipForge explicit CFR profile" width="1920" height="1080" progressive="1" sample_aspect_num="1" sample_aspect_den="1" display_aspect_num="16" display_aspect_den="9" frame_rate_num="30" frame_rate_den="1" colorspace="709" />
+  <playlist id="main_bin">
+    <property name="xml_retain">1</property>
+    <property name="shotcut:colorTransfer" />
+  </playlist>
+  <producer id="black" in="0" out="2179">
+    <property name="length">2180</property>
+    <property name="eof">pause</property>
+    <property name="resource">0</property>
+    <property name="aspect_ratio">1</property>
+    <property name="mlt_service">color</property>
+    <property name="mlt_image_format">rgba</property>
+    <property name="set.test_audio">0</property>
+  </producer>
+  <playlist id="background">
+    <entry producer="black" in="0" out="2179" />
+  </playlist>
+  <chain id="chain0" in="0" out="2177">
+    <property name="length">2178</property>
+    <property name="eof">pause</property>
+    <property name="resource">C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/normalized.mp4</property>
+    <property name="mlt_service">avformat</property>
+    <property name="video_index">0</property>
+    <property name="audio_index">1</property>
+    <property name="seekable">1</property>
+    <property name="ignore_points">0</property>
+    <property name="shotcut:caption">normalized.mp4</property>
+  </chain>
+  <chain id="chain0_clip1" in="0" out="2177">
+    <property name="length">2178</property>
+    <property name="eof">pause</property>
+    <property name="resource">C:/Users/asus/Documents/Codex/2026-10-03/fan-yu/outputs/week4-workbench/real-pipeline/data/jobs/1e5e7300-9f65-4772-bb2d-69ae0e717253/normalized.mp4</property>
+    <property name="mlt_service">avformat</property>
+    <property name="video_index">0</property>
+    <property name="audio_index">1</property>
+    <property name="seekable">1</property>
+    <property name="ignore_points">0</property>
+    <property name="shotcut:caption">normalized.mp4</property>
+  </chain>
+  <playlist id="playlist0">
+    <property name="shotcut:video">1</property>
+    <property name="shotcut:name">V1</property>
+    <entry producer="chain0" in="43" out="1681" />
+    <entry producer="chain0_clip1" in="112" out="652" />
+  </playlist>
+  <tractor id="tractor0" in="0" out="2179" title="Shotcut project (ClipForge EDL 0.1.0)">
+    <property name="shotcut">1</property>
+    <property name="shotcut:projectAudioChannels">2</property>
+    <property name="shotcut:projectFolder">0</property>
+    <property name="shotcut:processingMode">Native8Cpu</property>
+    <property name="shotcut:colorTransfer" />
+    <track producer="background" />
+    <track producer="playlist0" />
+    <transition id="transition0">
+      <property name="a_track">0</property>
+      <property name="b_track">1</property>
+      <property name="mlt_service">mix</property>
+      <property name="always_active">1</property>
+      <property name="sum">1</property>
+    </transition>
+    <filter id="subtitle0" in="0" out="25">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">人类就完了</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle0</property>
+    </filter>
+    <filter id="subtitle1" in="69" out="175">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">真的超级外星文明来了你
+怎么判这样他是有智能的</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle1</property>
+    </filter>
+    <filter id="subtitle2" in="184" out="286">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">你往桌子上放一个蚂蚁他
+能判断我们俩是有智能的</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle2</property>
+    </filter>
+    <filter id="subtitle3" in="301" out="323">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">判断不出来</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle3</property>
+    </filter>
+    <filter id="subtitle4" in="348" out="473">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">而且你进一步想想将来我们
+和人工智能也要面对这种局</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle4</property>
+    </filter>
+    <filter id="subtitle5" in="489" out="609">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">面签着了签着了签着了同志们</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle5</property>
+    </filter>
+    <filter id="subtitle6" in="637" out="753">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">今天在自贡刘慈欣3体20周年</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle6</property>
+    </filter>
+    <filter id="subtitle7" in="754" out="790">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">输了签收汇</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle7</property>
+    </filter>
+    <filter id="subtitle8" in="803" out="910">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">这人山人海这里边都在踩破头了</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle8</property>
+    </filter>
+    <filter id="subtitle9" in="911" out="1017">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">给大家签了那么十本</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle9</property>
+    </filter>
+    <filter id="subtitle10" in="1035" out="1154">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">然后呢给咱小伙伴抽奖用的今天啊赶着</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle10</property>
+    </filter>
+    <filter id="subtitle11" in="1155" out="1271">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">这个签书会呢我们这边也是拖人啊找到</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle11</property>
+    </filter>
+    <filter id="subtitle12" in="1272" out="1386">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">刘慈禧老师说他今儿忙完
+的时候呢能来抽空跟我们</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle12</property>
+    </filter>
+    <filter id="subtitle13" in="1387" out="1409">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">聊两句</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle13</property>
+    </filter>
+    <filter id="subtitle14" in="1414" out="1524">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">看看据说啊这个刘慈禧老师是个超爱的人</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle14</property>
+    </filter>
+    <filter id="subtitle15" in="1525" out="1638">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">看看这个抓紧这几分
+钟时间能跟他聊是点啥</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle15</property>
+    </filter>
+    <filter id="subtitle16" in="1639" out="1745">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">真的超级外星文明来了你
+怎么判这样他是有智能的</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle16</property>
+    </filter>
+    <filter id="subtitle17" in="1754" out="1856">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">你往桌子上放一个蚂蚁他
+能判断我们俩是有智能的</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle17</property>
+    </filter>
+    <filter id="subtitle18" in="1871" out="1893">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">判断不出来</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle18</property>
+    </filter>
+    <filter id="subtitle19" in="1918" out="2043">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">而且你进一步想想将来我们
+和人工智能也要面对这种局</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle19</property>
+    </filter>
+    <filter id="subtitle20" in="2059" out="2179">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">ClipForge 字幕</property>
+      <property name="argument">面签着了签着了签着了同志们</property>
+      <property name="geometry">96 863 1728 152</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">48</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">36</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">center</property>
+      <property name="valign">bottom</property>
+      <property name="clipforge:cue_id">subtitle20</property>
+    </filter>
+    <filter id="clipforge_brand" in="0" out="2179">
+      <property name="mlt_service">qtext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:name">AI辅助剪辑</property>
+      <property name="argument">AI辅助剪辑</property>
+      <property name="geometry">96 65 1728 50</property>
+      <property name="family">Microsoft YaHei</property>
+      <property name="size">28</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">0xffffffff</property>
+      <property name="olcolour">0x00000000</property>
+      <property name="outline">0</property>
+      <property name="pad">0</property>
+      <property name="typewriter">0</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">21</property>
+      <property name="opacity">1</property>
+      <property name="bgcolour">0x00000080</property>
+      <property name="halign">right</property>
+      <property name="valign">top</property>
+      <property name="clipforge:cue_id">clipforge_brand</property>
+    </filter>
+  </tractor>
+</mlt>

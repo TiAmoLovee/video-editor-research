@@ -1,0 +1,65 @@
+{
+  "cases": [
+    {
+      "case": "01-horizontal-reorder-repeat",
+      "label": "横屏重排与重复素材",
+      "frames": 26,
+      "cues": 5,
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\01-horizontal-reorder-repeat\\project.mlt",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\01-horizontal-reorder-repeat\\project.mlt",
+      "project_sha256": "0dedde6ceae9f91825ea45a95a1dd662d5f3eecba8847e127969eaf12f6e91f5",
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\01-horizontal-reorder-repeat\\shotcut-check.mlt",
+      "native_sample": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\01-horizontal-reorder-repeat\\output.mkv",
+      "gui_acceptance": "pending"
+    },
+    {
+      "case": "02-portrait-single-final",
+      "label": "竖屏单帧与末帧",
+      "frames": 9,
+      "cues": 2,
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\02-portrait-single-final\\project.mlt",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\02-portrait-single-final\\project.mlt",
+      "project_sha256": "632fdb84d20ec46c0731feb754232fe02e2e77eab7b9550ba91e277f4a45c892",
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\02-portrait-single-final\\shotcut-check.mlt",
+      "native_sample": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\02-portrait-single-final\\output.mkv",
+      "gui_acceptance": "pending"
+    },
+    {
+      "case": "03-rational-half-frame",
+      "label": "有理数帧率",
+      "frames": 16,
+      "cues": 3,
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\03-rational-half-frame\\project.mlt",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\03-rational-half-frame\\project.mlt",
+      "project_sha256": "697669bfea589cee51d6da69d3c33293cf8944655bcb731bb3c50650f0cdc40e",
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\03-rational-half-frame\\shotcut-check.mlt",
+      "native_sample": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\03-rational-half-frame\\output.mkv",
+      "gui_acceptance": "pending"
+    },
+    {
+      "case": "04-no-audio-native",
+      "label": "无声原素材",
+      "frames": 12,
+      "cues": 0,
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\04-no-audio-native\\project.mlt",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\04-no-audio-native\\project.mlt",
+      "project_sha256": "22f5efe48762f384c3cee5fa88b828403313cff5ac039ce652a3265579a4c7e3",
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\04-no-audio-native\\shotcut-check.mlt",
+      "native_sample": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\04-no-audio-native\\output.mkv",
+      "gui_acceptance": "pending"
+    },
+    {
+      "case": "05-portrait-mixed-native",
+      "label": "竖屏多来源",
+      "frames": 24,
+      "cues": 3,
+      "original": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\05-portrait-mixed-native\\project.mlt",
+      "project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\project.mlt",
+      "project_sha256": "6a0ca29d70e99f5a5fcf6e8b3dbe54087665faf3abb299dbe66d854bbb8f9784",
+      "expected_saved_project": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-check.mlt",
+      "native_sample": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\runs\\20261012T024727Z-8538ba71\\05-portrait-mixed-native\\output.mkv",
+      "gui_acceptance": "pending"
+    }
+  ],
+  "note": "Copied XML/JSON only; media referenced at existing verified paths. No GUI acceptance inferred."
+}

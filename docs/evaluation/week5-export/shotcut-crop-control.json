@@ -1,0 +1,386 @@
+{
+  "recorded_at": "2026-10-12T10:33:20.089600+00:00",
+  "status": "passed_profile_unit_crop_edit_with_quantization",
+  "scope": "Separate fifth-case crop-control GUI experiment; read-only XML semantics and screenshot evidence; no new render.",
+  "case": "05-portrait-mixed-native",
+  "inputs": {
+    "baseline_saved_project": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-check.mlt",
+      "sha256": "a12f4261c403a3c5aea33e396da35811c1fbf515aada57b6d6fde76efac48fda",
+      "bytes": 22668
+    },
+    "crop_control_project": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-crop-controls.mlt",
+      "sha256": "fb8e507b4684ee30fa9c7d82227f8e4cebc572866d4bb46d8d751f6704ef36ca",
+      "bytes": 22668
+    },
+    "crop_control_screenshot": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-crop-controls.jpg",
+      "sha256": "17b1629ddcaff17565fdb1b5df23d576376b7b6b2125d7575a7cdb9195c3c4e2",
+      "bytes": 103437
+    },
+    "gui_actions": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-actions.json",
+      "sha256": "2e4b75ac719e1d015e97610a2a22d0b444d341d8c69f27991f582e0db375fc84",
+      "bytes": 1201
+    },
+    "five_case_roundtrip": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-roundtrip.json",
+      "sha256": "dd1b9a6d0096447d63061e669c68f63ccaefc89a96b8531bb7ffbb40ec795c47",
+      "bytes": 152587
+    },
+    "semantic_parser_source": {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\audit_gui_roundtrip.py",
+      "sha256": "eed01b17abd93c1a96bb57f250d2fcbb89e4df6be1391056b5a63122f4782a38",
+      "bytes": 24664
+    }
+  },
+  "five_case_roundtrip_retained": {
+    "passed": 5,
+    "pending": 0,
+    "failed": 0
+  },
+  "baseline_saved_project_matches_five_case_report_sha": true,
+  "gui_evidence": {
+    "operator": "Codex via computer-use @oai/sky",
+    "cases": [
+      {
+        "case": "01-horizontal-reorder-repeat",
+        "action": "actual GUI open, fit timeline, save as shotcut-check.mlt",
+        "screenshot": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\01-horizontal-reorder-repeat\\shotcut-opened.jpg",
+          "sha256": "562af9fd4894be2d0ef0bedfb5c3be0e24aa0e09b33eb0c23f144a6502fcc666",
+          "bytes": 101664
+        },
+        "visually_inspected": true,
+        "observation": "Actual Shotcut window, loaded media preview, fitted timeline and saved-project notification are visible.",
+        "acceptance_does_not_depend_on_manifest_window_title": true
+      },
+      {
+        "case": "02-portrait-single-final",
+        "action": "actual GUI open, fit timeline, save as shotcut-check.mlt",
+        "screenshot": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\02-portrait-single-final\\shotcut-opened.jpg",
+          "sha256": "7b685cef8ce24a92c15c6db3b9eb8bc8d9f90fddbb169bbf47bdf3ab5fd2068a",
+          "bytes": 85237
+        },
+        "visually_inspected": true,
+        "observation": "Actual Shotcut window, loaded media preview, fitted timeline and saved-project notification are visible.",
+        "acceptance_does_not_depend_on_manifest_window_title": true
+      },
+      {
+        "case": "03-rational-half-frame",
+        "action": "actual GUI open, fit timeline, save as shotcut-check.mlt",
+        "screenshot": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\03-rational-half-frame\\shotcut-opened.jpg",
+          "sha256": "4312b1741237ed9e0a6173a581e5b9626f8b65c48c18946197992d020a5bba0e",
+          "bytes": 91953
+        },
+        "visually_inspected": true,
+        "observation": "Actual Shotcut window, loaded media preview, fitted timeline and saved-project notification are visible.",
+        "acceptance_does_not_depend_on_manifest_window_title": true
+      },
+      {
+        "case": "04-no-audio-native",
+        "action": "actual GUI open, fit timeline, save as shotcut-check.mlt",
+        "screenshot": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\04-no-audio-native\\shotcut-opened.jpg",
+          "sha256": "6780f0ada91296089fe85b2bccb35f6cd5d9046203f828f6ef37d9761f09cdaf",
+          "bytes": 90892
+        },
+        "visually_inspected": true,
+        "observation": "Actual Shotcut window, loaded media preview, fitted timeline and saved-project notification are visible.",
+        "acceptance_does_not_depend_on_manifest_window_title": true
+      },
+      {
+        "case": "05-portrait-mixed-native",
+        "action": "actual GUI open, fit timeline, save as shotcut-check.mlt",
+        "screenshot": {
+          "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-delivery\\gui-cases\\05-portrait-mixed-native\\shotcut-opened.jpg",
+          "sha256": "149ee245c34db9743a3918d65c2cb69d5a4507c80fef741471469c8d2ad125ba",
+          "bytes": 96594
+        },
+        "visually_inspected": true,
+        "observation": "Actual Shotcut window, loaded media preview, fitted timeline and saved-project notification are visible.",
+        "acceptance_does_not_depend_on_manifest_window_title": true
+      }
+    ],
+    "crop_screenshot_visually_inspected": true,
+    "first_capture_observation": "Left input showed 71 with the text-edit caret still active; first saved XML retained 70.",
+    "first_capture_saved_xml_sha256": "61be8b4a68729b3e31fd8da853ccd9e9447501f96c5120b77cd239cd92ff2657",
+    "first_capture_screenshot_sha256": "9fe611c8caab88854ebe17a80a423a349c02b39b338f54852fd77a84118f12fa",
+    "latest_crop_capture_observation": "Left control displays 71 without an active text caret; saved notification visible; window title has no dirty asterisk. Actual saved XML independently contains left=71.",
+    "operator_commit_action": "Root operator reports actual mouse focus, Ctrl+A, type 71, Tab, then Ctrl+S; saved notification and clean title observed."
+  },
+  "requested_left_profile_pixels": 71,
+  "requested_left_71_written_in_actual_timeline_source": true,
+  "native_source_size": {
+    "width": 160,
+    "height": 90
+  },
+  "project_profile_size": {
+    "width": 180,
+    "height": 320
+  },
+  "original_crop_properties": {
+    "active": "0",
+    "center": "0",
+    "use_profile": "0",
+    "left": "62",
+    "top": "12",
+    "right": "62",
+    "bottom": "14"
+  },
+  "actual_saved_crop_properties": {
+    "active": "0",
+    "center": "0",
+    "use_profile": "1",
+    "left": "71",
+    "top": "43",
+    "right": "70",
+    "bottom": "50"
+  },
+  "units": {
+    "original": "native source pixels; use_profile=0",
+    "edited": "project profile pixels; use_profile=1",
+    "conversion_basis": "Separate width and height ratios from 160x90 native source to 180x320 project; actual serialized GUI conversion and its integer quantization.",
+    "back_projection_limit": "Numeric coordinate projection only; no claim of pixel-identical rendered output."
+  },
+  "coordinate_conversion_and_quantization": {
+    "left": {
+      "original_native_pixels": 62.0,
+      "profile_pixels_per_source_pixel": {
+        "exact": "9/8",
+        "decimal": 1.125
+      },
+      "ideal_profile_pixels": {
+        "exact": "279/4",
+        "decimal": 69.75
+      },
+      "expected_initial_nearest_integer_profile_pixels": 70,
+      "initial_conversion_quantization_profile_pixels": {
+        "exact": "1/4",
+        "decimal": 0.25
+      },
+      "actual_saved_pixels": 71.0,
+      "actual_saved_minus_initial_quantized_profile_pixels": {
+        "exact": "1",
+        "decimal": 1.0
+      },
+      "back_projected_source_pixels": {
+        "exact": "568/9",
+        "decimal": 63.111111111111114
+      },
+      "back_projected_minus_original_source_pixels": {
+        "exact": "10/9",
+        "decimal": 1.1111111111111112
+      }
+    },
+    "right": {
+      "original_native_pixels": 62.0,
+      "profile_pixels_per_source_pixel": {
+        "exact": "9/8",
+        "decimal": 1.125
+      },
+      "ideal_profile_pixels": {
+        "exact": "279/4",
+        "decimal": 69.75
+      },
+      "expected_initial_nearest_integer_profile_pixels": 70,
+      "initial_conversion_quantization_profile_pixels": {
+        "exact": "1/4",
+        "decimal": 0.25
+      },
+      "actual_saved_pixels": 70.0,
+      "actual_saved_minus_initial_quantized_profile_pixels": {
+        "exact": "0",
+        "decimal": 0.0
+      },
+      "back_projected_source_pixels": {
+        "exact": "560/9",
+        "decimal": 62.22222222222222
+      },
+      "back_projected_minus_original_source_pixels": {
+        "exact": "2/9",
+        "decimal": 0.2222222222222222
+      }
+    },
+    "top": {
+      "original_native_pixels": 12.0,
+      "profile_pixels_per_source_pixel": {
+        "exact": "32/9",
+        "decimal": 3.5555555555555554
+      },
+      "ideal_profile_pixels": {
+        "exact": "128/3",
+        "decimal": 42.666666666666664
+      },
+      "expected_initial_nearest_integer_profile_pixels": 43,
+      "initial_conversion_quantization_profile_pixels": {
+        "exact": "1/3",
+        "decimal": 0.3333333333333333
+      },
+      "actual_saved_pixels": 43.0,
+      "actual_saved_minus_initial_quantized_profile_pixels": {
+        "exact": "0",
+        "decimal": 0.0
+      },
+      "back_projected_source_pixels": {
+        "exact": "387/32",
+        "decimal": 12.09375
+      },
+      "back_projected_minus_original_source_pixels": {
+        "exact": "3/32",
+        "decimal": 0.09375
+      }
+    },
+    "bottom": {
+      "original_native_pixels": 14.0,
+      "profile_pixels_per_source_pixel": {
+        "exact": "32/9",
+        "decimal": 3.5555555555555554
+      },
+      "ideal_profile_pixels": {
+        "exact": "448/9",
+        "decimal": 49.77777777777778
+      },
+      "expected_initial_nearest_integer_profile_pixels": 50,
+      "initial_conversion_quantization_profile_pixels": {
+        "exact": "2/9",
+        "decimal": 0.2222222222222222
+      },
+      "actual_saved_pixels": 50.0,
+      "actual_saved_minus_initial_quantized_profile_pixels": {
+        "exact": "0",
+        "decimal": 0.0
+      },
+      "back_projected_source_pixels": {
+        "exact": "225/16",
+        "decimal": 14.0625
+      },
+      "back_projected_minus_original_source_pixels": {
+        "exact": "1/16",
+        "decimal": 0.0625
+      }
+    }
+  },
+  "original_native_source_rectangle": {
+    "x": {
+      "exact": "62",
+      "decimal": 62.0
+    },
+    "y": {
+      "exact": "12",
+      "decimal": 12.0
+    },
+    "width": {
+      "exact": "36",
+      "decimal": 36.0
+    },
+    "height": {
+      "exact": "64",
+      "decimal": 64.0
+    }
+  },
+  "back_projected_edited_native_source_rectangle": {
+    "x": {
+      "exact": "568/9",
+      "decimal": 63.111111111111114
+    },
+    "y": {
+      "exact": "387/32",
+      "decimal": 12.09375
+    },
+    "width": {
+      "exact": "104/3",
+      "decimal": 34.666666666666664
+    },
+    "height": {
+      "exact": "2043/32",
+      "decimal": 63.84375
+    }
+  },
+  "intentional_crop_difference_details": [
+    {
+      "field": "tracks[1].entries[0].source.filters[0].crop.bottom",
+      "original": "14",
+      "saved": "50"
+    },
+    {
+      "field": "tracks[1].entries[0].source.filters[0].crop.left",
+      "original": "62",
+      "saved": "71"
+    },
+    {
+      "field": "tracks[1].entries[0].source.filters[0].crop.right",
+      "original": "62",
+      "saved": "70"
+    },
+    {
+      "field": "tracks[1].entries[0].source.filters[0].crop.top",
+      "original": "12",
+      "saved": "43"
+    },
+    {
+      "field": "tracks[1].entries[0].source.filters[0].crop.use_profile",
+      "original": "0",
+      "saved": "1"
+    }
+  ],
+  "changed_timeline_source_entry_indices": [
+    0
+  ],
+  "timeline_source_order_ranges_audio_profile_transitions_and_qtext_unchanged_excluding_intentional_crop_values": true,
+  "other_semantic_changes": [],
+  "qtext_captions_and_brand_unchanged": true,
+  "total_frames": 24,
+  "clips": 3,
+  "caption_cues": 3,
+  "brand_filters": 1,
+  "source_media": [
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-portrait\\fixtures\\v1-a.mov",
+      "sha256": "04b4a4dac88d6a3032d2e701a779232421b3b2e010d32efe6d0b946d0a2d8f43",
+      "bytes": 1430793
+    },
+    {
+      "path": "C:\\Users\\asus\\Documents\\Codex\\2026-10-03\\fan-yu\\outputs\\week5-mlt-effects\\verification\\fixtures\\large.mov",
+      "sha256": "0e88181a149ed566e96f1a48e39cf61995656034715904b3add001b862339c2e",
+      "bytes": 1601617
+    }
+  ],
+  "limits": [
+    "Intentional crop experiment does not replace or invalidate the original five saved-case roundtrip.",
+    "No RichText editing-controls completion claimed; unchanged text/geometry is a readback result.",
+    "No new native render, screenshot pixel-regression, audible sync, real-speech subtitle audit or model/network call."
+  ],
+  "five_case_original_and_saved_sha_checks": [
+    {
+      "case": "01-horizontal-reorder-repeat",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    },
+    {
+      "case": "02-portrait-single-final",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    },
+    {
+      "case": "03-rational-half-frame",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    },
+    {
+      "case": "04-no-audio-native",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    },
+    {
+      "case": "05-portrait-mixed-native",
+      "original_xml_sha_unchanged": true,
+      "saved_xml_sha_unchanged": true
+    }
+  ],
+  "all_five_original_and_saved_xml_sha_unchanged": true,
+  "all_five_gui_screenshot_sha_unchanged_since_visual_inspection": true
+}
