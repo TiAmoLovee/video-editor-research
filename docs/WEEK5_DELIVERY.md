@@ -1,6 +1,6 @@
 # 第五周本地交付核对
 
-2026-10-12。第五周代码 `293d436` 已推送为 [草稿 PR #8](https://github.com/TiAmoLovee/video-editor-research/pull/8)。首次 GitHub 检查前端通过、后端失败；本地复现并修复了新版 MLT 历史列表遗漏字幕样式版本的问题，35 项相关测试和 Ruff 通过。完整本地回归 605 项中有 7 项 Windows 文件链接权限错误，不能标记完整通过；GitHub 修复后的检查需在推送后确认。核心功能、字幕编辑修复及既有隔离 Linux 导出验收证据保留；三处真实人声同步已获用户定性确认，≤0.3 秒没有量化记录。尚未合并或部署，当前 8331 预览及 8200 服务不会自动升级。
+2026-10-12。第五周 [草稿 PR #8](https://github.com/TiAmoLovee/video-editor-research/pull/8) 已更新至 `9397f03`。MLT 历史字段修复后，GitHub Linux 后端及两平台前端检查通过；Windows 后端 605 项测试仅 1 项失败：检出时 LF→CRLF 改变了冻结 EDL Schema 的字节 SHA。本次仅增加该 Schema 的 Git 原始字节保留规则，已真实复现原失败，并验证 Windows 换行配置开启及关闭时均保留原件；7 项相关测试及 Ruff 通过，修复后的 GitHub 检查等待推送确认。字幕三处定性同步确认和原隔离容器证据保留，严格 ≤0.3 秒仍未量化。尚未合并或部署。
 
 ## 完成的功能与最新验证
 
@@ -66,3 +66,9 @@
 35 项相关测试全部通过；与 CI 相同的完整 unittest 命令运行 605 项，597 通过、1 项平台跳过，无业务断言失败，但旧 acceptance 代码的 7 项 os.link 操作遇到 Windows WinError 5；完整运行仍记为失败，不能宣称全量通过。仓库 Ruff 检查通过。首次完整本地诊断另有 24 项临时目录 WinError 5，随后改用工作区临时目录，重命名错误消失，仍有上述 7 项文件链接权限错误。此前 GitHub 前端通过、后端失败的记录保留，修复后的远端检查等待推送后确认。
 
 补充证据见 [历史样式版本修复](evaluation/week5-export/history-style-version-ci-fix.json) 和 [首次 GitHub 检查](evaluation/week5-export/pr8-initial-ci-verification.json)。`current-manifest.json`、源文件换行映射及隔离容器报告继续作为原快照证据；本次未重跑容器，也没有以新字段改动后的源码 SHA 冒充原容器实测 SHA。
+
+## Windows 检出字节修复
+
+`9397f03` 的 Linux 后端与两平台前端 CI 已通过。Windows 日志确认运行 605 项，603 通过、1 项平台跳过、1 个失败、无错误；唯一失败是冻结 v0.1 EDL Schema 的原始字节校验。原件为 4547 字节，SHA `44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8`；Windows 将 85 个 LF 转为 CRLF，得到 4632 字节及 `e9a2fce5977ba72960c4d950a7130c74f84c4af8ad51877625762e9ab761ad4f`，与失败日志完全一致。
+
+`.gitattributes` 仅新增 `schemas/edl.schema.json -text`，让检出保留提交内原始字节。Schema 文件、其 v0.1 尺寸合同、SHA 断言和业务代码没有修改。最小 Git 检出实验先以 `core.autocrlf=true` 真实复现旧规则的 SHA 失败，再验证新规则在 true/false 两种配置下字节均与原件完全一致；7 项竖屏 EDL 测试和仓库 Ruff 通过。见 [Windows 检出验证](evaluation/week5-export/windows-schema-checkout-fix.json)。本次不重复全量本地运行或渲染，也不改写此前容器、人工字幕或失败记录。远端修复 CI 待推送后确认。

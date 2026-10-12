@@ -1,2 +1,5 @@
 # Preserve verification files byte-for-byte so archived SHA256 evidence stays valid.
 docs/evaluation/week5-export/** -text
+
+# Preserve the frozen v0.1 EDL schema bytes on every platform.
+schemas/edl.schema.json -text
