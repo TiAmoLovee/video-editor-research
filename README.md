@@ -1,54 +1,58 @@
-# ClipForge 智剪工坊
+# ClipForge �Ǽ�����
 
-**第五周本地交付：[功能与验收核对](docs/WEEK5_DELIVERY.md) · [统一 EDL 与第二周衔接](docs/WEEK2_TO_WEEK5.md) · [网页导出与历史恢复](docs/WEB_EXPORT.md)**。已打通明确选择候选 → 保存 EDL → 精确 MP4／可继续编辑的 MLT，包含固定中心 9:16、SRT／ASS 和字幕烧录。真实网页导出及播放跳转、五例 Shotcut 实际打开另存与整数切点回读均通过。新 MLT 字幕将文字与样式分开保存，实际中文全文替换、两行编辑、另存及原生渲染通过；旧版导出按保存的策略继续核验。隔离 Linux 的合成 EDL 导出及 HTTP 范围读取已通过，用户已确认三处人声字幕无明显同步问题，≤0.3 秒尚未量化记录。Test3 的固定中心取景会丢失说话人，建议保留横屏；尺寸和帧序通过不代表取景合格。第五周代码仍为本地修改，不能据此称 GitHub 或现有 8200 服务已更新。
+**��������ʦ�������ģ�[�����ѡ����](docs/TOPIC_GENERATION.md)**����ʵ������ǰ�����ڴ������ƶȹȵ�ֶΣ���ѡֻȡ��������Ρ�New1�C4 �Ŀ����ط��� 600 ��������Ϊ 17 ����ѡ��δ���ɵĶ̶μ��״�ʧ����ϱ�����δ���۵��±߽粻���þɱ�ǩ���²�����Ϊ��ȷ���õ�ʵ�飬��δ�滻�������̣��������������ﵽ 85%��
 
-**第四周阶段性交付：[当前状态与遗留项](docs/WEEK4_PLAN.md) · [历史人工评测](docs/HUMAN_EVALUATION.md) · [候选工作台](docs/WEEK4_WORKBENCH.md)**。基础候选流程已合并。本分支继续接入可选的自动首尾优化：新任务会使用规则基线筛选候选，再选择词级边界、生成可播放和下载的优化视频。New4 新素材人工评测为 **17/19，89.47%**，达到该单批次的 85% 目标；[完整结果及两个结尾问题](docs/evaluation/new4-20261009/result.json)均保留。此结论不代表所有视频都达到 85%；这次新增接入尚未部署或推送。
+**[���ɺ���˹��޸���](docs/MANUAL_EDIT_EFFORT.md)** ���ڱ��ؽ���ͳһ EDL ����ҳ�༭����Դ֡��������ɾ�����ţ������°汾���������ɻ��ߣ��������վ��仯�͸��Ӱ汾���α仯�����ӱ���ʱ��²��ʱ���� EDL Schema ����ԭ������δ������ռ������ز����ݡ�
 
-边界优化默认关闭。Docker 使用 `compose.yaml`、`compose.asr-small.yaml`、`compose.boundary.yaml` 三个配置，最后一个会选择已验证的规则基线并读取 `CLIPFORGE_BOUNDARY_CONFIG_FILE` 和私下导出的 `CLIPFORGE_LLM_API_KEY`。本机执行需要设置 `CLIPFORGE_BOUNDARY_REPAIR=1` 与 `CLIPFORGE_BOUNDARY_CONFIG`。配置样例为 `config/boundaries/sentence-v1.json`；继续已有实验时，在私有 `.local.json` 中将 `initial_used_tokens` 设置为已用量（本次为 91,987），而非重新获得一份额度。用量账本保存在任务数据目录的 `boundary-budget.sqlite3`，跨任务预留、结算，未知用量会停止后续调用；失败不重试，整批返回原候选。缓存命中不再调用模型。
+**�����ܱ��ؽ�����[���������պ˶�](docs/WEEK5_DELIVERY.md) �� [ͳһ EDL ��ڶ����ν�](docs/WEEK2_TO_WEEK5.md) �� [��ҳ��������ʷ�ָ�](docs/WEB_EXPORT.md)**���Ѵ�ͨ��ȷѡ���ѡ �� ���� EDL �� ��ȷ MP4���ɼ����༭�� MLT�������̶����� 9:16��SRT��ASS ����Ļ��¼����ʵ��ҳ������������ת������ Shotcut ʵ�ʴ������������е�ض���ͨ������ MLT ��Ļ����������ʽ�ֿ����棬ʵ������ȫ���滻�����б༭�����漰ԭ����Ⱦͨ�����ɰ浼��������Ĳ��Լ������顣���� Linux �ĺϳ� EDL ������ HTTP ��Χ��ȡ��ͨ�����û���ȷ������������Ļ������ͬ�����⣬��0.3 ����δ������¼��Test3 �Ĺ̶�����ȡ���ᶪʧ˵���ˣ����鱣���������ߴ��֡��ͨ��������ȡ���ϸ񡣵����� PR #8 �Ѻϲ���2026-10-13 �˶Ա��� 8200 ����ɶ�ȡԭ�����°浼������̨����Щ������鲻���ڵ��������������Ѿ���ꡣ
 
-优化视频与原评分、人工验收分别保存，模型选择不会自动变为人工通过。页面的“边界优化试听”可查看新范围；S02 和 S14 的既有失败记录不会被本次接入改写。源视频本身不会发送给模型，调用包含完整转写和候选边界。
+**�����ܽ׶��Խ�����[��ǰ״̬��������](docs/WEEK4_PLAN.md) �� [��ʷ�˹�����](docs/HUMAN_EVALUATION.md) �� [��ѡ����̨](docs/WEEK4_WORKBENCH.md)**��������ѡ�����Ѻϲ�������֧���������ѡ���Զ���β�Ż����������ʹ�ù������ɸѡ��ѡ����ѡ��ʼ��߽硢���ɿɲ��ź����ص��Ż���Ƶ��New4 ���ز��˹�����Ϊ **17/19��89.47%**���ﵽ�õ����ε� 85% Ŀ�ꣻ[���������������β����](docs/evaluation/new4-20261009/result.json)���������˽��۲�����������Ƶ���ﵽ 85%���������������δ��������͡�
 
-ClipForge 当前流程：**网页上传 → 后台归一化 → 镜头检测 → 语音活动检测 → 词级转写与分析校验 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。第三周新增 PySceneDetect 镜头区间、WebRTC VAD 语音区间，词级转写、中文分句与 analysis.json 汇总，以及 shots.json / vad.json / asr.json 下载；成品仍采用固定帧数切片，镜头结果暂不改变选段。
+�߽��Ż�Ĭ�Ϲرա�Docker ʹ�� `compose.yaml`��`compose.asr-small.yaml`��`compose.boundary.yaml` �������ã����һ����ѡ������֤�Ĺ�����߲���ȡ `CLIPFORGE_BOUNDARY_CONFIG_FILE` ��˽�µ����� `CLIPFORGE_LLM_API_KEY`������ִ����Ҫ���� `CLIPFORGE_BOUNDARY_REPAIR=1` �� `CLIPFORGE_BOUNDARY_CONFIG`����������Ϊ `config/boundaries/sentence-v1.json`����������ʵ��ʱ����˽�� `.local.json` �н� `initial_used_tokens` ����Ϊ������������Ϊ 91,987�����������»��һ�ݶ�ȡ������˱���������������Ŀ¼�� `boundary-budget.sqlite3`��������Ԥ�������㣬δ֪������ֹͣ�������ã�ʧ�ܲ����ԣ���������ԭ��ѡ���������в��ٵ���ģ�͡�
 
-**第三周进展：[镜头检测](docs/SHOT_DETECTION.md) · [语音活动检测](docs/VAD_DETECTION.md) · [词级转写与分析汇总](docs/ASR_ANALYSIS.md)**。ASR 已完成本地接入，仍待项目环境与 Docker 验收；识别质量、词级时间误差、缓存和镜头 F1 尚未验收。
+�Ż���Ƶ��ԭ���֡��˹����շֱ𱣴棬ģ��ѡ�񲻻��Զ���Ϊ�˹�ͨ����ҳ��ġ��߽��Ż��������ɲ鿴�·�Χ��S02 �� S14 �ļ���ʧ�ܼ�¼���ᱻ���ν����д��Դ��Ƶ�������ᷢ�͸�ģ�ͣ����ð�������תд�ͺ�ѡ�߽硣
 
-根据老师的工程反馈，本分支将单文件前端迁移为 **React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5**，后端、测试和部署文件分目录，并统一 FFmpeg 环境配置。第二周原有验收记录是历史证据，迁移后的验证范围单独记录。
+ClipForge ��ǰ���̣�**��ҳ�ϴ� �� ��̨��һ�� �� ��ͷ��� �� �������� �� �ʼ�תд�����У�� �� ÿ����� 30 ����Ƭ �� ��ѯ�׶ν��� �� Ԥ��������**������������ PySceneDetect ��ͷ���䡢WebRTC VAD �������䣬�ʼ�תд�����ķ־��� analysis.json ���ܣ��Լ� shots.json / vad.json / asr.json ���أ���Ʒ�Բ��ù̶�֡����Ƭ����ͷ����ݲ��ı�ѡ�Ρ�
 
-**老师查看入口：[工程整改说明](docs/ENGINEERING_REFACTOR.md)** · [第二周交付摘要](docs/WEEK2_DELIVERY.md) · [周报](docs/WEEKLY.md)
+**�����ܽ�չ��[��ͷ���](docs/SHOT_DETECTION.md) �� [��������](docs/VAD_DETECTION.md) �� [�ʼ�תд���������](docs/ASR_ANALYSIS.md)**��ASR ����ɱ��ؽ��룬�Դ���Ŀ������ Docker ���գ�ʶ���������ʼ�ʱ��������;�ͷ F1 ��δ���ա�
 
-## 项目结构
+������ʦ�Ĺ��̷���������֧�����ļ�ǰ��Ǩ��Ϊ **React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5**����ˡ����ԺͲ����ļ���Ŀ¼����ͳһ FFmpeg �������á��ڶ���ԭ�����ռ�¼����ʷ֤�ݣ�Ǩ�ƺ����֤��Χ������¼��
+
+**��ʦ�鿴��ڣ�[��������˵��](docs/ENGINEERING_REFACTOR.md)** �� [�ڶ��ܽ���ժҪ](docs/WEEK2_DELIVERY.md) �� [�ܱ�](docs/WEEKLY.md)
+
+## ��Ŀ�ṹ
 
 ```text
-frontend/                     React 前端与构建配置
-  src/components/             上传、任务历史、详情、切片结果
-  src/api/                    HTTP 请求、上传及下载地址校验
-  src/store/                  Zustand 任务、分页、选中项与连接状态
-  src/hooks/                  可取消的任务轮询
-  src/types/                  TypeScript 接口类型
-  src/test/                   前端交互测试
-  package.json                开发、类型检查、测试、构建命令
-  package-lock.json           可复现安装的依赖锁文件
+frontend/                     React ǰ���빹������
+  src/components/             �ϴ���������ʷ�����顢��Ƭ���
+  src/api/                    HTTP �����ϴ������ص�ַУ��
+  src/store/                  Zustand ���񡢷�ҳ��ѡ����������״̬
+  src/hooks/                  ��ȡ����������ѯ
+  src/types/                  TypeScript �ӿ�����
+  src/test/                   ǰ�˽�������
+  package.json                ���������ͼ�顢���ԡ���������
+  package-lock.json           �ɸ��ְ�װ���������ļ�
 backend/
-  clipforge/api.py            FastAPI 入口与前端构建产物提供
-  clipforge/routes/           HTTP 上传、查询、下载
-  clipforge/media/            FFprobe、归一化、切片
-  clipforge/analysis/         分析校验、镜头、VAD、词级 ASR 与中文分句
-  clipforge/services/         视频处理流程
-  clipforge/storage/          SQLite 与任务目录
-  clipforge/queue/            Celery 任务、客户端及队列演示
-  clipforge/config.py         FFmpeg / FFprobe 配置解析
-  tests/                     Python 单元与集成实验
-  requirements*.txt           Python 依赖
+  clipforge/api.py            FastAPI �����ǰ�˹��������ṩ
+  clipforge/routes/           HTTP �ϴ�����ѯ������
+  clipforge/media/            FFprobe����һ������Ƭ
+  clipforge/analysis/         ����У�顢��ͷ��VAD���ʼ� ASR �����ķ־�
+  clipforge/services/         ��Ƶ��������
+  clipforge/storage/          SQLite ������Ŀ¼
+  clipforge/queue/            Celery ���񡢿ͻ��˼�������ʾ
+  clipforge/config.py         FFmpeg / FFprobe ���ý���
+  tests/                     Python ��Ԫ�뼯��ʵ��
+  requirements*.txt           Python ����
 deploy/                      API / worker Dockerfile
-docs/                        说明、周报与历史验收记录
-schemas/                     数据格式定义
-compose.yaml                 本地容器编排
-.env.example                 本机环境变量模板
+docs/                        ˵�����ܱ�����ʷ���ռ�¼
+schemas/                     ���ݸ�ʽ����
+compose.yaml                 ������������
+.env.example                 ������������ģ��
 ```
 
-## Docker 启动（用于完整流程）
+## Docker �����������������̣�
 
-安装 Git、Docker Desktop，启用 Linux 容器。先按 [ASR 说明](docs/ASR_ANALYSIS.md) 将固定版本模型准备到 models/faster-whisper-base；模型由 worker 只读挂载。然后在项目根目录执行：
+��װ Git��Docker Desktop������ Linux �������Ȱ� [ASR ˵��](docs/ASR_ANALYSIS.md) ���̶��汾ģ��׼���� models/faster-whisper-base��ģ���� worker ֻ�����ء�Ȼ������Ŀ��Ŀ¼ִ�У�
 
 ```powershell
 docker compose config --quiet
@@ -56,17 +60,17 @@ docker compose up -d --build
 docker compose ps
 ```
 
-打开 [工作台](http://127.0.0.1:8200/)；[接口文档](http://127.0.0.1:8200/docs)用于开发检查。地址指向访问者自己的电脑，GitHub 不运行这些服务。
+�� [����̨](http://127.0.0.1:8200/)��[�ӿ��ĵ�](http://127.0.0.1:8200/docs)���ڿ�����顣��ַָ��������Լ��ĵ��ԣ�GitHub ��������Щ����
 
-API 镜像先使用 Node.js 24 构建 React 页面，再把静态产物复制到 Python 镜像。worker 自带 FFmpeg。只用 Docker 运行时无需在宿主机额外安装 Node、Python 或 FFmpeg。首次构建需要网络，可能需要配置 Docker Desktop 代理。
+API ������ʹ�� Node.js 24 ���� React ҳ�棬�ٰѾ�̬���︴�Ƶ� Python ����worker �Դ� FFmpeg��ֻ�� Docker ����ʱ���������������ⰲװ Node��Python �� FFmpeg���״ι�����Ҫ���磬������Ҫ���� Docker Desktop ������
 
-**从旧版迁移时，等待正在处理的任务完成，再同时重新构建 API 和 worker**。本次 Python 模块路径发生变化，不能只更新页面。服务名、8200 端口、任务 API、Celery 任务名、SQLite 表结构及数据卷名称保持不变。不要删除数据卷；历史任务仍由现有数据卷读取，容器迁移后的实际回归需按整改说明执行。
+**�Ӿɰ�Ǩ��ʱ���ȴ����ڴ�����������ɣ���ͬʱ���¹��� API �� worker**������ Python ģ��·�������仯������ֻ����ҳ�档��������8200 �˿ڡ����� API��Celery ��������SQLite ���ṹ�����ݾ����Ʊ��ֲ��䡣��Ҫɾ�����ݾ�����ʷ���������������ݾ���ȡ������Ǩ�ƺ��ʵ�ʻع��谴����˵��ִ�С�
 
-以后可用 `docker compose up -d` 启动，用 `docker compose stop` 停止。处理任务时保持 Docker 运行和电脑唤醒。`docker compose down -v` 会删除数据卷，不用于普通关闭。
+�Ժ���� `docker compose up -d` �������� `docker compose stop` ֹͣ����������ʱ���� Docker ���к͵��Ի��ѡ�`docker compose down -v` ��ɾ�����ݾ�����������ͨ�رա�
 
-## 本地开发
+## ���ؿ���
 
-本地开发使用 Python 3.11、Node.js 24 和 npm。先在仓库根目录创建 Python 环境：
+���ؿ���ʹ�� Python 3.11��Node.js 24 �� npm�����ڲֿ��Ŀ¼���� Python ������
 
 ```powershell
 py -3.11 -m venv .venv
@@ -74,7 +78,7 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e backend
 ```
 
-编辑前端时，先启动上述 Docker 服务作为 API，再在另一窗口执行：
+�༭ǰ��ʱ������������ Docker ������Ϊ API��������һ����ִ�У�
 
 ```powershell
 cd frontend
@@ -82,9 +86,9 @@ npm ci
 npm run dev
 ```
 
-打开 `http://127.0.0.1:5173/`。Vite 将 `/tasks` 等请求代理到 `http://127.0.0.1:8200`，上传和下载仍使用同一后端。如 API 地址不同，启动 Vite 前设置 `$env:CLIPFORGE_API_URL`。
+�� `http://127.0.0.1:5173/`��Vite �� `/tasks` ����������� `http://127.0.0.1:8200`���ϴ���������ʹ��ͬһ��ˡ��� API ��ַ��ͬ������ Vite ǰ���� `$env:CLIPFORGE_API_URL`��
 
-构建及测试（在 `frontend` 目录）：
+���������ԣ��� `frontend` Ŀ¼����
 
 ```powershell
 npm run typecheck
@@ -92,13 +96,13 @@ npm test
 npm run build
 ```
 
-产物为 `frontend/dist/`，不提交 Git。源码、package.json 和锁文件提交 Git。开发页面使用 Vite；部署页面由 FastAPI 提供构建产物，不把源码目录直接作为网站发布。
+����Ϊ `frontend/dist/`�����ύ Git��Դ�롢package.json �����ļ��ύ Git������ҳ��ʹ�� Vite������ҳ���� FastAPI �ṩ�����������Դ��Ŀ¼ֱ����Ϊ��վ������
 
-仅开发 API 时可在仓库根目录运行 `.\.venv\Scripts\python.exe -m uvicorn clipforge.api:app --host 127.0.0.1 --port 8201`，并设置 Vite 的 API 目标。该方式需要另外配置可连接的 Redis 和共用数据目录；推荐初学阶段使用 Docker 完整后台，避免误连另一套任务存储。
+������ API ʱ���ڲֿ��Ŀ¼���� `.\.venv\Scripts\python.exe -m uvicorn clipforge.api:app --host 127.0.0.1 --port 8201`�������� Vite �� API Ŀ�ꡣ�÷�ʽ��Ҫ�������ÿ����ӵ� Redis �͹�������Ŀ¼���Ƽ���ѧ�׶�ʹ�� Docker ������̨������������һ������洢��
 
-## 本机 FFmpeg 配置
+## ���� FFmpeg ����
 
-Docker 已配置容器内工具；以下仅用于 Windows 本机媒体命令。优先使用系统 PATH 中的可执行文件：
+Docker �����������ڹ��ߣ����½����� Windows ����ý���������ʹ��ϵͳ PATH �еĿ�ִ���ļ���
 
 ```powershell
 $env:FFMPEG = (Get-Command ffmpeg -ErrorAction Stop).Source
@@ -107,29 +111,29 @@ $env:FFPROBE = (Get-Command ffprobe -ErrorAction Stop).Source
 & $env:FFPROBE -version
 ```
 
-如果工具不在 PATH 中，改用下面方式输入本机实际路径（输入时不用额外加引号）：
+������߲��� PATH �У��������淽ʽ���뱾��ʵ��·��������ʱ���ö�������ţ���
 
 ```powershell
-$env:FFMPEG = Read-Host "请输入 ffmpeg 可执行文件的完整路径"
-$env:FFPROBE = Read-Host "请输入 ffprobe 可执行文件的完整路径"
+$env:FFMPEG = Read-Host "������ ffmpeg ��ִ���ļ�������·��"
+$env:FFPROBE = Read-Host "������ ffprobe ��ִ���ļ�������·��"
 & $env:FFMPEG -version
 & $env:FFPROBE -version
 ```
 
-配置优先级：命令行显式参数 > `FFMPEG` / `FFPROBE` > 兼容旧变量 `FFMPEG_PATH` / `FFPROBE_PATH` > PATH 中的命令。变量在每次调用时读取。`.env.example` 只是模板，Python 不会自动读取 `.env`；PowerShell 的 `$env:` 设置作用于当前窗口及其子进程。
+�������ȼ�����������ʽ���� > `FFMPEG` / `FFPROBE` > ���ݾɱ��� `FFMPEG_PATH` / `FFPROBE_PATH` > PATH �е����������ÿ�ε���ʱ��ȡ��`.env.example` ֻ��ģ�壬Python �����Զ���ȡ `.env`��PowerShell �� `$env:` ���������ڵ�ǰ���ڼ����ӽ��̡�
 
-准备自己的输入视频后，在仓库根目录执行（输出必须是新路径）：
+׼���Լ���������Ƶ���ڲֿ��Ŀ¼ִ�У������������·������
 
 ```powershell
-$video = Read-Host "请输入要处理的视频完整路径"
+$video = Read-Host "������Ҫ��������Ƶ����·��"
 .\.venv\Scripts\python.exe -m clipforge.media.probe "$video"
 .\.venv\Scripts\python.exe -m clipforge.media.normalize "$video" "downloads/normalized.mp4"
 .\.venv\Scripts\python.exe -m clipforge.media.split "downloads/normalized.mp4" "downloads/clips"
 ```
 
-## 验证与 CI
+## ��֤�� CI
 
-在仓库根目录执行：
+�ڲֿ��Ŀ¼ִ�У�
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
@@ -138,38 +142,38 @@ $video = Read-Host "请输入要处理的视频完整路径"
 .\.venv\Scripts\python.exe backend/tests/integration_video_api.py "$video" --timeout 7200
 ```
 
-最后一条需要服务运行并先设置 `$video`；会创建一个真实任务。`--expected-clips` 设置测试预期，不控制切片数量，不确定时省略。等待超时不代表后台停止，应先查询已有任务，避免重复上传。
+���һ����Ҫ�������в������� `$video`���ᴴ��һ����ʵ����`--expected-clips` ���ò���Ԥ�ڣ���������Ƭ��������ȷ��ʱʡ�ԡ��ȴ���ʱ��������ֹ̨ͣ��Ӧ�Ȳ�ѯ�������񣬱����ظ��ϴ���
 
-[GitHub Actions](.github/workflows/ci.yml) 分别在 Ubuntu / Windows 检查 Python 与前端：Python 依赖检查、Ruff、单元测试；前端锁文件安装、TypeScript 检查、交互测试和 Vite 构建。新提交的远程结果以其 Actions 记录为准。
+[GitHub Actions](.github/workflows/ci.yml) �ֱ��� Ubuntu / Windows ��� Python ��ǰ�ˣ�Python ������顢Ruff����Ԫ���ԣ�ǰ�����ļ���װ��TypeScript ��顢�������Ժ� Vite ���������ύ��Զ�̽������ Actions ��¼Ϊ׼��
 
-## 已完成的历史验收与当前限制
+## ����ɵ���ʷ�����뵱ǰ����
 
-- 第二周原型已验证真实短视频 2 段、345.5 秒素材 12 段，记录见 [页面验收](docs/samples/web_ui_video_task_verification.json) 和 [Test1 验收](docs/samples/Test1_video_task_verification.json)。
-- 60 分钟 1080p 低复杂度合成素材生成 120 段，逐段解码共 108,000 帧；任务记录耗时约 50 分 18 秒，见 [长视频验收](docs/LONG_VIDEO_TEST.md)。这是旧版已归档的媒体实验，不代表本次重新转码或真实复杂素材性能。
-- 已归档的 [数据保留记录](docs/samples/restart_persistence_verification.json) 和 [异常验收](docs/FAILURE_TESTS.md)保留原测试时间与范围。
-- 仍未实现处理中断自动恢复、取消/重试、多用户隔离与自动清理；峰值内存、精确音画同步和完整端到端性能未测量。阶段百分比不是逐帧进度。
+- �ڶ���ԭ������֤��ʵ����Ƶ 2 �Ρ�345.5 ���ز� 12 �Σ���¼�� [ҳ������](docs/samples/web_ui_video_task_verification.json) �� [Test1 ����](docs/samples/Test1_video_task_verification.json)��
+- 60 ���� 1080p �͸��ӶȺϳ��ز����� 120 �Σ���ν��빲 108,000 ֡�������¼��ʱԼ 50 �� 18 �룬�� [����Ƶ����](docs/LONG_VIDEO_TEST.md)�����Ǿɰ��ѹ鵵��ý��ʵ�飬��������������ת�����ʵ�����ز����ܡ�
+- �ѹ鵵�� [���ݱ�����¼](docs/samples/restart_persistence_verification.json) �� [�쳣����](docs/FAILURE_TESTS.md)����ԭ����ʱ���뷶Χ��
+- ��δʵ�ִ����ж��Զ��ָ���ȡ��/���ԡ����û��������Զ���������ֵ�ڴ桢��ȷ����ͬ���������˵�������δ�������׶ΰٷֱȲ�����֡���ȡ�
 
-## 第一周调研与设计
+## ��һ�ܵ��������
 
-第一周完成基础流程实验、商业产品体验记录、需求规格与设计图。以下保留原调研阶段状态；需求文档描述后续目标，不表示当前功能全部交付。
+��һ����ɻ�������ʵ�顢��ҵ��Ʒ�����¼�������������ͼ�����±���ԭ���н׶�״̬�������ĵ���������Ŀ�꣬����ʾ��ǰ����ȫ��������
 
-| 工作项 | 当前状态 |
+| ������ | ��ǰ״̬ |
 | --- | --- |
-| OpenCut Classic | 已完成本地运行、导入、分割与删除、MP4 导出、播放及刷新恢复；已补充编辑、保存、预览、音频与导出的主要模块图和源码依据 |
-| AutoClip | 已完成本地部署、转写、模型分析、切片生成及播放；已补充六步处理、结果同步与进度查询模块图；实际任务启动路径及异常分支仍需运行证据核对 |
-| Shotcut / MLT | 已完成手工剪辑、MLT 保存与重新打开、MP4 导出与播放；已有工程样本，并补充时间轴、播放、滤镜挂接和后台导出模块图及源码依据 |
-| OpusClip / Descript | 已整理两款产品的体验与截图；OpusClip 已验证 MP4 下载，Descript 最终输出及文本删改联动尚未确认 |
-| 需求规格说明书 | 已形成 8 条功能需求、5 条非功能需求，逐条附验收判据，并补充借鉴说明和分阶段实现范围 |
-| 用例图与主流程时序图 | 已形成图片和说明，与需求编号对应 |
-| 仓库与 CI | 已配置 `.gitignore` 和 GitHub Actions 的 lint＋test 占位任务；本次核对的运行成功 |
+| OpenCut Classic | ����ɱ������С����롢�ָ���ɾ����MP4 ���������ż�ˢ�»ָ����Ѳ���༭�����桢Ԥ������Ƶ�뵼������Ҫģ��ͼ��Դ������ |
+| AutoClip | ����ɱ��ز���תд��ģ�ͷ�������Ƭ���ɼ����ţ��Ѳ����������������ͬ������Ȳ�ѯģ��ͼ��ʵ����������·�����쳣��֧��������֤�ݺ˶� |
+| Shotcut / MLT | ������ֹ�������MLT ���������´򿪡�MP4 �����벥�ţ����й���������������ʱ���ᡢ���š��˾��ҽӺͺ�̨����ģ��ͼ��Դ������ |
+| OpusClip / Descript | �����������Ʒ���������ͼ��OpusClip ����֤ MP4 ���أ�Descript ����������ı�ɾ��������δȷ�� |
+| ������˵���� | ���γ� 8 ����������5 ���ǹ������������������оݣ���������˵���ͷֽ׶�ʵ�ַ�Χ |
+| ����ͼ��������ʱ��ͼ | ���γ�ͼƬ��˵�����������Ŷ�Ӧ |
+| �ֿ��� CI | ������ `.gitignore` �� GitHub Actions �� lint��test ռλ���񣻱��κ˶Ե����гɹ� |
 
-| 文档 | 内容 |
+| �ĵ� | ���� |
 | --- | --- |
-| [调研报告](docs/research-report.md) | 参考项目实验、源码调查、产品对比与资料 |
-| [需求规格说明书](docs/requirements.md) | 功能、非功能需求与验收判据 |
-| [设计图说明](docs/design-diagrams.md) | 用例与主流程时序、需求映射 |
-| [用例图](docs/clipforge-use-case.png) / [时序图](docs/clipforge-main-sequence.png) | 设计图片 |
-| [Shotcut 工程样本说明](docs/samples/README.md) | 素材来源、路径调整与验证范围 |
-| [Week1Work.mlt](docs/samples/Week1Work.mlt) | 手工工程样本，需 Shotcut 和对应原素材 |
+| [���б���](docs/research-report.md) | �ο���Ŀʵ�顢Դ����顢��Ʒ�Ա������� |
+| [������˵����](docs/requirements.md) | ���ܡ��ǹ��������������о� |
+| [���ͼ˵��](docs/design-diagrams.md) | ������������ʱ������ӳ�� |
+| [����ͼ](docs/clipforge-use-case.png) / [ʱ��ͼ](docs/clipforge-main-sequence.png) | ���ͼƬ |
+| [Shotcut ��������˵��](docs/samples/README.md) | �ز���Դ��·����������֤��Χ |
+| [Week1Work.mlt](docs/samples/Week1Work.mlt) | �ֹ������������� Shotcut �Ͷ�Ӧԭ�ز� |
 
-第二周进一步说明：[归一化](docs/NORMALIZATION.md)、[切片](docs/SPLITTING.md)、[队列](docs/QUEUE.md)、[视频接口](docs/VIDEO_TASKS.md)、[网页操作](docs/WEB_UI.md)、[周报](docs/WEEKLY.md)。
+�ڶ��ܽ�һ��˵����[��һ��](docs/NORMALIZATION.md)��[��Ƭ](docs/SPLITTING.md)��[����](docs/QUEUE.md)��[��Ƶ�ӿ�](docs/VIDEO_TASKS.md)��[��ҳ����](docs/WEB_UI.md)��[�ܱ�](docs/WEEKLY.md)��

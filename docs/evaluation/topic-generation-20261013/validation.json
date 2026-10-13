@@ -1,0 +1,52 @@
+{
+  "scope": "Backend regression with explicit patterns; not GitHub CI or real model/media quality acceptance",
+  "patterns": [
+    "test_candidates.py",
+    "test_topic*.py",
+    "test_scoring.py",
+    "test_llm_scoring.py",
+    "test_llm_assessment.py",
+    "test_result_cache.py",
+    "test_editing_service.py",
+    "test_edl*.py",
+    "test_selection.py",
+    "test_risk_selection.py",
+    "test_boundary_optimizer.py",
+    "test_continuity.py",
+    "test_end_context.py",
+    "test_word_followup.py",
+    "test_context_proposals.py"
+  ],
+  "excluded_cases": [
+    "test_llm_scoring.HTTPTransportTests.test_real_loopback_success_auth_retry_codes_and_malformed_responses",
+    "test_llm_scoring.HTTPTransportTests.test_real_timeout_and_closed_port",
+    "backend.tests.test_candidate_api.CandidateApiTests.test_corrupt_or_missing_result_is_explicit_without_path_leak",
+    "backend.tests.test_candidate_api.CandidateApiTests.test_empty_is_success_not_an_error",
+    "backend.tests.test_candidate_api.CandidateApiTests.test_invalid_score_and_path_escape_rejected",
+    "backend.tests.test_candidate_api.CandidateApiTests.test_legacy_unfinished_unknown_and_invalid_pagination",
+    "backend.tests.test_candidate_api.CandidateApiTests.test_model_and_fallback_projection",
+    "backend.tests.test_candidate_api.CandidateApiTests.test_paginated_projection_matches_download_without_internal_fields",
+    "test_selection.SelectionApiTests.test_filter_is_global_and_download_matches_page",
+    "test_selection.SelectionApiTests.test_legacy_and_invalid_review_are_not_silent_success",
+    "test_selection.SelectionApiTests.test_topic_filter_folds_repeated_text_globally_and_preserves_originals"
+  ],
+  "tests": 177,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 70.109,
+  "status": "passed",
+  "failed_cases": [],
+  "skipped_cases": [],
+  "implementation_sha256": {
+    "backend/clipforge/decision/topic_segments.py": "712f525174a74be06fd531cf41fdfbf613f856f16626551de3e63e7ece101af2",
+    "backend/clipforge/decision/generation.py": "0157ed76ab83f2c3dda72109b30626689f70a50bc84a73df4d6cddc39af95838",
+    "backend/clipforge/decision/validation.py": "3f6912233964d5d4a59aade08bd224e04e57ce3f2c525085c22d73e3e2d18c5d",
+    "backend/clipforge/services/pipeline.py": "0e8c9c6da643d7a666a05269cbb6fe7a9bce8764a0acf9e48c8cb0c1b04db24a",
+    "backend/clipforge/services/result_cache.py": "1d5edeea000ba52bc0d979a5337da1cb988e0f84585d8664059e610aa029839a",
+    "schemas/candidates.schema.json": "c4e61a5a7883bbb5e3024641675a02eb02740f9af49783ddada4051589f2134b",
+    "schemas/scored_candidates.schema.json": "dfcfef8f75fe66833dcda863610190c806e63ac25a26305ea92e67534ed27876",
+    "schemas/llm_candidates.schema.json": "34d7d98faa0e512b16b60332e6234eae0e5817d55d2acd00fb3cdbfac17ed933"
+  },
+  "inputs_unchanged": true
+}

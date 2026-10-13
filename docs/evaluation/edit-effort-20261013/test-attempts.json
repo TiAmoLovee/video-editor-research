@@ -1,0 +1,37 @@
+{
+  "attempts": [
+    {
+      "run": "run-20261013T010116634787Z",
+      "status": "interrupted_not_passed",
+      "note": "Expanded historical artifact regression stopped before a final suite result; original log retained",
+      "log": "run-20261013T010116634787Z/backend.log"
+    },
+    {
+      "run": "run-20261013T010510487543Z",
+      "status": "failed",
+      "tests": 89,
+      "failed_cases": [
+        "test_editing_changed_exports.EditedExportTests.test_mp4_service_passes_exact_edited_edl_without_inheriting_parent_artifacts (portrait=False)",
+        "test_editing_changed_exports.EditedExportTests.test_mp4_service_passes_exact_edited_edl_without_inheriting_parent_artifacts (portrait=True)"
+      ],
+      "log": "run-20261013T010510487543Z/backend.log"
+    },
+    {
+      "run": "run-20261013T010647472282Z",
+      "status": "failed",
+      "tests": 89,
+      "failed_cases": [
+        "test_editing_changed_exports.EditedExportTests.test_mp4_service_passes_exact_edited_edl_without_inheriting_parent_artifacts (portrait=True)"
+      ],
+      "log": "run-20261013T010647472282Z/backend.log"
+    },
+    {
+      "run": "run-20261013T010816796145Z",
+      "status": "passed",
+      "tests": 89,
+      "failed_cases": [],
+      "log": "run-20261013T010816796145Z/backend.log"
+    }
+  ],
+  "diagnostic_note": "Two mock-render report fields were completed (path/framing); production renderer logic was not weakened"
+}

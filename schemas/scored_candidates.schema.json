@@ -69,47 +69,112 @@
       }
     },
     "generator": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "version",
-        "options"
-      ],
-      "properties": {
-        "version": {
-          "const": "sentence-window-v1"
-        },
-        "options": {
+      "oneOf": [
+        {
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "min_seconds",
-            "max_seconds",
-            "max_gap_seconds",
-            "max_candidates"
+            "version",
+            "options"
           ],
           "properties": {
-            "min_seconds": {
-              "type": "number",
-              "minimum": 15,
-              "maximum": 90
+            "version": {
+              "const": "sentence-window-v1"
             },
-            "max_seconds": {
-              "type": "number",
-              "minimum": 15,
-              "maximum": 90
+            "options": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "min_seconds",
+                "max_seconds",
+                "max_gap_seconds",
+                "max_candidates"
+              ],
+              "properties": {
+                "min_seconds": {
+                  "type": "number",
+                  "minimum": 15,
+                  "maximum": 90
+                },
+                "max_seconds": {
+                  "type": "number",
+                  "minimum": 15,
+                  "maximum": 90
+                },
+                "max_gap_seconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "max_candidates": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "version",
+            "options"
+          ],
+          "properties": {
+            "version": {
+              "const": "topic-valley-v1"
             },
-            "max_gap_seconds": {
-              "type": "number",
-              "minimum": 0
-            },
-            "max_candidates": {
-              "type": "integer",
-              "minimum": 1
+            "options": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "min_seconds",
+                "max_seconds",
+                "max_gap_seconds",
+                "max_candidates",
+                "window_units",
+                "min_segment_units",
+                "min_depth"
+              ],
+              "properties": {
+                "min_seconds": {
+                  "type": "number",
+                  "minimum": 15,
+                  "maximum": 90
+                },
+                "max_seconds": {
+                  "type": "number",
+                  "minimum": 15,
+                  "maximum": 90
+                },
+                "max_gap_seconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "max_candidates": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "window_units": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32
+                },
+                "min_segment_units": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "min_depth": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1
+                }
+              }
             }
           }
         }
-      }
+      ]
     },
     "candidate_count": {
       "type": "integer",
@@ -125,11 +190,7 @@
       "type": "array",
       "uniqueItems": true,
       "items": {
-        "enum": [
-          "no_sentences",
-          "overlong_sentence_unit_skipped",
-          "no_eligible_window"
-        ]
+        "enum": ["no_sentences", "overlong_sentence_unit_skipped", "no_eligible_window", "topic_short_segment_skipped", "topic_long_segment_skipped", "topic_uninformative_text"]
       }
     },
     "windows_sha256": {

@@ -1,0 +1,2707 @@
+{
+  "scope": "synthetic functional examples, not human review or independent video quality acceptance",
+  "source_fps": {
+    "num": 30000,
+    "den": 1001
+  },
+  "model_calls": 0,
+  "videos_copied": 0,
+  "examples": [
+    {
+      "title": "ֱ�Ӳ���",
+      "note": "�е��˳�򱣳�ԭ����",
+      "baseline_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "final_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "baseline_clip_count": 2,
+        "final_clip_count": 2,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 0,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      },
+      "step_effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "baseline_clip_count": 2,
+        "final_clip_count": 2,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 0,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      }
+    },
+    {
+      "title": "�޸�һ��Ƭ�ε�����",
+      "note": "������ 3 ֡���յ�ǰ�� 6 ֡��",
+      "baseline_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "final_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 3,
+            "source_out_frame": 294,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 291,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 291,
+            "timeline_out_frame": 591,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 591
+      },
+      "effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "e0a7157a98b49cc48a433aec45268f25cbc63671bc44f12ddcfec360b943978b",
+        "baseline_clip_count": 2,
+        "final_clip_count": 2,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 1,
+        "added_clip_count": 0,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.3003,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 3003,
+          "den": 10000
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 3,
+              "out_frame": 294
+            },
+            "in_delta_frames": 3,
+            "out_delta_frames": -6,
+            "in_delta_seconds": 0.1001,
+            "out_delta_seconds": -0.2002,
+            "in_delta_seconds_exact": {
+              "num": 1001,
+              "den": 10000
+            },
+            "out_delta_seconds_exact": {
+              "num": -1001,
+              "den": 5000
+            },
+            "absolute_boundary_adjustment_seconds": 0.3003,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 3003,
+              "den": 10000
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      },
+      "step_effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "e0a7157a98b49cc48a433aec45268f25cbc63671bc44f12ddcfec360b943978b",
+        "baseline_clip_count": 2,
+        "final_clip_count": 2,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 1,
+        "added_clip_count": 0,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.3003,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 3003,
+          "den": 10000
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 3,
+              "out_frame": 294
+            },
+            "in_delta_frames": 3,
+            "out_delta_frames": -6,
+            "in_delta_seconds": 0.1001,
+            "out_delta_seconds": -0.2002,
+            "in_delta_seconds_exact": {
+              "num": 1001,
+              "den": 10000
+            },
+            "out_delta_seconds_exact": {
+              "num": -1001,
+              "den": 5000
+            },
+            "absolute_boundary_adjustment_seconds": 0.3003,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 3003,
+              "den": 10000
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      }
+    },
+    {
+      "title": "�ָ�ԭ�е�",
+      "note": "���վ��仯Ϊ�㣬�����λָ����б仯��",
+      "baseline_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "final_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "baseline_clip_count": 2,
+        "final_clip_count": 2,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 0,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      },
+      "step_effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "e0a7157a98b49cc48a433aec45268f25cbc63671bc44f12ddcfec360b943978b",
+        "final_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "baseline_clip_count": 2,
+        "final_clip_count": 2,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 1,
+        "added_clip_count": 0,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.3003,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 3003,
+          "den": 10000
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 3,
+              "out_frame": 294
+            },
+            "final_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "in_delta_frames": -3,
+            "out_delta_frames": 6,
+            "in_delta_seconds": -0.1001,
+            "out_delta_seconds": 0.2002,
+            "in_delta_seconds_exact": {
+              "num": -1001,
+              "den": 10000
+            },
+            "out_delta_seconds_exact": {
+              "num": 1001,
+              "den": 5000
+            },
+            "absolute_boundary_adjustment_seconds": 0.3003,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 3003,
+              "den": 10000
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      }
+    },
+    {
+      "title": "ɾ����һ��",
+      "note": "�ڶ����ڳ�Ƭ��ǰ�ƣ�Դ�е�δ�䣬��˲����е��޸Ļ����š�",
+      "baseline_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "final_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 300
+      },
+      "effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "c373b7e3f53e409b795ae5c53cd7641ba204415ea9f9d378441a79ad70269687",
+        "baseline_clip_count": 2,
+        "final_clip_count": 1,
+        "common_clip_count": 1,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 0,
+        "removed_clip_count": 1,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            }
+          }
+        ],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      },
+      "step_effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "c373b7e3f53e409b795ae5c53cd7641ba204415ea9f9d378441a79ad70269687",
+        "baseline_clip_count": 2,
+        "final_clip_count": 1,
+        "common_clip_count": 1,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 0,
+        "removed_clip_count": 1,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            }
+          }
+        ],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      }
+    },
+    {
+      "title": "��������˳��",
+      "note": "����Դ�е�δ�䣻�����ƶ�һ������ʵ�֡�",
+      "baseline_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "final_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          },
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "9f14a64d3eb4720ea5c6245e69fd74356068e7a89dd59b8ee5dfe5aab7f1a411",
+        "baseline_clip_count": 2,
+        "final_clip_count": 2,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 0,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 1,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      },
+      "step_effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "9f14a64d3eb4720ea5c6245e69fd74356068e7a89dd59b8ee5dfe5aab7f1a411",
+        "baseline_clip_count": 2,
+        "final_clip_count": 2,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 0,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 1,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.0,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      }
+    },
+    {
+      "title": "����һ����Ƭ��",
+      "note": "����Ƭ�ε���������� 1 ֡���빲��Ƭ���е������С�",
+      "baseline_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 600
+      },
+      "final_edl": {
+        "schema_version": "0.1.0",
+        "artifact_kind": "edit_decision_list",
+        "profile": {
+          "width": 960,
+          "height": 600,
+          "fps": {
+            "num": 30000,
+            "den": 1001
+          }
+        },
+        "sources": [
+          {
+            "id": "normalized-1",
+            "ref": "��Ƶ & source.mp4",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "total_frames": 3000,
+            "width": 960,
+            "height": 600,
+            "fps": {
+              "num": 30000,
+              "den": 1001
+            },
+            "cfr": true,
+            "progressive": true,
+            "sample_aspect_num": 1,
+            "sample_aspect_den": 1,
+            "rotation_degrees": 0,
+            "colorspace": 709,
+            "video_stream_index": 0,
+            "audio_stream_index": 1
+          }
+        ],
+        "clips": [
+          {
+            "id": "clip_c0",
+            "source_id": "normalized-1",
+            "source_in_frame": 0,
+            "source_out_frame": 300,
+            "timeline_in_frame": 0,
+            "timeline_out_frame": 300,
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            }
+          },
+          {
+            "id": "clip_c1",
+            "source_id": "normalized-1",
+            "source_in_frame": 599,
+            "source_out_frame": 899,
+            "timeline_in_frame": 300,
+            "timeline_out_frame": 600,
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            }
+          },
+          {
+            "id": "clip_c2",
+            "source_id": "normalized-1",
+            "source_in_frame": 1200,
+            "source_out_frame": 1499,
+            "timeline_in_frame": 600,
+            "timeline_out_frame": 899,
+            "provenance": {
+              "candidate_id": "c2",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 40,
+              "original_end_seconds": 50,
+              "original_in_frame": 1199,
+              "original_out_frame": 1499,
+              "original_selection_index": 4,
+              "source_sentences": [
+                "s2"
+              ]
+            }
+          }
+        ],
+        "duration_frames": 899
+      },
+      "effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "0223606d8bbe976383c94236d3ec2fdb3f60f0d35b679dbaccfff297664b534d",
+        "baseline_clip_count": 2,
+        "final_clip_count": 3,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 1,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.03336666666666667,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 1001,
+          "den": 30000
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c2"
+            },
+            "provenance": {
+              "candidate_id": "c2",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 40,
+              "original_end_seconds": 50,
+              "original_in_frame": 1199,
+              "original_out_frame": 1499,
+              "original_selection_index": 4,
+              "source_sentences": [
+                "s2"
+              ]
+            },
+            "final_clip_id": "clip_c2",
+            "final_index": 2,
+            "provenance_source_range": {
+              "in_frame": 1199,
+              "out_frame": 1499
+            },
+            "final_source_range": {
+              "in_frame": 1200,
+              "out_frame": 1499
+            },
+            "in_delta_frames": 1,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.03336666666666667,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 1001,
+              "den": 30000
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.03336666666666667,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 1001,
+              "den": 30000
+            }
+          }
+        ],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      },
+      "step_effort": {
+        "report_version": "1.0.0",
+        "metric_scope": "final_net_edl_change",
+        "baseline_edl_sha256": "39c0338ab2191b9d1444ffb29d353d4949f14f8b3a8af252f998d69cf29ba689",
+        "final_edl_sha256": "0223606d8bbe976383c94236d3ec2fdb3f60f0d35b679dbaccfff297664b534d",
+        "baseline_clip_count": 2,
+        "final_clip_count": 3,
+        "common_clip_count": 2,
+        "adjusted_clip_count": 0,
+        "added_clip_count": 1,
+        "removed_clip_count": 0,
+        "minimum_moved_clip_count": 0,
+        "net_boundary_adjustment_seconds": 0.0,
+        "net_boundary_adjustment_seconds_exact": {
+          "num": 0,
+          "den": 1
+        },
+        "added_clip_boundary_adjustment_seconds": 0.03336666666666667,
+        "added_clip_boundary_adjustment_seconds_exact": {
+          "num": 1001,
+          "den": 30000
+        },
+        "common_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c0"
+            },
+            "provenance": {
+              "candidate_id": "c0",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 0,
+              "original_end_seconds": 10,
+              "original_in_frame": 0,
+              "original_out_frame": 300,
+              "original_selection_index": 0,
+              "source_sentences": [
+                "s0"
+              ]
+            },
+            "baseline_clip_id": "clip_c0",
+            "final_clip_id": "clip_c0",
+            "baseline_index": 0,
+            "final_index": 0,
+            "baseline_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "final_source_range": {
+              "in_frame": 0,
+              "out_frame": 300
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          },
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c1"
+            },
+            "provenance": {
+              "candidate_id": "c1",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 20,
+              "original_end_seconds": 30,
+              "original_in_frame": 599,
+              "original_out_frame": 899,
+              "original_selection_index": 1,
+              "source_sentences": [
+                "s1"
+              ]
+            },
+            "baseline_clip_id": "clip_c1",
+            "final_clip_id": "clip_c1",
+            "baseline_index": 1,
+            "final_index": 1,
+            "baseline_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "final_source_range": {
+              "in_frame": 599,
+              "out_frame": 899
+            },
+            "in_delta_frames": 0,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.0,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.0,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 0,
+              "den": 1
+            }
+          }
+        ],
+        "added_clips": [
+          {
+            "identity": {
+              "source_id": "normalized-1",
+              "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "candidate_id": "c2"
+            },
+            "provenance": {
+              "candidate_id": "c2",
+              "candidate_document_sha256": "0fc51ab2a9ddb7e42e2f1da53bccb88e7596e2272a7f0af686129395e7410a09",
+              "original_source_id": "normalized-1",
+              "original_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "original_start_seconds": 40,
+              "original_end_seconds": 50,
+              "original_in_frame": 1199,
+              "original_out_frame": 1499,
+              "original_selection_index": 4,
+              "source_sentences": [
+                "s2"
+              ]
+            },
+            "final_clip_id": "clip_c2",
+            "final_index": 2,
+            "provenance_source_range": {
+              "in_frame": 1199,
+              "out_frame": 1499
+            },
+            "final_source_range": {
+              "in_frame": 1200,
+              "out_frame": 1499
+            },
+            "in_delta_frames": 1,
+            "out_delta_frames": 0,
+            "in_delta_seconds": 0.03336666666666667,
+            "out_delta_seconds": 0.0,
+            "in_delta_seconds_exact": {
+              "num": 1001,
+              "den": 30000
+            },
+            "out_delta_seconds_exact": {
+              "num": 0,
+              "den": 1
+            },
+            "absolute_boundary_adjustment_seconds": 0.03336666666666667,
+            "absolute_boundary_adjustment_seconds_exact": {
+              "num": 1001,
+              "den": 30000
+            }
+          }
+        ],
+        "removed_clips": [],
+        "limitations": [
+          "Final net changes between snapshots, not cumulative editing operations or labor.",
+          "Boundary seconds sum absolute in/out shifts for common identities at native source fps.",
+          "Added-clip boundary changes are separate and relative to their own provenance frames.",
+          "Minimum moved clips is an LCS lower bound on common clips; insertions/deletions are excluded.",
+          "Profile/framing changes do not count as boundary adjustment.",
+          "Active editing time, saved time and content quality/acceptance are not measured."
+        ]
+      }
+    }
+  ]
+}

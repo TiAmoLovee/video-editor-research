@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "scope": "directed backend editing regression; real HTTP, real render and production deployment not tested",
+  "patterns": [
+    "test_edit_effort.py",
+    "test_editing_changes*.py",
+    "test_editing_service.py",
+    "test_editing_changed_exports.py",
+    "test_editing_routes.py",
+    "test_edl.py",
+    "test_edl_portrait.py"
+  ],
+  "tests": 89,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "failed_cases": [],
+  "elapsed_seconds": 54.234,
+  "implementation_sha256": {
+    "backend/clipforge/editing/effort.py": "82a4dad2c832c68d2d8f6e3e3bebab66f8b9d49d210c5f6f829cc5aedda81f29",
+    "backend/clipforge/services/editing_changes.py": "f08d9b07a2c2ee6adde64e090c37f10dea4689bd9c4b7616e0df1abf7e40909a",
+    "backend/clipforge/services/editing.py": "d952510638cdcfcba6b50f031e507e57c0d6104c28f645585992190ad16f872c",
+    "backend/clipforge/routes/editing.py": "d665863cef8b2b3b646f9d49fffaa3dbb6e14e8e758102ddcc6896d2374d6e0d",
+    "frontend/src/components/ExportWorkbench.tsx": "4912785c7754e696e2eb6342f5acd216f13c224120cd33e241112d5080842a9c",
+    "frontend/src/api/editing.ts": "75cd1adae55db529c807def4f8bf2d8eb215e5d88b06a21665933d22e592b41b",
+    "frontend/src/types/editing.ts": "37c1508cc33b0940e6dfb9e8a6758e0859d485f818c8dc39951973d9af7cd440",
+    "schemas/edl.schema.json": "44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8",
+    "schemas/edl-v0.2.schema.json": "1a5b5921d5681ad998ecb2755697c6fcafaa25f185becfa0cc97db1ee5ca77ff"
+  },
+  "inputs_unchanged": true,
+  "model_calls": 0,
+  "production_deployed": false
+}

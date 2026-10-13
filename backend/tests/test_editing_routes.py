@@ -41,10 +41,13 @@ class EditingRoutesTests(unittest.TestCase):
 
     def test_get_returns_saved_revision_edl_and_manifest(self):
         saved = {"revision": {"revision_id": REVISION_ID}, "edl": {"clips": []}, "manifest": {}}
-        with patch.object(editing.editing_service, "load_task_edl", return_value=saved) as load:
+        available = {"available_clips": [], "unavailable_edit_clip_count": 0}
+        with patch.object(editing.editing_service, "load_task_edl", return_value=saved) as load, patch.object(
+                editing.editing_changes_service, "available_edit_clips", return_value=available) as projection:
             response = editing.get_edl(TASK, REVISION)
         load.assert_called_once_with(TASK_ID, REVISION_ID)
-        self.assertEqual(json.loads(response.body), saved)
+        projection.assert_called_once_with(TASK_ID, REVISION_ID, saved)
+        self.assertEqual(json.loads(response.body), {**saved, **available})
         self.assertEqual(response.headers["cache-control"], "no-store")
 
     def test_file_download_uses_service_allowlist(self):
@@ -77,11 +80,11 @@ class EditingRoutesTests(unittest.TestCase):
         )
         for name, call in operations:
             with self.subTest(route=name):
-                with patch.object(editing.editing_service, name, side_effect=ProjectError(409, "安全错误。")):
+                with patch.object(editing.editing_service, name, side_effect=ProjectError(409, "��ȫ����")):
                     with self.assertRaises(HTTPException) as caught:
                         call()
                 self.assertEqual(caught.exception.status_code, 409)
-                self.assertEqual(caught.exception.detail, "安全错误。")
+                self.assertEqual(caught.exception.detail, "��ȫ����")
 
     def test_unexpected_errors_do_not_expose_internal_details_on_every_route(self):
         operations = (

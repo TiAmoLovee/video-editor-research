@@ -1,4 +1,4 @@
-"""成功任务的持久化结果索引；按内容和完整处理配置复用，不共享可写文件。"""
+"""�ɹ�����ĳ־û���������������ݺ������������ø��ã���������д�ļ���"""
 from contextlib import contextmanager
 import hashlib
 from importlib.metadata import version
@@ -20,6 +20,10 @@ from clipforge.decision.scoring import load_config, validate_scored
 from clipforge.decision.validation import validate_candidates
 from clipforge.decision.llm import safe_settings_snapshot
 from clipforge.decision.boundary_optimizer import settings_snapshot as boundary_settings_snapshot
+from clipforge.decision.generation import (
+    TOPIC, effective_boundary_settings, settings_snapshot as generation_settings_snapshot,
+)
+from clipforge.decision.topic_segments import TopicOptions, segment_topics
 from clipforge.decision.boundary_media import validate_report
 from clipforge.storage.jobs import data_root, get_job, job_dir
 
@@ -39,7 +43,7 @@ def canonical(value):
 def fingerprint(source, options, ffmpeg, ffprobe):
     package = Path(__file__).resolve().parents[1]
     schema = package.parents[1] / 'schemas/analysis.schema.json'
-    # 源码、Schema、依赖或工具变化均失效，宁可少命中，不复用过期分析。
+    # Դ�롢Schema�������򹤾߱仯��ʧЧ�����������У������ù��ڷ�����
     code = {str(p.relative_to(package)).replace('\\', '/'): sha256(p)
             for p in sorted(package.rglob('*.py'))}
     spec = model_spec()
@@ -52,6 +56,7 @@ def fingerprint(source, options, ffmpeg, ffprobe):
         'scenedetect', 'opencv-python-headless', 'numpy', 'webrtcvad-wheels',
         'faster-whisper', 'ctranslate2', 'onnxruntime', 'av', 'tokenizers',
         'opencc-python-reimplemented', 'jieba', 'jsonschema']}
+    generation = generation_settings_snapshot()
     descriptor = {'format': FORMAT, 'source_sha256': sha256(source),
                   'source_suffix': Path(source).suffix.lower(), 'shot_options': options,
                   'model': identity, 'language': os.environ.get('CLIPFORGE_ASR_LANGUAGE') or None,
@@ -60,7 +65,8 @@ def fingerprint(source, options, ffmpeg, ffprobe):
                                             ('candidates.schema.json', 'scored_candidates.schema.json', 'llm_candidates.schema.json')},
                   'scoring_config': load_config().to_dict(),
                   'decision_settings': safe_settings_snapshot(),
-                  'boundary_settings': boundary_settings_snapshot(),
+                  'generation_settings': generation,
+                  'boundary_settings': effective_boundary_settings(boundary_settings_snapshot(), generation),
                   'dependencies': dependencies, 'tools': tools,
                   'platform': [platform.system(), platform.machine(), platform.python_version()]}
     return hashlib.sha256(canonical(descriptor).encode('utf-8')).hexdigest(), descriptor
@@ -73,7 +79,7 @@ def request_fingerprint(source, options_path, ffmpeg, ffprobe):
 
 @contextmanager
 def key_lock(key, timeout=900):
-    """由操作系统释放进程锁，进程崩溃不会留下永久占用的锁。"""
+    """�ɲ���ϵͳ�ͷŽ����������̱���������������ռ�õ�����"""
     root = data_root() / 'result-cache-v2'
     root.mkdir(parents=True, exist_ok=True)
     with (root / (key + '.lock')).open('a+b') as lock:
@@ -93,7 +99,7 @@ def key_lock(key, timeout=900):
                 break
             except OSError:
                 if time.monotonic() - started >= timeout:
-                    raise TimeoutError('等待相同视频的缓存任务超时')
+                    raise TimeoutError('�ȴ���ͬ��Ƶ�Ļ�������ʱ')
                 time.sleep(.1)
         try:
             yield root / (key + '.json')
@@ -109,13 +115,13 @@ def key_lock(key, timeout=900):
 
 def safe_path(root, relative):
     if not isinstance(relative, str) or '\\' in relative or ':' in relative:
-        raise ValueError('缓存文件路径无效')
+        raise ValueError('�����ļ�·����Ч')
     path = PurePosixPath(relative)
     if path.is_absolute() or '..' in path.parts or not path.parts:
-        raise ValueError('缓存文件路径无效')
+        raise ValueError('�����ļ�·����Ч')
     target = root.joinpath(*path.parts).resolve()
     if not target.is_relative_to(root.resolve()):
-        raise ValueError('缓存文件路径超出任务目录')
+        raise ValueError('�����ļ�·����������Ŀ¼')
     return target
 
 
@@ -125,19 +131,20 @@ def artifact_files(result):
                 'shots.json', 'vad.json', 'asr.json', 'analysis.json',
                 'candidate_windows.json', 'candidates.json'}
     if not required.issubset(files) or len(set(files.values())) != len(files):
-        raise ValueError('缓存结果不完整')
-    # 只接受流水线的固定 JSON 和切片；永不复制上传原片或缓存状态文件。
+        raise ValueError('������������')
+    # ֻ������ˮ�ߵĹ̶� JSON ����Ƭ�����������ϴ�ԭƬ�򻺴�״̬�ļ���
     optimized = {name for name in files if re.fullmatch(r'repair_[a-f0-9]{64}\.mp4', name)}
     if optimized and 'boundary_optimization.json' not in files:
-        raise ValueError('优化视频缺少边界记录')
-    allowed = required | {'shot_options.json', 'boundary_optimization.json'} | {clip['file'] for clip in result['clips']} | optimized
+        raise ValueError('�Ż���Ƶȱ�ٱ߽��¼')
+    optional = {'shot_options.json', 'boundary_optimization.json', 'topic_segmentation.json'}
+    allowed = required | (optional & set(files)) | {clip['file'] for clip in result['clips']} | optimized
     allowed -= {name for name in ('shot_options.json', 'boundary_optimization.json') if name not in files}
     if set(files) != allowed - ({'shot_options.json'} if 'shot_options.json' not in files else set()):
-        raise ValueError('缓存下载清单异常')
+        raise ValueError('���������嵥�쳣')
     for name, relative in files.items():
         expected = 'repaired/'+name if name in optimized else 'clips/' + name if name == 'clip_plan.json' or name.endswith('.mp4') else name
         if relative != expected or Path(name).name != name or '/' in name:
-            raise ValueError('缓存文件映射异常')
+            raise ValueError('�����ļ�ӳ���쳣')
     return files
 
 
@@ -146,58 +153,70 @@ def validate_bundle(folder, source, result, descriptor):
     options_path = folder / 'shot_options.json'
     options = parse_options(options_path.read_text(encoding='utf-8')) if options_path.is_file() else None
     if options != descriptor['shot_options']:
-        raise ValueError('缓存选区或模式不匹配')
+        raise ValueError('����ѡ����ģʽ��ƥ��')
     analysis = combine_analysis(source, read('shots.json'), read('vad.json'), read('asr.json'))
     if analysis != read('analysis.json') or analysis['media']['source_sha256'] != descriptor['source_sha256']:
-        raise ValueError('缓存分析身份或内容不匹配')
+        raise ValueError('����������ݻ����ݲ�ƥ��')
     windows, candidates = read('candidate_windows.json'), read('candidates.json')
     validate_candidates(windows, analysis)
     validate_scored(candidates, analysis)
+    generation = descriptor.get('generation_settings')
+    if generation is not None and windows['generator'] != generation:
+        raise ValueError('�����ѡ���ɲ��Բ�ƥ��')
+    if windows['generator']['version'] == TOPIC:
+        if ('topic_segmentation.json' not in result['files'] or
+                read('topic_segmentation.json') != segment_topics(
+                    analysis, TopicOptions(**windows['generator']['options']))):
+            raise ValueError('���滰��ֶμ�¼��ƥ��')
+    elif 'topic_segmentation.json' in result['files']:
+        raise ValueError('���Ӵ��ڻ��治�ܴ��뻰��ֶμ�¼')
     if candidates['windows_sha256'] != content_hash(windows):
-        raise ValueError('缓存候选及评分不是同一批结果')
+        raise ValueError('�����ѡ�����ֲ���ͬһ�����')
     if 'scoring_config' in descriptor and candidates['scoring']['config'] != descriptor['scoring_config']:
-        raise ValueError('缓存评分配置不匹配')
+        raise ValueError('�����������ò�ƥ��')
     settings = descriptor.get('decision_settings',{'mode':'rule'})
     llm = candidates['scoring'].get('llm')
     if settings['mode'] == 'llm':
         if (not llm or llm['config'] != settings['config'] or llm['prompt_sha256'] != settings['prompt_sha256']
                 or llm['fallback_reason'] is not None):
-            raise ValueError('LLM 配置、提示词不匹配或结果已降级')
+            raise ValueError('LLM ���á���ʾ�ʲ�ƥ������ѽ���')
     elif llm:
-        raise ValueError('规则缓存不能复用 LLM 模式')
+        raise ValueError('���򻺴治�ܸ��� LLM ģʽ')
     boundary_settings = descriptor.get('boundary_settings', {'mode': 'off'})
+    if generation is not None:
+        boundary_settings = effective_boundary_settings(boundary_settings, generation)
     if boundary_settings['mode'] != 'off':
         boundary = read('boundary_optimization.json')
         validate_report(boundary, analysis, candidates, folder)
         if boundary['status'] != 'ready' or boundary['settings_sha256'] != content_hash(boundary_settings):
-            raise ValueError('边界优化配置不匹配或已降级')
+            raise ValueError('�߽��Ż����ò�ƥ����ѽ���')
         expected_media = {v['file'] for v in boundary['renders'].values()}
         actual_media = {n for n in result['files'] if re.fullmatch(r'repair_[a-f0-9]{64}\.mp4', n)}
         if expected_media != actual_media:
-            raise ValueError('边界优化文件清单不匹配')
+            raise ValueError('�߽��Ż��ļ��嵥��ƥ��')
     elif 'boundary_optimization.json' in result['files']:
-        raise ValueError('离线模式不能恢复模型边界结果')
+        raise ValueError('����ģʽ���ָܻ�ģ�ͱ߽���')
     plan = read('clips/clip_plan.json')
     if (plan['clips'] != result['clips'] or plan['total_frames'] != result['total_frames']
             or result['clip_count'] != len(result['clips'])):
-        raise ValueError('缓存切片清单不一致')
+        raise ValueError('������Ƭ�嵥��һ��')
 
 
 def restore(index, descriptor, source, destination):
-    """全部验证后才发布到新任务；任何缺失/损坏抛出异常，由调用方重算。"""
+    """ȫ����֤��ŷ������������κ�ȱʧ/���׳��쳣���ɵ��÷����㡣"""
     if not index.is_file():
         return None
     entry = json.loads(index.read_text(encoding='utf-8'))
     if entry['descriptor'] != descriptor or entry['format'] != FORMAT:
-        raise ValueError('缓存版本或配置不一致')
+        raise ValueError('����汾�����ò�һ��')
     task_id = str(UUID(entry['task_id']))
     job = get_job(task_id)
     if not job or job['status'] != 'SUCCEEDED' or not job['result']:
-        raise ValueError('缓存源任务没有完整成功')
+        raise ValueError('����Դ����û�������ɹ�')
     result = job['result']
     files = artifact_files(result)
     if set(entry['files']) != set(files):
-        raise ValueError('缓存文件清单不完整')
+        raise ValueError('�����ļ��嵥������')
     origin = job_dir(task_id)
     with tempfile.TemporaryDirectory(prefix='.cache-restore-', dir=destination) as directory:
         staged = Path(directory)
@@ -205,7 +224,7 @@ def restore(index, descriptor, source, destination):
             item = entry['files'][name]
             path = safe_path(origin, relative)
             if item['path'] != relative or path.stat().st_size != item['size']:
-                raise ValueError('缓存文件大小或路径改变')
+                raise ValueError('�����ļ���С��·���ı�')
             target = safe_path(staged, relative)
             target.parent.mkdir(parents=True, exist_ok=True)
             digest = hashlib.sha256()
@@ -214,16 +233,16 @@ def restore(index, descriptor, source, destination):
                     digest.update(block)
                     outgoing.write(block)
             if digest.hexdigest() != item['sha256']:
-                raise ValueError('缓存文件校验失败')
+                raise ValueError('�����ļ�У��ʧ��')
         validate_bundle(staged, source, result, descriptor)
-        # 用户这次请求设置已经存在，须逐值一致，不能用缓存覆盖当前配置。
+        # �û�������������Ѿ����ڣ�����ֵһ�£������û��渲�ǵ�ǰ���á�
         options = destination / 'shot_options.json'
         if options.exists() and json.loads(options.read_text(encoding='utf-8')) != json.loads((staged/'shot_options.json').read_text(encoding='utf-8')):
-            raise ValueError('缓存框选设置不一致')
+            raise ValueError('�����ѡ���ò�һ��')
         for name, relative in files.items():
             target = safe_path(destination, relative)
             if target.exists() and name != 'shot_options.json':
-                raise ValueError('任务输出已存在，不覆盖')
+                raise ValueError('��������Ѵ��ڣ�������')
         for name, relative in files.items():
             if name == 'shot_options.json':
                 continue
@@ -232,19 +251,19 @@ def restore(index, descriptor, source, destination):
             try:
                 safe_path(staged, relative).rename(target)
             except OSError as error:
-                # 已发布部分文件时不可假装普通缓存未命中继续覆盖重算。
-                raise RuntimeError('缓存文件发布失败，停止本次任务') from error
+                # �ѷ��������ļ�ʱ���ɼ�װ��ͨ����δ���м����������㡣
+                raise RuntimeError('�����ļ�����ʧ�ܣ�ֹͣ��������') from error
     return {'task_id': task_id, 'result': result, 'files': files}
 
 
 def publish(index, descriptor, task_id, source):
     job = get_job(task_id)
     if not job or job['status'] != 'SUCCEEDED':
-        raise ValueError('只缓存成功任务')
+        raise ValueError('ֻ����ɹ�����')
     folder = job_dir(task_id)
     scoring = json.loads((folder/'candidates.json').read_text(encoding='utf-8'))['scoring']
     if scoring.get('llm',{}).get('fallback_reason'):
-        # 下次恢复网络/密钥后应再次尝试模型，不让临时降级永久成为命中结果。
+        # �´λָ�����/��Կ��Ӧ�ٴγ���ģ�ͣ�������ʱ�������ó�Ϊ���н����
         return
     boundary_path = folder/'boundary_optimization.json'
     if boundary_path.exists() and json.loads(boundary_path.read_text(encoding='utf-8'))['status'] != 'ready':

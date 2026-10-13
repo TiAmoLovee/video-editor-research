@@ -1,4 +1,4 @@
-"""复用已有媒体模块；由 Celery 调用，也可在隔离目录中测试。"""
+"""��������ý��ģ�飻�� Celery ���ã�Ҳ���ڸ���Ŀ¼�в��ԡ�"""
 
 import json
 import logging
@@ -19,7 +19,11 @@ from clipforge.analysis.vad import detect_speech
 from clipforge.analysis.asr import transcribe_video
 from clipforge.analysis.combine import combine_analysis
 from clipforge.decision.audio import measure_audio
-from clipforge.decision.candidates import generate_candidates
+from clipforge.decision.generation import (
+    TOPIC, effective_boundary_settings, generate_configured_candidates as generate_candidates,
+    settings_snapshot as generation_settings_snapshot,
+)
+from clipforge.decision.topic_segments import TopicOptions, segment_topics
 from clipforge.decision.scorers import RuleConfig
 from clipforge.decision.scoring import load_config, score_candidates
 from clipforge.decision.llm import apply_llm, safe_settings_snapshot
@@ -52,7 +56,7 @@ def process_video(task_id: str) -> dict:
                 index = stack.enter_context(result_cache.key_lock(key))
                 info.update(status='miss', key=key)
             except Exception:
-                # 缓存不是处理成功的前提；模型/工具问题仍由原处理步骤准确报告。
+                # ���治�Ǵ����ɹ���ǰ�᣻ģ��/������������ԭ��������׼ȷ���档
                 logger.warning('Result cache unavailable; processing normally', exc_info=True)
                 info['status'] = 'unavailable'
                 index = None
@@ -75,25 +79,26 @@ def process_video(task_id: str) -> dict:
                 previous = restored['result']
                 plan = {'clips': previous['clips'], 'total_frames': previous['total_frames']}
                 return finish_task(task_id, folder, plan, dict(restored['files']), info, started)
-            # 使用指纹时读取的配置快照，避免处理中改配置而将新分数写入旧键。
+            # ʹ��ָ��ʱ��ȡ�����ÿ��գ����⴦���и����ö����·���д��ɼ���
             scoring_config = (RuleConfig(**descriptor['scoring_config'])
                               if descriptor and 'scoring_config' in descriptor else None)
             decision_settings = descriptor.get('decision_settings') if descriptor else None
             result = _process_uncached(task_id, info, started, scoring_config=scoring_config,
                                        decision_settings=decision_settings,
-                                       boundary_settings=descriptor.get('boundary_settings') if descriptor else None)
+                                       boundary_settings=descriptor.get('boundary_settings') if descriptor else None,
+                                       generation_settings=descriptor.get('generation_settings') if descriptor else None)
             if index is not None:
                 try:
                     result_cache.publish(index, descriptor, task_id, source)
                 except Exception:
-                    # 分析成功而索引写入失败时，保留本次成功结果，下次继续正常处理。
+                    # �����ɹ�������д��ʧ��ʱ���������γɹ�������´μ�������������
                     logger.warning('Result cache publication failed for %s', task_id, exc_info=True)
             return result
         except Exception:
             current = get_job(task_id)
             if current and current['status'] == 'RUNNING':
                 update_job(task_id, 'FAILED', current['stage'], current['progress'],
-                           error='视频结果复用或打包失败，请查看 worker 日志。')
+                           error='��Ƶ������û���ʧ�ܣ���鿴 worker ��־��')
             raise
 
 
@@ -136,7 +141,8 @@ def finish_task(task_id, folder, plan, files, info, started):
     return {'task_id': task_id, 'clip_count': len(plan['clips']), 'cache_hit': info['hit']}
 
 
-def _process_uncached(task_id, cache_info, started, *, scoring_config=None, decision_settings=None, boundary_settings=None):
+def _process_uncached(task_id, cache_info, started, *, scoring_config=None, decision_settings=None,
+                      boundary_settings=None, generation_settings=None):
     job = get_job(task_id)
     folder = job_dir(task_id)
     ffmpeg = media_tool("ffmpeg")
@@ -144,7 +150,9 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
     stage, progress = "probing", 10
     try:
         decision_settings = decision_settings or safe_settings_snapshot()
-        boundary_settings = boundary_settings or boundary_settings_snapshot()
+        generation_settings = generation_settings or generation_settings_snapshot()
+        boundary_settings = effective_boundary_settings(
+            boundary_settings or boundary_settings_snapshot(), generation_settings)
         source = folder / job["source_key"]
         original = normalize_metadata(probe_video(str(source), ffprobe), str(source))
         original["source_file"] = job["source_name"]
@@ -180,7 +188,12 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
 
         stage, progress = "scoring_candidates", 68
         update_job(task_id, 'RUNNING', stage, progress)
-        windows = generate_candidates(analysis)
+        windows = generate_candidates(analysis, settings=generation_settings)
+        generation_files = {}
+        if windows.get('generator', {}).get('version') == TOPIC:
+            segmentation = segment_topics(analysis, TopicOptions(**generation_settings['options']))
+            save_json(folder / 'topic_segmentation.json', segmentation)
+            generation_files['topic_segmentation.json'] = 'topic_segmentation.json'
         config = scoring_config or load_config()
         audio = (measure_audio(folder / 'normalized.mp4', analysis, ffmpeg=ffmpeg, ffprobe=ffprobe)
                  if windows['candidates'] and analysis['media']['has_audio'] else None)
@@ -215,6 +228,7 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
         }
         if options_path.is_file():
             files["shot_options.json"] = "shot_options.json"
+        files.update(generation_files)
         files.update(boundary_files)
         for clip in plan["clips"]:
             files[clip["file"]] = f"clips/{clip['file']}"
@@ -223,5 +237,5 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
         logger.exception("Video task %s failed at %s", task_id, stage)
         (folder / "result.zip.tmp").unlink(missing_ok=True)
         update_job(task_id, "FAILED", stage, progress,
-                   error=f"视频处理在 {stage} 阶段失败，请查看 worker 日志。")
+                   error=f"��Ƶ������ {stage} �׶�ʧ�ܣ���鿴 worker ��־��")
         raise

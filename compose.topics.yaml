@@ -1,0 +1,7 @@
+# Use only with API and worker images built from the reviewed topic-generation source.
+# An old API cannot validate the new candidate contract. This file does not deploy images.
+services:
+  worker:
+    environment:
+      CLIPFORGE_CANDIDATE_GENERATOR: topic-valley-v1
+      CLIPFORGE_BOUNDARY_REPAIR: "0"
