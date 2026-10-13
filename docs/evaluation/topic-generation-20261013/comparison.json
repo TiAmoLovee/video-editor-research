@@ -1,0 +1,4834 @@
+{
+  "version": "topic-generation-development-replay-v1",
+  "scope": "known_development_New1_New2_New3_New4_not_independent_holdout",
+  "quality_claim": "none; segmentation is not proof of event completeness",
+  "model_calls": 0,
+  "media_files_read": 0,
+  "videos_copied": 0,
+  "parameter_search": false,
+  "topic_options": {
+    "min_seconds": 15.0,
+    "max_seconds": 90.0,
+    "max_gap_seconds": 3.0,
+    "max_candidates": 10000,
+    "window_units": 3,
+    "min_segment_units": 2,
+    "min_depth": 0.15
+  },
+  "baseline_options": {
+    "min_seconds": 15.0,
+    "max_seconds": 90.0,
+    "max_gap_seconds": 3.0,
+    "max_candidates": 10000
+  },
+  "implementation_files": [
+    {
+      "path": "backend/clipforge/decision/candidates.py",
+      "sha256": "eae72fb56bba82055a9e84b2a48960d86b6b989e2db11f76341152eb8b45d03a"
+    },
+    {
+      "path": "backend/clipforge/decision/topic_segments.py",
+      "sha256": "712f525174a74be06fd531cf41fdfbf613f856f16626551de3e63e7ece101af2"
+    },
+    {
+      "path": "backend/clipforge/decision/topics.py",
+      "sha256": "0b00c8a264dc0b3e50b9fcc7e0e443c9238c4f68d89161855ffa7720bceae500"
+    },
+    {
+      "path": "backend/clipforge/decision/validation.py",
+      "sha256": "3f6912233964d5d4a59aade08bd224e04e57ce3f2c525085c22d73e3e2d18c5d"
+    },
+    {
+      "path": "backend/clipforge/analysis/validation.py",
+      "sha256": "e67422ab8be8b8abed3edc3da1eae70894275b0e90f2f77c0067809d3beb1d97"
+    },
+    {
+      "path": "schemas/analysis.schema.json",
+      "sha256": "86f7e752f4ed0241bc23d3a25f5742a71ffe3caca384162905f0b9f23940d4cb"
+    },
+    {
+      "path": "schemas/candidates.schema.json",
+      "sha256": "c4e61a5a7883bbb5e3024641675a02eb02740f9af49783ddada4051589f2134b"
+    }
+  ],
+  "implementation_sha": "0ef8ea4627cd910d19d04b1b410e63427cab7a0dd989b70148b42888ae262fec",
+  "replay_script_sha256": "2cc4caab6ed48fe5d92d5fae4a0fba2552b54935eeabf5249dd771e14dd6f2c2",
+  "inputs": [
+    {
+      "path": "outputs/week4-new1/data/jobs/edf5944e-a2ab-4004-96a3-d14ff39ed16d/analysis.json",
+      "file_sha256": "faf1eaae7ecc45b5cb163b1c0cd35293d710d6be8df517e80d39001b1d7a0173",
+      "canonical_json_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "after_file_sha256": "faf1eaae7ecc45b5cb163b1c0cd35293d710d6be8df517e80d39001b1d7a0173",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new1/data/jobs/edf5944e-a2ab-4004-96a3-d14ff39ed16d/candidates.json",
+      "file_sha256": "45587115db10dfef5f825724b7c655e818878ff236e87ba260ddbeb76c0bb68a",
+      "canonical_json_sha256": "19ab223226c64f903d08fd7986aa0d2893c6f38ba76d9f794909034f2f672edd",
+      "after_file_sha256": "45587115db10dfef5f825724b7c655e818878ff236e87ba260ddbeb76c0bb68a",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-review-results/baseline-human-review.json",
+      "file_sha256": "4dc951dfeb20621e47ee2d9a1b85eb945869957a8990aa5f2e2e68953a968736",
+      "canonical_json_sha256": "7672da29b377c08530ced5de5b8856e499b3e9ac71750a403e7e03603d951014",
+      "after_file_sha256": "4dc951dfeb20621e47ee2d9a1b85eb945869957a8990aa5f2e2e68953a968736",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new2/data/jobs/ab38b698-af09-4f84-a318-4533ae04db05/analysis.json",
+      "file_sha256": "c91759caa7cadfbc58984345901a4ad94a1abd6dd329f60adffe0d3ba3f777c3",
+      "canonical_json_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "after_file_sha256": "c91759caa7cadfbc58984345901a4ad94a1abd6dd329f60adffe0d3ba3f777c3",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new2/data/jobs/ab38b698-af09-4f84-a318-4533ae04db05/candidates.json",
+      "file_sha256": "3c2e32a5d96afbd92393bb1085e3f02ca176af4e3ce91f2f51c9192140598c3d",
+      "canonical_json_sha256": "880ba983416c229c7644c2256b38f4a058fc719def094e7b435a038af1137033",
+      "after_file_sha256": "3c2e32a5d96afbd92393bb1085e3f02ca176af4e3ce91f2f51c9192140598c3d",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new2/review-results/human-review-revision-8.json",
+      "file_sha256": "4b071039ffeb21e07e70631e0720f9308707ba8932fd30b5d9974ecb0fbc249f",
+      "canonical_json_sha256": "35535772580da1fe28217a7449de950d569031cd62fe73cabdecaf57f47ac74e",
+      "after_file_sha256": "4b071039ffeb21e07e70631e0720f9308707ba8932fd30b5d9974ecb0fbc249f",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new3/data/jobs/03cedded-5423-467d-ae5c-c1a81677c409/analysis.json",
+      "file_sha256": "aa4a94bf4c11c99dcc246d87c8a412a5f07cebf075453ac652cc2f30af36c758",
+      "canonical_json_sha256": "00e9ff79b63358faf2f2fb6c6609b8935d28ed32ebfbad5f2bdbda2ded1c640a",
+      "after_file_sha256": "aa4a94bf4c11c99dcc246d87c8a412a5f07cebf075453ac652cc2f30af36c758",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new3/data/jobs/03cedded-5423-467d-ae5c-c1a81677c409/candidates.json",
+      "file_sha256": "b2c4ba7fa462c1a9068b3d84a40f785334e62f52e1c6126b27d77149d6feb24f",
+      "canonical_json_sha256": "d18971364beaf2c72bca9f3bbba1ca9c60fe83c12ce18efb0499ef6390beeafb",
+      "after_file_sha256": "b2c4ba7fa462c1a9068b3d84a40f785334e62f52e1c6126b27d77149d6feb24f",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new3/review-results/human-review.json",
+      "file_sha256": "50a4fbaf2aafc86bf1fe6ebc4c4675c8edea66d2ab6187faa1e44ca67856fca3",
+      "canonical_json_sha256": "3c8bd9844c02472d2349d2934523190dbef8747dc9dd4a3e837f3eb8fe58213c",
+      "after_file_sha256": "50a4fbaf2aafc86bf1fe6ebc4c4675c8edea66d2ab6187faa1e44ca67856fca3",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new4/analysis.json",
+      "file_sha256": "997b980f303457d8f37d5a78726295d941dbceac5ef297feab62d2d9aeef6c2a",
+      "canonical_json_sha256": "49517a50dd64922c8ac13f9f76e3539c3492d0b4785d5eaf9051f237a78632d8",
+      "after_file_sha256": "997b980f303457d8f37d5a78726295d941dbceac5ef297feab62d2d9aeef6c2a",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new4/candidates.json",
+      "file_sha256": "24ab92954be707cdfdef7d73d7418eebc1e217f8259f2412365ab9f347e52b7c",
+      "canonical_json_sha256": "4408d28e29a7a37842697f66daebe12d2a5e9ba614da91455713a5ab14e285c9",
+      "after_file_sha256": "24ab92954be707cdfdef7d73d7418eebc1e217f8259f2412365ab9f347e52b7c",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new4/human-review-revision-19.json",
+      "file_sha256": "bca6617cafc3be625180e9a56df6cdb1b49edd0aa05423dd9880f56e54651087",
+      "canonical_json_sha256": "3beb2da371f792529a75468a8c6317ece40c08a41b4415545dfee2caf5e8e9f5",
+      "after_file_sha256": "bca6617cafc3be625180e9a56df6cdb1b49edd0aa05423dd9880f56e54651087",
+      "byte_hash_unchanged": true
+    },
+    {
+      "path": "outputs/week4-new4/original-cohort.json",
+      "file_sha256": "fc341ecf287cb71d50dd3d9b48c5b58b19c0c5b438621f4be120288fa27b392e",
+      "canonical_json_sha256": "2937699e5f9332e017f6c4af6f440590343fec040c5a08956425c44849a92fdc",
+      "after_file_sha256": "fc341ecf287cb71d50dd3d9b48c5b58b19c0c5b438621f4be120288fa27b392e",
+      "byte_hash_unchanged": true
+    }
+  ],
+  "sources": [
+    {
+      "source_name": "New1",
+      "sentence_count": 16,
+      "baseline_candidate_count": 97,
+      "topic_candidate_count": 2,
+      "topic_segment_count": 3,
+      "rejection_counts": {
+        "below_min_seconds": 1
+      },
+      "boundary_decisions": {
+        "not_valley": 13,
+        "accepted_valley": 2
+      },
+      "reused_label_count": 0,
+      "verified_original_label_count": 10,
+      "excluded_original_labels": [],
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "baseline_generated_sha256": "f9678df61fa91047330b153cf9530df0afd8417fda9ac7ba365b9592f0dbf178",
+      "topic_generated_sha256": "3bf12056837c4846a6eb2767eeb4341569a185b061d2a1bd5933379bbbc66d52",
+      "timing_seconds": {
+        "baseline_generation": 0.056563600002846215,
+        "topic_generation": 0.06113960000220686,
+        "standalone_segmentation": 0.057091000002401415
+      },
+      "source_coverage": {
+        "source_sentences": 16,
+        "all_topic_segments_sentence_refs": 16,
+        "candidate_sentence_refs": 14,
+        "rejected_segment_sentence_refs": 2,
+        "covered_source_sentences": 16,
+        "source_order_preserved": true,
+        "missing_sentence_refs": [],
+        "duplicated_sentence_refs": [],
+        "rejected_segments": [
+          "t_d0aaba3431009629e640c3f4b5cdee8752fd9438a8481dd0fa0ffde21d2a5d31"
+        ]
+      },
+      "segmentation": {
+        "schema_version": "0.1.0-draft.1",
+        "artifact_kind": "topic_segmentation",
+        "version": "topic-valley-v1",
+        "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+        "options": {
+          "min_seconds": 15.0,
+          "max_seconds": 90.0,
+          "max_gap_seconds": 3.0,
+          "max_candidates": 10000,
+          "window_units": 3,
+          "min_segment_units": 2,
+          "min_depth": 0.15
+        },
+        "method": "adjacent-window TF-IDF cosine valleys; relative peak prominence; Chinese 2/3-grams",
+        "scope": "lexical topic boundary evidence; not semantic event-completeness verification",
+        "limits": {
+          "max_sentences": 10000,
+          "max_text_characters": 1000000,
+          "max_analysis_bytes": 16777216,
+          "max_window_units": 32
+        },
+        "units": [
+          {
+            "index": 0,
+            "start": 5.5,
+            "end": 10.62,
+            "source_sentences": [
+              "s000001"
+            ]
+          },
+          {
+            "index": 1,
+            "start": 11.11,
+            "end": 15.65,
+            "source_sentences": [
+              "s000002"
+            ]
+          },
+          {
+            "index": 2,
+            "start": 16.28,
+            "end": 25.7,
+            "source_sentences": [
+              "s000003"
+            ]
+          },
+          {
+            "index": 3,
+            "start": 26.35,
+            "end": 36.24,
+            "source_sentences": [
+              "s000004"
+            ]
+          },
+          {
+            "index": 4,
+            "start": 36.76,
+            "end": 46.68,
+            "source_sentences": [
+              "s000005"
+            ]
+          },
+          {
+            "index": 5,
+            "start": 47.36,
+            "end": 51.96,
+            "source_sentences": [
+              "s000006"
+            ]
+          },
+          {
+            "index": 6,
+            "start": 52.46,
+            "end": 60.03,
+            "source_sentences": [
+              "s000007"
+            ]
+          },
+          {
+            "index": 7,
+            "start": 61.07,
+            "end": 64.57,
+            "source_sentences": [
+              "s000008"
+            ]
+          },
+          {
+            "index": 8,
+            "start": 65.1,
+            "end": 71.79,
+            "source_sentences": [
+              "s000009"
+            ]
+          },
+          {
+            "index": 9,
+            "start": 72.06,
+            "end": 81.32,
+            "source_sentences": [
+              "s000010"
+            ]
+          },
+          {
+            "index": 10,
+            "start": 81.5,
+            "end": 88.68,
+            "source_sentences": [
+              "s000011"
+            ]
+          },
+          {
+            "index": 11,
+            "start": 89.74,
+            "end": 99.62,
+            "source_sentences": [
+              "s000012"
+            ]
+          },
+          {
+            "index": 12,
+            "start": 100.24,
+            "end": 103.46,
+            "source_sentences": [
+              "s000013"
+            ]
+          },
+          {
+            "index": 13,
+            "start": 104.02,
+            "end": 116.88,
+            "source_sentences": [
+              "s000014"
+            ]
+          },
+          {
+            "index": 14,
+            "start": 117.25,
+            "end": 124.86,
+            "source_sentences": [
+              "s000015"
+            ]
+          },
+          {
+            "index": 15,
+            "start": 125.52,
+            "end": 129.04,
+            "source_sentences": [
+              "s000016"
+            ]
+          }
+        ],
+        "boundaries": [
+          {
+            "after_unit": 0,
+            "gap_seconds": 0.4900000000000002,
+            "left_sentences": [
+              "s000001"
+            ],
+            "right_sentences": [
+              "s000002"
+            ],
+            "left_window_units": [
+              0,
+              0
+            ],
+            "right_window_units": [
+              1,
+              3
+            ],
+            "similarity": 0.0,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 1,
+            "gap_seconds": 0.6300000000000008,
+            "left_sentences": [
+              "s000002"
+            ],
+            "right_sentences": [
+              "s000003"
+            ],
+            "left_window_units": [
+              0,
+              1
+            ],
+            "right_window_units": [
+              2,
+              4
+            ],
+            "similarity": 0.041575048202,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 2,
+            "gap_seconds": 0.6500000000000021,
+            "left_sentences": [
+              "s000003"
+            ],
+            "right_sentences": [
+              "s000004"
+            ],
+            "left_window_units": [
+              0,
+              2
+            ],
+            "right_window_units": [
+              3,
+              5
+            ],
+            "similarity": 0.086789183902,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 3,
+            "gap_seconds": 0.519999999999996,
+            "left_sentences": [
+              "s000004"
+            ],
+            "right_sentences": [
+              "s000005"
+            ],
+            "left_window_units": [
+              1,
+              3
+            ],
+            "right_window_units": [
+              4,
+              6
+            ],
+            "similarity": 0.106976968707,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 4,
+            "gap_seconds": 0.6799999999999997,
+            "left_sentences": [
+              "s000005"
+            ],
+            "right_sentences": [
+              "s000006"
+            ],
+            "left_window_units": [
+              2,
+              4
+            ],
+            "right_window_units": [
+              5,
+              7
+            ],
+            "similarity": 0.134639042805,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 5,
+            "gap_seconds": 0.5,
+            "left_sentences": [
+              "s000006"
+            ],
+            "right_sentences": [
+              "s000007"
+            ],
+            "left_window_units": [
+              3,
+              5
+            ],
+            "right_window_units": [
+              6,
+              8
+            ],
+            "similarity": 0.068784203756,
+            "left_peak": 0.134639042805,
+            "right_peak": 0.072084339616,
+            "raw_depth": 0.069154974909,
+            "depth": 0.334529041171,
+            "plateau_after_units": [
+              5
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 6,
+            "gap_seconds": 1.0399999999999991,
+            "left_sentences": [
+              "s000007"
+            ],
+            "right_sentences": [
+              "s000008"
+            ],
+            "left_window_units": [
+              4,
+              6
+            ],
+            "right_window_units": [
+              7,
+              9
+            ],
+            "similarity": 0.072084339616,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 7,
+            "gap_seconds": 0.5300000000000011,
+            "left_sentences": [
+              "s000008"
+            ],
+            "right_sentences": [
+              "s000009"
+            ],
+            "left_window_units": [
+              5,
+              7
+            ],
+            "right_window_units": [
+              8,
+              10
+            ],
+            "similarity": 0.0,
+            "left_peak": 0.072084339616,
+            "right_peak": 0.07458693209,
+            "raw_depth": 0.146671271706,
+            "depth": 1.0,
+            "plateau_after_units": [
+              7
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 8,
+            "gap_seconds": 0.269999999999996,
+            "left_sentences": [
+              "s000009"
+            ],
+            "right_sentences": [
+              "s000010"
+            ],
+            "left_window_units": [
+              6,
+              8
+            ],
+            "right_window_units": [
+              9,
+              11
+            ],
+            "similarity": 0.004735448353,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 9,
+            "gap_seconds": 0.18000000000000682,
+            "left_sentences": [
+              "s000010"
+            ],
+            "right_sentences": [
+              "s000011"
+            ],
+            "left_window_units": [
+              7,
+              9
+            ],
+            "right_window_units": [
+              10,
+              12
+            ],
+            "similarity": 0.015286305484,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 10,
+            "gap_seconds": 1.059999999999988,
+            "left_sentences": [
+              "s000011"
+            ],
+            "right_sentences": [
+              "s000012"
+            ],
+            "left_window_units": [
+              8,
+              10
+            ],
+            "right_window_units": [
+              11,
+              13
+            ],
+            "similarity": 0.064403404714,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 11,
+            "gap_seconds": 0.6199999999999903,
+            "left_sentences": [
+              "s000012"
+            ],
+            "right_sentences": [
+              "s000013"
+            ],
+            "left_window_units": [
+              9,
+              11
+            ],
+            "right_window_units": [
+              12,
+              14
+            ],
+            "similarity": 0.07458693209,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 12,
+            "gap_seconds": 0.5600000000000023,
+            "left_sentences": [
+              "s000013"
+            ],
+            "right_sentences": [
+              "s000014"
+            ],
+            "left_window_units": [
+              10,
+              12
+            ],
+            "right_window_units": [
+              13,
+              15
+            ],
+            "similarity": 0.056471691824,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 13,
+            "gap_seconds": 0.37000000000000455,
+            "left_sentences": [
+              "s000014"
+            ],
+            "right_sentences": [
+              "s000015"
+            ],
+            "left_window_units": [
+              11,
+              13
+            ],
+            "right_window_units": [
+              14,
+              15
+            ],
+            "similarity": 0.004492089918,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 14,
+            "gap_seconds": 0.6599999999999966,
+            "left_sentences": [
+              "s000015"
+            ],
+            "right_sentences": [
+              "s000016"
+            ],
+            "left_window_units": [
+              12,
+              14
+            ],
+            "right_window_units": [
+              15,
+              15
+            ],
+            "similarity": 0.0,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          }
+        ],
+        "segments": [
+          {
+            "id": "t_3abd4a52800f0bb2fe495ba9ebdbc002c5e477bfa8ab71359626ea4476878f8f",
+            "first_unit": 0,
+            "last_unit": 5,
+            "start": 5.5,
+            "end": 51.96,
+            "duration_seconds": 46.46,
+            "source_sentences": [
+              "s000001",
+              "s000002",
+              "s000003",
+              "s000004",
+              "s000005",
+              "s000006"
+            ],
+            "text": "那差别是相当大的那会造成那个对世界形势造成根本的影响\n它这个问题就很有启发性 对吧还有一个更有意思的问题\n也是后来让我很震撼的问题很简单你仔细想想才知道它有多复杂他说真的超级外星文明来了你怎么判这样它是有智能的\n这个问题很深刻你不要以为说外星人有智能你马上就能判断出来没那么容易你往座子上放一个蚂蚁它能判断我们俩是有智能的\n判断不出来它判断我们没智能你判断它有智能它的智能的差距是有一定范围的如果超出了这个范围\n你真的没法判断它是有智能的还是它是一个纯自然的现象你判断不出来",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_d0aaba3431009629e640c3f4b5cdee8752fd9438a8481dd0fa0ffde21d2a5d31",
+            "first_unit": 6,
+            "last_unit": 7,
+            "start": 52.46,
+            "end": 64.57,
+            "duration_seconds": 12.11,
+            "source_sentences": [
+              "s000007",
+              "s000008"
+            ],
+            "text": "而且你进一步想想将来我们和人工智能也要面对这种局面它的智能远超人类的话你就\n完全无法理解它也没法判断它的智能到哪一步",
+            "eligible": false,
+            "reasons": [
+              "below_min_seconds"
+            ]
+          },
+          {
+            "id": "t_0e3c186a56576e1735d0a0e6614460ccb910d9c63b7fe3bbcbf1ecd608e6885b",
+            "first_unit": 8,
+            "last_unit": 15,
+            "start": 65.1,
+            "end": 129.04,
+            "duration_seconds": 63.94,
+            "source_sentences": [
+              "s000009",
+              "s000010",
+              "s000011",
+              "s000012",
+              "s000013",
+              "s000014",
+              "s000015",
+              "s000016"
+            ],
+            "text": "因为我们今年6月去规股去规股然后待了大概小一个月然后\n正好我们这个月也会更新我们关于在矽谷拍的AI的片录你看像在AI发展这么快你觉得AI的出现会\n影响到您对未来科技的想像里至少在这个AI的领域里面\n你比如现在的AI可能在过去就是一种想像现在它变成现实了你只能去想像那种更强大的那些AI还是一种想像\n但是即便如此因此现在的AI已经\n慢慢地开始让人们熟悉 让人们适应也慢慢让人们觉得它平淡无奇了这肯定会影响到对未来AI更进一步的想像\n因为我写三题的时候人工智能还没有取得这么大的突破那会儿它的前景还不太明朗\n我要再写的话这方面的内容应该是会很多的",
+            "eligible": true,
+            "reasons": []
+          }
+        ],
+        "warnings": [
+          "short_topic_segment_not_generated"
+        ],
+        "model_requests": 0
+      },
+      "topic_candidates": {
+        "schema_version": "0.1.0-draft.1",
+        "artifact_kind": "candidate_windows",
+        "stage": "generated",
+        "input_result_kind": "measured",
+        "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+        "media": {
+          "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+          "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+          "duration_seconds": 147.86666666666667,
+          "time_reference": "normalized_video",
+          "has_audio": true
+        },
+        "generator": {
+          "version": "topic-valley-v1",
+          "options": {
+            "min_seconds": 15.0,
+            "max_seconds": 90.0,
+            "max_gap_seconds": 3.0,
+            "max_candidates": 10000,
+            "window_units": 3,
+            "min_segment_units": 2,
+            "min_depth": 0.15
+          }
+        },
+        "candidate_count": 2,
+        "candidates": [
+          {
+            "id": "c_3abd4a52800f0bb2fe495ba9ebdbc002c5e477bfa8ab71359626ea4476878f8f",
+            "start": 5.5,
+            "end": 51.96,
+            "duration_seconds": 46.46,
+            "text": "那差别是相当大的那会造成那个对世界形势造成根本的影响\n它这个问题就很有启发性 对吧还有一个更有意思的问题\n也是后来让我很震撼的问题很简单你仔细想想才知道它有多复杂他说真的超级外星文明来了你怎么判这样它是有智能的\n这个问题很深刻你不要以为说外星人有智能你马上就能判断出来没那么容易你往座子上放一个蚂蚁它能判断我们俩是有智能的\n判断不出来它判断我们没智能你判断它有智能它的智能的差距是有一定范围的如果超出了这个范围\n你真的没法判断它是有智能的还是它是一个纯自然的现象你判断不出来",
+            "source_sentences": [
+              "s000001",
+              "s000002",
+              "s000003",
+              "s000004",
+              "s000005",
+              "s000006"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_0e3c186a56576e1735d0a0e6614460ccb910d9c63b7fe3bbcbf1ecd608e6885b",
+            "start": 65.1,
+            "end": 129.04,
+            "duration_seconds": 63.94,
+            "text": "因为我们今年6月去规股去规股然后待了大概小一个月然后\n正好我们这个月也会更新我们关于在矽谷拍的AI的片录你看像在AI发展这么快你觉得AI的出现会\n影响到您对未来科技的想像里至少在这个AI的领域里面\n你比如现在的AI可能在过去就是一种想像现在它变成现实了你只能去想像那种更强大的那些AI还是一种想像\n但是即便如此因此现在的AI已经\n慢慢地开始让人们熟悉 让人们适应也慢慢让人们觉得它平淡无奇了这肯定会影响到对未来AI更进一步的想像\n因为我写三题的时候人工智能还没有取得这么大的突破那会儿它的前景还不太明朗\n我要再写的话这方面的内容应该是会很多的",
+            "source_sentences": [
+              "s000009",
+              "s000010",
+              "s000011",
+              "s000012",
+              "s000013",
+              "s000014",
+              "s000015",
+              "s000016"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          }
+        ],
+        "warnings": [
+          "topic_short_segment_skipped"
+        ]
+      },
+      "candidate_comparisons": [
+        {
+          "candidate_id": "c_3abd4a52800f0bb2fe495ba9ebdbc002c5e477bfa8ab71359626ea4476878f8f",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_416651e88485476ba3592eeaf41bae2b8e19f427724eb9213e8090d51856be20"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_0e3c186a56576e1735d0a0e6614460ccb910d9c63b7fe3bbcbf1ecd608e6885b",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_7d4cdb6449f8084cc97f5940c13f7339872afe64ad0e6ba7e74c8c9ff1b416c9"
+          },
+          "exact_original_human_observation": null
+        }
+      ]
+    },
+    {
+      "source_name": "New2",
+      "sentence_count": 23,
+      "baseline_candidate_count": 39,
+      "topic_candidate_count": 5,
+      "topic_segment_count": 6,
+      "rejection_counts": {
+        "below_min_seconds": 1
+      },
+      "boundary_decisions": {
+        "not_valley": 17,
+        "hard_pause": 3,
+        "accepted_valley": 2
+      },
+      "reused_label_count": 3,
+      "verified_original_label_count": 8,
+      "excluded_original_labels": [],
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "baseline_generated_sha256": "25207a2416131c267551fbfed0ba8f27e8e3f78e3391246aa5eeba4562e161a7",
+      "topic_generated_sha256": "44b50a336ce1094a6af6411262f8b6c2dfc69e15bcca02d0cda35a39861bd408",
+      "timing_seconds": {
+        "baseline_generation": 0.05847199999698205,
+        "topic_generation": 0.06633159999910276,
+        "standalone_segmentation": 0.06712149999657413
+      },
+      "source_coverage": {
+        "source_sentences": 23,
+        "all_topic_segments_sentence_refs": 23,
+        "candidate_sentence_refs": 21,
+        "rejected_segment_sentence_refs": 2,
+        "covered_source_sentences": 23,
+        "source_order_preserved": true,
+        "missing_sentence_refs": [],
+        "duplicated_sentence_refs": [],
+        "rejected_segments": [
+          "t_91440cb2b95d7817232a78b8077b38690d8d3e7f5f37301ced842a2de15d8a6a"
+        ]
+      },
+      "segmentation": {
+        "schema_version": "0.1.0-draft.1",
+        "artifact_kind": "topic_segmentation",
+        "version": "topic-valley-v1",
+        "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+        "options": {
+          "min_seconds": 15.0,
+          "max_seconds": 90.0,
+          "max_gap_seconds": 3.0,
+          "max_candidates": 10000,
+          "window_units": 3,
+          "min_segment_units": 2,
+          "min_depth": 0.15
+        },
+        "method": "adjacent-window TF-IDF cosine valleys; relative peak prominence; Chinese 2/3-grams",
+        "scope": "lexical topic boundary evidence; not semantic event-completeness verification",
+        "limits": {
+          "max_sentences": 10000,
+          "max_text_characters": 1000000,
+          "max_analysis_bytes": 16777216,
+          "max_window_units": 32
+        },
+        "units": [
+          {
+            "index": 0,
+            "start": 2.78,
+            "end": 11.26,
+            "source_sentences": [
+              "s000001"
+            ]
+          },
+          {
+            "index": 1,
+            "start": 11.82,
+            "end": 14.14,
+            "source_sentences": [
+              "s000002"
+            ]
+          },
+          {
+            "index": 2,
+            "start": 14.6,
+            "end": 22.68,
+            "source_sentences": [
+              "s000003"
+            ]
+          },
+          {
+            "index": 3,
+            "start": 24.87,
+            "end": 26.05,
+            "source_sentences": [
+              "s000004"
+            ]
+          },
+          {
+            "index": 4,
+            "start": 30.12,
+            "end": 39.1,
+            "source_sentences": [
+              "s000005"
+            ]
+          },
+          {
+            "index": 5,
+            "start": 39.1,
+            "end": 45.68,
+            "source_sentences": [
+              "s000006"
+            ]
+          },
+          {
+            "index": 6,
+            "start": 46.91,
+            "end": 55.71,
+            "source_sentences": [
+              "s000007"
+            ]
+          },
+          {
+            "index": 7,
+            "start": 57.16,
+            "end": 60.32,
+            "source_sentences": [
+              "s000008"
+            ]
+          },
+          {
+            "index": 8,
+            "start": 62.72,
+            "end": 65.68,
+            "source_sentences": [
+              "s000009"
+            ]
+          },
+          {
+            "index": 9,
+            "start": 66.04,
+            "end": 74.24,
+            "source_sentences": [
+              "s000010"
+            ]
+          },
+          {
+            "index": 10,
+            "start": 74.24,
+            "end": 78.22,
+            "source_sentences": [
+              "s000011"
+            ]
+          },
+          {
+            "index": 11,
+            "start": 81.53,
+            "end": 87.51,
+            "source_sentences": [
+              "s000012"
+            ]
+          },
+          {
+            "index": 12,
+            "start": 88.81,
+            "end": 91.51,
+            "source_sentences": [
+              "s000013"
+            ]
+          },
+          {
+            "index": 13,
+            "start": 92.12,
+            "end": 98.05,
+            "source_sentences": [
+              "s000014"
+            ]
+          },
+          {
+            "index": 14,
+            "start": 98.67,
+            "end": 105.73,
+            "source_sentences": [
+              "s000015"
+            ]
+          },
+          {
+            "index": 15,
+            "start": 109.3,
+            "end": 117.8,
+            "source_sentences": [
+              "s000016"
+            ]
+          },
+          {
+            "index": 16,
+            "start": 118.38,
+            "end": 122.06,
+            "source_sentences": [
+              "s000017"
+            ]
+          },
+          {
+            "index": 17,
+            "start": 123.39,
+            "end": 125.15,
+            "source_sentences": [
+              "s000018"
+            ]
+          },
+          {
+            "index": 18,
+            "start": 126.57,
+            "end": 130.21,
+            "source_sentences": [
+              "s000019"
+            ]
+          },
+          {
+            "index": 19,
+            "start": 130.99,
+            "end": 131.77,
+            "source_sentences": [
+              "s000020"
+            ]
+          },
+          {
+            "index": 20,
+            "start": 133.27,
+            "end": 138.45,
+            "source_sentences": [
+              "s000021"
+            ]
+          },
+          {
+            "index": 21,
+            "start": 138.95,
+            "end": 146.03,
+            "source_sentences": [
+              "s000022"
+            ]
+          },
+          {
+            "index": 22,
+            "start": 146.03,
+            "end": 153.65,
+            "source_sentences": [
+              "s000023"
+            ]
+          }
+        ],
+        "boundaries": [
+          {
+            "after_unit": 0,
+            "gap_seconds": 0.5600000000000005,
+            "left_sentences": [
+              "s000001"
+            ],
+            "right_sentences": [
+              "s000002"
+            ],
+            "left_window_units": [
+              0,
+              0
+            ],
+            "right_window_units": [
+              1,
+              3
+            ],
+            "similarity": 0.10583201233,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 1,
+            "gap_seconds": 0.4599999999999991,
+            "left_sentences": [
+              "s000002"
+            ],
+            "right_sentences": [
+              "s000003"
+            ],
+            "left_window_units": [
+              0,
+              1
+            ],
+            "right_window_units": [
+              2,
+              3
+            ],
+            "similarity": 0.130905990561,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 2,
+            "gap_seconds": 2.1900000000000013,
+            "left_sentences": [
+              "s000003"
+            ],
+            "right_sentences": [
+              "s000004"
+            ],
+            "left_window_units": [
+              0,
+              2
+            ],
+            "right_window_units": [
+              3,
+              3
+            ],
+            "similarity": 0.017335054159,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 3,
+            "gap_seconds": 4.07,
+            "left_sentences": [
+              "s000004"
+            ],
+            "right_sentences": [
+              "s000005"
+            ],
+            "left_window_units": null,
+            "right_window_units": null,
+            "similarity": null,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "hard_pause",
+            "reasons": [
+              "gap_above_max_gap"
+            ]
+          },
+          {
+            "after_unit": 4,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000005"
+            ],
+            "right_sentences": [
+              "s000006"
+            ],
+            "left_window_units": [
+              4,
+              4
+            ],
+            "right_window_units": [
+              5,
+              7
+            ],
+            "similarity": 0.058259682385,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 5,
+            "gap_seconds": 1.2299999999999969,
+            "left_sentences": [
+              "s000006"
+            ],
+            "right_sentences": [
+              "s000007"
+            ],
+            "left_window_units": [
+              4,
+              5
+            ],
+            "right_window_units": [
+              6,
+              8
+            ],
+            "similarity": 0.063587240118,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 6,
+            "gap_seconds": 1.4499999999999957,
+            "left_sentences": [
+              "s000007"
+            ],
+            "right_sentences": [
+              "s000008"
+            ],
+            "left_window_units": [
+              4,
+              6
+            ],
+            "right_window_units": [
+              7,
+              9
+            ],
+            "similarity": 0.023451817208,
+            "left_peak": 0.063587240118,
+            "right_peak": 0.028595385425,
+            "raw_depth": 0.045278991127,
+            "depth": 0.491187909438,
+            "plateau_after_units": [
+              6
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 7,
+            "gap_seconds": 2.3999999999999986,
+            "left_sentences": [
+              "s000008"
+            ],
+            "right_sentences": [
+              "s000009"
+            ],
+            "left_window_units": [
+              5,
+              7
+            ],
+            "right_window_units": [
+              8,
+              10
+            ],
+            "similarity": 0.028595385425,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 8,
+            "gap_seconds": 0.35999999999999943,
+            "left_sentences": [
+              "s000009"
+            ],
+            "right_sentences": [
+              "s000010"
+            ],
+            "left_window_units": [
+              6,
+              8
+            ],
+            "right_window_units": [
+              9,
+              10
+            ],
+            "similarity": 0.023376957012,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 9,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000010"
+            ],
+            "right_sentences": [
+              "s000011"
+            ],
+            "left_window_units": [
+              7,
+              9
+            ],
+            "right_window_units": [
+              10,
+              10
+            ],
+            "similarity": 0.018023253245,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 10,
+            "gap_seconds": 3.3100000000000023,
+            "left_sentences": [
+              "s000011"
+            ],
+            "right_sentences": [
+              "s000012"
+            ],
+            "left_window_units": null,
+            "right_window_units": null,
+            "similarity": null,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "hard_pause",
+            "reasons": [
+              "gap_above_max_gap"
+            ]
+          },
+          {
+            "after_unit": 11,
+            "gap_seconds": 1.2999999999999972,
+            "left_sentences": [
+              "s000012"
+            ],
+            "right_sentences": [
+              "s000013"
+            ],
+            "left_window_units": [
+              11,
+              11
+            ],
+            "right_window_units": [
+              12,
+              14
+            ],
+            "similarity": 0.020284447158,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 12,
+            "gap_seconds": 0.6099999999999994,
+            "left_sentences": [
+              "s000013"
+            ],
+            "right_sentences": [
+              "s000014"
+            ],
+            "left_window_units": [
+              11,
+              12
+            ],
+            "right_window_units": [
+              13,
+              14
+            ],
+            "similarity": 0.025716090154,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 13,
+            "gap_seconds": 0.6200000000000045,
+            "left_sentences": [
+              "s000014"
+            ],
+            "right_sentences": [
+              "s000015"
+            ],
+            "left_window_units": [
+              11,
+              13
+            ],
+            "right_window_units": [
+              14,
+              14
+            ],
+            "similarity": 0.003545845662,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 14,
+            "gap_seconds": 3.569999999999993,
+            "left_sentences": [
+              "s000015"
+            ],
+            "right_sentences": [
+              "s000016"
+            ],
+            "left_window_units": null,
+            "right_window_units": null,
+            "similarity": null,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "hard_pause",
+            "reasons": [
+              "gap_above_max_gap"
+            ]
+          },
+          {
+            "after_unit": 15,
+            "gap_seconds": 0.5799999999999983,
+            "left_sentences": [
+              "s000016"
+            ],
+            "right_sentences": [
+              "s000017"
+            ],
+            "left_window_units": [
+              15,
+              15
+            ],
+            "right_window_units": [
+              16,
+              18
+            ],
+            "similarity": 0.006794530576,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 16,
+            "gap_seconds": 1.3299999999999983,
+            "left_sentences": [
+              "s000017"
+            ],
+            "right_sentences": [
+              "s000018"
+            ],
+            "left_window_units": [
+              15,
+              16
+            ],
+            "right_window_units": [
+              17,
+              19
+            ],
+            "similarity": 0.0,
+            "left_peak": 0.006794530576,
+            "right_peak": 0.036956618577,
+            "raw_depth": 0.043751149153,
+            "depth": 1.0,
+            "plateau_after_units": [
+              16,
+              17
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 17,
+            "gap_seconds": 1.4199999999999875,
+            "left_sentences": [
+              "s000018"
+            ],
+            "right_sentences": [
+              "s000019"
+            ],
+            "left_window_units": [
+              15,
+              17
+            ],
+            "right_window_units": [
+              18,
+              20
+            ],
+            "similarity": 0.0,
+            "left_peak": 0.006794530576,
+            "right_peak": 0.036956618577,
+            "raw_depth": 0.043751149153,
+            "depth": 1.0,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "plateau_alternative"
+            ]
+          },
+          {
+            "after_unit": 18,
+            "gap_seconds": 0.7800000000000011,
+            "left_sentences": [
+              "s000019"
+            ],
+            "right_sentences": [
+              "s000020"
+            ],
+            "left_window_units": [
+              16,
+              18
+            ],
+            "right_window_units": [
+              19,
+              21
+            ],
+            "similarity": 0.007631387447,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 19,
+            "gap_seconds": 1.5,
+            "left_sentences": [
+              "s000020"
+            ],
+            "right_sentences": [
+              "s000021"
+            ],
+            "left_window_units": [
+              17,
+              19
+            ],
+            "right_window_units": [
+              20,
+              22
+            ],
+            "similarity": 0.008012500463,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 20,
+            "gap_seconds": 0.5,
+            "left_sentences": [
+              "s000021"
+            ],
+            "right_sentences": [
+              "s000022"
+            ],
+            "left_window_units": [
+              18,
+              20
+            ],
+            "right_window_units": [
+              21,
+              22
+            ],
+            "similarity": 0.012054584424,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 21,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000022"
+            ],
+            "right_sentences": [
+              "s000023"
+            ],
+            "left_window_units": [
+              19,
+              21
+            ],
+            "right_window_units": [
+              22,
+              22
+            ],
+            "similarity": 0.036956618577,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          }
+        ],
+        "segments": [
+          {
+            "id": "t_9e325f26df50b5e547e8d94701346eaa5042ae28426dc798d1e53d0b7739688e",
+            "first_unit": 0,
+            "last_unit": 3,
+            "start": 2.78,
+            "end": 26.05,
+            "duration_seconds": 23.27,
+            "source_sentences": [
+              "s000001",
+              "s000002",
+              "s000003",
+              "s000004"
+            ],
+            "text": "杨楠 录这个就是他这种音森的氛围可以啊 音森观众朋友们大家好黄毓舒看 小杨有约我们\n本期请来的嘉宾是杨迪你可以\n叫我小杨小杨你好 小杨两个小杨知道你好可以打个招呼大家好我是杨迪很高兴来到小杨有约\n这个氛围就是这种",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_064dc9901f32fd5649f13094a478489457caf4be72bf201affe10445c8af70f5",
+            "first_unit": 4,
+            "last_unit": 6,
+            "start": 30.12,
+            "end": 55.71,
+            "duration_seconds": 25.59,
+            "source_sentences": [
+              "s000005",
+              "s000006",
+              "s000007"
+            ],
+            "text": "是这样子就是这次是你面前的这个灵可以我面前的灵 好是在我对你提问你觉得可能比较冒犯或者不想回答的时候\n你就可以拍一张然后我们就可以终止这个问题只有在冒犯的时候呢只要不舒服我都拿下吧随便都可以\n可以开始了刚才想说什么可以说想说什么我有点忘了是这样子的这次来到小阳有约也是那个小潮好 第一个问题小",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_15125a12e03e191e3e713e150bc2b2892d240e57a24abb4279e3604d5c3729d4",
+            "first_unit": 7,
+            "last_unit": 10,
+            "start": 57.16,
+            "end": 78.22,
+            "duration_seconds": 21.06,
+            "source_sentences": [
+              "s000008",
+              "s000009",
+              "s000010",
+              "s000011"
+            ],
+            "text": "阳请我来的因为老收你们礼物我们就来一下哦\n闹钟响了是不是那我今天的时间就是到这里了\n好那我们就收看本期节目我们下期再见是谁的闹钟我们节目就是很尴尬夹人而止我感受到了因为我平时是一个就是\n录节目喜欢热闹的人嘛就是没人说话的时候我就马上会说话的那种",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_b0c0aa7f52874c5bad1cac7baba337b63ce40611df8b46c1ef5e6151fc81da2f",
+            "first_unit": 11,
+            "last_unit": 14,
+            "start": 81.53,
+            "end": 105.73,
+            "duration_seconds": 24.2,
+            "source_sentences": [
+              "s000012",
+              "s000013",
+              "s000014",
+              "s000015"
+            ],
+            "text": "好 所以 来吧可以开始了我看你面前有个稿子应该有很多想问我的问题我\n其实应该要适应各种各样节目的类型\n比如这种我就得适应一下 感受一下我内心其实在说话好 第一个问题好\n太好了终于进入正题了你可以再来一遍那个哪个就是枪枪枪枪那个吗我",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_91440cb2b95d7817232a78b8077b38690d8d3e7f5f37301ced842a2de15d8a6a",
+            "first_unit": 15,
+            "last_unit": 16,
+            "start": 109.3,
+            "end": 122.06,
+            "duration_seconds": 12.76,
+            "source_sentences": [
+              "s000016",
+              "s000017"
+            ],
+            "text": "一般不会在这种就是非常安静的氛围之下来那个就是你很喜欢那个吗大家都很喜欢因为他要找一个专门的那个音频厂\n大家好我是枪子小夏杨迪呛呛呛呛 庆祝小晒",
+            "eligible": false,
+            "reasons": [
+              "below_min_seconds"
+            ]
+          },
+          {
+            "id": "t_f804bd5e4dd856881c7e7b39c891f963613306b75891b55f67d6632237f85e0f",
+            "first_unit": 17,
+            "last_unit": 22,
+            "start": 123.39,
+            "end": 153.65,
+            "duration_seconds": 30.26,
+            "source_sentences": [
+              "s000018",
+              "s000019",
+              "s000020",
+              "s000021",
+              "s000022",
+              "s000023"
+            ],
+            "text": "是不是这个手机的声音\n上次就是表演这个大概多少时间了\n前天吧\n反正就是动不动人家就会Q到Q到以后我就忍不住所以刚才那种尴尬是装出来\n也不算尴尬吧就是我不能太踊跃的表演每次都先得推托一下但是我内心是爱演的就个摄护包 摄护包是差不多\n差不多差不多不用不用其实马上已经准备好了那可以再来一遍吗再来一遍但很少以口区演两次",
+            "eligible": true,
+            "reasons": []
+          }
+        ],
+        "warnings": [
+          "short_topic_segment_not_generated"
+        ],
+        "model_requests": 0
+      },
+      "topic_candidates": {
+        "schema_version": "0.1.0-draft.1",
+        "artifact_kind": "candidate_windows",
+        "stage": "generated",
+        "input_result_kind": "measured",
+        "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+        "media": {
+          "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+          "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+          "duration_seconds": 157.1,
+          "time_reference": "normalized_video",
+          "has_audio": true
+        },
+        "generator": {
+          "version": "topic-valley-v1",
+          "options": {
+            "min_seconds": 15.0,
+            "max_seconds": 90.0,
+            "max_gap_seconds": 3.0,
+            "max_candidates": 10000,
+            "window_units": 3,
+            "min_segment_units": 2,
+            "min_depth": 0.15
+          }
+        },
+        "candidate_count": 5,
+        "candidates": [
+          {
+            "id": "c_9e325f26df50b5e547e8d94701346eaa5042ae28426dc798d1e53d0b7739688e",
+            "start": 2.78,
+            "end": 26.05,
+            "duration_seconds": 23.27,
+            "text": "杨楠 录这个就是他这种音森的氛围可以啊 音森观众朋友们大家好黄毓舒看 小杨有约我们\n本期请来的嘉宾是杨迪你可以\n叫我小杨小杨你好 小杨两个小杨知道你好可以打个招呼大家好我是杨迪很高兴来到小杨有约\n这个氛围就是这种",
+            "source_sentences": [
+              "s000001",
+              "s000002",
+              "s000003",
+              "s000004"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_064dc9901f32fd5649f13094a478489457caf4be72bf201affe10445c8af70f5",
+            "start": 30.12,
+            "end": 55.71,
+            "duration_seconds": 25.59,
+            "text": "是这样子就是这次是你面前的这个灵可以我面前的灵 好是在我对你提问你觉得可能比较冒犯或者不想回答的时候\n你就可以拍一张然后我们就可以终止这个问题只有在冒犯的时候呢只要不舒服我都拿下吧随便都可以\n可以开始了刚才想说什么可以说想说什么我有点忘了是这样子的这次来到小阳有约也是那个小潮好 第一个问题小",
+            "source_sentences": [
+              "s000005",
+              "s000006",
+              "s000007"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_15125a12e03e191e3e713e150bc2b2892d240e57a24abb4279e3604d5c3729d4",
+            "start": 57.16,
+            "end": 78.22,
+            "duration_seconds": 21.06,
+            "text": "阳请我来的因为老收你们礼物我们就来一下哦\n闹钟响了是不是那我今天的时间就是到这里了\n好那我们就收看本期节目我们下期再见是谁的闹钟我们节目就是很尴尬夹人而止我感受到了因为我平时是一个就是\n录节目喜欢热闹的人嘛就是没人说话的时候我就马上会说话的那种",
+            "source_sentences": [
+              "s000008",
+              "s000009",
+              "s000010",
+              "s000011"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_b0c0aa7f52874c5bad1cac7baba337b63ce40611df8b46c1ef5e6151fc81da2f",
+            "start": 81.53,
+            "end": 105.73,
+            "duration_seconds": 24.2,
+            "text": "好 所以 来吧可以开始了我看你面前有个稿子应该有很多想问我的问题我\n其实应该要适应各种各样节目的类型\n比如这种我就得适应一下 感受一下我内心其实在说话好 第一个问题好\n太好了终于进入正题了你可以再来一遍那个哪个就是枪枪枪枪那个吗我",
+            "source_sentences": [
+              "s000012",
+              "s000013",
+              "s000014",
+              "s000015"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_f804bd5e4dd856881c7e7b39c891f963613306b75891b55f67d6632237f85e0f",
+            "start": 123.39,
+            "end": 153.65,
+            "duration_seconds": 30.26,
+            "text": "是不是这个手机的声音\n上次就是表演这个大概多少时间了\n前天吧\n反正就是动不动人家就会Q到Q到以后我就忍不住所以刚才那种尴尬是装出来\n也不算尴尬吧就是我不能太踊跃的表演每次都先得推托一下但是我内心是爱演的就个摄护包 摄护包是差不多\n差不多差不多不用不用其实马上已经准备好了那可以再来一遍吗再来一遍但很少以口区演两次",
+            "source_sentences": [
+              "s000018",
+              "s000019",
+              "s000020",
+              "s000021",
+              "s000022",
+              "s000023"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          }
+        ],
+        "warnings": [
+          "topic_short_segment_skipped"
+        ]
+      },
+      "candidate_comparisons": [
+        {
+          "candidate_id": "c_9e325f26df50b5e547e8d94701346eaa5042ae28426dc798d1e53d0b7739688e",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_67fbc094cc94e938701fb157a2b20633e1315c5d90d502e6e477f8a1559e3da4"
+          },
+          "exact_original_human_observation": {
+            "old_candidate_id": "c_67fbc094cc94e938701fb157a2b20633e1315c5d90d502e6e477f8a1559e3da4",
+            "sample_id": "S02",
+            "answers": {
+              "opening_complete": "yes",
+              "ending_complete": "no",
+              "understandable": "yes",
+              "no_unrelated_content": "yes"
+            },
+            "note": "",
+            "provenance": "reused_original_exact_range_refs_text_only",
+            "all_four_yes": false
+          }
+        },
+        {
+          "candidate_id": "c_064dc9901f32fd5649f13094a478489457caf4be72bf201affe10445c8af70f5",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_ff7a5abd14e288dd50023399ad018c4ede3a4c33f7e0ca18badf9b0120e3d021"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_15125a12e03e191e3e713e150bc2b2892d240e57a24abb4279e3604d5c3729d4",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_c0143667b01084ca2325b04d40f993ca2a2c102240d6c64590cb7ba21a1ecb53"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_b0c0aa7f52874c5bad1cac7baba337b63ce40611df8b46c1ef5e6151fc81da2f",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_ed402807938191fe7bceb124de139f76cf39ff34e985ccb7c57fc3d1732cc814"
+          },
+          "exact_original_human_observation": {
+            "old_candidate_id": "c_ed402807938191fe7bceb124de139f76cf39ff34e985ccb7c57fc3d1732cc814",
+            "sample_id": "S07",
+            "answers": {
+              "opening_complete": "yes",
+              "ending_complete": "yes",
+              "understandable": "yes",
+              "no_unrelated_content": "yes"
+            },
+            "note": "",
+            "provenance": "reused_original_exact_range_refs_text_only",
+            "all_four_yes": true
+          }
+        },
+        {
+          "candidate_id": "c_f804bd5e4dd856881c7e7b39c891f963613306b75891b55f67d6632237f85e0f",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_aadafec0c9bfd1f848ed3bc69162a2329aff8d917f1c2ae04fc9fef0fac5dcaf"
+          },
+          "exact_original_human_observation": {
+            "old_candidate_id": "c_aadafec0c9bfd1f848ed3bc69162a2329aff8d917f1c2ae04fc9fef0fac5dcaf",
+            "sample_id": "S05",
+            "answers": {
+              "opening_complete": "yes",
+              "ending_complete": "yes",
+              "understandable": "yes",
+              "no_unrelated_content": "yes"
+            },
+            "note": "",
+            "provenance": "reused_original_exact_range_refs_text_only",
+            "all_four_yes": true
+          }
+        }
+      ]
+    },
+    {
+      "source_name": "New3",
+      "sentence_count": 22,
+      "baseline_candidate_count": 158,
+      "topic_candidate_count": 4,
+      "topic_segment_count": 6,
+      "rejection_counts": {
+        "below_min_seconds": 2
+      },
+      "boundary_decisions": {
+        "not_valley": 15,
+        "accepted_valley": 5,
+        "rejected": 1
+      },
+      "reused_label_count": 1,
+      "verified_original_label_count": 16,
+      "excluded_original_labels": [],
+      "analysis_sha256": "00e9ff79b63358faf2f2fb6c6609b8935d28ed32ebfbad5f2bdbda2ded1c640a",
+      "baseline_generated_sha256": "650fda55221af3b85fed55a5710cc2d89bede4e47e4aebb3a5ca6ae5264ee523",
+      "topic_generated_sha256": "3e17d50489c81419330b5b5e2b7ac4ca9e767f3d56e00c6441dcb63cbf68406c",
+      "timing_seconds": {
+        "baseline_generation": 0.07252950000111014,
+        "topic_generation": 0.08156869999947958,
+        "standalone_segmentation": 0.08234989999618847
+      },
+      "source_coverage": {
+        "source_sentences": 22,
+        "all_topic_segments_sentence_refs": 22,
+        "candidate_sentence_refs": 18,
+        "rejected_segment_sentence_refs": 4,
+        "covered_source_sentences": 22,
+        "source_order_preserved": true,
+        "missing_sentence_refs": [],
+        "duplicated_sentence_refs": [],
+        "rejected_segments": [
+          "t_e39ab326a8cd032456fa6d2596ec659f83b04d2fe453cfd1386a74727ebedfe9",
+          "t_81579d1d9753ccc027f73216fbc27dd6ab9604ee1684ba7f56747dc1b465a605"
+        ]
+      },
+      "segmentation": {
+        "schema_version": "0.1.0-draft.1",
+        "artifact_kind": "topic_segmentation",
+        "version": "topic-valley-v1",
+        "analysis_sha256": "00e9ff79b63358faf2f2fb6c6609b8935d28ed32ebfbad5f2bdbda2ded1c640a",
+        "options": {
+          "min_seconds": 15.0,
+          "max_seconds": 90.0,
+          "max_gap_seconds": 3.0,
+          "max_candidates": 10000,
+          "window_units": 3,
+          "min_segment_units": 2,
+          "min_depth": 0.15
+        },
+        "method": "adjacent-window TF-IDF cosine valleys; relative peak prominence; Chinese 2/3-grams",
+        "scope": "lexical topic boundary evidence; not semantic event-completeness verification",
+        "limits": {
+          "max_sentences": 10000,
+          "max_text_characters": 1000000,
+          "max_analysis_bytes": 16777216,
+          "max_window_units": 32
+        },
+        "units": [
+          {
+            "index": 0,
+            "start": 3.48,
+            "end": 14.16,
+            "source_sentences": [
+              "s000001"
+            ]
+          },
+          {
+            "index": 1,
+            "start": 14.76,
+            "end": 17.6,
+            "source_sentences": [
+              "s000002"
+            ]
+          },
+          {
+            "index": 2,
+            "start": 18.14,
+            "end": 26.88,
+            "source_sentences": [
+              "s000003"
+            ]
+          },
+          {
+            "index": 3,
+            "start": 27.19,
+            "end": 36.15,
+            "source_sentences": [
+              "s000004"
+            ]
+          },
+          {
+            "index": 4,
+            "start": 36.15,
+            "end": 41.19,
+            "source_sentences": [
+              "s000005"
+            ]
+          },
+          {
+            "index": 5,
+            "start": 41.61,
+            "end": 52.97,
+            "source_sentences": [
+              "s000006"
+            ]
+          },
+          {
+            "index": 6,
+            "start": 53.21,
+            "end": 62.35,
+            "source_sentences": [
+              "s000007"
+            ]
+          },
+          {
+            "index": 7,
+            "start": 62.35,
+            "end": 70.51,
+            "source_sentences": [
+              "s000008"
+            ]
+          },
+          {
+            "index": 8,
+            "start": 70.51,
+            "end": 79.27,
+            "source_sentences": [
+              "s000009"
+            ]
+          },
+          {
+            "index": 9,
+            "start": 79.73,
+            "end": 82.57,
+            "source_sentences": [
+              "s000010"
+            ]
+          },
+          {
+            "index": 10,
+            "start": 83.17,
+            "end": 92.85,
+            "source_sentences": [
+              "s000011"
+            ]
+          },
+          {
+            "index": 11,
+            "start": 93.06,
+            "end": 97.8,
+            "source_sentences": [
+              "s000012"
+            ]
+          },
+          {
+            "index": 12,
+            "start": 98.58,
+            "end": 100.96,
+            "source_sentences": [
+              "s000013"
+            ]
+          },
+          {
+            "index": 13,
+            "start": 102.1,
+            "end": 107.33,
+            "source_sentences": [
+              "s000014"
+            ]
+          },
+          {
+            "index": 14,
+            "start": 108.01,
+            "end": 115.19,
+            "source_sentences": [
+              "s000015"
+            ]
+          },
+          {
+            "index": 15,
+            "start": 116.05,
+            "end": 128.51,
+            "source_sentences": [
+              "s000016"
+            ]
+          },
+          {
+            "index": 16,
+            "start": 128.71,
+            "end": 136.49,
+            "source_sentences": [
+              "s000017"
+            ]
+          },
+          {
+            "index": 17,
+            "start": 136.53,
+            "end": 144.53,
+            "source_sentences": [
+              "s000018"
+            ]
+          },
+          {
+            "index": 18,
+            "start": 144.53,
+            "end": 152.57,
+            "source_sentences": [
+              "s000019"
+            ]
+          },
+          {
+            "index": 19,
+            "start": 152.57,
+            "end": 156.91,
+            "source_sentences": [
+              "s000020"
+            ]
+          },
+          {
+            "index": 20,
+            "start": 157.41,
+            "end": 162.23,
+            "source_sentences": [
+              "s000021"
+            ]
+          },
+          {
+            "index": 21,
+            "start": 162.67,
+            "end": 170.75,
+            "source_sentences": [
+              "s000022"
+            ]
+          }
+        ],
+        "boundaries": [
+          {
+            "after_unit": 0,
+            "gap_seconds": 0.5999999999999996,
+            "left_sentences": [
+              "s000001"
+            ],
+            "right_sentences": [
+              "s000002"
+            ],
+            "left_window_units": [
+              0,
+              0
+            ],
+            "right_window_units": [
+              1,
+              3
+            ],
+            "similarity": 0.072203038391,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 1,
+            "gap_seconds": 0.5399999999999991,
+            "left_sentences": [
+              "s000002"
+            ],
+            "right_sentences": [
+              "s000003"
+            ],
+            "left_window_units": [
+              0,
+              1
+            ],
+            "right_window_units": [
+              2,
+              4
+            ],
+            "similarity": 0.033664916988,
+            "left_peak": 0.072203038391,
+            "right_peak": 0.092499233117,
+            "raw_depth": 0.097372437532,
+            "depth": 0.591202760232,
+            "plateau_after_units": [
+              1
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 2,
+            "gap_seconds": 0.3100000000000023,
+            "left_sentences": [
+              "s000003"
+            ],
+            "right_sentences": [
+              "s000004"
+            ],
+            "left_window_units": [
+              0,
+              2
+            ],
+            "right_window_units": [
+              3,
+              5
+            ],
+            "similarity": 0.05526061602,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 3,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000004"
+            ],
+            "right_sentences": [
+              "s000005"
+            ],
+            "left_window_units": [
+              1,
+              3
+            ],
+            "right_window_units": [
+              4,
+              6
+            ],
+            "similarity": 0.092499233117,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 4,
+            "gap_seconds": 0.4200000000000017,
+            "left_sentences": [
+              "s000005"
+            ],
+            "right_sentences": [
+              "s000006"
+            ],
+            "left_window_units": [
+              2,
+              4
+            ],
+            "right_window_units": [
+              5,
+              7
+            ],
+            "similarity": 0.090429087918,
+            "left_peak": 0.092499233117,
+            "right_peak": 0.100876275933,
+            "raw_depth": 0.012517333214,
+            "depth": 0.064730705949,
+            "plateau_after_units": [
+              4
+            ],
+            "decision": "rejected",
+            "reasons": [
+              "below_min_depth"
+            ]
+          },
+          {
+            "after_unit": 5,
+            "gap_seconds": 0.240000000000002,
+            "left_sentences": [
+              "s000006"
+            ],
+            "right_sentences": [
+              "s000007"
+            ],
+            "left_window_units": [
+              3,
+              5
+            ],
+            "right_window_units": [
+              6,
+              8
+            ],
+            "similarity": 0.100876275933,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 6,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000007"
+            ],
+            "right_sentences": [
+              "s000008"
+            ],
+            "left_window_units": [
+              4,
+              6
+            ],
+            "right_window_units": [
+              7,
+              9
+            ],
+            "similarity": 0.052364531404,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 7,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000008"
+            ],
+            "right_sentences": [
+              "s000009"
+            ],
+            "left_window_units": [
+              5,
+              7
+            ],
+            "right_window_units": [
+              8,
+              10
+            ],
+            "similarity": 0.015463233727,
+            "left_peak": 0.100876275933,
+            "right_peak": 0.065258772582,
+            "raw_depth": 0.135208581061,
+            "depth": 0.813847422742,
+            "plateau_after_units": [
+              7
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 8,
+            "gap_seconds": 0.46000000000000796,
+            "left_sentences": [
+              "s000009"
+            ],
+            "right_sentences": [
+              "s000010"
+            ],
+            "left_window_units": [
+              6,
+              8
+            ],
+            "right_window_units": [
+              9,
+              11
+            ],
+            "similarity": 0.065258772582,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 9,
+            "gap_seconds": 0.6000000000000085,
+            "left_sentences": [
+              "s000010"
+            ],
+            "right_sentences": [
+              "s000011"
+            ],
+            "left_window_units": [
+              7,
+              9
+            ],
+            "right_window_units": [
+              10,
+              12
+            ],
+            "similarity": 0.007069248541,
+            "left_peak": 0.065258772582,
+            "right_peak": 0.071619229914,
+            "raw_depth": 0.122739505414,
+            "depth": 0.896707309983,
+            "plateau_after_units": [
+              9
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 10,
+            "gap_seconds": 0.21000000000000796,
+            "left_sentences": [
+              "s000011"
+            ],
+            "right_sentences": [
+              "s000012"
+            ],
+            "left_window_units": [
+              8,
+              10
+            ],
+            "right_window_units": [
+              11,
+              13
+            ],
+            "similarity": 0.065827815246,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 11,
+            "gap_seconds": 0.7800000000000011,
+            "left_sentences": [
+              "s000012"
+            ],
+            "right_sentences": [
+              "s000013"
+            ],
+            "left_window_units": [
+              9,
+              11
+            ],
+            "right_window_units": [
+              12,
+              14
+            ],
+            "similarity": 0.071619229914,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 12,
+            "gap_seconds": 1.1400000000000006,
+            "left_sentences": [
+              "s000013"
+            ],
+            "right_sentences": [
+              "s000014"
+            ],
+            "left_window_units": [
+              10,
+              12
+            ],
+            "right_window_units": [
+              13,
+              15
+            ],
+            "similarity": 0.053325824745,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 13,
+            "gap_seconds": 0.6800000000000068,
+            "left_sentences": [
+              "s000014"
+            ],
+            "right_sentences": [
+              "s000015"
+            ],
+            "left_window_units": [
+              11,
+              13
+            ],
+            "right_window_units": [
+              14,
+              16
+            ],
+            "similarity": 0.012737432893,
+            "left_peak": 0.071619229914,
+            "right_peak": 0.031078714066,
+            "raw_depth": 0.077223078194,
+            "depth": 0.75194376052,
+            "plateau_after_units": [
+              13
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 14,
+            "gap_seconds": 0.8599999999999994,
+            "left_sentences": [
+              "s000015"
+            ],
+            "right_sentences": [
+              "s000016"
+            ],
+            "left_window_units": [
+              12,
+              14
+            ],
+            "right_window_units": [
+              15,
+              17
+            ],
+            "similarity": 0.025179619658,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 15,
+            "gap_seconds": 0.20000000000001705,
+            "left_sentences": [
+              "s000016"
+            ],
+            "right_sentences": [
+              "s000017"
+            ],
+            "left_window_units": [
+              13,
+              15
+            ],
+            "right_window_units": [
+              16,
+              18
+            ],
+            "similarity": 0.031078714066,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 16,
+            "gap_seconds": 0.03999999999999204,
+            "left_sentences": [
+              "s000017"
+            ],
+            "right_sentences": [
+              "s000018"
+            ],
+            "left_window_units": [
+              14,
+              16
+            ],
+            "right_window_units": [
+              17,
+              19
+            ],
+            "similarity": 0.030681264987,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 17,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000018"
+            ],
+            "right_sentences": [
+              "s000019"
+            ],
+            "left_window_units": [
+              15,
+              17
+            ],
+            "right_window_units": [
+              18,
+              20
+            ],
+            "similarity": 0.026250614895,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 18,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000019"
+            ],
+            "right_sentences": [
+              "s000020"
+            ],
+            "left_window_units": [
+              16,
+              18
+            ],
+            "right_window_units": [
+              19,
+              21
+            ],
+            "similarity": 0.022522772244,
+            "left_peak": 0.031078714066,
+            "right_peak": 0.05320601755,
+            "raw_depth": 0.039239187128,
+            "depth": 0.465555105601,
+            "plateau_after_units": [
+              18
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 19,
+            "gap_seconds": 0.5,
+            "left_sentences": [
+              "s000020"
+            ],
+            "right_sentences": [
+              "s000021"
+            ],
+            "left_window_units": [
+              17,
+              19
+            ],
+            "right_window_units": [
+              20,
+              21
+            ],
+            "similarity": 0.05320601755,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 20,
+            "gap_seconds": 0.4399999999999977,
+            "left_sentences": [
+              "s000021"
+            ],
+            "right_sentences": [
+              "s000022"
+            ],
+            "left_window_units": [
+              18,
+              20
+            ],
+            "right_window_units": [
+              21,
+              21
+            ],
+            "similarity": 0.049659949633,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          }
+        ],
+        "segments": [
+          {
+            "id": "t_e39ab326a8cd032456fa6d2596ec659f83b04d2fe453cfd1386a74727ebedfe9",
+            "first_unit": 0,
+            "last_unit": 1,
+            "start": 3.48,
+            "end": 17.6,
+            "duration_seconds": 14.12,
+            "source_sentences": [
+              "s000001",
+              "s000002"
+            ],
+            "text": "这问题可能比较难回答但是我觉得杨老师应该没什么问题吧我先看看是什么问题我先听听看和那么多明星合作过谁最难搞哇塞\n这个问题真是好问题谁最难搞",
+            "eligible": false,
+            "reasons": [
+              "below_min_seconds"
+            ]
+          },
+          {
+            "id": "t_379c1979216856b48161946c65ea180bb577fde877a3806cd649075c05a2c6c6",
+            "first_unit": 2,
+            "last_unit": 7,
+            "start": 18.14,
+            "end": 70.51,
+            "duration_seconds": 52.37,
+            "source_sentences": [
+              "s000003",
+              "s000004",
+              "s000005",
+              "s000006",
+              "s000007",
+              "s000008"
+            ],
+            "text": "其实曾经来过想要约的有约艺人比较难搞耀青哥耀青哥真的难搞你知道他是属于那种练\n过巴西柔术的他上次来这没跟你搞一下巴西柔术是不是难搞不是比较能搞不 他就是比较难搞我们当时录一个节目\n有那个巴西柔术的环节巴西柔术其实它有一个重要的技能就是锁你的喉\n但如果你被锁喉锁到有点窒息的话你就有一个拍打的动作他就知道你可能有点憋不住了耀青哥勒我的时候我已经拍了他还要送你五秒我都看到太奶了\n他就是所以我每次想到的时候我就会想到这一幕李死亡最近的时候非常近而且同一天他还勒了那个巴西柔术的教练\n他就说教练我有这个招那个教练都拍了他送了教练10秒那说明你比那个巴西教练比较厉害没有没有没有因为我只",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_81579d1d9753ccc027f73216fbc27dd6ab9604ee1684ba7f56747dc1b465a605",
+            "first_unit": 8,
+            "last_unit": 9,
+            "start": 70.51,
+            "end": 82.57,
+            "duration_seconds": 12.06,
+            "source_sentences": [
+              "s000009",
+              "s000010"
+            ],
+            "text": "送了我5秒嘛这个事情我印象非常深刻只要送10秒可能就已经没法出现在这儿了有可能他也没法出现在这儿了对\n我们俩都没法出现在这儿他应该在另外一个地方",
+            "eligible": false,
+            "reasons": [
+              "below_min_seconds"
+            ]
+          },
+          {
+            "id": "t_190e9f2bff97f7a12ae38767051151fc50b3241ac14e90841cefe7d9fd6e1aa1",
+            "first_unit": 10,
+            "last_unit": 13,
+            "start": 83.17,
+            "end": 107.33,
+            "duration_seconds": 24.16,
+            "source_sentences": [
+              "s000011",
+              "s000012",
+              "s000013",
+              "s000014"
+            ],
+            "text": "你也可以去那个探望我在团队当中其实也是算扮演一个主持人的角色那你觉得主持人最应该拥有的一个东西是\n可能需要茶园观色嘛感受一下那个现场的氛围我很不太需要\n你是那个氛围制造者\n作为一个主持人林场应变应该是特别好的一个",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_0655e6285ebd018f00c8f1141f63ab7de174216e5e88a5c2fdc0ba06f4475518",
+            "first_unit": 14,
+            "last_unit": 18,
+            "start": 108.01,
+            "end": 152.57,
+            "duration_seconds": 44.56,
+            "source_sentences": [
+              "s000015",
+              "s000016",
+              "s000017",
+              "s000018",
+              "s000019"
+            ],
+            "text": "还行吧 怎么说呢就是能能来回过那么几招好的 那我们下面有两个两个情景\n还有情景演技啊说是现在正在主持一党音乐综艺嗯 好 英宗正在计票然后结果马上出来了这时候突然有导师说你们这个计票有问题哦\n当场质疑当场质疑他说你的票数好像啊绝对是做手脚应该怎么处理我就 我就真的先问问他我说老师 哎\n等一下老师那个那个小阳老师有一点意见是不是您当 你是觉得票数有点问题对哪方面有问题我们可以马上现场\n来核实一下我们这种那个现场投票都会有公证处的公证员在这里所以小潮院长他票数太高了他票数太高那可能也是",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_7952a08f9cfcf071385cad1b04f0d4dd20f1312a2ff98219bea6ec4bef1e4724",
+            "first_unit": 19,
+            "last_unit": 21,
+            "start": 152.57,
+            "end": 170.75,
+            "duration_seconds": 18.18,
+            "source_sentences": [
+              "s000020",
+              "s000021",
+              "s000022"
+            ],
+            "text": "今天现场的观众正好喜欢他这个款全场120个人他三百多票为什么\n他有三百多票吗那我确实要问一下现在是不是有人卖黄牛票了不\n像你设定这种情景在做这种节目上很难发生那就是说三百多票票数超过这么多就是比如说我直接报警我报警",
+            "eligible": true,
+            "reasons": []
+          }
+        ],
+        "warnings": [
+          "short_topic_segment_not_generated"
+        ],
+        "model_requests": 0
+      },
+      "topic_candidates": {
+        "schema_version": "0.1.0-draft.1",
+        "artifact_kind": "candidate_windows",
+        "stage": "generated",
+        "input_result_kind": "measured",
+        "analysis_sha256": "00e9ff79b63358faf2f2fb6c6609b8935d28ed32ebfbad5f2bdbda2ded1c640a",
+        "media": {
+          "source_sha256": "1db176d8a64c0fe189d4afe5a8b81943e83a1b9779c900f989f0b5f71cf4419a",
+          "normalized_sha256": "f6c3e7cca911eb2ab26dda4d4a0fbdd53ae024f6a904d3260cd83e9a5357017c",
+          "duration_seconds": 175.16666666666666,
+          "time_reference": "normalized_video",
+          "has_audio": true
+        },
+        "generator": {
+          "version": "topic-valley-v1",
+          "options": {
+            "min_seconds": 15.0,
+            "max_seconds": 90.0,
+            "max_gap_seconds": 3.0,
+            "max_candidates": 10000,
+            "window_units": 3,
+            "min_segment_units": 2,
+            "min_depth": 0.15
+          }
+        },
+        "candidate_count": 4,
+        "candidates": [
+          {
+            "id": "c_379c1979216856b48161946c65ea180bb577fde877a3806cd649075c05a2c6c6",
+            "start": 18.14,
+            "end": 70.51,
+            "duration_seconds": 52.37,
+            "text": "其实曾经来过想要约的有约艺人比较难搞耀青哥耀青哥真的难搞你知道他是属于那种练\n过巴西柔术的他上次来这没跟你搞一下巴西柔术是不是难搞不是比较能搞不 他就是比较难搞我们当时录一个节目\n有那个巴西柔术的环节巴西柔术其实它有一个重要的技能就是锁你的喉\n但如果你被锁喉锁到有点窒息的话你就有一个拍打的动作他就知道你可能有点憋不住了耀青哥勒我的时候我已经拍了他还要送你五秒我都看到太奶了\n他就是所以我每次想到的时候我就会想到这一幕李死亡最近的时候非常近而且同一天他还勒了那个巴西柔术的教练\n他就说教练我有这个招那个教练都拍了他送了教练10秒那说明你比那个巴西教练比较厉害没有没有没有因为我只",
+            "source_sentences": [
+              "s000003",
+              "s000004",
+              "s000005",
+              "s000006",
+              "s000007",
+              "s000008"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_190e9f2bff97f7a12ae38767051151fc50b3241ac14e90841cefe7d9fd6e1aa1",
+            "start": 83.17,
+            "end": 107.33,
+            "duration_seconds": 24.16,
+            "text": "你也可以去那个探望我在团队当中其实也是算扮演一个主持人的角色那你觉得主持人最应该拥有的一个东西是\n可能需要茶园观色嘛感受一下那个现场的氛围我很不太需要\n你是那个氛围制造者\n作为一个主持人林场应变应该是特别好的一个",
+            "source_sentences": [
+              "s000011",
+              "s000012",
+              "s000013",
+              "s000014"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_0655e6285ebd018f00c8f1141f63ab7de174216e5e88a5c2fdc0ba06f4475518",
+            "start": 108.01,
+            "end": 152.57,
+            "duration_seconds": 44.56,
+            "text": "还行吧 怎么说呢就是能能来回过那么几招好的 那我们下面有两个两个情景\n还有情景演技啊说是现在正在主持一党音乐综艺嗯 好 英宗正在计票然后结果马上出来了这时候突然有导师说你们这个计票有问题哦\n当场质疑当场质疑他说你的票数好像啊绝对是做手脚应该怎么处理我就 我就真的先问问他我说老师 哎\n等一下老师那个那个小阳老师有一点意见是不是您当 你是觉得票数有点问题对哪方面有问题我们可以马上现场\n来核实一下我们这种那个现场投票都会有公证处的公证员在这里所以小潮院长他票数太高了他票数太高那可能也是",
+            "source_sentences": [
+              "s000015",
+              "s000016",
+              "s000017",
+              "s000018",
+              "s000019"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_7952a08f9cfcf071385cad1b04f0d4dd20f1312a2ff98219bea6ec4bef1e4724",
+            "start": 152.57,
+            "end": 170.75,
+            "duration_seconds": 18.18,
+            "text": "今天现场的观众正好喜欢他这个款全场120个人他三百多票为什么\n他有三百多票吗那我确实要问一下现在是不是有人卖黄牛票了不\n像你设定这种情景在做这种节目上很难发生那就是说三百多票票数超过这么多就是比如说我直接报警我报警",
+            "source_sentences": [
+              "s000020",
+              "s000021",
+              "s000022"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          }
+        ],
+        "warnings": [
+          "topic_short_segment_skipped"
+        ]
+      },
+      "candidate_comparisons": [
+        {
+          "candidate_id": "c_379c1979216856b48161946c65ea180bb577fde877a3806cd649075c05a2c6c6",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_7923546b8a6840eb7e2ed603e5106e8c8b1373a3cc01cc8cf3979a296d32ed48"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_190e9f2bff97f7a12ae38767051151fc50b3241ac14e90841cefe7d9fd6e1aa1",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_2bdd25fb06fcd92d25913117862ee531f23f49bcfb457c3773bc8f0c51042a70"
+          },
+          "exact_original_human_observation": {
+            "old_candidate_id": "c_2bdd25fb06fcd92d25913117862ee531f23f49bcfb457c3773bc8f0c51042a70",
+            "sample_id": "S03",
+            "answers": {
+              "opening_complete": "no",
+              "ending_complete": "no",
+              "understandable": "yes",
+              "no_unrelated_content": "yes"
+            },
+            "note": "本质语序有问题，而且前面不是完整一句话，而且那句话说完基本也是下一个话题了 看起来完全不搭",
+            "provenance": "reused_original_exact_range_refs_text_only",
+            "all_four_yes": false
+          }
+        },
+        {
+          "candidate_id": "c_0655e6285ebd018f00c8f1141f63ab7de174216e5e88a5c2fdc0ba06f4475518",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_160efbabf01d9c8e2a6b5873bf45fd79ec3d084fcefd072d985dbf0d8ee4db78"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_7952a08f9cfcf071385cad1b04f0d4dd20f1312a2ff98219bea6ec4bef1e4724",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_55a8ec2e67d0edba35eb68ba0d02c5343b25aa779b69e0ee19073406b3a755f7"
+          },
+          "exact_original_human_observation": null
+        }
+      ]
+    },
+    {
+      "source_name": "New4",
+      "sentence_count": 34,
+      "baseline_candidate_count": 306,
+      "topic_candidate_count": 6,
+      "topic_segment_count": 9,
+      "rejection_counts": {
+        "below_min_seconds": 3
+      },
+      "boundary_decisions": {
+        "not_valley": 24,
+        "hard_pause": 1,
+        "rejected": 1,
+        "accepted_valley": 7
+      },
+      "reused_label_count": 0,
+      "verified_original_label_count": 0,
+      "excluded_original_labels": [
+        {
+          "sample_id": "S01",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S02",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S03",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S04",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S05",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S06",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S07",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S08",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S09",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S10",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S11",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S12",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S13",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S14",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S15",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S16",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S17",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S18",
+          "reason": "not_exact_original_id_range_refs_text"
+        },
+        {
+          "sample_id": "S19",
+          "reason": "not_exact_original_id_range_refs_text"
+        }
+      ],
+      "analysis_sha256": "49517a50dd64922c8ac13f9f76e3539c3492d0b4785d5eaf9051f237a78632d8",
+      "baseline_generated_sha256": "e1007db065c927640d3665d3b896109b5d16286d24eb5e57ae496a4135eaabf7",
+      "topic_generated_sha256": "6dabd3c91229ea9e77b715b21fac012c498e6cd6b11cf166399b6192738e50e2",
+      "timing_seconds": {
+        "baseline_generation": 0.0910100999972201,
+        "topic_generation": 0.08844839999801479,
+        "standalone_segmentation": 0.08624520000012126
+      },
+      "source_coverage": {
+        "source_sentences": 34,
+        "all_topic_segments_sentence_refs": 34,
+        "candidate_sentence_refs": 26,
+        "rejected_segment_sentence_refs": 8,
+        "covered_source_sentences": 34,
+        "source_order_preserved": true,
+        "missing_sentence_refs": [],
+        "duplicated_sentence_refs": [],
+        "rejected_segments": [
+          "t_6bbf6b86ede53129cc80c384179a65d3be6be5f83a62c075b47d02b6f0c2b514",
+          "t_4c34d0bd2c70aa506d36a173b774424de61606cbe7dfc972406480818c817eee",
+          "t_d7c76b13f6696c03a5ef39c1890aa456428715b14b734b97c1d89bcd79882e1e"
+        ]
+      },
+      "segmentation": {
+        "schema_version": "0.1.0-draft.1",
+        "artifact_kind": "topic_segmentation",
+        "version": "topic-valley-v1",
+        "analysis_sha256": "49517a50dd64922c8ac13f9f76e3539c3492d0b4785d5eaf9051f237a78632d8",
+        "options": {
+          "min_seconds": 15.0,
+          "max_seconds": 90.0,
+          "max_gap_seconds": 3.0,
+          "max_candidates": 10000,
+          "window_units": 3,
+          "min_segment_units": 2,
+          "min_depth": 0.15
+        },
+        "method": "adjacent-window TF-IDF cosine valleys; relative peak prominence; Chinese 2/3-grams",
+        "scope": "lexical topic boundary evidence; not semantic event-completeness verification",
+        "limits": {
+          "max_sentences": 10000,
+          "max_text_characters": 1000000,
+          "max_analysis_bytes": 16777216,
+          "max_window_units": 32
+        },
+        "units": [
+          {
+            "index": 0,
+            "start": 3.32,
+            "end": 9.5,
+            "source_sentences": [
+              "s000001"
+            ]
+          },
+          {
+            "index": 1,
+            "start": 9.96,
+            "end": 14.94,
+            "source_sentences": [
+              "s000002"
+            ]
+          },
+          {
+            "index": 2,
+            "start": 18.09,
+            "end": 30.17,
+            "source_sentences": [
+              "s000003"
+            ]
+          },
+          {
+            "index": 3,
+            "start": 30.86,
+            "end": 44.11,
+            "source_sentences": [
+              "s000004"
+            ]
+          },
+          {
+            "index": 4,
+            "start": 46.48,
+            "end": 47.2,
+            "source_sentences": [
+              "s000005"
+            ]
+          },
+          {
+            "index": 5,
+            "start": 48.48,
+            "end": 50.58,
+            "source_sentences": [
+              "s000006"
+            ]
+          },
+          {
+            "index": 6,
+            "start": 52.3,
+            "end": 56.8,
+            "source_sentences": [
+              "s000007"
+            ]
+          },
+          {
+            "index": 7,
+            "start": 58.1,
+            "end": 62.25,
+            "source_sentences": [
+              "s000008"
+            ]
+          },
+          {
+            "index": 8,
+            "start": 64.15,
+            "end": 72.13,
+            "source_sentences": [
+              "s000009"
+            ]
+          },
+          {
+            "index": 9,
+            "start": 73.19,
+            "end": 87.44,
+            "source_sentences": [
+              "s000010"
+            ]
+          },
+          {
+            "index": 10,
+            "start": 87.87,
+            "end": 96.19,
+            "source_sentences": [
+              "s000011"
+            ]
+          },
+          {
+            "index": 11,
+            "start": 97.09,
+            "end": 101.17,
+            "source_sentences": [
+              "s000012"
+            ]
+          },
+          {
+            "index": 12,
+            "start": 101.6,
+            "end": 104.04,
+            "source_sentences": [
+              "s000013"
+            ]
+          },
+          {
+            "index": 13,
+            "start": 105.75,
+            "end": 109.87,
+            "source_sentences": [
+              "s000014"
+            ]
+          },
+          {
+            "index": 14,
+            "start": 111.66,
+            "end": 113.1,
+            "source_sentences": [
+              "s000015"
+            ]
+          },
+          {
+            "index": 15,
+            "start": 114.62,
+            "end": 118.78,
+            "source_sentences": [
+              "s000016"
+            ]
+          },
+          {
+            "index": 16,
+            "start": 120.23,
+            "end": 120.59,
+            "source_sentences": [
+              "s000017"
+            ]
+          },
+          {
+            "index": 17,
+            "start": 121.7,
+            "end": 124.62,
+            "source_sentences": [
+              "s000018"
+            ]
+          },
+          {
+            "index": 18,
+            "start": 127.18,
+            "end": 128.3,
+            "source_sentences": [
+              "s000019"
+            ]
+          },
+          {
+            "index": 19,
+            "start": 130.3,
+            "end": 132.96,
+            "source_sentences": [
+              "s000020"
+            ]
+          },
+          {
+            "index": 20,
+            "start": 134.0,
+            "end": 139.66,
+            "source_sentences": [
+              "s000021"
+            ]
+          },
+          {
+            "index": 21,
+            "start": 140.08,
+            "end": 143.56,
+            "source_sentences": [
+              "s000022"
+            ]
+          },
+          {
+            "index": 22,
+            "start": 144.52,
+            "end": 145.74,
+            "source_sentences": [
+              "s000023"
+            ]
+          },
+          {
+            "index": 23,
+            "start": 147.74,
+            "end": 152.88,
+            "source_sentences": [
+              "s000024"
+            ]
+          },
+          {
+            "index": 24,
+            "start": 153.86,
+            "end": 163.5,
+            "source_sentences": [
+              "s000025"
+            ]
+          },
+          {
+            "index": 25,
+            "start": 163.5,
+            "end": 166.6,
+            "source_sentences": [
+              "s000026"
+            ]
+          },
+          {
+            "index": 26,
+            "start": 167.92,
+            "end": 175.34,
+            "source_sentences": [
+              "s000027"
+            ]
+          },
+          {
+            "index": 27,
+            "start": 175.78,
+            "end": 182.12,
+            "source_sentences": [
+              "s000028"
+            ]
+          },
+          {
+            "index": 28,
+            "start": 183.9,
+            "end": 184.7,
+            "source_sentences": [
+              "s000029"
+            ]
+          },
+          {
+            "index": 29,
+            "start": 186.12,
+            "end": 198.6,
+            "source_sentences": [
+              "s000030"
+            ]
+          },
+          {
+            "index": 30,
+            "start": 199.36,
+            "end": 207.23,
+            "source_sentences": [
+              "s000031"
+            ]
+          },
+          {
+            "index": 31,
+            "start": 207.82,
+            "end": 211.5,
+            "source_sentences": [
+              "s000032"
+            ]
+          },
+          {
+            "index": 32,
+            "start": 212.14,
+            "end": 217.34,
+            "source_sentences": [
+              "s000033"
+            ]
+          },
+          {
+            "index": 33,
+            "start": 217.94,
+            "end": 223.84,
+            "source_sentences": [
+              "s000034"
+            ]
+          }
+        ],
+        "boundaries": [
+          {
+            "after_unit": 0,
+            "gap_seconds": 0.46000000000000085,
+            "left_sentences": [
+              "s000001"
+            ],
+            "right_sentences": [
+              "s000002"
+            ],
+            "left_window_units": [
+              0,
+              0
+            ],
+            "right_window_units": [
+              1,
+              1
+            ],
+            "similarity": 0.226682542894,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 1,
+            "gap_seconds": 3.1500000000000004,
+            "left_sentences": [
+              "s000002"
+            ],
+            "right_sentences": [
+              "s000003"
+            ],
+            "left_window_units": null,
+            "right_window_units": null,
+            "similarity": null,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "hard_pause",
+            "reasons": [
+              "gap_above_max_gap"
+            ]
+          },
+          {
+            "after_unit": 2,
+            "gap_seconds": 0.6899999999999977,
+            "left_sentences": [
+              "s000003"
+            ],
+            "right_sentences": [
+              "s000004"
+            ],
+            "left_window_units": [
+              2,
+              2
+            ],
+            "right_window_units": [
+              3,
+              5
+            ],
+            "similarity": 0.038001665664,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 3,
+            "gap_seconds": 2.3699999999999974,
+            "left_sentences": [
+              "s000004"
+            ],
+            "right_sentences": [
+              "s000005"
+            ],
+            "left_window_units": [
+              2,
+              3
+            ],
+            "right_window_units": [
+              4,
+              6
+            ],
+            "similarity": 0.033449800007,
+            "left_peak": 0.038001665664,
+            "right_peak": 0.033747880591,
+            "raw_depth": 0.004849946241,
+            "depth": 0.067595497033,
+            "plateau_after_units": [
+              3
+            ],
+            "decision": "rejected",
+            "reasons": [
+              "below_min_depth"
+            ]
+          },
+          {
+            "after_unit": 4,
+            "gap_seconds": 1.279999999999994,
+            "left_sentences": [
+              "s000005"
+            ],
+            "right_sentences": [
+              "s000006"
+            ],
+            "left_window_units": [
+              2,
+              4
+            ],
+            "right_window_units": [
+              5,
+              7
+            ],
+            "similarity": 0.033747880591,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 5,
+            "gap_seconds": 1.7199999999999989,
+            "left_sentences": [
+              "s000006"
+            ],
+            "right_sentences": [
+              "s000007"
+            ],
+            "left_window_units": [
+              3,
+              5
+            ],
+            "right_window_units": [
+              6,
+              8
+            ],
+            "similarity": 0.027739738468,
+            "left_peak": 0.033747880591,
+            "right_peak": 0.13354961062,
+            "raw_depth": 0.111818014275,
+            "depth": 0.668378308997,
+            "plateau_after_units": [
+              5
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 6,
+            "gap_seconds": 1.3000000000000043,
+            "left_sentences": [
+              "s000007"
+            ],
+            "right_sentences": [
+              "s000008"
+            ],
+            "left_window_units": [
+              4,
+              6
+            ],
+            "right_window_units": [
+              7,
+              9
+            ],
+            "similarity": 0.08138954855,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 7,
+            "gap_seconds": 1.9000000000000057,
+            "left_sentences": [
+              "s000008"
+            ],
+            "right_sentences": [
+              "s000009"
+            ],
+            "left_window_units": [
+              5,
+              7
+            ],
+            "right_window_units": [
+              8,
+              10
+            ],
+            "similarity": 0.081784237177,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 8,
+            "gap_seconds": 1.0600000000000023,
+            "left_sentences": [
+              "s000009"
+            ],
+            "right_sentences": [
+              "s000010"
+            ],
+            "left_window_units": [
+              6,
+              8
+            ],
+            "right_window_units": [
+              9,
+              11
+            ],
+            "similarity": 0.13354961062,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 9,
+            "gap_seconds": 0.4300000000000068,
+            "left_sentences": [
+              "s000010"
+            ],
+            "right_sentences": [
+              "s000011"
+            ],
+            "left_window_units": [
+              7,
+              9
+            ],
+            "right_window_units": [
+              10,
+              12
+            ],
+            "similarity": 0.117133532761,
+            "left_peak": 0.13354961062,
+            "right_peak": 0.161763508376,
+            "raw_depth": 0.061046053474,
+            "depth": 0.20671636154,
+            "plateau_after_units": [
+              9
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 10,
+            "gap_seconds": 0.9000000000000057,
+            "left_sentences": [
+              "s000011"
+            ],
+            "right_sentences": [
+              "s000012"
+            ],
+            "left_window_units": [
+              8,
+              10
+            ],
+            "right_window_units": [
+              11,
+              13
+            ],
+            "similarity": 0.161763508376,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 11,
+            "gap_seconds": 0.4299999999999926,
+            "left_sentences": [
+              "s000012"
+            ],
+            "right_sentences": [
+              "s000013"
+            ],
+            "left_window_units": [
+              9,
+              11
+            ],
+            "right_window_units": [
+              12,
+              14
+            ],
+            "similarity": 0.140333588974,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 12,
+            "gap_seconds": 1.7099999999999937,
+            "left_sentences": [
+              "s000013"
+            ],
+            "right_sentences": [
+              "s000014"
+            ],
+            "left_window_units": [
+              10,
+              12
+            ],
+            "right_window_units": [
+              13,
+              15
+            ],
+            "similarity": 0.067067021352,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 13,
+            "gap_seconds": 1.789999999999992,
+            "left_sentences": [
+              "s000014"
+            ],
+            "right_sentences": [
+              "s000015"
+            ],
+            "left_window_units": [
+              11,
+              13
+            ],
+            "right_window_units": [
+              14,
+              16
+            ],
+            "similarity": 0.008540568119,
+            "left_peak": 0.161763508376,
+            "right_peak": 0.03514318646,
+            "raw_depth": 0.179825558598,
+            "depth": 0.913252638504,
+            "plateau_after_units": [
+              13
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 14,
+            "gap_seconds": 1.5200000000000102,
+            "left_sentences": [
+              "s000015"
+            ],
+            "right_sentences": [
+              "s000016"
+            ],
+            "left_window_units": [
+              12,
+              14
+            ],
+            "right_window_units": [
+              15,
+              17
+            ],
+            "similarity": 0.012068495447,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 15,
+            "gap_seconds": 1.4500000000000028,
+            "left_sentences": [
+              "s000016"
+            ],
+            "right_sentences": [
+              "s000017"
+            ],
+            "left_window_units": [
+              13,
+              15
+            ],
+            "right_window_units": [
+              16,
+              18
+            ],
+            "similarity": 0.03514318646,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 16,
+            "gap_seconds": 1.1099999999999994,
+            "left_sentences": [
+              "s000017"
+            ],
+            "right_sentences": [
+              "s000018"
+            ],
+            "left_window_units": [
+              14,
+              16
+            ],
+            "right_window_units": [
+              17,
+              19
+            ],
+            "similarity": 0.011932213259,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 17,
+            "gap_seconds": 2.5600000000000023,
+            "left_sentences": [
+              "s000018"
+            ],
+            "right_sentences": [
+              "s000019"
+            ],
+            "left_window_units": [
+              15,
+              17
+            ],
+            "right_window_units": [
+              18,
+              20
+            ],
+            "similarity": 0.0,
+            "left_peak": 0.03514318646,
+            "right_peak": 0.018491403819,
+            "raw_depth": 0.053634590279,
+            "depth": 1.0,
+            "plateau_after_units": [
+              17
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 18,
+            "gap_seconds": 2.0,
+            "left_sentences": [
+              "s000019"
+            ],
+            "right_sentences": [
+              "s000020"
+            ],
+            "left_window_units": [
+              16,
+              18
+            ],
+            "right_window_units": [
+              19,
+              21
+            ],
+            "similarity": 0.018491403819,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 19,
+            "gap_seconds": 1.039999999999992,
+            "left_sentences": [
+              "s000020"
+            ],
+            "right_sentences": [
+              "s000021"
+            ],
+            "left_window_units": [
+              17,
+              19
+            ],
+            "right_window_units": [
+              20,
+              22
+            ],
+            "similarity": 0.01481251186,
+            "left_peak": 0.018491403819,
+            "right_peak": 0.109703224115,
+            "raw_depth": 0.098569604214,
+            "depth": 0.768905887888,
+            "plateau_after_units": [
+              19
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 20,
+            "gap_seconds": 0.4200000000000159,
+            "left_sentences": [
+              "s000021"
+            ],
+            "right_sentences": [
+              "s000022"
+            ],
+            "left_window_units": [
+              18,
+              20
+            ],
+            "right_window_units": [
+              21,
+              23
+            ],
+            "similarity": 0.109703224115,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 21,
+            "gap_seconds": 0.960000000000008,
+            "left_sentences": [
+              "s000022"
+            ],
+            "right_sentences": [
+              "s000023"
+            ],
+            "left_window_units": [
+              19,
+              21
+            ],
+            "right_window_units": [
+              22,
+              24
+            ],
+            "similarity": 0.101096615702,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 22,
+            "gap_seconds": 2.0,
+            "left_sentences": [
+              "s000023"
+            ],
+            "right_sentences": [
+              "s000024"
+            ],
+            "left_window_units": [
+              20,
+              22
+            ],
+            "right_window_units": [
+              23,
+              25
+            ],
+            "similarity": 0.08199621799,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 23,
+            "gap_seconds": 0.9800000000000182,
+            "left_sentences": [
+              "s000024"
+            ],
+            "right_sentences": [
+              "s000025"
+            ],
+            "left_window_units": [
+              21,
+              23
+            ],
+            "right_window_units": [
+              24,
+              26
+            ],
+            "similarity": 0.011146169946,
+            "left_peak": 0.109703224115,
+            "right_peak": 0.011879362738,
+            "raw_depth": 0.099290246961,
+            "depth": 0.81664858045,
+            "plateau_after_units": [
+              23
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 24,
+            "gap_seconds": 0.0,
+            "left_sentences": [
+              "s000025"
+            ],
+            "right_sentences": [
+              "s000026"
+            ],
+            "left_window_units": [
+              22,
+              24
+            ],
+            "right_window_units": [
+              25,
+              27
+            ],
+            "similarity": 0.011205251022,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 25,
+            "gap_seconds": 1.3199999999999932,
+            "left_sentences": [
+              "s000026"
+            ],
+            "right_sentences": [
+              "s000027"
+            ],
+            "left_window_units": [
+              23,
+              25
+            ],
+            "right_window_units": [
+              26,
+              28
+            ],
+            "similarity": 0.011879362738,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 26,
+            "gap_seconds": 0.4399999999999977,
+            "left_sentences": [
+              "s000027"
+            ],
+            "right_sentences": [
+              "s000028"
+            ],
+            "left_window_units": [
+              24,
+              26
+            ],
+            "right_window_units": [
+              27,
+              29
+            ],
+            "similarity": 0.005153841308,
+            "left_peak": 0.011879362738,
+            "right_peak": 0.08479914756,
+            "raw_depth": 0.086370827682,
+            "depth": 0.893381863413,
+            "plateau_after_units": [
+              26
+            ],
+            "decision": "accepted_valley",
+            "reasons": []
+          },
+          {
+            "after_unit": 27,
+            "gap_seconds": 1.7800000000000011,
+            "left_sentences": [
+              "s000028"
+            ],
+            "right_sentences": [
+              "s000029"
+            ],
+            "left_window_units": [
+              25,
+              27
+            ],
+            "right_window_units": [
+              28,
+              30
+            ],
+            "similarity": 0.006149493067,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 28,
+            "gap_seconds": 1.420000000000016,
+            "left_sentences": [
+              "s000029"
+            ],
+            "right_sentences": [
+              "s000030"
+            ],
+            "left_window_units": [
+              26,
+              28
+            ],
+            "right_window_units": [
+              29,
+              31
+            ],
+            "similarity": 0.006586591472,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 29,
+            "gap_seconds": 0.7600000000000193,
+            "left_sentences": [
+              "s000030"
+            ],
+            "right_sentences": [
+              "s000031"
+            ],
+            "left_window_units": [
+              27,
+              29
+            ],
+            "right_window_units": [
+              30,
+              32
+            ],
+            "similarity": 0.054860055262,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 30,
+            "gap_seconds": 0.5900000000000034,
+            "left_sentences": [
+              "s000031"
+            ],
+            "right_sentences": [
+              "s000032"
+            ],
+            "left_window_units": [
+              28,
+              30
+            ],
+            "right_window_units": [
+              31,
+              33
+            ],
+            "similarity": 0.08479914756,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 31,
+            "gap_seconds": 0.6399999999999864,
+            "left_sentences": [
+              "s000032"
+            ],
+            "right_sentences": [
+              "s000033"
+            ],
+            "left_window_units": [
+              29,
+              31
+            ],
+            "right_window_units": [
+              32,
+              33
+            ],
+            "similarity": 0.054461086895,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          },
+          {
+            "after_unit": 32,
+            "gap_seconds": 0.5999999999999943,
+            "left_sentences": [
+              "s000033"
+            ],
+            "right_sentences": [
+              "s000034"
+            ],
+            "left_window_units": [
+              30,
+              32
+            ],
+            "right_window_units": [
+              33,
+              33
+            ],
+            "similarity": 0.007421949188,
+            "left_peak": null,
+            "right_peak": null,
+            "raw_depth": null,
+            "depth": null,
+            "plateau_after_units": [],
+            "decision": "not_valley",
+            "reasons": [
+              "not_local_minimum_or_unbracketed"
+            ]
+          }
+        ],
+        "segments": [
+          {
+            "id": "t_6bbf6b86ede53129cc80c384179a65d3be6be5f83a62c075b47d02b6f0c2b514",
+            "first_unit": 0,
+            "last_unit": 1,
+            "start": 3.32,
+            "end": 14.94,
+            "duration_seconds": 11.62,
+            "source_sentences": [
+              "s000001",
+              "s000002"
+            ],
+            "text": "大家好 欢迎收看《小阳有约》我们今天请来的嘉宾是国民舅舅\n王尧兴各位朋友大家好欢迎来到《小阳有约》",
+            "eligible": false,
+            "reasons": [
+              "below_min_seconds"
+            ]
+          },
+          {
+            "id": "t_80448563c6319001cc74598d6176c80e595ae4ad1a3e1275b9960cd853571468",
+            "first_unit": 2,
+            "last_unit": 5,
+            "start": 18.09,
+            "end": 50.58,
+            "duration_seconds": 32.49,
+            "source_sentences": [
+              "s000003",
+              "s000004",
+              "s000005",
+              "s000006"
+            ],
+            "text": "非常感谢王老师能来今天我们的这个节目这可太荣幸了 太开心了为什么今天没有带一个领带之类的我觉得看场合吧因为一般来讲只有公司的中层\n需要打领带需要特别用一个相对来讲正式的装扮去表达或者是表示自己的地位的可能是我们开始今天的问题可以吗可以\n第一个问题\n为什么总是出现成功人士",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_62ae5d38f3b5f37c900b207f5f4a7f1f6e8152472d03e18faabcdc8c24c06545",
+            "first_unit": 6,
+            "last_unit": 9,
+            "start": 52.3,
+            "end": 87.44,
+            "duration_seconds": 35.14,
+            "source_sentences": [
+              "s000007",
+              "s000008",
+              "s000009",
+              "s000010"
+            ],
+            "text": "我觉得这个取决于每个人对于成功的定义我是不会这么认为的\n我觉得我是一个幸运的人扮演成功人士那\n你最新一部戏《年会不能停二》你们演的这个什么角色就是一个分公司的主管\n也是成功人士成功吗也还好吧是一个没有现实当中自己成功比如说大家会说爸总用这种标签或者形容词去形容我",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_0678147ae71e736b169a8a30c85905fa5ea58f035ebf58cdda7742bff590d4af",
+            "first_unit": 10,
+            "last_unit": 13,
+            "start": 87.87,
+            "end": 109.87,
+            "duration_seconds": 22.0,
+            "source_sentences": [
+              "s000011",
+              "s000012",
+              "s000013",
+              "s000014"
+            ],
+            "text": "自己那你觉得自己是一个什么样的角色我是一个比较帅气的人帅气的人帅气任性\n我是一个幸运的人那我们其实挺像的不会是一个比较帅气的人\n你是一个帅气的人你是\n平时王老师是一个比较爱笑的人就笑起来就很成功的感觉",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_4c34d0bd2c70aa506d36a173b774424de61606cbe7dfc972406480818c817eee",
+            "first_unit": 14,
+            "last_unit": 17,
+            "start": 111.66,
+            "end": 124.62,
+            "duration_seconds": 12.96,
+            "source_sentences": [
+              "s000015",
+              "s000016",
+              "s000017",
+              "s000018"
+            ],
+            "text": "好的有什么技巧\n如果你要这样子说的话首先你只要成功了你怎么笑都是成功\n所以\n还是觉得自己成功我们下一个问题",
+            "eligible": false,
+            "reasons": [
+              "below_min_seconds"
+            ]
+          },
+          {
+            "id": "t_d7c76b13f6696c03a5ef39c1890aa456428715b14b734b97c1d89bcd79882e1e",
+            "first_unit": 18,
+            "last_unit": 19,
+            "start": 127.18,
+            "end": 132.96,
+            "duration_seconds": 5.78,
+            "source_sentences": [
+              "s000019",
+              "s000020"
+            ],
+            "text": "你是一个真诚的人\n是的那您最讨厌哪个演员比较",
+            "eligible": false,
+            "reasons": [
+              "below_min_seconds"
+            ]
+          },
+          {
+            "id": "t_9c0da7224d0da4367061c0ec9c5ff0476af7c0e59605aab4eb24d63dbf3df672",
+            "first_unit": 20,
+            "last_unit": 23,
+            "start": 134.0,
+            "end": 152.88,
+            "duration_seconds": 18.88,
+            "source_sentences": [
+              "s000021",
+              "s000022",
+              "s000023",
+              "s000024"
+            ],
+            "text": "不喜欢不诚恳的人谁最不诚恳的谁最\n极限词在B键是可以用的对 网科也没有问题的\n别让我们说了算了\n以我浅薄的入行经验可能没办法比出来一个谁最不诚恳",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_7e475dacd5584e0dc5d387ee68c484d7543df729b224580b2e6d01a6920d6538",
+            "first_unit": 24,
+            "last_unit": 26,
+            "start": 153.86,
+            "end": 175.34,
+            "duration_seconds": 21.48,
+            "source_sentences": [
+              "s000025",
+              "s000026",
+              "s000027"
+            ],
+            "text": "就是不愿意说出一个名字我没有这个名字没有这种名字那这样这讨厌哪一个合作过的品牌方合作的品牌方 假方吗\n你怎么能说自己爸爸的不是呢还是一个很真诚的人\n我们下一个问题好就是在表演之外唱歌跳舞也是你很擅长的一件事喜欢对",
+            "eligible": true,
+            "reasons": []
+          },
+          {
+            "id": "t_7f701e8f204221fe2dd91fd6a7132df5d0aac463087997786434393b9805bd4a",
+            "first_unit": 27,
+            "last_unit": 33,
+            "start": 175.78,
+            "end": 223.84,
+            "duration_seconds": 48.06,
+            "source_sentences": [
+              "s000028",
+              "s000029",
+              "s000030",
+              "s000031",
+              "s000032",
+              "s000033",
+              "s000034"
+            ],
+            "text": "能感觉出来那还有没有什么吉他的特长我想说是郭刚晴多大啊 杨老师三四年级\n学了\n可能也就两三个月吧然后这个老师要开一个成功发表会老师就给我找了一个特别简单的曲调曲调是A B B A的就是弹了一个开头\n弹一个变奏重复一次再回到那个主旋律就结束了上台的时候也特别紧张然后我就弹了一个A然后弹了一段B\n然后要重复一次我弹了几次呢\n我再弹一次然后再回到主权里结束了台下就有一个人喊Uncle\n就是很精彩但是他们还是弹得很好听吗这个技能不然那个人是我爸爸是对",
+            "eligible": true,
+            "reasons": []
+          }
+        ],
+        "warnings": [
+          "uninformative_sentence_unit",
+          "short_topic_segment_not_generated"
+        ],
+        "model_requests": 0
+      },
+      "topic_candidates": {
+        "schema_version": "0.1.0-draft.1",
+        "artifact_kind": "candidate_windows",
+        "stage": "generated",
+        "input_result_kind": "measured",
+        "analysis_sha256": "49517a50dd64922c8ac13f9f76e3539c3492d0b4785d5eaf9051f237a78632d8",
+        "media": {
+          "source_sha256": "f321276be604040a5df3173f78cf66fb19479ecb5bad524c31d4925ed314cb09",
+          "normalized_sha256": "d19f411829bd6b25e0c312ba5987127190ac0bd7fdb2ce47cb854f20ecc3a647",
+          "duration_seconds": 228.53333333333333,
+          "time_reference": "normalized_video",
+          "has_audio": true
+        },
+        "generator": {
+          "version": "topic-valley-v1",
+          "options": {
+            "min_seconds": 15.0,
+            "max_seconds": 90.0,
+            "max_gap_seconds": 3.0,
+            "max_candidates": 10000,
+            "window_units": 3,
+            "min_segment_units": 2,
+            "min_depth": 0.15
+          }
+        },
+        "candidate_count": 6,
+        "candidates": [
+          {
+            "id": "c_80448563c6319001cc74598d6176c80e595ae4ad1a3e1275b9960cd853571468",
+            "start": 18.09,
+            "end": 50.58,
+            "duration_seconds": 32.49,
+            "text": "非常感谢王老师能来今天我们的这个节目这可太荣幸了 太开心了为什么今天没有带一个领带之类的我觉得看场合吧因为一般来讲只有公司的中层\n需要打领带需要特别用一个相对来讲正式的装扮去表达或者是表示自己的地位的可能是我们开始今天的问题可以吗可以\n第一个问题\n为什么总是出现成功人士",
+            "source_sentences": [
+              "s000003",
+              "s000004",
+              "s000005",
+              "s000006"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_62ae5d38f3b5f37c900b207f5f4a7f1f6e8152472d03e18faabcdc8c24c06545",
+            "start": 52.3,
+            "end": 87.44,
+            "duration_seconds": 35.14,
+            "text": "我觉得这个取决于每个人对于成功的定义我是不会这么认为的\n我觉得我是一个幸运的人扮演成功人士那\n你最新一部戏《年会不能停二》你们演的这个什么角色就是一个分公司的主管\n也是成功人士成功吗也还好吧是一个没有现实当中自己成功比如说大家会说爸总用这种标签或者形容词去形容我",
+            "source_sentences": [
+              "s000007",
+              "s000008",
+              "s000009",
+              "s000010"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_0678147ae71e736b169a8a30c85905fa5ea58f035ebf58cdda7742bff590d4af",
+            "start": 87.87,
+            "end": 109.87,
+            "duration_seconds": 22.0,
+            "text": "自己那你觉得自己是一个什么样的角色我是一个比较帅气的人帅气的人帅气任性\n我是一个幸运的人那我们其实挺像的不会是一个比较帅气的人\n你是一个帅气的人你是\n平时王老师是一个比较爱笑的人就笑起来就很成功的感觉",
+            "source_sentences": [
+              "s000011",
+              "s000012",
+              "s000013",
+              "s000014"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_9c0da7224d0da4367061c0ec9c5ff0476af7c0e59605aab4eb24d63dbf3df672",
+            "start": 134.0,
+            "end": 152.88,
+            "duration_seconds": 18.88,
+            "text": "不喜欢不诚恳的人谁最不诚恳的谁最\n极限词在B键是可以用的对 网科也没有问题的\n别让我们说了算了\n以我浅薄的入行经验可能没办法比出来一个谁最不诚恳",
+            "source_sentences": [
+              "s000021",
+              "s000022",
+              "s000023",
+              "s000024"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_7e475dacd5584e0dc5d387ee68c484d7543df729b224580b2e6d01a6920d6538",
+            "start": 153.86,
+            "end": 175.34,
+            "duration_seconds": 21.48,
+            "text": "就是不愿意说出一个名字我没有这个名字没有这种名字那这样这讨厌哪一个合作过的品牌方合作的品牌方 假方吗\n你怎么能说自己爸爸的不是呢还是一个很真诚的人\n我们下一个问题好就是在表演之外唱歌跳舞也是你很擅长的一件事喜欢对",
+            "source_sentences": [
+              "s000025",
+              "s000026",
+              "s000027"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          },
+          {
+            "id": "c_7f701e8f204221fe2dd91fd6a7132df5d0aac463087997786434393b9805bd4a",
+            "start": 175.78,
+            "end": 223.84,
+            "duration_seconds": 48.06,
+            "text": "能感觉出来那还有没有什么吉他的特长我想说是郭刚晴多大啊 杨老师三四年级\n学了\n可能也就两三个月吧然后这个老师要开一个成功发表会老师就给我找了一个特别简单的曲调曲调是A B B A的就是弹了一个开头\n弹一个变奏重复一次再回到那个主旋律就结束了上台的时候也特别紧张然后我就弹了一个A然后弹了一段B\n然后要重复一次我弹了几次呢\n我再弹一次然后再回到主权里结束了台下就有一个人喊Uncle\n就是很精彩但是他们还是弹得很好听吗这个技能不然那个人是我爸爸是对",
+            "source_sentences": [
+              "s000028",
+              "s000029",
+              "s000030",
+              "s000031",
+              "s000032",
+              "s000033",
+              "s000034"
+            ],
+            "scoring_status": "pending",
+            "score": null,
+            "reasons": [],
+            "scorer": null
+          }
+        ],
+        "warnings": [
+          "topic_short_segment_skipped",
+          "topic_uninformative_text"
+        ]
+      },
+      "candidate_comparisons": [
+        {
+          "candidate_id": "c_80448563c6319001cc74598d6176c80e595ae4ad1a3e1275b9960cd853571468",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_96eb7b2b043b8a94328c38a325335f91fa0ed82d33bdf9fd81f0473ba4d47ec7"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_62ae5d38f3b5f37c900b207f5f4a7f1f6e8152472d03e18faabcdc8c24c06545",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_47e392dd260dbff9c191f6a34afbf4e87399e9af68acc9407aec6717eeecba9a"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_0678147ae71e736b169a8a30c85905fa5ea58f035ebf58cdda7742bff590d4af",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_30711aeb22a1dea8c9dd570c4c0c8ac2814b066c726b82d7a2c04b74ae83a2a4"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_9c0da7224d0da4367061c0ec9c5ff0476af7c0e59605aab4eb24d63dbf3df672",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_6694664d5221df3345af7c2737c248fa11a1fd42c68ddf52e5cffb200431584b"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_7e475dacd5584e0dc5d387ee68c484d7543df729b224580b2e6d01a6920d6538",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_d7af20f6f5cf039d9ec1a6047971ffed73c57a5bbb63d5ae320c44856669a1ea"
+          },
+          "exact_original_human_observation": null
+        },
+        {
+          "candidate_id": "c_7f701e8f204221fe2dd91fd6a7132df5d0aac463087997786434393b9805bd4a",
+          "exact_baseline_match": {
+            "old_candidate_id": "c_9e7d85a503ab83e79e8d42a6616237c46061bbf988abf3af18f3d11ac3082dc6"
+          },
+          "exact_original_human_observation": null
+        }
+      ]
+    }
+  ]
+}

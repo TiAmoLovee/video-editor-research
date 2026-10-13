@@ -1,0 +1,41 @@
+{
+  "scope": "local sandbox; no GitHub CI or container acceptance",
+  "attempts": [
+    {
+      "name": "backend-tests",
+      "status": "interrupted_not_passed",
+      "log": "outputs/week4-topic-validation/backend-tests.log",
+      "reason": "Windows sandbox filesystem failures and local HTTP test stalled; stopped without final suite result"
+    },
+    {
+      "name": "topic-regression",
+      "status": "interrupted_not_passed",
+      "log": "outputs/week4-topic-validation/topic-regression.log",
+      "reason": "Real loopback transport failures and imported API tests stalled; stopped without final suite result"
+    },
+    {
+      "name": "topic-regression-no-network",
+      "status": "passed_directed_scope",
+      "log": "outputs/week4-topic-validation/topic-regression-no-network.log",
+      "tests": 177,
+      "excluded_cases": [
+        "test_llm_scoring.HTTPTransportTests.test_real_loopback_success_auth_retry_codes_and_malformed_responses",
+        "test_llm_scoring.HTTPTransportTests.test_real_timeout_and_closed_port",
+        "backend.tests.test_candidate_api.CandidateApiTests.test_corrupt_or_missing_result_is_explicit_without_path_leak",
+        "backend.tests.test_candidate_api.CandidateApiTests.test_empty_is_success_not_an_error",
+        "backend.tests.test_candidate_api.CandidateApiTests.test_invalid_score_and_path_escape_rejected",
+        "backend.tests.test_candidate_api.CandidateApiTests.test_legacy_unfinished_unknown_and_invalid_pagination",
+        "backend.tests.test_candidate_api.CandidateApiTests.test_model_and_fallback_projection",
+        "backend.tests.test_candidate_api.CandidateApiTests.test_paginated_projection_matches_download_without_internal_fields",
+        "test_selection.SelectionApiTests.test_filter_is_global_and_download_matches_page",
+        "test_selection.SelectionApiTests.test_legacy_and_invalid_review_are_not_silent_success",
+        "test_selection.SelectionApiTests.test_topic_filter_folds_repeated_text_globally_and_preserves_originals"
+      ],
+      "temp_directory": "outputs/week4-topic-validation/tmp"
+    }
+  ],
+  "ruff_modified_python_files": "passed",
+  "git_diff_check": "passed",
+  "production_deployed": false,
+  "quality_acceptance": "pending"
+}

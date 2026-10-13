@@ -35,6 +35,159 @@ beforeEach(() => {
 });
 
 describe('export workbench', () => {
+  it('adds selected candidates using saved frame projections, supports deleting and re-adding, and saves them on the same baseline', async () => {
+    const stored = saved();
+    stored.available_clips = [{ candidate_id: 'new-candidate', source_in_frame: 1001, source_out_frame: 1499 }];
+    vi.mocked(api.getEdl).mockImplementation(async (_task, id) => id === revision ? stored : saved(id));
+    const save = vi.spyOn(api, 'saveEdits').mockResolvedValue(record(portraitRevision));
+    const candidate = { ...candidates[0], id: 'new-candidate', start: 1.23456, end: 123.45678 };
+    render(<ExportWorkbench {...props()} selected={[candidate]} />);
+    await screen.findByRole('button', { name: '编辑这个版本' });
+    fireEvent.click(screen.getByRole('button', { name: '编辑这个版本' }));
+    fireEvent.click(screen.getByRole('button', { name: '加入当前所选的新片段' }));
+    expect(screen.getByLabelText('片段 3 源起帧')).toHaveValue(1001);
+    expect(screen.getByLabelText('片段 3 源止帧')).toHaveValue(1499);
+    expect(screen.getByRole('button', { name: '加入当前所选的新片段' })).toBeDisabled();
+    fireEvent.change(screen.getByLabelText('片段 3 源起帧'), { target: { value: '1002' } });
+    fireEvent.click(screen.getByRole('button', { name: '删除编辑片段 3' }));
+    fireEvent.click(screen.getByRole('button', { name: '加入当前所选的新片段' }));
+    expect(screen.getByLabelText('片段 3 源起帧')).toHaveValue(1001);
+    fireEvent.click(screen.getByRole('button', { name: '保存修改为新版本' }));
+    await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
+    expect(save).toHaveBeenCalledWith(task, revision, [
+      { candidate_id: 'candidate-2', source_in_frame: 0, source_out_frame: 600 },
+      { candidate_id: 'candidate-1', source_in_frame: 600, source_out_frame: 1200 },
+      { candidate_id: 'new-candidate', source_in_frame: 1001, source_out_frame: 1499 },
+    ], expect.any(AbortSignal));
+    await waitFor(() => expect(screen.queryByRole('list', { name: '切点编辑草稿' })).not.toBeInTheDocument());
+  });
+
+  it('does not add a selected candidate that is missing from the saved snapshot', async () => {
+    const stored = saved(); stored.available_clips = [];
+    vi.mocked(api.getEdl).mockResolvedValue(stored);
+    render(<ExportWorkbench {...props()} selected={[{ ...candidates[0], id: 'unknown-to-snapshot' }]} />);
+    await screen.findByRole('button', { name: '编辑这个版本' });
+    fireEvent.click(screen.getByRole('button', { name: '编辑这个版本' }));
+    expect(screen.getByRole('button', { name: '加入当前所选的新片段' })).toBeDisabled();
+    expect(screen.getByText('当前所选中有 1 条不在此版本的候选快照内，不能加入。')).toBeInTheDocument();
+    expect(within(screen.getByRole('list', { name: '切点编辑草稿' })).getAllByRole('listitem')).toHaveLength(2);
+  });
+
+  it('blocks additions exceeding the editable clip limit until enough clips are removed', async () => {
+    const stored = saved();
+    const repeated = stored.edl.clips[0];
+    stored.revision.clip_count = 100; stored.revision.duration_frames = 60000; stored.edl.duration_frames = 60000;
+    stored.edl.clips = Array.from({ length: 100 }, (_, index) => ({ ...repeated, id: `clip-${index}`,
+      timeline_in_frame: index * 600, timeline_out_frame: (index + 1) * 600, provenance: { candidate_id: `candidate-${index}` } }));
+    stored.available_clips = [{ candidate_id: 'extra', source_in_frame: 1001, source_out_frame: 1499 }];
+    vi.mocked(api.getEdl).mockResolvedValue(stored);
+    render(<ExportWorkbench {...props()} selected={[{ ...candidates[0], id: 'extra' }]} />);
+    await screen.findByRole('button', { name: '编辑这个版本' });
+    fireEvent.click(screen.getByRole('button', { name: '编辑这个版本' }));
+    expect(screen.getByRole('button', { name: '加入当前所选的新片段' })).toBeDisabled();
+    expect(screen.getByText('加入后会超过 100 条，请减少候选选择或先删除草稿中的片段。')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '删除编辑片段 100' }));
+    expect(screen.getByRole('button', { name: '加入当前所选的新片段' })).not.toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '加入当前所选的新片段' }));
+    expect(screen.getByLabelText('片段 100 源起帧')).toHaveValue(1001);
+    expect(within(screen.getByRole('list', { name: '切点编辑草稿' })).getAllByRole('listitem')).toHaveLength(100);
+  }, 20_000); // Rendering 100 real editor rows can exceed Vitest's 5 s default on CI.
+
+  it('saves exact edited source frames and reordered clips to a new revision, keeping selection and exports bound to their own versions', async () => {
+    const create = vi.spyOn(api, 'saveEdits').mockResolvedValue(record(portraitRevision));
+    const supplied = props();
+    render(<ExportWorkbench {...supplied} />);
+    await screen.findByRole('link', { name: '下载 EDL' });
+    fireEvent.click(screen.getByRole('button', { name: '编辑这个版本' }));
+    expect(screen.getByRole('button', { name: '保存修改为新版本' })).toBeDisabled();
+    fireEvent.change(screen.getByLabelText('片段 1 源起帧'), { target: { value: '1' } });
+    fireEvent.change(screen.getByLabelText('片段 1 源止帧'), { target: { value: '599' } });
+    fireEvent.click(screen.getByRole('button', { name: '下移编辑片段 1' }));
+    expect(screen.getByLabelText('片段 2 源起帧')).toHaveValue(1);
+    expect(screen.getByLabelText('导出版本')).toBeDisabled();
+    expect(screen.getByRole('button', { name: '导出 MP4' })).toBeDisabled();
+    expect(screen.getByRole('link', { name: '下载 EDL' })).toHaveAttribute('href', api.edlFileUrl(task, revision, 'project.edl.json'));
+    const save = screen.getByRole('button', { name: '保存修改为新版本' });
+    fireEvent.click(save); fireEvent.click(save);
+    await waitFor(() => expect(screen.getByRole('link', { name: '下载 EDL' })).toHaveAttribute('href', api.edlFileUrl(task, portraitRevision, 'project.edl.json')));
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(create).toHaveBeenCalledWith(task, revision, [
+      { candidate_id: 'candidate-1', source_in_frame: 600, source_out_frame: 1200 },
+      { candidate_id: 'candidate-2', source_in_frame: 1, source_out_frame: 599 },
+    ], expect.any(AbortSignal));
+    expect(screen.queryByRole('list', { name: '切点编辑草稿' })).not.toBeInTheDocument();
+    expect(supplied.onMove).not.toHaveBeenCalled();
+    expect(supplied.onRemove).not.toHaveBeenCalled();
+  });
+
+  it('keeps one clip, rejects invalid frame input, and requires an explicit discard before switching versions', async () => {
+    vi.mocked(api.listEdls).mockResolvedValue(edlPage([revision, portraitRevision]));
+    const save = vi.spyOn(api, 'saveEdits');
+    render(<ExportWorkbench {...props()} />);
+    await screen.findByRole('link', { name: '下载 EDL' });
+    fireEvent.click(screen.getByRole('button', { name: '编辑这个版本' }));
+    fireEvent.click(screen.getByRole('button', { name: '删除编辑片段 2' }));
+    expect(screen.getByRole('button', { name: '删除编辑片段 1' })).toBeDisabled();
+    fireEvent.change(screen.getByLabelText('片段 1 源止帧'), { target: { value: '0' } });
+    expect(screen.getByRole('button', { name: '保存修改为新版本' })).toBeDisabled();
+    expect(screen.getByText('请输入非负整数起帧，止帧必须大于起帧。')).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('片段 1 源止帧'), { target: { value: '599.5' } });
+    expect(screen.getByRole('button', { name: '保存修改为新版本' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '放弃这次修改' }));
+    expect(screen.getByLabelText('导出版本')).not.toBeDisabled();
+    fireEvent.change(screen.getByLabelText('导出版本'), { target: { value: portraitRevision } });
+    await waitFor(() => expect(screen.getByRole('link', { name: '下载 EDL' })).toHaveAttribute('href', api.edlFileUrl(task, portraitRevision, 'project.edl.json')));
+    expect(save).not.toHaveBeenCalled();
+  });
+
+  it('shows net and per-step editing measurements without reporting elapsed time or quality for old versions', async () => {
+    const stored = saved();
+    stored.revision.files = { 'edit-record.json': 'edit-record.json' };
+    stored.edit_record = { baseline_revision_id: portraitRevision, parent_revision_id: revision, editing_elapsed_ms: null,
+      effort: { net_boundary_adjustment_seconds: 0.2, added_clip_boundary_adjustment_seconds: 0.1, adjusted_clip_count: 1, added_clip_count: 1, removed_clip_count: 1, minimum_moved_clip_count: 0 },
+      step_effort: { net_boundary_adjustment_seconds: 0.1, adjusted_clip_count: 1, added_clip_count: 0, removed_clip_count: 0, minimum_moved_clip_count: 1 } };
+    vi.mocked(api.getEdl).mockResolvedValue(stored);
+    render(<ExportWorkbench {...props()} />);
+    expect(await screen.findByRole('region', { name: '人工修改量' })).toBeInTheDocument();
+    expect(within(screen.getByLabelText('最终净修改')).getByText(/切点调整 0.20 秒/)).toBeInTheDocument();
+    expect(within(screen.getByLabelText('最终净修改')).getByText('新增片段切点调整 0.10 秒（相对候选快照）。')).toBeInTheDocument();
+    expect(within(screen.getByLabelText('本次修改')).getByText(/切点调整 0.10 秒/)).toBeInTheDocument();
+    expect(screen.getByText(/未记录编辑耗时/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '下载人工修改记录' })).toHaveAttribute('href', api.edlFileUrl(task, revision, 'edit-record.json'));
+  });
+
+  it('retains the unknown-result lock after an edit POST and recovers only through refresh and acknowledgement', async () => {
+    const save = vi.spyOn(api, 'saveEdits').mockRejectedValue(new api.MutationUnknownError());
+    render(<ExportWorkbench {...props()} />);
+    await screen.findByRole('link', { name: '下载 EDL' });
+    fireEvent.click(screen.getByRole('button', { name: '编辑这个版本' }));
+    fireEvent.change(screen.getByLabelText('片段 1 源起帧'), { target: { value: '1' } });
+    fireEvent.click(screen.getByRole('button', { name: '保存修改为新版本' }));
+    await screen.findByText('上次操作的结果尚未确认');
+    expect(screen.getByRole('button', { name: '保存修改为新版本' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: '保存修改为新版本' }));
+    expect(save).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('button', { name: '刷新已保存记录' }));
+    await waitFor(() => expect(screen.getByRole('button', { name: '已核对记录，继续操作' })).not.toBeDisabled());
+    fireEvent.click(screen.getByRole('button', { name: '已核对记录，继续操作' }));
+    expect(save).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('button', { name: '保存修改为新版本' })).not.toBeDisabled();
+  });
+
+  it('discards an unsaved frame draft when changing tasks without posting it', async () => {
+    const save = vi.spyOn(api, 'saveEdits');
+    const supplied = props();
+    const component = render(<ExportWorkbench {...supplied} />);
+    await screen.findByRole('link', { name: '下载 EDL' });
+    expect(screen.queryByRole('region', { name: '人工修改量' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '编辑这个版本' }));
+    fireEvent.change(screen.getByLabelText('片段 1 源起帧'), { target: { value: '1' } });
+    component.rerender(<ExportWorkbench {...supplied} taskId={otherTask} />);
+    await screen.findByRole('button', { name: '编辑这个版本' });
+    expect(screen.queryByRole('list', { name: '切点编辑草稿' })).not.toBeInTheDocument();
+    expect(save).not.toHaveBeenCalled();
+  });
+
   it('saves the displayed candidate order once and fetches the returned saved revision before enabling downloads', async () => {
     vi.mocked(api.listEdls).mockResolvedValueOnce(edlPage([]));
     let finish!: (value: EdlRevision) => void;

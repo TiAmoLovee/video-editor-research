@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "observed_at": "2026-10-13T01:09:45.641588+00:00",
+  "scope": "full frontend Vitest, TypeScript and Vite local build; not deployed",
+  "test_files": 6,
+  "tests": 76,
+  "failures": 0,
+  "typescript": "passed",
+  "vite_build": "passed",
+  "node": "24 bundled runtime",
+  "build_directory": "outputs/week4-editing-build-final",
+  "source_hashes": {
+    "frontend/src/components/ExportWorkbench.tsx": "4912785c7754e696e2eb6342f5acd216f13c224120cd33e241112d5080842a9c",
+    "frontend/src/api/editing.ts": "75cd1adae55db529c807def4f8bf2d8eb215e5d88b06a21665933d22e592b41b",
+    "frontend/src/types/editing.ts": "37c1508cc33b0940e6dfb9e8a6758e0859d485f818c8dc39951973d9af7cd440"
+  },
+  "asset_hashes": {
+    "outputs/week4-editing-build-final/assets/index-B7T1CDJk.js": "b426e79df7dc2a052d89cf8bcdbfd7c36e9124f2a55e27a8bbb95dc1c6e6490a",
+    "outputs/week4-editing-build-final/assets/index-CToC8abj.css": "fc197d363e68c24d5a97a8cfd193a3a877272518ed31ee505e39753636f29347",
+    "outputs/week4-editing-build-final/index.html": "6aa168e635de89955f5dafe4283ded7cea64b4cf67e66f798963a76e983b0b66"
+  }
+}

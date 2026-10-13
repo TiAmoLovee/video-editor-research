@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_vali
 from starlette.datastructures import Headers
 
 from clipforge.services import editing as editing_service
+from clipforge.services import editing_changes as editing_changes_service
 from clipforge.services import editing_history as editing_history_service
 from clipforge.services import mlt_exporting as mlt_exporting_service
 from clipforge.services import rendering as rendering_service
@@ -134,6 +135,27 @@ class CreateEdlRequest(BaseModel):
         return values
 
 
+class EditClipRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    candidate_id: CandidateId
+    source_in_frame: int = Field(ge=0)
+    source_out_frame: int = Field(ge=1)
+
+
+class SaveEditRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    clips: list[EditClipRequest] = Field(min_length=1, max_length=100)
+    editing_elapsed_ms: int | None = Field(default=None, ge=0, le=86_400_000)
+
+    @field_validator("clips")
+    @classmethod
+    def valid_clips(cls, values):
+        if (any(not value.candidate_id.strip() or value.source_in_frame >= value.source_out_frame for value in values)
+                or len({value.candidate_id for value in values}) != len(values)):
+            raise ValueError("片段编号须不同，源起帧须小于止帧。")
+        return values
+
+
 def _public_call(operation: Callable[[], T]) -> T:
     """Expose only the service's deliberately safe error messages."""
     try:
@@ -170,10 +192,27 @@ def create_edl(task_id: UUID, payload: CreateEdlRequest) -> JSONResponse:
                409: {"description": "保存的清单或来源记录已改变"}},
 )
 def get_edl(task_id: UUID, revision_id: UUID) -> JSONResponse:
-    return _public_call(lambda: JSONResponse(
-        content=jsonable_encoder(editing_service.load_task_edl(str(task_id), str(revision_id))),
-        headers=NO_STORE,
-    ))
+    def operation():
+        saved = editing_service.load_task_edl(str(task_id), str(revision_id))
+        available = editing_changes_service.available_edit_clips(str(task_id), str(revision_id), saved)
+        return JSONResponse(content=jsonable_encoder({**saved, **available}), headers=NO_STORE)
+    return _public_call(operation)
+
+
+@router.post(
+    "/{task_id}/edl/{revision_id}/edits", status_code=201,
+    summary="按源帧保存新的人工编辑版本及修改量",
+    description="保留最初采纳基线和父版本；只改变候选选择、源切点和顺序。未计时填空，不重评分或复制媒体。",
+)
+def save_edl_edit(task_id: UUID, revision_id: UUID, payload: SaveEditRequest) -> JSONResponse:
+    def operation():
+        record = editing_changes_service.create_task_edit(
+            str(task_id), str(revision_id), [clip.model_dump() for clip in payload.clips],
+            editing_elapsed_ms=payload.editing_elapsed_ms)
+        new_id = str(UUID(str(record["revision_id"])))
+        return JSONResponse(status_code=201, content=jsonable_encoder(record), headers={
+            **NO_STORE, "Location": f"/tasks/{task_id}/edl/{new_id}"})
+    return _public_call(operation)
 
 
 @router.post(

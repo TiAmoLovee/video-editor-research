@@ -20,6 +20,10 @@ from clipforge.decision.scoring import load_config, validate_scored
 from clipforge.decision.validation import validate_candidates
 from clipforge.decision.llm import safe_settings_snapshot
 from clipforge.decision.boundary_optimizer import settings_snapshot as boundary_settings_snapshot
+from clipforge.decision.generation import (
+    TOPIC, effective_boundary_settings, settings_snapshot as generation_settings_snapshot,
+)
+from clipforge.decision.topic_segments import TopicOptions, segment_topics
 from clipforge.decision.boundary_media import validate_report
 from clipforge.storage.jobs import data_root, get_job, job_dir
 
@@ -52,6 +56,7 @@ def fingerprint(source, options, ffmpeg, ffprobe):
         'scenedetect', 'opencv-python-headless', 'numpy', 'webrtcvad-wheels',
         'faster-whisper', 'ctranslate2', 'onnxruntime', 'av', 'tokenizers',
         'opencc-python-reimplemented', 'jieba', 'jsonschema']}
+    generation = generation_settings_snapshot()
     descriptor = {'format': FORMAT, 'source_sha256': sha256(source),
                   'source_suffix': Path(source).suffix.lower(), 'shot_options': options,
                   'model': identity, 'language': os.environ.get('CLIPFORGE_ASR_LANGUAGE') or None,
@@ -60,7 +65,8 @@ def fingerprint(source, options, ffmpeg, ffprobe):
                                             ('candidates.schema.json', 'scored_candidates.schema.json', 'llm_candidates.schema.json')},
                   'scoring_config': load_config().to_dict(),
                   'decision_settings': safe_settings_snapshot(),
-                  'boundary_settings': boundary_settings_snapshot(),
+                  'generation_settings': generation,
+                  'boundary_settings': effective_boundary_settings(boundary_settings_snapshot(), generation),
                   'dependencies': dependencies, 'tools': tools,
                   'platform': [platform.system(), platform.machine(), platform.python_version()]}
     return hashlib.sha256(canonical(descriptor).encode('utf-8')).hexdigest(), descriptor
@@ -130,7 +136,8 @@ def artifact_files(result):
     optimized = {name for name in files if re.fullmatch(r'repair_[a-f0-9]{64}\.mp4', name)}
     if optimized and 'boundary_optimization.json' not in files:
         raise ValueError('优化视频缺少边界记录')
-    allowed = required | {'shot_options.json', 'boundary_optimization.json'} | {clip['file'] for clip in result['clips']} | optimized
+    optional = {'shot_options.json', 'boundary_optimization.json', 'topic_segmentation.json'}
+    allowed = required | (optional & set(files)) | {clip['file'] for clip in result['clips']} | optimized
     allowed -= {name for name in ('shot_options.json', 'boundary_optimization.json') if name not in files}
     if set(files) != allowed - ({'shot_options.json'} if 'shot_options.json' not in files else set()):
         raise ValueError('缓存下载清单异常')
@@ -153,6 +160,16 @@ def validate_bundle(folder, source, result, descriptor):
     windows, candidates = read('candidate_windows.json'), read('candidates.json')
     validate_candidates(windows, analysis)
     validate_scored(candidates, analysis)
+    generation = descriptor.get('generation_settings')
+    if generation is not None and windows['generator'] != generation:
+        raise ValueError('缓存候选生成策略不匹配')
+    if windows['generator']['version'] == TOPIC:
+        if ('topic_segmentation.json' not in result['files'] or
+                read('topic_segmentation.json') != segment_topics(
+                    analysis, TopicOptions(**windows['generator']['options']))):
+            raise ValueError('缓存话题分段记录不匹配')
+    elif 'topic_segmentation.json' in result['files']:
+        raise ValueError('句子窗口缓存不能带入话题分段记录')
     if candidates['windows_sha256'] != content_hash(windows):
         raise ValueError('缓存候选及评分不是同一批结果')
     if 'scoring_config' in descriptor and candidates['scoring']['config'] != descriptor['scoring_config']:
@@ -166,6 +183,8 @@ def validate_bundle(folder, source, result, descriptor):
     elif llm:
         raise ValueError('规则缓存不能复用 LLM 模式')
     boundary_settings = descriptor.get('boundary_settings', {'mode': 'off'})
+    if generation is not None:
+        boundary_settings = effective_boundary_settings(boundary_settings, generation)
     if boundary_settings['mode'] != 'off':
         boundary = read('boundary_optimization.json')
         validate_report(boundary, analysis, candidates, folder)

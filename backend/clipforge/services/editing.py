@@ -19,6 +19,7 @@ from clipforge.editing.manifest import build_media_manifest, open_media_source
 from clipforge.storage.jobs import get_job, job_dir, now
 
 FILES = frozenset({"media-profile.json", "project.edl.json", "candidates.json", "analysis.json"})
+DOWNLOAD_FILES = FILES | {"edit-record.json"}
 
 
 class ProjectError(ValueError):
@@ -172,6 +173,8 @@ def create_task_portrait(task_id, revision_id):
     """
     task_id, revision_id = _uuid(task_id), _uuid(revision_id)
     saved = load_task_edl(task_id, revision_id)
+    if saved["lineage_depth"] >= 16:
+        raise ProjectError(422, "保存版本链已达到 16 层，请保留现有导出并开始新的采纳版本。")
     parent = _revision_folder(task_id, revision_id)[2].parent
     folder, published = None, False
     try:
@@ -229,17 +232,22 @@ def _revision_folder(task_id, revision_id):
     return task_id, revision_id, folder
 
 
-def load_task_edl(task_id, revision_id):
+def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
     """Read the saved EDL; never reconstruct it from current rankings."""
     task_id, revision_id, folder = _revision_folder(task_id, revision_id)
     try:
+        if revision_id in _visited or len(_visited) >= 16:
+            raise ValueError("revision parent cycle or depth limit exceeded")
+        visited = _visited | {revision_id}
         revision = _read_json(_contained_file(folder, "revision.json"))
+        manual = isinstance(revision.get("derivation"), dict) and revision["derivation"].get("kind") == "manual_edit"
+        expected_files = FILES | {"edit-record.json"} if manual else FILES
         if (type(revision.get("format_version")) is not int or revision["format_version"] != 1
                 or revision["task_id"] != task_id or revision["revision_id"] != revision_id
-                or set(revision["files"]) != FILES):
+                or set(revision["files"]) != expected_files):
             raise ValueError("invalid revision identity/files")
         _uuid(revision["source_task_id"])
-        for filename in FILES:
+        for filename in expected_files:
             if _digest(_contained_file(folder, filename)) != revision["files"][filename]:
                 raise ValueError("changed revision artifact")
         project = _read_json(folder / "project.edl.json")
@@ -255,7 +263,12 @@ def load_task_edl(task_id, revision_id):
                 or revision["clip_count"] != len(project["clips"])
                 or revision["duration_frames"] != project["duration_frames"]):
             raise ValueError("revision media/timeline mismatch")
-        if project['schema_version'] == '0.2.0':
+        edit_record, lineage_depth = None, 1
+        if manual:
+            from clipforge.services.editing_changes import validate_saved_edit
+            edit_record, lineage_depth = validate_saved_edit(
+                task_id, revision_id, revision, project, manifest, folder, visited)
+        elif project['schema_version'] == '0.2.0':
             derivation = revision['derivation']
             if (set(derivation) != {'kind', 'parent_revision_id', 'parent_edl_file_sha256'}
                     or derivation['kind'] != 'center_crop_9_16'):
@@ -268,16 +281,32 @@ def load_task_edl(task_id, revision_id):
             # cannot cause unbounded recursion or a portrait-to-portrait rewrite.
             if _read_json(_contained_file(parent_folder, 'project.edl.json'))['schema_version'] != '0.1.0':
                 raise ValueError('portrait parent must be an original EDL')
-            original = load_task_edl(task_id, parent_id)
+            original = load_task_edl(task_id, parent_id, _visited=visited)
+            lineage_depth = original["lineage_depth"] + 1
             if (original['revision']['files']['project.edl.json'] != derivation['parent_edl_file_sha256']
                     or project != create_portrait_edl(original['edl'])
                     or revision['source_task_id'] != original['revision']['source_task_id']
                     or any(revision['files'][name] != original['revision']['files'][name]
                            for name in FILES - {'project.edl.json'})):
                 raise ValueError('portrait version differs from its bound parent')
+            if "edit_record" in original:
+                from clipforge.editing.effort import compare_edit_effort
+                root_id = original["edit_record"]["baseline_revision_id"]
+                baseline = load_task_edl(task_id, root_id, _visited=visited)
+                edit_record = {
+                    "format_version": 1, "task_id": task_id, "revision_id": revision_id,
+                    "baseline_revision_id": root_id, "parent_revision_id": parent_id,
+                    "editing_elapsed_ms": None, "elapsed_time_scope": "not_recorded",
+                    "origin": "automatic_center_crop_no_manual_operation",
+                    "effort": compare_edit_effort(baseline["edl"], project),
+                    "step_effort": compare_edit_effort(original["edl"], project),
+                }
         elif 'derivation' in revision:
             raise ValueError('original EDL cannot contain a portrait derivation')
-        return {"revision": revision, "edl": project, "manifest": manifest}
+        result = {"revision": revision, "edl": project, "manifest": manifest, "lineage_depth": lineage_depth}
+        if edit_record is not None:
+            result["edit_record"] = edit_record
+        return result
     except ProjectError:
         raise
     except (OSError, ValueError, KeyError, TypeError) as error:
@@ -285,9 +314,11 @@ def load_task_edl(task_id, revision_id):
 
 
 def revision_file(task_id, revision_id, filename):
-    if filename not in FILES:
+    if filename not in DOWNLOAD_FILES:
         raise ProjectError(404, "此工程没有对应的下载文件。")
-    load_task_edl(task_id, revision_id)
+    saved = load_task_edl(task_id, revision_id)
+    if filename not in saved["revision"]["files"]:
+        raise ProjectError(404, "此工程没有对应的下载文件。")
     return _contained_file(_revision_folder(task_id, revision_id)[2], filename)
 
 
@@ -304,9 +335,11 @@ def revision_source(task_id, revision_id):
 @contextmanager
 def open_revision_file(task_id, revision_id, filename):
     """Hash and download the same held handle, rather than reopening its path."""
-    if filename not in FILES:
+    if filename not in DOWNLOAD_FILES:
         raise ProjectError(404, "此工程没有对应的下载文件。")
     saved = load_task_edl(task_id, revision_id)
+    if filename not in saved["revision"]["files"]:
+        raise ProjectError(404, "此工程没有对应的下载文件。")
     path = _contained_file(_revision_folder(task_id, revision_id)[2], filename)
     with open_media_source(path) as incoming:
         if hashlib.file_digest(incoming, "sha256").hexdigest() != saved["revision"]["files"][filename]:

@@ -42,7 +42,9 @@ class ResultCacheTests(unittest.TestCase):
         options = json.loads(options_path.read_text()) if options_path.exists() else None
         d = {'source_sha256': cache.sha256(source), 'shot_options': options, 'test_configuration': 'fixed',
              'scoring_config': cache.load_config().to_dict(),'decision_settings':cache.safe_settings_snapshot(),
-             'boundary_settings':cache.boundary_settings_snapshot()}
+             'generation_settings': cache.generation_settings_snapshot()}
+        d['boundary_settings'] = cache.effective_boundary_settings(
+            cache.boundary_settings_snapshot(), d['generation_settings'])
         return hashlib.sha256(cache.canonical(d).encode()).hexdigest(), d
 
     def pipeline(self):
@@ -153,6 +155,8 @@ class ResultCacheTests(unittest.TestCase):
                 self.assertNotEqual(key, cache.fingerprint(source,None,'ffmpeg','ffprobe')[0])
             with patch.dict(os.environ,{'CLIPFORGE_ASR_LANGUAGE':'zh'}):
                 self.assertNotEqual(key,cache.fingerprint(source,None,'ffmpeg','ffprobe')[0])
+            with patch.dict(os.environ,{'CLIPFORGE_CANDIDATE_GENERATOR':'topic-valley-v1'}):
+                self.assertNotEqual(key,cache.fingerprint(source,None,'ffmpeg','ffprobe')[0])
             verify.return_value={'revision':'two'}
             self.assertNotEqual(key,cache.fingerprint(source,None,'ffmpeg','ffprobe')[0])
             verify.return_value={'revision':'one'}
@@ -170,6 +174,44 @@ class ResultCacheTests(unittest.TestCase):
         index=next((root/'result-cache-v2').glob('*.json'));index.write_text('{bad')
         with self.assertLogs('clipforge.services.pipeline',level='WARNING'):
             self.assertFalse(process_video(self.job())['cache_hit'])
+
+    def test_topic_strategy_reuses_its_segmentation_and_does_not_reuse_legacy(self):
+        self.pipeline()
+        legacy = self.job()
+        process_video(legacy)
+        with patch.dict(os.environ, {'CLIPFORGE_CANDIDATE_GENERATOR': 'topic-valley-v1'}):
+            first = self.job()
+            self.assertFalse(process_video(first)['cache_hit'])
+            second = self.job()
+            self.assertTrue(process_video(second)['cache_hit'])
+        self.assertEqual(self.asr.call_count, 2)
+        self.assertFalse((job_dir(legacy) / 'topic_segmentation.json').exists())
+        self.assertEqual((job_dir(first) / 'topic_segmentation.json').read_bytes(),
+                         (job_dir(second) / 'topic_segmentation.json').read_bytes())
+        report = json.loads((job_dir(first) / 'topic_segmentation.json').read_text(encoding='utf-8'))
+        self.assertEqual(report['model_requests'], 0)
+        with zipfile.ZipFile(job_dir(second) / 'result.zip') as archive:
+            self.assertEqual(json.loads(archive.read('topic_segmentation.json')), report)
+
+    def test_topic_cache_rejects_wrong_generation_and_tampered_segmentation(self):
+        self.pipeline()
+        with patch.dict(os.environ, {'CLIPFORGE_CANDIDATE_GENERATOR': 'topic-valley-v1'}):
+            first = self.job()
+            process_video(first)
+            job = cache.get_job(first)
+            descriptor = self.descriptor(job_dir(first) / 'source.mp4',
+                                         job_dir(first) / 'shot_options.json', '', '')[1]
+            wrong = deepcopy(descriptor)
+            with patch.dict(os.environ, {'CLIPFORGE_CANDIDATE_GENERATOR': 'sentence-window-v1'}):
+                wrong['generation_settings'] = cache.generation_settings_snapshot()
+            with self.assertRaisesRegex(ValueError, '生成策略'):
+                cache.validate_bundle(job_dir(first), job_dir(first) / 'source.mp4', job['result'], wrong)
+            report_path = job_dir(first) / 'topic_segmentation.json'
+            report = json.loads(report_path.read_text(encoding='utf-8'))
+            report['model_requests'] = 1
+            report_path.write_text(json.dumps(report), encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, '分段记录'):
+                cache.validate_bundle(job_dir(first), job_dir(first) / 'source.mp4', job['result'], descriptor)
 
     def test_missing_candidates_recomputes_and_configuration_change_misses(self):
         self.pipeline(); first=self.job();process_video(first)

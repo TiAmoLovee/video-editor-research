@@ -19,7 +19,11 @@ from clipforge.analysis.vad import detect_speech
 from clipforge.analysis.asr import transcribe_video
 from clipforge.analysis.combine import combine_analysis
 from clipforge.decision.audio import measure_audio
-from clipforge.decision.candidates import generate_candidates
+from clipforge.decision.generation import (
+    TOPIC, effective_boundary_settings, generate_configured_candidates as generate_candidates,
+    settings_snapshot as generation_settings_snapshot,
+)
+from clipforge.decision.topic_segments import TopicOptions, segment_topics
 from clipforge.decision.scorers import RuleConfig
 from clipforge.decision.scoring import load_config, score_candidates
 from clipforge.decision.llm import apply_llm, safe_settings_snapshot
@@ -81,7 +85,8 @@ def process_video(task_id: str) -> dict:
             decision_settings = descriptor.get('decision_settings') if descriptor else None
             result = _process_uncached(task_id, info, started, scoring_config=scoring_config,
                                        decision_settings=decision_settings,
-                                       boundary_settings=descriptor.get('boundary_settings') if descriptor else None)
+                                       boundary_settings=descriptor.get('boundary_settings') if descriptor else None,
+                                       generation_settings=descriptor.get('generation_settings') if descriptor else None)
             if index is not None:
                 try:
                     result_cache.publish(index, descriptor, task_id, source)
@@ -136,7 +141,8 @@ def finish_task(task_id, folder, plan, files, info, started):
     return {'task_id': task_id, 'clip_count': len(plan['clips']), 'cache_hit': info['hit']}
 
 
-def _process_uncached(task_id, cache_info, started, *, scoring_config=None, decision_settings=None, boundary_settings=None):
+def _process_uncached(task_id, cache_info, started, *, scoring_config=None, decision_settings=None,
+                      boundary_settings=None, generation_settings=None):
     job = get_job(task_id)
     folder = job_dir(task_id)
     ffmpeg = media_tool("ffmpeg")
@@ -144,7 +150,9 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
     stage, progress = "probing", 10
     try:
         decision_settings = decision_settings or safe_settings_snapshot()
-        boundary_settings = boundary_settings or boundary_settings_snapshot()
+        generation_settings = generation_settings or generation_settings_snapshot()
+        boundary_settings = effective_boundary_settings(
+            boundary_settings or boundary_settings_snapshot(), generation_settings)
         source = folder / job["source_key"]
         original = normalize_metadata(probe_video(str(source), ffprobe), str(source))
         original["source_file"] = job["source_name"]
@@ -180,7 +188,12 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
 
         stage, progress = "scoring_candidates", 68
         update_job(task_id, 'RUNNING', stage, progress)
-        windows = generate_candidates(analysis)
+        windows = generate_candidates(analysis, settings=generation_settings)
+        generation_files = {}
+        if windows.get('generator', {}).get('version') == TOPIC:
+            segmentation = segment_topics(analysis, TopicOptions(**generation_settings['options']))
+            save_json(folder / 'topic_segmentation.json', segmentation)
+            generation_files['topic_segmentation.json'] = 'topic_segmentation.json'
         config = scoring_config or load_config()
         audio = (measure_audio(folder / 'normalized.mp4', analysis, ffmpeg=ffmpeg, ffprobe=ffprobe)
                  if windows['candidates'] and analysis['media']['has_audio'] else None)
@@ -215,6 +228,7 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
         }
         if options_path.is_file():
             files["shot_options.json"] = "shot_options.json"
+        files.update(generation_files)
         files.update(boundary_files)
         for clip in plan["clips"]:
             files[clip["file"]] = f"clips/{clip['file']}"

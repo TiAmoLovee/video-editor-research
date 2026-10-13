@@ -1,5 +1,5 @@
 import { ApiError, validId } from './tasks';
-import type { ArtifactHistory, EdlPage, EdlRevision, MltRecord, RenderRecord, SavedEdl, SubtitleRecord } from '../types/editing';
+import type { ArtifactHistory, EditedClip, EdlPage, EdlRevision, MltRecord, RenderRecord, SavedEdl, SubtitleRecord } from '../types/editing';
 
 export { ApiError };
 export class MutationUnknownError extends Error {
@@ -77,7 +77,32 @@ export function listEdls(task: string, offset: number, signal: AbortSignal): Pro
 }
 export function getEdl(task: string, revision: string, signal: AbortSignal): Promise<SavedEdl> {
   return request(revisionPath(task, revision), signal, value => object(value) && revisionRecord(value.revision, task, revision)
-    && validTimeline(value.edl));
+    && validTimeline(value.edl) && (value.edit_record === undefined || validEditRecord(value.edit_record))
+    && (value.available_clips === undefined || validAvailableClips(value.available_clips)));
+}
+function validAvailableClips(value: unknown): boolean {
+  if (!Array.isArray(value) || value.length > 10000) return false;
+  const ids = new Set<string>();
+  return value.every(clip => {
+    if (!object(clip) || typeof clip.candidate_id !== 'string' || !clip.candidate_id.trim() || clip.candidate_id.length > 200
+      || ids.has(clip.candidate_id) || !integer(clip.source_in_frame) || !integer(clip.source_out_frame)
+      || clip.source_out_frame <= clip.source_in_frame) return false;
+    ids.add(clip.candidate_id); return true;
+  });
+}
+function validEditRecord(value: unknown): boolean {
+  return object(value) && typeof value.baseline_revision_id === 'string' && validId(value.baseline_revision_id)
+    && typeof value.parent_revision_id === 'string' && validId(value.parent_revision_id)
+    && (value.editing_elapsed_ms === null || integer(value.editing_elapsed_ms))
+    && validEffort(value.effort) && validEffort(value.step_effort);
+}
+function validEffort(value: unknown): boolean {
+  return object(value) && typeof value.net_boundary_adjustment_seconds === 'number'
+    && Number.isFinite(value.net_boundary_adjustment_seconds) && value.net_boundary_adjustment_seconds >= 0
+    && (value.added_clip_boundary_adjustment_seconds === undefined || (typeof value.added_clip_boundary_adjustment_seconds === 'number'
+      && Number.isFinite(value.added_clip_boundary_adjustment_seconds) && value.added_clip_boundary_adjustment_seconds >= 0))
+    && integer(value.adjusted_clip_count) && integer(value.added_clip_count)
+    && integer(value.removed_clip_count) && integer(value.minimum_moved_clip_count);
 }
 function validTimeline(value: unknown): boolean {
   if (!object(value) || !['0.1.0', '0.2.0'].includes(value.schema_version as string) || !profile(value.profile)
@@ -105,6 +130,15 @@ export function createEdl(task: string, ids: string[], signal: AbortSignal): Pro
   if (!ids.length || ids.length > 100 || new Set(ids).size !== ids.length || ids.some(id => typeof id !== 'string' || !id.trim() || id.length > 200)) throw new Error('请选择 1–100 个不重复的候选。');
   return request(taskPath(task), signal, value => revisionRecord(value, task), { selected_ids: ids }, true);
 }
+export function saveEdits(task: string, revision: string, clips: EditedClip[], signal: AbortSignal): Promise<EdlRevision> {
+  if (!clips.length || clips.length > 100 || new Set(clips.map(clip => clip.candidate_id)).size !== clips.length
+    || clips.some(clip => typeof clip.candidate_id !== 'string' || !clip.candidate_id.trim() || clip.candidate_id.length > 200
+      || !integer(clip.source_in_frame) || !integer(clip.source_out_frame) || clip.source_out_frame <= clip.source_in_frame)) {
+    throw new Error('请保留 1–100 个不重复的片段，并输入有效的整数帧范围。');
+  }
+  return request(`${revisionPath(task, revision)}/edits`, signal, value => revisionRecord(value, task) && object(value) && value.revision_id !== revision,
+    { clips, editing_elapsed_ms: null }, true);
+}
 export const createPortrait = (task: string, revision: string, signal: AbortSignal): Promise<EdlRevision> => request(`${revisionPath(task, revision)}/portrait`, signal, value => revisionRecord(value, task), undefined, true);
 export const createSubtitles = (task: string, revision: string, signal: AbortSignal): Promise<SubtitleRecord> => request(`${revisionPath(task, revision)}/subtitles`, signal, value => artifact(value, task, revision, 'subtitle_id'), undefined, true);
 export function createMp4(task: string, revision: string, subtitle: string | undefined, signal: AbortSignal): Promise<RenderRecord> {
@@ -120,7 +154,7 @@ function file(base: string, name: string, allowed: readonly string[]): string {
   if (!allowed.includes(name)) throw new Error('下载文件名格式异常');
   return `${base}/files/${name}`;
 }
-export const edlFileUrl = (task: string, revision: string, name: 'project.edl.json' | 'media-profile.json') => file(revisionPath(task, revision), name, ['project.edl.json', 'media-profile.json']);
+export const edlFileUrl = (task: string, revision: string, name: 'project.edl.json' | 'media-profile.json' | 'edit-record.json') => file(revisionPath(task, revision), name, ['project.edl.json', 'media-profile.json', 'edit-record.json']);
 export const sourceUrl = (task: string, revision: string) => `${revisionPath(task, revision)}/source`;
 export const subtitleFileUrl = (task: string, revision: string, subtitle: string, name: 'captions.srt' | 'captions.ass') => file(versionPath(task, revision, 'subtitles', subtitle), name, ['captions.srt', 'captions.ass']);
 export const renderFileUrl = (task: string, revision: string, render: string, name: 'output.mp4' | 'verification.json' | 'source.edl.json') => file(versionPath(task, revision, 'renders', render), name, ['output.mp4', 'verification.json', 'source.edl.json']);

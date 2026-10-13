@@ -19,7 +19,16 @@ def validate_candidates(data, analysis, schema=None):
     error = next(Draft202012Validator(schema).iter_errors(data), None)
     if error:
         raise ValueError(f"{error.json_path}: {error.message}")
-    options = WindowOptions(**data["generator"]["options"])
+    if data['generator']['version'] == 'topic-valley-v1':
+        from clipforge.decision.topic_segments import TopicOptions, generate_topic_candidates
+        options = TopicOptions(**data['generator']['options'])
+        # A topic candidate is the entire detected segment. Recompute the frozen
+        # strategy to reject partial ranges, changed IDs, omitted segments or
+        # warnings that hide short/long topics. Old windows retain their contract.
+        if data != generate_topic_candidates(analysis, options):
+            raise ValueError('话题候选与固定分段策略不一致')
+    else:
+        options = WindowOptions(**data["generator"]["options"])
     if (data["analysis_sha256"] != content_hash(analysis)
             or data["media"] != analysis["media"]
             or data["input_result_kind"] != analysis["result_kind"]):

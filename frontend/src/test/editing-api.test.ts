@@ -22,6 +22,65 @@ describe('saved export API', () => {
     expect(() => api.createEdl(taskId, ['same', 'same'], signal())).toThrow();
     expect(fetcher).not.toHaveBeenCalled();
   });
+  it('saves exact source frames in the requested order as one child-version POST without inventing edit duration', async () => {
+    const child = { ...record, revision_id: subtitleId };
+    const fetcher = vi.fn().mockResolvedValue(reply(child, 201)); vi.stubGlobal('fetch', fetcher);
+    const clips = [{ candidate_id: 'second', source_in_frame: 601, source_out_frame: 1007 },
+      { candidate_id: 'first', source_in_frame: 1, source_out_frame: 599 }];
+    expect(await api.saveEdits(taskId, revisionId, clips, signal())).toEqual(child);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(fetcher).toHaveBeenCalledWith(`/tasks/${taskId}/edl/${revisionId}/edits`, expect.objectContaining({
+      method: 'POST', body: JSON.stringify({ clips, editing_elapsed_ms: null }),
+    }));
+  });
+  it('rejects empty, repeated, fractional and reversed edit ranges before sending', () => {
+    const fetcher = vi.fn(); vi.stubGlobal('fetch', fetcher);
+    const clip = { candidate_id: 'first', source_in_frame: 0, source_out_frame: 20 };
+    for (const clips of [[], [clip, clip], [{ ...clip, source_in_frame: 0.5 }], [{ ...clip, source_in_frame: -1 }],
+      [{ ...clip, source_out_frame: 0 }], [{ ...clip, source_out_frame: Number.MAX_SAFE_INTEGER + 1 }],
+      Array.from({ length: 101 }, (_, index) => ({ ...clip, candidate_id: `clip-${index}` }))]) {
+      expect(() => api.saveEdits(taskId, revisionId, clips, signal())).toThrow('整数帧范围');
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it('does not retry an edit POST whose result is unknown', async () => {
+    const fetcher = vi.fn().mockRejectedValue(new TypeError('connection lost')); vi.stubGlobal('fetch', fetcher);
+    await expect(api.saveEdits(taskId, revisionId, [{ candidate_id: 'first', source_in_frame: 1, source_out_frame: 20 }], signal()))
+      .rejects.toBeInstanceOf(api.MutationUnknownError);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+  it('does not accept the parent version as a successful immutable edit receipt', async () => {
+    const fetcher = vi.fn().mockResolvedValue(reply(record, 201)); vi.stubGlobal('fetch', fetcher);
+    await expect(api.saveEdits(taskId, revisionId, [{ candidate_id: 'first', source_in_frame: 1, source_out_frame: 20 }], signal()))
+      .rejects.toBeInstanceOf(api.MutationUnknownError);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+  it('reads optional objective edit reports and rejects invalid measurements while preserving legacy records', async () => {
+    const old = { revision: record, edl: { schema_version: '0.1.0', duration_frames: 300,
+      profile: { width: 1920, height: 1080, fps: { num: 30000, den: 1001 } }, clips: [{ id: 'clip', source_id: 'source',
+        source_in_frame: 1, source_out_frame: 301, timeline_in_frame: 0, timeline_out_frame: 300, provenance: { candidate_id: 'first' } }] }, manifest: {} };
+    const effort = { net_boundary_adjustment_seconds: 1001 / 30000, adjusted_clip_count: 1, added_clip_count: 0,
+      removed_clip_count: 0, minimum_moved_clip_count: 0 };
+    const edited = { ...old, edit_record: { baseline_revision_id: revisionId, parent_revision_id: subtitleId,
+      editing_elapsed_ms: null, effort, step_effort: effort } };
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce(reply(old)).mockResolvedValueOnce(reply(edited))
+      .mockResolvedValueOnce(reply({ ...edited, edit_record: { ...edited.edit_record, effort: { ...effort, net_boundary_adjustment_seconds: -1 } } })));
+    expect((await api.getEdl(taskId, revisionId, signal())).edit_record).toBeUndefined();
+    expect((await api.getEdl(taskId, revisionId, signal())).edit_record).toEqual(edited.edit_record);
+    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
+  });
+  it('accepts exact saved candidate projections and rejects ambiguous or fractional projections', async () => {
+    const saved = { revision: record, edl: { schema_version: '0.1.0', duration_frames: 300,
+      profile: { width: 1920, height: 1080, fps: { num: 30000, den: 1001 } }, clips: [{ id: 'clip', source_id: 'source',
+        source_in_frame: 1, source_out_frame: 301, timeline_in_frame: 0, timeline_out_frame: 300, provenance: { candidate_id: 'first' } }] }, manifest: {} };
+    const projection = { candidate_id: 'extra', source_in_frame: 1001, source_out_frame: 1499 };
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce(reply({ ...saved, available_clips: [projection] }))
+      .mockResolvedValueOnce(reply({ ...saved, available_clips: [projection, projection] }))
+      .mockResolvedValueOnce(reply({ ...saved, available_clips: [{ ...projection, source_in_frame: 1001.5 }] })));
+    expect((await api.getEdl(taskId, revisionId, signal())).available_clips).toEqual([projection]);
+    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
+    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
+  });
   it('marks lost creation responses as unknown without retry', async () => {
     const fetcher = vi.fn().mockRejectedValue(new TypeError('connection lost')); vi.stubGlobal('fetch', fetcher);
     await expect(api.createEdl(taskId, ['one'], signal())).rejects.toBeInstanceOf(api.MutationUnknownError);

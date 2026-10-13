@@ -17,6 +17,26 @@ export interface EdlPage {
   has_more: boolean;
   unavailable_count: number;
 }
+export interface EditedClip {
+  candidate_id: string;
+  source_in_frame: number;
+  source_out_frame: number;
+}
+export interface EditEffort {
+  net_boundary_adjustment_seconds: number;
+  added_clip_boundary_adjustment_seconds?: number;
+  adjusted_clip_count: number;
+  added_clip_count: number;
+  removed_clip_count: number;
+  minimum_moved_clip_count: number;
+}
+export interface EditRecord {
+  baseline_revision_id: string;
+  parent_revision_id: string;
+  editing_elapsed_ms: number | null;
+  effort: EditEffort;
+  step_effort: EditEffort;
+}
 export interface SavedEdl {
   revision: EdlRevision;
   edl: {
@@ -34,6 +54,8 @@ export interface SavedEdl {
     }[];
   };
   manifest: unknown;
+  edit_record?: EditRecord;
+  available_clips?: EditedClip[];
 }
 interface VersionRecord {
   task_id: string;
