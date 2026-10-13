@@ -2,6 +2,8 @@ import { Alert, Empty, Progress, Skeleton, Steps, Tag } from 'antd';
 import { useTasks } from '../store/tasks';
 import { stageLabels, statusLabels, type Stage } from '../types/tasks';
 import { ClipResults } from './ClipResults';
+import { TranscriptPlayer } from './TranscriptPlayer';
+import { AuditPanel } from './AuditPanel';
 
 const steps: Stage[] = ['probing', 'normalizing', 'analyzing_shots', 'splitting', 'packaging', 'done'];
 const analysisStages: Stage[] = ['analyzing_shots', 'analyzing_speech', 'transcribing', 'combining_analysis', 'scoring_candidates'];
@@ -15,7 +17,9 @@ export function TaskDetail() {
       <h3 className="detail-name">{task.source_name}</h3><div className="task-id">任务编号 {task.task_id}</div>
       <div className="track"><div className="progress-label"><strong>{stageLabels[task.stage]}</strong><span>{task.progress}%</span></div><Progress percent={task.progress} showInfo={false} status={failure ? 'exception' : task.status === 'SUCCEEDED' ? 'success' : 'normal'} /><Steps size="small" responsive={false} progressDot current={steps.indexOf(analysisStages.includes(task.stage) ? 'analyzing_shots' : task.stage)} status={failure ? 'error' : task.status === 'SUCCEEDED' ? 'finish' : 'process'} items={['读取', '转码', '分析', '切片', '打包', '完成'].map(title => ({ title }))} /><p className="hint">显示的是阶段进度，转码、分析、转写或切片时可能暂时保持不变。</p></div>
       <div role="status" aria-live="polite">{note && <Alert type={failure ? 'error' : 'info'} message={note} showIcon />}</div>
+      {task.status === 'SUCCEEDED' && task.result?.downloads['analysis.json'] && <TranscriptPlayer taskId={task.task_id} download={task.result.downloads['analysis.json']} />}
       {task.status === 'SUCCEEDED' && task.result && <ClipResults key={task.task_id} task={task} result={task.result} />}
+      {task.status === 'SUCCEEDED' && task.result?.downloads['candidates.json'] && <AuditPanel taskId={task.task_id} />}
     </>}
   </section>;
 }

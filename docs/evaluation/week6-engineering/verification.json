@@ -1,0 +1,37 @@
+{
+  "status": "ready_for_browser_acceptance",
+  "frontend": {
+    "tests": 117,
+    "passed": 117,
+    "typecheck": "passed",
+    "build": "passed"
+  },
+  "backend": {
+    "discovered": 720,
+    "passed_across_full_run_and_targeted_retry": 712,
+    "skipped": 1,
+    "environment_blocked": 7,
+    "blocked_tests": [
+      "test_acceptance.AcceptanceTests.test_changed_stored_media_is_not_served_or_labeled_accepted",
+      "test_acceptance.AcceptanceTests.test_concurrent_record_is_never_overwritten",
+      "test_acceptance.AcceptanceTests.test_different_feedback_cannot_silently_replace_history",
+      "test_acceptance.AcceptanceTests.test_failed_record_publication_keeps_valid_media_and_allows_retry",
+      "test_acceptance.AcceptanceTests.test_import_is_idempotent_and_api_media_and_pagination_keep_acceptance",
+      "test_acceptance.AcceptanceTests.test_interrupted_copy_leaves_import_retryable_and_unpublished",
+      "test_acceptance.AcceptanceTests.test_structured_form_import_keeps_provenance_without_fabricated_quote"
+    ],
+    "blocking_error": "WinError 5 creating hard links in existing acceptance import tests",
+    "retry_method": "only the 27 initial failures; workspace temporary directory and default tool configuration"
+  },
+  "ruff": "passed",
+  "diff_check": "passed",
+  "independent_review": "three identified issues fixed and regression-tested",
+  "rendered_roundtrip_frames": 587,
+  "batch_specialist_frames": 28,
+  "source_cut_error_frames": 0,
+  "verification_method": "direct_registered_route_functions_and_independent_frame_decode",
+  "web_ui_acceptance": "pending",
+  "deployment": "not_performed",
+  "model_calls": 0,
+  "scope": "synthetic engineering material; not independent narrative quality or real-speech sync evaluation"
+}

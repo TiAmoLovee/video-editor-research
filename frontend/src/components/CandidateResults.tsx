@@ -4,6 +4,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import { acceptedVideoUrl, optimizedVideoUrl, downloadUrl, getCandidates, validId } from '../api/tasks';
 import type { Candidate, CandidatePage, CandidateView } from '../types/tasks';
 import { ExportWorkbench } from './ExportWorkbench';
+import { CandidateReviewControls, CandidateReviewHeader, useCandidateReviews } from './CandidateReview';
 
 const fallbackDetails: Record<string, string> = {
   invalid_assessment: '模型返回的分项分数或原文引用未通过校验。',
@@ -36,6 +37,7 @@ export function CandidateResults({ taskId, download }: { taskId: string; downloa
 }
 
 function CandidateResultsForTask({ taskId, download }: { taskId: string; download: string }) {
+  const reviews = useCandidateReviews(taskId);
   const [offset, setOffset] = useState(0);
   const [page, setPage] = useState<CandidatePage | null>(null);
   const [loading, setLoading] = useState(true);
@@ -77,6 +79,7 @@ function CandidateResultsForTask({ taskId, download }: { taskId: string; downloa
   catch { return <Alert type="error" message="候选下载地址异常，请刷新任务。" />; }
   return <section className="candidate-results" aria-label="候选片段推荐" aria-busy={loading}>
     <div className="result-head"><div><h2>候选片段推荐</h2><p className="hint">评分仅用于同一任务内排序。片段可能相互重叠，当前展示推荐时间范围。</p></div><Button href={url} download aria-label="下载评分结果" icon={<DownloadOutlined />}>下载评分结果</Button></div>
+    <CandidateReviewHeader reviews={reviews} />
     <ExportWorkbench taskId={taskId} selected={selected} onRemove={id => setSelected(items => items.filter(item => item.id !== id))} onMove={move} onBusyChange={setExportBusy} />
     {loading && page && <p role="status">正在更新候选列表…</p>}
     {loading && !page ? <Skeleton active title={false} paragraph={{ rows: 3 }} aria-label="正在加载候选" /> : error ? <Alert type="warning" message="候选暂时加载失败，切片下载仍可使用。" action={<Button size="small" onClick={() => setRetry(value => value + 1)}>重试候选</Button>} /> : page && <>
@@ -139,6 +142,7 @@ function CandidateResultsForTask({ taskId, download }: { taskId: string; downloa
           {candidate.scorer === 'llm' && candidate.rule_score != null && <p className="hint">规则基线 {candidate.rule_score.toFixed(2)}</p>}
           <p className="hint">时长 {candidate.duration_seconds.toFixed(2)} 秒</p>
           <p className="candidate-text">{candidate.text}</p>
+          <CandidateReviewControls candidateId={candidate.id} rank={candidate.rank} reviews={reviews} disabled={loading || exportBusy} />
           {candidate.selection && <>
             {candidate.selection.topic && <p><Tag color="cyan">文字分组：{candidate.selection.topic.group_label}</Tag>{candidate.selection.topic.duplicate_of && <Tag>疑似重复候选 #{candidate.selection.topic.duplicate_rank} · 文字相似度 {Math.round((candidate.selection.topic.duplicate_similarity ?? 0) * 100)}%</Tag>}</p>}
             <p><Tag color={candidate.selection.retained ? 'blue' : 'default'}>{candidate.selection.retained ? '去重保留' : '重叠已折叠'}</Tag><Tag color={candidate.selection.boundary_status === 'review_required' ? 'orange' : 'default'}>{candidate.selection.boundary_status === 'review_required' ? '边界待复核' : '完整性未人工验收'}</Tag></p>

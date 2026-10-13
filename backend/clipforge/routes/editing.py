@@ -124,6 +124,16 @@ class CreateEdlRequest(BaseModel):
 
     model_config = ConfigDict(extra="forbid", strict=True)
     selected_ids: list[CandidateId] = Field(min_length=1, max_length=100)
+    actor: Annotated[str, StringConstraints(strict=True)] | None = None
+
+    @field_validator("actor")
+    @classmethod
+    def valid_actor(cls, value):
+        from clipforge.services.reviewing import normalize_actor
+        try:
+            return normalize_actor(value, required=False)
+        except editing_service.ProjectError as error:
+            raise ValueError(error.detail) from error
 
     @field_validator("selected_ids")
     @classmethod
@@ -146,6 +156,16 @@ class SaveEditRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     clips: list[EditClipRequest] = Field(min_length=1, max_length=100)
     editing_elapsed_ms: int | None = Field(default=None, ge=0, le=86_400_000)
+    actor: Annotated[str, StringConstraints(strict=True)] | None = None
+
+    @field_validator("actor")
+    @classmethod
+    def valid_actor(cls, value):
+        from clipforge.services.reviewing import normalize_actor
+        try:
+            return normalize_actor(value, required=False)
+        except editing_service.ProjectError as error:
+            raise ValueError(error.detail) from error
 
     @field_validator("clips")
     @classmethod
@@ -177,7 +197,8 @@ def _public_call(operation: Callable[[], T]) -> T:
 )
 def create_edl(task_id: UUID, payload: CreateEdlRequest) -> JSONResponse:
     def operation():
-        revision = editing_service.create_task_edl(str(task_id), payload.selected_ids, timeout=90)
+        identity = {"actor": payload.actor} if payload.actor is not None else {}
+        revision = editing_service.create_task_edl(str(task_id), payload.selected_ids, timeout=90, **identity)
         revision_id = str(UUID(str(revision["revision_id"])))
         return JSONResponse(
             status_code=201, content=jsonable_encoder(revision),
@@ -206,9 +227,12 @@ def get_edl(task_id: UUID, revision_id: UUID) -> JSONResponse:
 )
 def save_edl_edit(task_id: UUID, revision_id: UUID, payload: SaveEditRequest) -> JSONResponse:
     def operation():
+        # Old clients omit actor; preserve their call shape and explicitly record
+        # the missing identity as unrecorded in the new immutable edit sidecar.
+        identity = {"actor": payload.actor} if payload.actor is not None else {}
         record = editing_changes_service.create_task_edit(
             str(task_id), str(revision_id), [clip.model_dump() for clip in payload.clips],
-            editing_elapsed_ms=payload.editing_elapsed_ms)
+            editing_elapsed_ms=payload.editing_elapsed_ms, **identity)
         new_id = str(UUID(str(record["revision_id"])))
         return JSONResponse(status_code=201, content=jsonable_encoder(record), headers={
             **NO_STORE, "Location": f"/tasks/{task_id}/edl/{new_id}"})

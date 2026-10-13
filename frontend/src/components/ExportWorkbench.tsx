@@ -3,6 +3,9 @@ import { Alert, Button, Checkbox, Empty, Tag } from 'antd';
 import * as editing from '../api/editing';
 import type { ArtifactHistory, EditedClip, EditEffort, EdlPage, EdlSummary, SavedEdl } from '../types/editing';
 import type { Candidate } from '../types/tasks';
+import { useActor } from '../hooks/useActor';
+import { frameToTimecode, timecodeToFrame } from '../utils/timecode';
+import { BatchExportPanel } from './BatchExportPanel';
 
 interface Props {
   taskId: string;
@@ -14,7 +17,7 @@ interface Props {
 const noArtifacts: ArtifactHistory = { subtitles: [], renders: [], mlt_exports: [], unavailable_count: 0 };
 const noPage: EdlPage = { items: [], total: 0, offset: 0, limit: 10, has_more: false, unavailable_count: 0 };
 interface RecoveryRecord { version: 1; task_id: string; operation_id: string; preferred_revision?: string }
-interface ClipDraft { candidate_id: string; source_in_frame: string; source_out_frame: string }
+interface ClipDraft { candidate_id: string; source_in_frame: string; source_out_frame: string; source_in_time?: string; source_out_time?: string }
 function parseEdits(draft: ClipDraft[]): EditedClip[] | null {
   const clips = draft.map(clip => ({ candidate_id: clip.candidate_id,
     source_in_frame: /^\d+$/.test(clip.source_in_frame) ? Number(clip.source_in_frame) : NaN,
@@ -64,6 +67,7 @@ const dateLabel = (value: string) => {
 const messageOf = (error: unknown) => error instanceof Error ? error.message : '暂时无法读取，请稍后刷新已保存记录。';
 
 export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChange }: Props) {
+  const [actor, setActor] = useActor();
   const [page, setPage] = useState<EdlPage>(noPage);
   const [saved, setSaved] = useState<SavedEdl | null>(null);
   const [artifacts, setArtifacts] = useState<ArtifactHistory>(noArtifacts);
@@ -71,6 +75,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
   const [withSubtitles, setWithSubtitles] = useState(false);
   const [reading, setReading] = useState(true);
   const [busy, setBusy] = useState('');
+  const [batchBusy, setBatchBusy] = useState(false);
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [unknown, setUnknown] = useState(() => !!readRecovery(taskId));
@@ -108,7 +113,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
   }
 
   async function refreshRecords() {
-    if (operation.current) return;
+    if (operation.current || batchBusy) return;
     readController.current?.abort();
     const controller = new AbortController();
     readController.current = controller;
@@ -138,7 +143,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
     readController.current = controller;
     const token = ++view.current;
     setPage(noPage); setSaved(null); savedRef.current = null; setArtifacts(noArtifacts);
-    setSubtitleId(''); setWithSubtitles(false); setEditDraft(null); setBusy(''); setError(''); setNotice('');
+    setSubtitleId(''); setWithSubtitles(false); setEditDraft(null); setBusy(''); setBatchBusy(false); setError(''); setNotice('');
     const recovery = readRecovery(taskId);
     setUnknown(!!recovery); setReviewReady(false); setPreviewFailed(''); setReading(true);
     readRecords(taskId, token, controller.signal, recovery?.preferred_revision).catch(caught => {
@@ -155,7 +160,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
   }, [taskId]);
 
   async function chooseRevision(revision: string) {
-    if (operation.current || reading || editDraft || !revision) return;
+    if (operation.current || batchBusy || reading || editDraft || !revision) return;
     readController.current?.abort();
     const controller = new AbortController(); readController.current = controller;
     const token = ++view.current; const task = taskId;
@@ -172,7 +177,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
   }
 
   async function loadOlder() {
-    if (operation.current || reading || !page.has_more) return;
+    if (operation.current || batchBusy || reading || !page.has_more) return;
     const controller = new AbortController(); readController.current = controller;
     const token = view.current; const task = taskId;
     setReading(true);
@@ -186,7 +191,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
   }
 
   async function mutate(label: string, action: (signal: AbortSignal) => Promise<{ revision: string; subtitle?: string }>, createsRevision = false) {
-    if (operation.current || reading || readRecovery(taskId)) return;
+    if (operation.current || batchBusy || reading || readRecovery(taskId)) return;
     const task = taskId; const token = view.current;
     const active = { controller: new AbortController(), task, view: token, id: `${Date.now()}-${++operationCounter}` };
     operation.current = active;
@@ -205,6 +210,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
       if (!stillCurrent(task, token) || active.controller.signal.aborted) return;
       if (result.subtitle) { setSubtitleId(result.subtitle); setWithSubtitles(true); }
       clearRecovery(task, active.id); setUnknown(false);
+      window.dispatchEvent(new CustomEvent('clipforge:audit-changed', { detail: { taskId: task } }));
       setNotice('已保存，可以下载或继续导出。');
     } catch (caught) {
       if (!stillCurrent(task, token) || active.controller.signal.aborted) return;
@@ -221,7 +227,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
 
   const revision = saved?.revision.revision_id;
   const profile = saved?.edl.profile;
-  const editingDisabled = !!busy || reading || unknown;
+  const editingDisabled = !!busy || batchBusy || reading || unknown;
   const disabled = editingDisabled || editDraft !== null;
   const editClips = editDraft ? parseEdits(editDraft) : null;
   const canEditSaved = !!saved && saved.edl.clips.length <= 100
@@ -250,7 +256,8 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
 
   return <section className="export-workbench" aria-label="剪辑与导出工作台" aria-busy={!!busy || reading}>
     <div className="result-head"><div><h2>剪辑与导出</h2><p className="hint">按顺序保存所选片段，再从同一版本导出成片、字幕和 Shotcut 工程。</p></div>
-      <Button disabled={!!busy || reading || (!!editDraft && !unknown)} onClick={() => void refreshRecords()}>刷新已保存记录</Button></div>
+      <Button disabled={!!busy || batchBusy || reading || (!!editDraft && !unknown)} onClick={() => void refreshRecords()}>刷新已保存记录</Button></div>
+    <label>操作记录姓名 <input value={actor} maxLength={80} disabled={editingDisabled} onChange={event => setActor(event.target.value)} /></label>
     <section aria-label="待保存的片段顺序">
       <h3>待保存的片段 · {selected.length} 条</h3>
       {!selected.length ? <p className="hint">先在候选列表中选择片段。已有保存版本仍可直接导出。</p> : <ol className="export-draft-list">{selected.map((candidate, index) => <li key={candidate.id}>
@@ -259,9 +266,9 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
           <Button size="small" disabled={!!busy || index === selected.length - 1} aria-label={`下移片段 ${index + 1}`} onClick={() => onMove(candidate.id, 1)}>下移</Button>
           <Button size="small" disabled={!!busy} aria-label={`移除片段 ${index + 1}`} onClick={() => onRemove(candidate.id)}>移除</Button></div>
       </li>)}</ol>}
-      <Button type="primary" disabled={disabled || !selected.length} onClick={() => {
+      <Button type="primary" disabled={disabled || !selected.length || !actor.trim() || actor.trim().length > 80} onClick={() => {
         const ids = selected.map(item => item.id);
-        void mutate('正在核验媒体并保存剪辑版本…', async signal => ({ revision: (await editing.createEdl(taskId, ids, signal)).revision_id }), true);
+        void mutate('正在核验媒体并保存剪辑版本…', async signal => ({ revision: (await editing.createEdl(taskId, ids, signal, actor.trim())).revision_id }), true);
       }}>保存选择为剪辑版本</Button>
     </section>
     {unknown && <Alert type="warning" message="上次操作的结果尚未确认" description={<>已暂停新的导出。上次处理可能仍在继续，请等待并刷新已保存记录；核对新增版本和文件后，点击下方按钮继续。<div className="export-actions"><Button disabled={!reviewReady || reading || !!busy} onClick={() => {
@@ -277,7 +284,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
     {dirty && <Alert type="info" message="当前草稿与已保存版本不同" description="调整上方选择不会改写已保存版本。下方导出始终使用明确显示的保存版本；需要采用新顺序时，请先保存。" />}
     <section aria-label="已保存的剪辑版本">
       <h3>已保存的剪辑版本</h3>
-      {versions.length > 0 && <div className="export-version-picker"><label htmlFor={`edl-${taskId}`}>导出版本</label><select id={`edl-${taskId}`} value={revision ?? ''} disabled={!!busy || reading || !!editDraft} onChange={event => void chooseRevision(event.target.value)}>
+      {versions.length > 0 && <div className="export-version-picker"><label htmlFor={`edl-${taskId}`}>导出版本</label><select id={`edl-${taskId}`} value={revision ?? ''} disabled={!!busy || batchBusy || reading || !!editDraft} onChange={event => void chooseRevision(event.target.value)}>
         {!revision && <option value="">请选择版本</option>}{versions.map(item => <option key={item.revision_id} value={item.revision_id}>{dateLabel(item.created_at)} · {item.clip_count} 条 · {item.profile.width}×{item.profile.height} · {shortId(item.revision_id)}</option>)}
       </select>{page.has_more && <Button size="small" disabled={!!busy || reading} onClick={() => void loadOlder()}>载入更早版本</Button>}</div>}
       {(page.unavailable_count > 0 || artifacts.unavailable_count > 0) && <p className="hint">部分旧记录暂时无法读取，未放入可下载列表。</p>}
@@ -291,7 +298,9 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
               source_in_frame: String(clip.source_in_frame), source_out_frame: String(clip.source_out_frame) })));
             setError(''); setNotice('');
           }}>编辑这个版本</Button>{!canEditSaved && <p className="hint">此旧版本缺少唯一候选编号或片段超过 100 条，暂时不能在网页中调整。</p>}</> : <>
-            <p className="hint">按原素材帧号调整，起帧包含在片段内，止帧不包含。保存会生成新版本；下方导出仍使用当前已保存版本。切换版本前请保存或放弃修改。</p>
+            <p className="hint">可输入时间（时:分:秒或秒数），自动对齐最近的视频帧；也可用帧号精调。起点包含，止点不包含。保存会生成新版本，导出使用已保存版本。</p>
+            <label>编辑者姓名 <input value={actor} maxLength={80} disabled={editingDisabled} onChange={event => setActor(event.target.value)} /></label>
+            <p className="hint">请填写用于操作记录的姓名。</p>
             <div className="export-actions"><Button disabled={editingDisabled || !addableClips.length || editDraft.length + addableClips.length > 100} onClick={() => setEditDraft(previous => {
               if (!previous) return null;
               const existing = new Set(previous.map(clip => clip.candidate_id));
@@ -303,10 +312,16 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
             {unavailableSelectedCount > 0 && <p className="hint">当前所选中有 {unavailableSelectedCount} 条不在此版本的候选快照内，不能加入。</p>}
             {editDraft.length + addableClips.length > 100 && <p className="hint">加入后会超过 100 条，请减少候选选择或先删除草稿中的片段。</p>}
             <ol className="export-draft-list" aria-label="切点编辑草稿">{editDraft.map((clip, index) => <li key={clip.candidate_id}>
-              <div><strong>片段 {index + 1}</strong><div><label>片段 {index + 1} 源起帧 <input type="number" min="0" step="1" value={clip.source_in_frame} disabled={editingDisabled} onChange={event => {
-                const value = event.target.value; setEditDraft(previous => previous?.map((item, position) => position === index ? { ...item, source_in_frame: value } : item) ?? null);
+              <div><strong>片段 {index + 1}</strong><div><label>片段 {index + 1} 开始时间 <input value={clip.source_in_time ?? frameToTimecode(clip.source_in_frame, profile.fps)} disabled={editingDisabled} onChange={event => {
+                const value = event.target.value; const frame = timecodeToFrame(value, profile.fps);
+                setEditDraft(previous => previous?.map((item, position) => position === index ? { ...item, source_in_time: value, source_in_frame: frame === null ? '' : String(frame) } : item) ?? null);
+              }} /></label></div><div><label>片段 {index + 1} 结束时间 <input value={clip.source_out_time ?? frameToTimecode(clip.source_out_frame, profile.fps)} disabled={editingDisabled} onChange={event => {
+                const value = event.target.value; const frame = timecodeToFrame(value, profile.fps);
+                setEditDraft(previous => previous?.map((item, position) => position === index ? { ...item, source_out_time: value, source_out_frame: frame === null ? '' : String(frame) } : item) ?? null);
+              }} /></label></div><div><label>片段 {index + 1} 源起帧 <input type="number" min="0" step="1" value={clip.source_in_frame} disabled={editingDisabled} onChange={event => {
+                const value = event.target.value; setEditDraft(previous => previous?.map((item, position) => position === index ? { ...item, source_in_frame: value, source_in_time: undefined } : item) ?? null);
               }} /></label></div><div><label>片段 {index + 1} 源止帧 <input type="number" min="1" step="1" value={clip.source_out_frame} disabled={editingDisabled} onChange={event => {
-                const value = event.target.value; setEditDraft(previous => previous?.map((item, position) => position === index ? { ...item, source_out_frame: value } : item) ?? null);
+                const value = event.target.value; setEditDraft(previous => previous?.map((item, position) => position === index ? { ...item, source_out_frame: value, source_out_time: undefined } : item) ?? null);
               }} /></label></div></div>
               <div className="export-actions">{([-1, 1] as const).map(direction => <Button key={direction} size="small" disabled={editingDisabled || (direction === -1 ? index === 0 : index === editDraft.length - 1)} aria-label={`${direction === -1 ? '上移' : '下移'}编辑片段 ${index + 1}`} onClick={() => setEditDraft(previous => {
                 if (!previous) return null; const next = [...previous]; const destination = index + direction;
@@ -315,13 +330,14 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
               })}>{direction === -1 ? '上移' : '下移'}</Button>)}<Button size="small" disabled={editingDisabled || editDraft.length === 1} aria-label={`删除编辑片段 ${index + 1}`} onClick={() => setEditDraft(previous => previous && previous.length > 1 ? previous.filter((_, position) => position !== index) : previous)}>删除</Button></div>
             </li>)}</ol>
             {!editClips && <p role="status" className="hint">请输入非负整数起帧，止帧必须大于起帧。</p>}
-            <div className="export-actions"><Button type="primary" disabled={editingDisabled || !editClips || !editsChanged} onClick={() => {
+            <div className="export-actions"><Button type="primary" disabled={editingDisabled || !editClips || !editsChanged || !actor.trim() || actor.trim().length > 80} onClick={() => {
               if (!editClips) return;
-              void mutate('正在核验切点并保存新版本…', async signal => ({ revision: (await editing.saveEdits(taskId, revision, editClips, signal)).revision_id }), true);
+              void mutate('正在核验切点并保存新版本…', async signal => ({ revision: (await editing.saveEdits(taskId, revision, editClips, signal, actor.trim())).revision_id }), true);
             }}>保存修改为新版本</Button><Button disabled={editingDisabled} onClick={() => { setEditDraft(null); setError(''); }}>放弃这次修改</Button></div>
           </>}
         </section>
         {saved.edit_record && <section aria-label="人工修改量"><h3>人工修改量</h3>
+          <p>编辑者：{saved.edit_record.actor ?? '未记录'}{saved.edit_record.created_at ? ` · ${dateLabel(saved.edit_record.created_at)}` : ''}</p>
           <p className="hint">基于源帧计算切点移动量。净修改相对最初采纳版本 {shortId(saved.edit_record.baseline_revision_id)}，本次修改相对父版本 {shortId(saved.edit_record.parent_revision_id)}；版本数量不代表劳动量。</p>
           <EffortSummary label="最终净修改" report={saved.edit_record.effort} /><EffortSummary label="本次修改" report={saved.edit_record.step_effort} />
           <p className="hint">{saved.edit_record.editing_elapsed_ms === null ? '未记录编辑耗时。' : `本次编辑经过 ${(saved.edit_record.editing_elapsed_ms / 1000).toFixed(1)} 秒（包含等待和停留）。`}这些记录不等于节省的时间，也不表示片段质量已达标。</p>
@@ -338,6 +354,7 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
         <div className="export-actions export-main-actions"><Button type="primary" disabled={disabled || (withSubtitles && !selectedSubtitle)} onClick={() => void mutate('正在按保存版本渲染并核验 MP4…', async signal => { await editing.createMp4(taskId, revision, boundSubtitle, signal); return { revision }; })}>导出 MP4</Button>
           <Button disabled={disabled || (withSubtitles && !selectedSubtitle)} onClick={() => void mutate('正在生成并核验 Shotcut 工程…', async signal => { await editing.createMlt(taskId, revision, boundSubtitle, signal); return { revision }; })}>导出 Shotcut 工程</Button></div>
         <p className="hint">MP4 可以直接播放。Shotcut 工程需要同时保留源素材；换电脑后请在 Shotcut 重新定位素材，并安装上方字幕字体。</p>
+        <BatchExportPanel key={`${taskId}:${revision}`} taskId={taskId} revisionId={revision} disabled={!!busy || reading || unknown || editDraft !== null} onBusyChange={value => { setBatchBusy(value); busyCallback.current?.(value); }} />
         {artifacts.renders.length > 0 && <section aria-label="此版本的已保存成片"><h3>已保存成片</h3>{artifacts.renders.map((item, index) => <article key={item.render_id} className="export-artifact">
           <strong>{dateLabel(item.created_at)} · {item.subtitle_id ? '带字幕' : '无字幕'} · {shortId(item.render_id)}</strong>
           {index === 0 && <video controls preload="metadata" src={editing.renderFileUrl(taskId, revision, item.render_id, 'output.mp4')} aria-label="最新保存成片播放器" onError={() => setPreviewFailed(item.render_id)} />}
