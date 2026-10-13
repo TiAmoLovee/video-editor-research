@@ -92,7 +92,7 @@ class ResultCacheTests(unittest.TestCase):
             self.assertIsNone(z.testzip())
             self.assertEqual(z.read('cache.json'),(job_dir(b)/'cache.json').read_bytes())
             self.assertEqual(z.read('candidates.json'),(job_dir(b)/'candidates.json').read_bytes())
-        # �������ƣ��޸���������Ƭ������Ⱦ����Դ����
+        # 独立复制，修改新任务切片不会污染缓存源任务。
         (job_dir(b)/'clips/clip_001.mp4').write_bytes(b'changed')
         self.assertEqual((job_dir(a)/'clips/clip_001.mp4').read_bytes(),b'test-clip')
 
@@ -117,7 +117,7 @@ class ResultCacheTests(unittest.TestCase):
 
     def test_failed_source_job_is_not_reused(self):
         self.pipeline();a=self.job();process_video(a)
-        # ģ������ָ��״̬�쳣�ľɼ�¼�������ӿڽ�ֹ��д�ѽ�������
+        # 模拟索引指向状态异常的旧记录；公共接口禁止改写已结束任务。
         with database() as connection:
             connection.execute("UPDATE jobs SET status='FAILED' WHERE task_id=?", (a,))
         with self.assertLogs('clipforge.services.pipeline',level='WARNING'):
@@ -204,13 +204,13 @@ class ResultCacheTests(unittest.TestCase):
             wrong = deepcopy(descriptor)
             with patch.dict(os.environ, {'CLIPFORGE_CANDIDATE_GENERATOR': 'sentence-window-v1'}):
                 wrong['generation_settings'] = cache.generation_settings_snapshot()
-            with self.assertRaisesRegex(ValueError, '���ɲ���'):
+            with self.assertRaisesRegex(ValueError, '生成策略'):
                 cache.validate_bundle(job_dir(first), job_dir(first) / 'source.mp4', job['result'], wrong)
             report_path = job_dir(first) / 'topic_segmentation.json'
             report = json.loads(report_path.read_text(encoding='utf-8'))
             report['model_requests'] = 1
             report_path.write_text(json.dumps(report), encoding='utf-8')
-            with self.assertRaisesRegex(ValueError, '�ֶμ�¼'):
+            with self.assertRaisesRegex(ValueError, '分段记录'):
                 cache.validate_bundle(job_dir(first), job_dir(first) / 'source.mp4', job['result'], descriptor)
 
     def test_missing_candidates_recomputes_and_configuration_change_misses(self):
@@ -324,7 +324,7 @@ class ResultCacheTests(unittest.TestCase):
         self.boundary_transport=unittest.mock.Mock()
         def reply(cfg,payload,key,timeout):
             content=payload['messages'][1]['content']
-            return response({'choice':'keep','reason':'����ԭ��'} if content.startswith('{') else {'punctuated':content})
+            return response({'choice':'keep','reason':'保留原文'} if content.startswith('{') else {'punctuated':content})
         self.boundary_transport.side_effect=reply
         stack=ExitStack();self.addCleanup(stack.close)
         stack.enter_context(patch.dict(os.environ,{'CLIPFORGE_LLM_API_KEY':'fake'}))

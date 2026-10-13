@@ -1,4 +1,4 @@
-"""��ѡ���ڲݰ����ṹ����Դ���������Ӽ�ʱ��Լ��У�顣"""
+"""候选窗口草案：结构、来源、完整句子及时间约束校验。"""
 
 import json
 import math
@@ -26,47 +26,47 @@ def validate_candidates(data, analysis, schema=None):
         # strategy to reject partial ranges, changed IDs, omitted segments or
         # warnings that hide short/long topics. Old windows retain their contract.
         if data != generate_topic_candidates(analysis, options):
-            raise ValueError('�����ѡ��̶��ֶβ��Բ�һ��')
+            raise ValueError('话题候选与固定分段策略不一致')
     else:
         options = WindowOptions(**data["generator"]["options"])
     if (data["analysis_sha256"] != content_hash(analysis)
             or data["media"] != analysis["media"]
             or data["input_result_kind"] != analysis["result_kind"]):
-        raise ValueError("��ѡ����Դ������ƥ��")
+        raise ValueError("候选与来源分析不匹配")
     if data["candidate_count"] != len(data["candidates"]):
-        raise ValueError("��ѡ������ƥ��")
+        raise ValueError("候选计数不匹配")
     if data["candidate_count"] > options.max_candidates:
-        raise ValueError("��ѡ����������������")
+        raise ValueError("候选数量超过配置上限")
     sentences = analysis["sentences"]
     indices = {s["id"]: i for i, s in enumerate(sentences)}
     seen, windows = set(), set()
     for candidate in data["candidates"]:
         refs = candidate["source_sentences"]
         if any(ref not in indices for ref in refs):
-            raise ValueError("�����˲����ڵľ���")
+            raise ValueError("引用了不存在的句子")
         positions = [indices[ref] for ref in refs]
         if positions != list(range(positions[0], positions[-1] + 1)):
-            raise ValueError("��ѡ������������������ľ���")
+            raise ValueError("候选必须引用连续且有序的句子")
         members = sentences[positions[0]:positions[-1] + 1]
         start, end = candidate["start"], candidate["end"]
         if start != min(s["start"] for s in members) or end != max(s["end"] for s in members):
-            raise ValueError("��ѡ�߽���븲����������")
+            raise ValueError("候选边界必须覆盖完整句子")
         if not options.min_seconds <= round(end - start, 9) <= options.max_seconds:
-            raise ValueError("��ѡʱ���������÷�Χ��")
+            raise ValueError("候选时长不在配置范围内")
         if not math.isclose(candidate["duration_seconds"], end - start, abs_tol=1e-8, rel_tol=0):
-            raise ValueError("��ѡʱ������ֹʱ�䲻һ��")
-        # ��һδ���þ����봰����ʵ�ʽ�����������ɰ���ȱʧ���á�
+            raise ValueError("候选时长与起止时间不一致")
+        # 任一未引用句子与窗口有实质交集，都会造成半句或缺失引用。
         for s in sentences:
             if s["start"] < end and s["end"] > start and s["id"] not in refs:
-                raise ValueError("��ѡ�ض���δ���õ����ھ���")
+                raise ValueError("候选截断了未引用的相邻句子")
         cursor = members[0]["end"]
         for s in members[1:]:
             if s["start"] - cursor > options.max_gap_seconds:
-                raise ValueError("��ѡ����˹���ͣ��")
+                raise ValueError("候选跨过了过长停顿")
             cursor = max(cursor, s["end"])
         if candidate["text"] != "\n".join(s["text"] for s in members):
-            raise ValueError("��ѡ�ı�����Դ���Ӳ�һ��")
+            raise ValueError("候选文本与来源句子不一致")
         if candidate["id"] in seen or (start, end) in windows:
-            raise ValueError("�ظ���ѡ")
+            raise ValueError("重复候选")
         seen.add(candidate["id"])
         windows.add((start, end))

@@ -39,7 +39,7 @@ describe('saved export API', () => {
     for (const clips of [[], [clip, clip], [{ ...clip, source_in_frame: 0.5 }], [{ ...clip, source_in_frame: -1 }],
       [{ ...clip, source_out_frame: 0 }], [{ ...clip, source_out_frame: Number.MAX_SAFE_INTEGER + 1 }],
       Array.from({ length: 101 }, (_, index) => ({ ...clip, candidate_id: `clip-${index}` }))]) {
-      expect(() => api.saveEdits(taskId, revisionId, clips, signal())).toThrow('����֡��Χ');
+      expect(() => api.saveEdits(taskId, revisionId, clips, signal())).toThrow('整数帧范围');
     }
     expect(fetcher).not.toHaveBeenCalled();
   });
@@ -67,7 +67,7 @@ describe('saved export API', () => {
       .mockResolvedValueOnce(reply({ ...edited, edit_record: { ...edited.edit_record, effort: { ...effort, net_boundary_adjustment_seconds: -1 } } })));
     expect((await api.getEdl(taskId, revisionId, signal())).edit_record).toBeUndefined();
     expect((await api.getEdl(taskId, revisionId, signal())).edit_record).toEqual(edited.edit_record);
-    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('��ʽ');
+    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
   });
   it('accepts exact saved candidate projections and rejects ambiguous or fractional projections', async () => {
     const saved = { revision: record, edl: { schema_version: '0.1.0', duration_frames: 300,
@@ -78,8 +78,8 @@ describe('saved export API', () => {
       .mockResolvedValueOnce(reply({ ...saved, available_clips: [projection, projection] }))
       .mockResolvedValueOnce(reply({ ...saved, available_clips: [{ ...projection, source_in_frame: 1001.5 }] })));
     expect((await api.getEdl(taskId, revisionId, signal())).available_clips).toEqual([projection]);
-    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('��ʽ');
-    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('��ʽ');
+    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
+    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
   });
   it('marks lost creation responses as unknown without retry', async () => {
     const fetcher = vi.fn().mockRejectedValue(new TypeError('connection lost')); vi.stubGlobal('fetch', fetcher);
@@ -106,8 +106,8 @@ describe('saved export API', () => {
     await expect(api.createMp4(taskId, revisionId, subtitleId, signal())).rejects.toBeInstanceOf(api.MutationUnknownError);
   });
   it('keeps backend compatibility errors readable', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply({ detail: 'MLT �ݲ�֧�ֺ�����ĵ�֡Ƭ�Σ���ʹ��ͬһ EDL ���� MP4��' }, 409)));
-    await expect(api.createMlt(taskId, revisionId, undefined, signal())).rejects.toMatchObject({ status: 409, message: expect.stringContaining('��֡Ƭ��') });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply({ detail: 'MLT 暂不支持含音轨的单帧片段，请使用同一 EDL 导出 MP4。' }, 409)));
+    await expect(api.createMlt(taskId, revisionId, undefined, signal())).rejects.toMatchObject({ status: 409, message: expect.stringContaining('单帧片段') });
   });
   it('treats gateway failures as uncertain rather than permission to create again', async () => {
     const fetcher = vi.fn().mockResolvedValue(reply({ detail: 'upstream timeout' }, 504)); vi.stubGlobal('fetch', fetcher);
@@ -118,7 +118,7 @@ describe('saved export API', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply({ revision: record, edl: { schema_version: '0.1.0', duration_frames: 300,
       profile: { width: 1920, height: 1080, fps: { num: 30, den: 1 } }, clips: [{ id: 'clip', source_id: 'source', source_in_frame: 0,
         source_out_frame: 300, timeline_in_frame: 1, timeline_out_frame: 301 }] }, manifest: {} })));
-    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('��ʽ');
+    await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
   });
   it('allows valid subtitle versions with zero cues', async () => {
     const subtitle = { ...record, subtitle_id: subtitleId, cue_count: 0, font_name: 'Noto Sans CJK SC' };

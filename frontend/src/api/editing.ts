@@ -3,19 +3,19 @@ import type { ArtifactHistory, EditedClip, EdlPage, EdlRevision, MltRecord, Rend
 
 export { ApiError };
 export class MutationUnknownError extends Error {
-  constructor(message = 'δ��ȷ�ϲ������������ˢ���ѱ����¼�������ظ����ɡ�') { super(message); }
+  constructor(message = '未能确认操作结果，请先刷新已保存记录，避免重复生成。') { super(message); }
 }
 
 function taskPath(task: string): string {
-  if (!validId(task)) throw new Error('�����Ÿ�ʽ�쳣');
+  if (!validId(task)) throw new Error('任务编号格式异常');
   return `/tasks/${task}/edl`;
 }
 function revisionPath(task: string, revision: string): string {
-  if (!validId(revision)) throw new Error('����汾��Ÿ�ʽ�쳣');
+  if (!validId(revision)) throw new Error('保存版本编号格式异常');
   return `${taskPath(task)}/${revision}`;
 }
 function versionPath(task: string, revision: string, kind: string, id: string): string {
-  if (!validId(id)) throw new Error('�����汾��Ÿ�ʽ�쳣');
+  if (!validId(id)) throw new Error('导出版本编号格式异常');
   return `${revisionPath(task, revision)}/${kind}/${id}`;
 }
 
@@ -33,14 +33,14 @@ async function request<T>(path: string, signal: AbortSignal, validate: (value: u
     });
     let value: unknown;
     try { value = await response.json(); }
-    catch { throw mutation ? new MutationUnknownError() : new Error('�����¼��ʱ�޷���ȡ����ˢ�¼�¼��'); }
+    catch { throw mutation ? new MutationUnknownError() : new Error('保存记录暂时无法读取，请刷新记录。'); }
     if (!response.ok) {
-      const detail = object(value) && typeof value.detail === 'string' ? value.detail : '������ʱ�޷���Ӧ�������̨��';
-      if (mutation && response.status >= 500) throw new MutationUnknownError(detail + ' ����ˢ���ѱ����¼��');
+      const detail = object(value) && typeof value.detail === 'string' ? value.detail : '服务暂时无法响应，请检查后台。';
+      if (mutation && response.status >= 500) throw new MutationUnknownError(detail + ' 请先刷新已保存记录。');
       throw new ApiError(detail, response.status);
     }
     if ((mutation && response.status !== 201) || !validate(value)) {
-      throw mutation ? new MutationUnknownError() : new Error('�����¼��ʽ�����������쳣����ˢ�¼�¼��');
+      throw mutation ? new MutationUnknownError() : new Error('保存记录格式或所属任务异常，请刷新记录。');
     }
     return value as T;
   } catch (error) {
@@ -70,7 +70,7 @@ function artifact(value: unknown, task: string, revision: string, key: 'subtitle
 }
 
 export function listEdls(task: string, offset: number, signal: AbortSignal): Promise<EdlPage> {
-  if (!integer(offset)) throw new Error('��ҳ������ʽ�쳣');
+  if (!integer(offset)) throw new Error('分页参数格式异常');
   return request(`${taskPath(task)}?limit=10&offset=${offset}`, signal, value => object(value) && Array.isArray(value.items)
     && integer(value.total) && value.offset === offset && value.limit === 10 && typeof value.has_more === 'boolean' && integer(value.unavailable_count)
     && value.items.every(item => revisionRecord(item, task) && object(item) && profile(item.profile) && Array.isArray(item.selected_ids) && item.selected_ids.every(id => typeof id === 'string')));
@@ -127,14 +127,14 @@ export function listArtifacts(task: string, revision: string, signal: AbortSigna
     && Array.isArray(value.mlt_exports) && value.mlt_exports.every(item => artifact(item, task, revision, 'export_id')));
 }
 export function createEdl(task: string, ids: string[], signal: AbortSignal): Promise<EdlRevision> {
-  if (!ids.length || ids.length > 100 || new Set(ids).size !== ids.length || ids.some(id => typeof id !== 'string' || !id.trim() || id.length > 200)) throw new Error('��ѡ�� 1�C100 �����ظ��ĺ�ѡ��');
+  if (!ids.length || ids.length > 100 || new Set(ids).size !== ids.length || ids.some(id => typeof id !== 'string' || !id.trim() || id.length > 200)) throw new Error('请选择 1–100 个不重复的候选。');
   return request(taskPath(task), signal, value => revisionRecord(value, task), { selected_ids: ids }, true);
 }
 export function saveEdits(task: string, revision: string, clips: EditedClip[], signal: AbortSignal): Promise<EdlRevision> {
   if (!clips.length || clips.length > 100 || new Set(clips.map(clip => clip.candidate_id)).size !== clips.length
     || clips.some(clip => typeof clip.candidate_id !== 'string' || !clip.candidate_id.trim() || clip.candidate_id.length > 200
       || !integer(clip.source_in_frame) || !integer(clip.source_out_frame) || clip.source_out_frame <= clip.source_in_frame)) {
-    throw new Error('�뱣�� 1�C100 �����ظ���Ƭ�Σ���������Ч������֡��Χ��');
+    throw new Error('请保留 1–100 个不重复的片段，并输入有效的整数帧范围。');
   }
   return request(`${revisionPath(task, revision)}/edits`, signal, value => revisionRecord(value, task) && object(value) && value.revision_id !== revision,
     { clips, editing_elapsed_ms: null }, true);
@@ -151,7 +151,7 @@ export function createMlt(task: string, revision: string, subtitle: string | und
 }
 
 function file(base: string, name: string, allowed: readonly string[]): string {
-  if (!allowed.includes(name)) throw new Error('�����ļ�����ʽ�쳣');
+  if (!allowed.includes(name)) throw new Error('下载文件名格式异常');
   return `${base}/files/${name}`;
 }
 export const edlFileUrl = (task: string, revision: string, name: 'project.edl.json' | 'media-profile.json' | 'edit-record.json') => file(revisionPath(task, revision), name, ['project.edl.json', 'media-profile.json', 'edit-record.json']);

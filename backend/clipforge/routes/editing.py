@@ -19,7 +19,7 @@ from clipforge.services import mlt_exporting as mlt_exporting_service
 from clipforge.services import rendering as rendering_service
 from clipforge.services import subtitling as subtitling_service
 
-router = APIRouter(prefix="/tasks", tags=["�����嵥"])
+router = APIRouter(prefix="/tasks", tags=["剪辑清单"])
 logger = logging.getLogger(__name__)
 NO_STORE = {"Cache-Control": "no-store"}
 T = TypeVar("T")
@@ -110,7 +110,7 @@ class VerifiedDownload(StreamingResponse):
                     error_headers = {**NO_STORE, "Accept-Ranges": "bytes"}
                     if status == 416:
                         error_headers["Content-Range"] = f"bytes */{self.length}"
-                    error = JSONResponse(status_code=status, content={"detail": "��Ч�򲻿�������ֽڷ�Χ��"},
+                    error = JSONResponse(status_code=status, content={"detail": "无效或不可满足的字节范围。"},
                                          headers=error_headers)
                     await error(scope, receive, send)
                     return
@@ -129,9 +129,9 @@ class CreateEdlRequest(BaseModel):
     @classmethod
     def distinct_nonblank_ids(cls, values):
         if any(not value.strip() for value in values):
-            raise ValueError("��ѡ��Ų���Ϊ�հס�")
+            raise ValueError("候选编号不能为空白。")
         if len(set(values)) != len(values):
-            raise ValueError("��ѡ��Ų����ظ���")
+            raise ValueError("候选编号不能重复。")
         return values
 
 
@@ -152,7 +152,7 @@ class SaveEditRequest(BaseModel):
     def valid_clips(cls, values):
         if (any(not value.candidate_id.strip() or value.source_in_frame >= value.source_out_frame for value in values)
                 or len({value.candidate_id for value in values}) != len(values)):
-            raise ValueError("Ƭ�α���벻ͬ��Դ��֡��С��ֹ֡��")
+            raise ValueError("片段编号须不同，源起帧须小于止帧。")
         return values
 
 
@@ -164,16 +164,16 @@ def _public_call(operation: Callable[[], T]) -> T:
         raise HTTPException(error.status_code, error.detail) from None
     except Exception:
         logger.exception("Unexpected editing API failure")
-        raise HTTPException(500, "�����嵥�����ݲ����ã������̨��־��") from None
+        raise HTTPException(500, "剪辑清单服务暂不可用，请检查后台日志。") from None
 
 
 @router.post(
-    "/{task_id}/edl", status_code=201, summary="��ָ����ѡ˳�򴴽������嵥�汾",
-    description=("�ύ 1�C100 �����ظ��ĺ�ѡ��ţ�˳�����˳��"
-                 "ͬ���˶Թ�һ����Ƶ��ԭ������ý����鹲�� 90 �볬ʱԤ�㡣"),
-    responses={404: {"description": "���񲻴���"},
-               409: {"description": "����ý����ѡ�����㴴������"},
-               503: {"description": "ý�����򱣴�ʧ��"}},
+    "/{task_id}/edl", status_code=201, summary="按指定候选顺序创建剪辑清单版本",
+    description=("提交 1–100 个不重复的候选编号，顺序即输出顺序。"
+                 "同步核对归一化视频和原分析；媒体核验共享 90 秒超时预算。"),
+    responses={404: {"description": "任务不存在"},
+               409: {"description": "任务、媒体或候选不满足创建条件"},
+               503: {"description": "媒体核验或保存失败"}},
 )
 def create_edl(task_id: UUID, payload: CreateEdlRequest) -> JSONResponse:
     def operation():
@@ -187,9 +187,9 @@ def create_edl(task_id: UUID, payload: CreateEdlRequest) -> JSONResponse:
 
 
 @router.get(
-    "/{task_id}/edl/{revision_id}", summary="��ȡ�ѱ���ļ����嵥��ý���嵥",
-    responses={404: {"description": "�����汾������"},
-               409: {"description": "������嵥����Դ��¼�Ѹı�"}},
+    "/{task_id}/edl/{revision_id}", summary="读取已保存的剪辑清单和媒体清单",
+    responses={404: {"description": "任务或版本不存在"},
+               409: {"description": "保存的清单或来源记录已改变"}},
 )
 def get_edl(task_id: UUID, revision_id: UUID) -> JSONResponse:
     def operation():
@@ -201,8 +201,8 @@ def get_edl(task_id: UUID, revision_id: UUID) -> JSONResponse:
 
 @router.post(
     "/{task_id}/edl/{revision_id}/edits", status_code=201,
-    summary="��Դ֡�����µ��˹��༭�汾���޸���",
-    description="����������ɻ��ߺ͸��汾��ֻ�ı��ѡѡ��Դ�е��˳��δ��ʱ��գ��������ֻ���ý�塣",
+    summary="按源帧保存新的人工编辑版本及修改量",
+    description="保留最初采纳基线和父版本；只改变候选选择、源切点和顺序。未计时填空，不重评分或复制媒体。",
 )
 def save_edl_edit(task_id: UUID, revision_id: UUID, payload: SaveEditRequest) -> JSONResponse:
     def operation():
@@ -217,8 +217,8 @@ def save_edl_edit(task_id: UUID, revision_id: UUID, payload: SaveEditRequest) ->
 
 @router.post(
     '/{task_id}/edl/{revision_id}/portrait', status_code=201,
-    summary='�ӱ���ĺ��� EDL �����̶����Ĳü��� 9:16 �汾',
-    description='����ԭ�ز�������Ƭ��˳����е㣻�����°汾����� 1080��1920������ʶ������֡�',
+    summary='从保存的横屏 EDL 创建固定中心裁剪的 9:16 版本',
+    description='保留原素材描述、片段顺序和切点；创建新版本，输出 1080×1920，不重识别或评分。',
 )
 def create_portrait(task_id: UUID, revision_id: UUID) -> JSONResponse:
     def operation():
@@ -230,10 +230,10 @@ def create_portrait(task_id: UUID, revision_id: UUID) -> JSONResponse:
 
 
 @router.get(
-    "/{task_id}/edl/{revision_id}/files/{filename}", summary="���ذ汾�� EDL ����Դ����",
+    "/{task_id}/edl/{revision_id}/files/{filename}", summary="下载版本的 EDL 或来源快照",
     response_class=StreamingResponse,
-    responses={404: {"description": "�ļ����ڴ˰汾�������嵥��"},
-               409: {"description": "����İ汾У��ʧ��"}},
+    responses={404: {"description": "文件不在此版本的下载清单中"},
+               409: {"description": "保存的版本校验失败"}},
 )
 def download_edl_file(task_id: UUID, revision_id: UUID, filename: str) -> StreamingResponse:
     return _public_call(lambda: VerifiedDownload(
@@ -243,10 +243,10 @@ def download_edl_file(task_id: UUID, revision_id: UUID, filename: str) -> Stream
 
 
 @router.get(
-    "/{task_id}/edl/{revision_id}/source", summary="���ؾ� SHA256 �˶ԵĹ�һ���ز�",
+    "/{task_id}/edl/{revision_id}/source", summary="下载经 SHA256 核对的归一化素材",
     response_class=StreamingResponse,
-    responses={404: {"description": "�����汾������"},
-               409: {"description": "�ز�ȱʧ���뱣��İ汾��һ��"}},
+    responses={404: {"description": "任务或版本不存在"},
+               409: {"description": "素材缺失或与保存的版本不一致"}},
 )
 def download_edl_source(task_id: UUID, revision_id: UUID) -> StreamingResponse:
     return _public_call(lambda: VerifiedDownload(
@@ -257,12 +257,12 @@ def download_edl_source(task_id: UUID, revision_id: UUID) -> StreamingResponse:
 
 @router.post(
     "/{task_id}/edl/{revision_id}/renders", status_code=201,
-    summary="��ָ�����ѱ��� EDL �汾��ȾΪ MP4",
-    description=("��ָ���汾����� EDL ��Ⱦ�������ܺ�ѡѡ�����Ⱦ������"
-                 "�زĺ��顢ת��ͳ�Ƭ���鹲�� 90 �볬ʱԤ�㡣"),
-    responses={404: {"description": "����� EDL �汾������"},
-               409: {"description": "EDL ����Դý��У��ʧ��"},
-               503: {"description": "ת����Ƭ����ʧ��"}},
+    summary="将指定的已保存 EDL 版本渲染为 MP4",
+    description=("按指定版本保存的 EDL 渲染，不接受候选选择或渲染参数。"
+                 "素材核验、转码和成片核验共享 90 秒超时预算。"),
+    responses={404: {"description": "任务或 EDL 版本不存在"},
+               409: {"description": "EDL 或来源媒体校验失败"},
+               503: {"description": "转码或成片核验失败"}},
 )
 def create_render(task_id: UUID, revision_id: UUID) -> JSONResponse:
     def operation():
@@ -276,9 +276,9 @@ def create_render(task_id: UUID, revision_id: UUID) -> JSONResponse:
 
 
 @router.get(
-    "/{task_id}/edl/{revision_id}/renders/{render_id}", summary="��ȡ��Ƭ��¼�ͺ��鱨��",
-    responses={404: {"description": "����EDL �汾���Ƭ������"},
-               409: {"description": "��Ƭ��¼���ļ�У��ʧ��"}},
+    "/{task_id}/edl/{revision_id}/renders/{render_id}", summary="读取成片记录和核验报告",
+    responses={404: {"description": "任务、EDL 版本或成片不存在"},
+               409: {"description": "成片记录或文件校验失败"}},
 )
 def get_render(task_id: UUID, revision_id: UUID, render_id: UUID) -> JSONResponse:
     return _public_call(lambda: JSONResponse(
@@ -290,9 +290,9 @@ def get_render(task_id: UUID, revision_id: UUID, render_id: UUID) -> JSONRespons
 
 @router.get(
     "/{task_id}/edl/{revision_id}/renders/{render_id}/files/{filename}",
-    summary="���س�Ƭ�����鱨�����Ⱦʹ�õ� EDL ����", response_class=StreamingResponse,
-    responses={404: {"description": "�ļ����ڴ˳�Ƭ�������嵥��"},
-               409: {"description": "��Ƭ��¼�������ļ�У��ʧ��"}},
+    summary="下载成片、核验报告或渲染使用的 EDL 快照", response_class=StreamingResponse,
+    responses={404: {"description": "文件不在此成片的下载清单中"},
+               409: {"description": "成片记录或下载文件校验失败"}},
 )
 def download_render_file(task_id: UUID, revision_id: UUID, render_id: UUID,
                          filename: str) -> StreamingResponse:
@@ -304,8 +304,8 @@ def download_render_file(task_id: UUID, revision_id: UUID, render_id: UUID,
 
 @router.post(
     "/{task_id}/edl/{revision_id}/subtitles", status_code=201,
-    summary="�ӱ���� EDL ��תд������Ļ�汾",
-    description="��ʹ�ô� EDL �汾�ķ������գ���Դ֡ӳ����Ļ��������ʶ�����������ģ�͡�",
+    summary="从保存的 EDL 与转写生成字幕版本",
+    description="仅使用此 EDL 版本的分析快照，按源帧映射字幕；不重新识别语音或调用模型。",
 )
 def create_subtitles(task_id: UUID, revision_id: UUID) -> JSONResponse:
     def operation():
@@ -316,7 +316,7 @@ def create_subtitles(task_id: UUID, revision_id: UUID) -> JSONResponse:
     return _public_call(operation)
 
 
-@router.get("/{task_id}/edl/{revision_id}/subtitles/{subtitle_id}", summary="��ȡ��Ļ�汾��Դʱ��ӳ��")
+@router.get("/{task_id}/edl/{revision_id}/subtitles/{subtitle_id}", summary="读取字幕版本与源时间映射")
 def get_subtitles(task_id: UUID, revision_id: UUID, subtitle_id: UUID) -> JSONResponse:
     return _public_call(lambda: JSONResponse(content=jsonable_encoder(
         subtitling_service.load_task_subtitles(str(task_id), str(revision_id), str(subtitle_id))), headers=NO_STORE))
@@ -324,7 +324,7 @@ def get_subtitles(task_id: UUID, revision_id: UUID, subtitle_id: UUID) -> JSONRe
 
 @router.get(
     "/{task_id}/edl/{revision_id}/subtitles/{subtitle_id}/files/{filename}",
-    summary="���� SRT��ASS ����Ļʱ��ӳ��", response_class=StreamingResponse,
+    summary="下载 SRT、ASS 或字幕时间映射", response_class=StreamingResponse,
 )
 def download_subtitle_file(task_id: UUID, revision_id: UUID, subtitle_id: UUID, filename: str) -> StreamingResponse:
     return _public_call(lambda: VerifiedDownload(
@@ -335,8 +335,8 @@ def download_subtitle_file(task_id: UUID, revision_id: UUID, subtitle_id: UUID, 
 
 @router.post(
     "/{task_id}/edl/{revision_id}/subtitles/{subtitle_id}/renders", status_code=201,
-    summary="��ͬһ EDL ��¼ָ���ı�����Ļ",
-    description="���÷��������õ���Ļ������ FFmpeg���˶���Ļ��Դ����¼������ 90 �봦��Ԥ�㡣",
+    summary="按同一 EDL 烧录指定的保存字幕",
+    description="沿用服务器配置的字幕字体与 FFmpeg，核对字幕来源后烧录，共享 90 秒处理预算。",
 )
 def create_subtitled_render(task_id: UUID, revision_id: UUID, subtitle_id: UUID) -> JSONResponse:
     def operation():
@@ -360,8 +360,8 @@ def _create_mlt_export(task_id, revision_id, subtitle_id=None):
 
 @router.post(
     "/{task_id}/edl/{revision_id}/exports/mlt", status_code=201,
-    summary="�ӱ���� EDL �������ɱ�� MLT ���̰汾",
-    description="�����Ѻ���Ĺ�һ���زģ�����Ƭ��˳���е�ͱ���Ĳ��У�������ʶ������֡�",
+    summary="从保存的 EDL 导出不可变的 MLT 工程版本",
+    description="引用已核验的归一化素材，保留片段顺序、切点和保存的裁切；不重新识别或评分。",
 )
 def create_mlt_export(task_id: UUID, revision_id: UUID) -> JSONResponse:
     return _create_mlt_export(task_id, revision_id)
@@ -369,14 +369,14 @@ def create_mlt_export(task_id: UUID, revision_id: UUID) -> JSONResponse:
 
 @router.post(
     "/{task_id}/edl/{revision_id}/subtitles/{subtitle_id}/exports/mlt", status_code=201,
-    summary="��ͬһ EDL ������������Ļ�� MLT ���̰汾",
-    description="�˶Ա������Ļ��Դ���������ƣ�ʹ�þ�ȷʱ����֡��Χ�������ܿͻ�����Ļ����в�����",
+    summary="按同一 EDL 导出带保存字幕的 MLT 工程版本",
+    description="核对保存的字幕来源和字体名称，使用精确时间线帧范围，不接受客户端字幕或裁切参数。",
 )
 def create_subtitled_mlt_export(task_id: UUID, revision_id: UUID, subtitle_id: UUID) -> JSONResponse:
     return _create_mlt_export(task_id, revision_id, subtitle_id)
 
 
-@router.get("/{task_id}/edl/{revision_id}/exports/mlt/{export_id}", summary="��ȡ�Ѻ���� MLT ������¼")
+@router.get("/{task_id}/edl/{revision_id}/exports/mlt/{export_id}", summary="读取已核验的 MLT 导出记录")
 def get_mlt_export(task_id: UUID, revision_id: UUID, export_id: UUID) -> JSONResponse:
     return _public_call(lambda: JSONResponse(content=jsonable_encoder(
         mlt_exporting_service.load_task_mlt_export(str(task_id), str(revision_id), str(export_id))), headers=NO_STORE))
@@ -384,7 +384,7 @@ def get_mlt_export(task_id: UUID, revision_id: UUID, export_id: UUID) -> JSONRes
 
 @router.get(
     "/{task_id}/edl/{revision_id}/exports/mlt/{export_id}/files/{filename}",
-    summary="���ؾ������ MLT ���̻���Դ����", response_class=StreamingResponse,
+    summary="下载经核验的 MLT 工程或来源快照", response_class=StreamingResponse,
 )
 def download_mlt_export_file(task_id: UUID, revision_id: UUID, export_id: UUID, filename: str) -> StreamingResponse:
     return _public_call(lambda: VerifiedDownload(
@@ -392,14 +392,14 @@ def download_mlt_export_file(task_id: UUID, revision_id: UUID, export_id: UUID, 
         filename=filename, media_type=_export_media_type(filename)))
 
 
-@router.get("/{task_id}/edl", summary="��ȡ�������ͨ��У��ļ����嵥��ʷ")
+@router.get("/{task_id}/edl", summary="读取已完成且通过校验的剪辑清单历史")
 def list_edls(task_id: UUID, limit: Annotated[int, Query(ge=1, le=50)] = 10,
               offset: Annotated[int, Query(ge=0, le=500)] = 0) -> JSONResponse:
     return _public_call(lambda: JSONResponse(content=jsonable_encoder(
         editing_history_service.list_task_edls(str(task_id), limit=limit, offset=offset)), headers=NO_STORE))
 
 
-@router.get("/{task_id}/edl/{revision_id}/artifacts", summary="��ȡ�˱���汾�Ѻ������Ļ�뵼����ʷ")
+@router.get("/{task_id}/edl/{revision_id}/artifacts", summary="读取此保存版本已核验的字幕与导出历史")
 def list_edl_artifacts(task_id: UUID, revision_id: UUID) -> JSONResponse:
     return _public_call(lambda: JSONResponse(content=jsonable_encoder(
         editing_history_service.list_revision_artifacts(str(task_id), str(revision_id))), headers=NO_STORE))

@@ -69,7 +69,7 @@ class TopicSegmentationEdgeTests(unittest.TestCase):
         self.assertEqual(len(report["segments"]), 1)
 
     def test_unknown_windows_break_peak_evidence_instead_of_becoming_zero(self):
-        report = self.report(["alpha", "alpha", "beta", "������", "gamma", "delta", "delta"])
+        report = self.report(["alpha", "alpha", "beta", "！！！", "gamma", "delta", "delta"])
         self.assertEqual([b["similarity"] for b in report["boundaries"]], [1, 0, None, None, 0, 1])
         self.assertEqual([b["after_unit"] for b in report["boundaries"]
                           if b["reasons"] == ["uninformative_window"]], [2, 3])
@@ -118,7 +118,7 @@ class TopicSegmentationEdgeTests(unittest.TestCase):
         before = deepcopy(forbidden)
         with patch.object(topic_segments, "MAX_SENTENCES", 2):
             self.assertEqual(len(segment_topics(allowed)["units"]), 2)
-            with self.assertRaisesRegex(ValueError, "�������������̶�����"):
+            with self.assertRaisesRegex(ValueError, "句子数量超过固定上限"):
                 segment_topics(forbidden)
         self.assertEqual(forbidden, before)
 
@@ -128,19 +128,19 @@ class TopicSegmentationEdgeTests(unittest.TestCase):
         with patch.object(topic_segments, "MAX_TEXT_CHARACTERS", 9):
             self.assertEqual(len(segment_topics(analysis)["units"]), 2)
         with patch.object(topic_segments, "MAX_TEXT_CHARACTERS", 8):
-            with self.assertRaisesRegex(ValueError, "�������ֳ����̶�����"):
+            with self.assertRaisesRegex(ValueError, "句子文字超过固定上限"):
                 segment_topics(analysis)
         self.assertEqual(analysis, before)
 
     def test_serialized_byte_limit_is_inclusive_and_failure_does_not_truncate(self):
-        analysis = analysis_with_texts(["ƻ��", "�㽶"])
+        analysis = analysis_with_texts(["苹果", "香蕉"])
         before = deepcopy(analysis)
         size = len(json.dumps(analysis, sort_keys=True, ensure_ascii=False,
                               separators=(",", ":"), allow_nan=False).encode("utf-8"))
         with patch.object(topic_segments, "MAX_ANALYSIS_BYTES", size):
             self.assertEqual(len(segment_topics(analysis)["units"]), 2)
         with patch.object(topic_segments, "MAX_ANALYSIS_BYTES", size - 1):
-            with self.assertRaisesRegex(ValueError, "�������ݳ����̶�����"):
+            with self.assertRaisesRegex(ValueError, "分析数据超过固定上限"):
                 segment_topics(analysis)
         self.assertEqual(analysis, before)
 

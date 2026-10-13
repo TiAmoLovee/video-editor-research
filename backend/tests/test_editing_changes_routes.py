@@ -122,8 +122,8 @@ class SaveEdlEditRouteTests(unittest.TestCase):
 
     def test_project_error_preserves_only_deliberate_safe_status_and_detail(self):
         payload = editing.SaveEditRequest.model_validate(payload_fixture())
-        for status, detail in ((404, "���񲻴��ڡ�"), (409, "��Դ��¼��һ�¡�"),
-                               (422, "Ƭ�η�Χ��Ч��"), (503, "��������ݲ����á�")):
+        for status, detail in ((404, "任务不存在。"), (409, "来源记录不一致。"),
+                               (422, "片段范围无效。"), (503, "保存服务暂不可用。")):
             with self.subTest(status=status), patch.object(
                     editing.editing_changes_service, "create_task_edit", side_effect=ProjectError(status, detail)):
                 with self.assertRaises(HTTPException) as raised:
@@ -140,7 +140,7 @@ class SaveEdlEditRouteTests(unittest.TestCase):
             with self.assertRaises(HTTPException) as raised:
                 editing.save_edl_edit(self.task_id, self.parent_id, payload)
         self.assertEqual(raised.exception.status_code, 500)
-        self.assertEqual(raised.exception.detail, "�����嵥�����ݲ����ã������̨��־��")
+        self.assertEqual(raised.exception.detail, "剪辑清单服务暂不可用，请检查后台日志。")
         self.assertNotIn(private_detail, str(raised.exception.detail))
 
     def test_invalid_service_revision_cannot_produce_a_location_header(self):
@@ -150,7 +150,7 @@ class SaveEdlEditRouteTests(unittest.TestCase):
             with self.assertRaises(HTTPException) as raised:
                 editing.save_edl_edit(self.task_id, self.parent_id, payload)
         self.assertEqual(raised.exception.status_code, 500)
-        self.assertEqual(raised.exception.detail, "�����嵥�����ݲ����ã������̨��־��")
+        self.assertEqual(raised.exception.detail, "剪辑清单服务暂不可用，请检查后台日志。")
 
 
 if __name__ == "__main__":

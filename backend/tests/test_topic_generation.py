@@ -33,7 +33,7 @@ class TopicGenerationTests(unittest.TestCase):
 
     def test_distinct_topics_generate_whole_topics_not_overlapping_subwindows(self):
         analysis, result, report = self.case(
-            ['��������߲���������ʳ��'] * 4 + ['���Ĺ۲����Ӻ���������Զ��'] * 4)
+            ['厨房烹饪蔬菜汤锅油盐食谱'] * 4 + ['天文观测银河恒星宇宙望远镜'] * 4)
         ranges = [(c['start'], c['end']) for c in result['candidates']]
         self.assertEqual(ranges, [(0, 32), (32, 64)])
         self.assertLess(result['candidate_count'], generate_candidates(analysis)['candidate_count'])
@@ -42,7 +42,7 @@ class TopicGenerationTests(unittest.TestCase):
         self.assertEqual(report['model_requests'], 0)
 
     def test_uniform_topic_kept_as_one_range(self):
-        _, result, _ = self.case(['�����Ӱ��Ȧ���ž�ͷ�ع�'] * 7)
+        _, result, _ = self.case(['相机摄影光圈快门镜头曝光'] * 7)
         self.assertEqual([(c['start'], c['end']) for c in result['candidates']], [(0, 56)])
 
     def test_short_topic_not_padded_across_hard_pause(self):
@@ -56,7 +56,7 @@ class TopicGenerationTests(unittest.TestCase):
         self.assertFalse(report['segments'][0]['eligible'])
 
     def test_long_topic_not_truncated_to_duration_limit(self):
-        _, result, report = self.case(['ͬһ����������û�����Ա仯'] * 13)
+        _, result, report = self.case(['同一个完整话题没有明显变化'] * 13)
         self.assertEqual(result['candidate_count'], 0)
         self.assertIn('topic_long_segment_skipped', result['warnings'])
         self.assertEqual([(s['start'], s['end']) for s in report['segments']], [(0, 104)])
@@ -77,7 +77,7 @@ class TopicGenerationTests(unittest.TestCase):
         self.assertEqual(segment_topics(analysis)['units'][0]['source_sentences'], ['s0', 's1'])
 
     def test_touching_sentences_are_not_hard_pause_with_zero_gap_limit(self):
-        _, result, _ = self.case(['��ͬ������ͬ����'] * 3,
+        _, result, _ = self.case(['相同话题相同内容'] * 3,
                                  options=TopicOptions(max_gap_seconds=0))
         self.assertEqual(result['candidate_count'], 1)
         self.assertEqual(result['candidates'][0]['duration_seconds'], 24)
@@ -87,13 +87,13 @@ class TopicGenerationTests(unittest.TestCase):
         self.assertEqual(result['candidate_count'], 0)
         self.assertEqual(report['segments'], [])
         self.assertIn('no_sentences', result['warnings'])
-        _, result, report = self.case(['������'] * 5)
+        _, result, report = self.case(['！！！'] * 5)
         self.assertIn('topic_uninformative_text', result['warnings'])
         self.assertTrue(all(b['similarity'] is None for b in report['boundaries']))
         self.assertEqual(len(report['segments']), 1)
 
     def test_source_and_options_are_bound_to_deterministic_ids(self):
-        analysis, result, report = self.case(['�����������'] * 4 + ['̫����Զ������'] * 4)
+        analysis, result, report = self.case(['厨房锅具烹饪'] * 4 + ['太空望远镜星球'] * 4)
         original = deepcopy(analysis)
         self.assertEqual(result, generate_topic_candidates(analysis))
         self.assertEqual(report, segment_topics(analysis))
@@ -103,7 +103,7 @@ class TopicGenerationTests(unittest.TestCase):
         self.assertEqual(analysis, original)
 
     def test_partial_topic_or_missing_candidate_or_changed_id_is_rejected(self):
-        analysis, baseline, _ = self.case(['�����������'] * 4 + ['̫����Զ������'] * 4)
+        analysis, baseline, _ = self.case(['厨房锅具烹饪'] * 4 + ['太空望远镜星球'] * 4)
         for change in ('partial', 'missing', 'id', 'warnings', 'options'):
             corrupted = deepcopy(baseline)
             if change == 'partial':
@@ -123,7 +123,7 @@ class TopicGenerationTests(unittest.TestCase):
                 validate_candidates(corrupted, analysis)
 
     def test_rule_scoring_preserves_topic_identity_and_boundaries(self):
-        analysis, result, _ = self.case(['�����������'] * 4 + ['̫����Զ������'] * 4)
+        analysis, result, _ = self.case(['厨房锅具烹饪'] * 4 + ['太空望远镜星球'] * 4)
         scored = score_candidates(result, analysis)
         validate_scored(scored, analysis)
         self.assertEqual(scored['generator'], result['generator'])
@@ -131,7 +131,7 @@ class TopicGenerationTests(unittest.TestCase):
                          {(c['id'], c['start'], c['end']) for c in result['candidates']})
 
     def test_generation_defaults_and_explicit_legacy_baseline(self):
-        analysis = text_analysis(['�����������'] * 4)
+        analysis = text_analysis(['厨房锅具烹饪'] * 4)
         with patch.dict(os.environ, {}, clear=True):
             snapshot = settings_snapshot()
             self.assertEqual(snapshot['version'], LEGACY)
@@ -144,7 +144,7 @@ class TopicGenerationTests(unittest.TestCase):
             settings_snapshot()
 
     def test_generation_snapshot_does_not_read_later_environment_changes(self):
-        analysis = text_analysis(['�����������'] * 4)
+        analysis = text_analysis(['厨房锅具烹饪'] * 4)
         with patch.dict(os.environ, {'CLIPFORGE_CANDIDATE_GENERATOR': TOPIC}):
             settings = settings_snapshot()
         with patch.dict(os.environ, {'CLIPFORGE_CANDIDATE_GENERATOR': LEGACY}):

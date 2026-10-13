@@ -32,9 +32,9 @@ def _requests(clips, elapsed_ms=None):
                    or not 0 <= clip["source_in_frame"] < clip["source_out_frame"]
                    for clip in clips)
             or len({clip["candidate_id"] for clip in clips}) != len(clips)):
-        raise editing.ProjectError(422, "��ѡ�� 1�C100 ����ͬƬ�Σ��е���Ϊ��Ч������Դ֡��")
+        raise editing.ProjectError(422, "请选择 1–100 条不同片段，切点须为有效的整数源帧。")
     if elapsed_ms is not None and (type(elapsed_ms) is not int or not 0 <= elapsed_ms <= MAX_ELAPSED_MS):
-        raise editing.ProjectError(422, "�༭����ʱ����Ч��δ��ʱ�����ա�")
+        raise editing.ProjectError(422, "编辑经过时间无效；未计时请留空。")
 
 
 def _build_project(parent, baseline, candidates, clips):
@@ -44,11 +44,11 @@ def _build_project(parent, baseline, candidates, clips):
         raise ValueError("edit source differs from baseline")
     source = parent["sources"][0]
     if any(clip["source_out_frame"] > source["total_frames"] for clip in clips):
-        raise editing.ProjectError(422, "�е㳬���˰汾��Դ��Ƶ֡����")
+        raise editing.ProjectError(422, "切点超出此版本的源视频帧数。")
     available = {candidate["id"]: index for index, candidate in enumerate(candidates["candidates"])}
     selected = [clip["candidate_id"] for clip in clips]
     if not set(selected) <= available.keys():
-        raise editing.ProjectError(422, "Ƭ�β����ڴ˰汾����ĺ�ѡ���ա�")
+        raise editing.ProjectError(422, "片段不属于此版本保存的候选快照。")
     native = {"width": source["width"], "height": source["height"], "fps": source["fps"]}
     imported = candidates_to_edl(candidates, selected, source, native)
     baseline_clips = {clip["provenance"]["candidate_id"]: clip for clip in baseline["clips"]}
@@ -82,11 +82,11 @@ def available_edit_clips(task_id, revision_id, saved):
     """Project precise candidate frames from this held snapshot, not current rankings."""
     with editing.open_revision_file(task_id, revision_id, "candidates.json") as incoming:
         if hashlib.file_digest(incoming, "sha256").hexdigest() != saved["revision"]["files"]["candidates.json"]:
-            raise editing.ProjectError(409, "��������ڶ�ȡ�ڼ�ı䣬�����´򿪴˰汾��")
+            raise editing.ProjectError(409, "保存快照在读取期间改变，请重新打开此版本。")
         incoming.seek(0)
         candidates = json.load(incoming)["candidates"]
     if len(candidates) > 10000:
-        raise editing.ProjectError(503, "����ĺ�ѡ���������༭ͶӰ���ޡ�")
+        raise editing.ProjectError(503, "保存的候选数量超过编辑投影上限。")
     source = saved["manifest"]["source"]
     available, unavailable = [], 0
     for candidate in candidates:
@@ -122,7 +122,7 @@ def create_task_edit(task_id, revision_id, clips, *, editing_elapsed_ms=None):
     _requests(clips, editing_elapsed_ms)
     parent = editing.load_task_edl(task_id, revision_id)
     if parent["lineage_depth"] >= MAX_EDIT_DEPTH:
-        raise editing.ProjectError(422, "����汾���Ѵﵽ 16 �㣬�뱣�����е�������ʼ�µĲ��ɰ汾��")
+        raise editing.ProjectError(422, "保存版本链已达到 16 层，请保留现有导出并开始新的采纳版本。")
     root_id = parent.get("edit_record", {}).get("baseline_revision_id", revision_id)
     baseline = parent if root_id == revision_id else editing.load_task_edl(task_id, root_id)
     folder, published = None, False
@@ -166,9 +166,9 @@ def create_task_edit(task_id, revision_id, clips, *, editing_elapsed_ms=None):
     except editing.ProjectError:
         raise
     except (ValueError, KeyError, TypeError) as error:
-        raise editing.ProjectError(409, "��Դ���е���޸ļ�¼δͨ��У�飬δ����༭�档") from error
+        raise editing.ProjectError(409, "来源、切点或修改记录未通过校验，未保存编辑版。") from error
     except OSError as error:
-        raise editing.ProjectError(503, "�༭�汣��ʧ�ܣ������̨��־��") from error
+        raise editing.ProjectError(503, "编辑版保存失败，请检查后台日志。") from error
     finally:
         if folder is not None and not published:
             shutil.rmtree(folder)

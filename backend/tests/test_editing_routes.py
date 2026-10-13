@@ -80,11 +80,11 @@ class EditingRoutesTests(unittest.TestCase):
         )
         for name, call in operations:
             with self.subTest(route=name):
-                with patch.object(editing.editing_service, name, side_effect=ProjectError(409, "��ȫ����")):
+                with patch.object(editing.editing_service, name, side_effect=ProjectError(409, "安全错误。")):
                     with self.assertRaises(HTTPException) as caught:
                         call()
                 self.assertEqual(caught.exception.status_code, 409)
-                self.assertEqual(caught.exception.detail, "��ȫ����")
+                self.assertEqual(caught.exception.detail, "安全错误。")
 
     def test_unexpected_errors_do_not_expose_internal_details_on_every_route(self):
         operations = (

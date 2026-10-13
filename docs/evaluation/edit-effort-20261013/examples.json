@@ -8,8 +8,8 @@
   "videos_copied": 0,
   "examples": [
     {
-      "title": "ֱ�Ӳ���",
-      "note": "�е��˳�򱣳�ԭ����",
+      "title": "直接采纳",
+      "note": "切点和顺序保持原样。",
       "baseline_edl": {
         "schema_version": "0.1.0",
         "artifact_kind": "edit_decision_list",
@@ -24,7 +24,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -105,7 +105,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -448,8 +448,8 @@
       }
     },
     {
-      "title": "�޸�һ��Ƭ�ε�����",
-      "note": "������ 3 ֡���յ�ǰ�� 6 ֡��",
+      "title": "修改一条片段的两端",
+      "note": "起点后移 3 帧，终点前移 6 帧。",
       "baseline_edl": {
         "schema_version": "0.1.0",
         "artifact_kind": "edit_decision_list",
@@ -464,7 +464,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -545,7 +545,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -888,8 +888,8 @@
       }
     },
     {
-      "title": "�ָ�ԭ�е�",
-      "note": "���վ��仯Ϊ�㣬�����λָ����б仯��",
+      "title": "恢复原切点",
+      "note": "最终净变化为零，但本次恢复仍有变化。",
       "baseline_edl": {
         "schema_version": "0.1.0",
         "artifact_kind": "edit_decision_list",
@@ -904,7 +904,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -985,7 +985,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -1328,8 +1328,8 @@
       }
     },
     {
-      "title": "ɾ����һ��",
-      "note": "�ڶ����ڳ�Ƭ��ǰ�ƣ�Դ�е�δ�䣬��˲����е��޸Ļ����š�",
+      "title": "删除第一条",
+      "note": "第二条在成片里前移，源切点未变，因此不算切点修改或重排。",
       "baseline_edl": {
         "schema_version": "0.1.0",
         "artifact_kind": "edit_decision_list",
@@ -1344,7 +1344,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -1425,7 +1425,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -1702,8 +1702,8 @@
       }
     },
     {
-      "title": "��������˳��",
-      "note": "����Դ�е�δ�䣻�����ƶ�һ������ʵ�֡�",
+      "title": "交换两条顺序",
+      "note": "两条源切点未变；最少移动一条即可实现。",
       "baseline_edl": {
         "schema_version": "0.1.0",
         "artifact_kind": "edit_decision_list",
@@ -1718,7 +1718,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -1799,7 +1799,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -2142,8 +2142,8 @@
       }
     },
     {
-      "title": "����һ����Ƭ��",
-      "note": "����Ƭ�ε���������� 1 ֡���빲��Ƭ���е������С�",
+      "title": "加入一条新片段",
+      "note": "新增片段的起点另改了 1 帧，与共有片段切点量分列。",
       "baseline_edl": {
         "schema_version": "0.1.0",
         "artifact_kind": "edit_decision_list",
@@ -2158,7 +2158,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,
@@ -2239,7 +2239,7 @@
         "sources": [
           {
             "id": "normalized-1",
-            "ref": "��Ƶ & source.mp4",
+            "ref": "视频 & source.mp4",
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "total_frames": 3000,
             "width": 960,

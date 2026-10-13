@@ -35,24 +35,24 @@ def _uuid(value):
     try:
         return str(UUID(str(value)))
     except (ValueError, AttributeError, TypeError) as error:
-        raise ProjectError(422, "����򹤳̱����Ч��") from error
+        raise ProjectError(422, "任务或工程编号无效。") from error
 
 
 def _completed_job(task_id):
     job = get_job(task_id)
     if job is None:
-        raise ProjectError(404, "���񲻴��ڡ�")
+        raise ProjectError(404, "任务不存在。")
     if job["status"] != "SUCCEEDED":
-        raise ProjectError(409, "��ȴ���Ƶ����ɹ���ɺ��ٱ�������嵥��")
+        raise ProjectError(409, "请等待视频任务成功完成后再保存剪辑清单。")
     return job
 
 
 def _contained_file(folder, relative):
     if not isinstance(relative, str) or not relative:
-        raise ProjectError(409, "���������ļ���¼��������")
+        raise ProjectError(409, "任务结果的文件记录不完整。")
     target = (folder / relative).resolve()
     if not target.is_relative_to(folder.resolve()) or not target.is_file():
-        raise ProjectError(409, "���������ļ������ڻ�·����Ч��")
+        raise ProjectError(409, "所需任务文件不存在或路径无效。")
     return target
 
 
@@ -71,7 +71,7 @@ def _normalized_source(task_id):
     for _ in range(16):
         task_id = _uuid(task_id)
         if task_id in seen:
-            raise ProjectError(409, "������Դ��¼����ѭ�����޷��˶Թ�һ���زġ�")
+            raise ProjectError(409, "缓存来源记录出现循环，无法核对归一化素材。")
         seen.add(task_id)
         job = _completed_job(task_id)
         folder = job_dir(task_id).resolve()
@@ -80,9 +80,9 @@ def _normalized_source(task_id):
             return task_id, _contained_file(folder, "normalized.mp4")
         cache = _result_json(job, task_id, "cache.json")
         if not isinstance(cache, dict) or cache.get("hit") is not True:
-            raise ProjectError(409, "��һ���ز�ȱʧ������ʹ��ԭƬ���档")
+            raise ProjectError(409, "归一化素材缺失，不能使用原片代替。")
         task_id = cache.get("reused_from_task_id")
-    raise ProjectError(409, "������Դ���������޷��˶Թ�һ���زġ�")
+    raise ProjectError(409, "缓存来源链过长，无法核对归一化素材。")
 
 
 def _digest(path):
@@ -99,10 +99,10 @@ def _selected_ids(selected_ids, candidates):
     if (not isinstance(selected_ids, list) or not 1 <= len(selected_ids) <= 100
             or any(not isinstance(item, str) or not item.strip() or len(item) > 200 for item in selected_ids)
             or len(set(selected_ids)) != len(selected_ids)):
-        raise ProjectError(422, "��ѡ�� 1�C100 �����ظ��ĺ�ѡ��ţ��������˳���ύ��")
+        raise ProjectError(422, "请选择 1–100 个不重复的候选编号，并按输出顺序提交。")
     available = {item["id"] for item in candidates["candidates"]}
     if not set(selected_ids) <= available:
-        raise ProjectError(422, "ѡ���а��������񲻴��ڵĺ�ѡ��š�")
+        raise ProjectError(422, "选择中包含此任务不存在的候选编号。")
 
 
 def create_task_edl(task_id, selected_ids, *, ffprobe=None, timeout=90):
@@ -123,18 +123,18 @@ No original analysis, task result, media or previous revision is overwritten.
                                         ref="normalized.mp4", ffprobe=ffprobe, timeout=timeout)
         # Matching filenames or container duration are not a media identity.
         if manifest["source"]["sha256"] != analysis["media"]["normalized_sha256"]:
-            raise ProjectError(409, "��һ����Ƶ�Ѹı䣬��ԭ�����ͺ�ѡ��ƥ�䡣")
+            raise ProjectError(409, "归一化视频已改变，与原分析和候选不匹配。")
         rate = frame_rate(manifest["source"]["fps"])
         frame_duration = Fraction(manifest["source"]["total_frames"], 1) / rate
         if abs(Fraction(str(analysis["media"]["duration_seconds"])) - frame_duration) > 1 / rate:
-            raise ProjectError(409, "����ʱ������ʵ����Ƶ֡����һ�£����ܱ�����嵥��")
+            raise ProjectError(409, "分析时间轴与实测视频帧数不一致，不能保存此清单。")
         project = candidates_to_edl(candidates, selected_ids, manifest["source"], manifest["profile"])
         if _digest(media) != manifest["source"]["sha256"]:
-            raise ProjectError(409, "ý��������Ƶ�����仯��δ������嵥��")
+            raise ProjectError(409, "媒体核验后视频发生变化，未保存此清单。")
         revision_id = str(uuid4())
         parent = job_dir(task_id).resolve() / "edits"
         if parent.resolve() != parent:
-            raise ProjectError(409, "�����嵥Ŀ¼·����Ч��")
+            raise ProjectError(409, "剪辑清单目录路径无效。")
         parent.mkdir(exist_ok=True)
         target = parent / revision_id
         target.mkdir(exist_ok=False)
@@ -160,9 +160,9 @@ No original analysis, task result, media or previous revision is overwritten.
     except ProjectError:
         raise
     except (ValueError, KeyError, TypeError) as error:
-        raise ProjectError(409, "��ѡ��������ý������δͨ��У�飬δ���������嵥��") from error
+        raise ProjectError(409, "候选、分析或媒体描述未通过校验，未发布剪辑清单。") from error
     except (OSError, RuntimeError) as error:
-        raise ProjectError(503, "ý�����򹤳̱���ʧ�ܣ����� FFPROBE ���ü���̨��־��") from error
+        raise ProjectError(503, "媒体核验或工程保存失败，请检查 FFPROBE 配置及后台日志。") from error
 
 
 def create_task_portrait(task_id, revision_id):
@@ -174,7 +174,7 @@ def create_task_portrait(task_id, revision_id):
     task_id, revision_id = _uuid(task_id), _uuid(revision_id)
     saved = load_task_edl(task_id, revision_id)
     if saved["lineage_depth"] >= 16:
-        raise ProjectError(422, "����汾���Ѵﵽ 16 �㣬�뱣�����е�������ʼ�µĲ��ɰ汾��")
+        raise ProjectError(422, "保存版本链已达到 16 层，请保留现有导出并开始新的采纳版本。")
     parent = _revision_folder(task_id, revision_id)[2].parent
     folder, published = None, False
     try:
@@ -183,7 +183,7 @@ def create_task_portrait(task_id, revision_id):
                       for name in sorted(FILES)}
             original = json.load(inputs['project.edl.json'])
             if original != saved['edl']:
-                raise ProjectError(409, "����� EDL �ڶ�ȡ�ڼ�ı䣬δ���������汾��")
+                raise ProjectError(409, "保存的 EDL 在读取期间改变，未生成竖屏版本。")
             project = create_portrait_edl(original)
             # No duplicate media copy: hold and verify the existing native source.
             media = stack.enter_context(open_revision_source(task_id, revision_id))
@@ -197,10 +197,10 @@ def create_task_portrait(task_id, revision_id):
                 with (folder / name).open('xb') as outgoing:
                     shutil.copyfileobj(inputs[name], outgoing)
                 if _digest(folder / name) != saved['revision']['files'][name]:
-                    raise ProjectError(409, "��Դ�����ڱ����ڼ�ı䣬δ���������汾��")
+                    raise ProjectError(409, "来源快照在保存期间改变，未发布竖屏版本。")
             media.seek(0)
             if hashlib.file_digest(media, 'sha256').hexdigest() != saved['manifest']['source']['sha256']:
-                raise ProjectError(409, "��һ����Ƶ�ڱ����ڼ�ı䣬δ���������汾��")
+                raise ProjectError(409, "归一化视频在保存期间改变，未发布竖屏版本。")
             revision = {
                 'format_version': 1, 'task_id': task_id, 'revision_id': new_id,
                 'source_task_id': saved['revision']['source_task_id'], 'created_at': now(),
@@ -215,9 +215,9 @@ def create_task_portrait(task_id, revision_id):
     except ProjectError:
         raise
     except (ValueError, KeyError, TypeError) as error:
-        raise ProjectError(409, "�˱���汾������������ EDL����ʹ��ԭ�����汾��") from error
+        raise ProjectError(409, "此保存版本不能生成竖屏 EDL，请使用原横屏版本。") from error
     except OSError as error:
-        raise ProjectError(503, "�����汾����ʧ�ܣ������̨��־��") from error
+        raise ProjectError(503, "竖屏版本保存失败，请检查后台日志。") from error
     finally:
         if folder is not None and not published:
             shutil.rmtree(folder)
@@ -228,7 +228,7 @@ def _revision_folder(task_id, revision_id):
     _completed_job(task_id)
     folder = job_dir(task_id).resolve() / "edits" / revision_id
     if folder.resolve() != folder or not folder.is_dir() or not (folder / "revision.json").is_file():
-        raise ProjectError(404, "�����嵥�汾�����ڡ�")
+        raise ProjectError(404, "剪辑清单版本不存在。")
     return task_id, revision_id, folder
 
 
@@ -310,15 +310,15 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
     except ProjectError:
         raise
     except (OSError, ValueError, KeyError, TypeError) as error:
-        raise ProjectError(409, "����ļ����嵥����Դ��¼�Ѹı䣬�޷�ʹ�ô˰汾��") from error
+        raise ProjectError(409, "保存的剪辑清单或来源记录已改变，无法使用此版本。") from error
 
 
 def revision_file(task_id, revision_id, filename):
     if filename not in DOWNLOAD_FILES:
-        raise ProjectError(404, "�˹���û�ж�Ӧ�������ļ���")
+        raise ProjectError(404, "此工程没有对应的下载文件。")
     saved = load_task_edl(task_id, revision_id)
     if filename not in saved["revision"]["files"]:
-        raise ProjectError(404, "�˹���û�ж�Ӧ�������ļ���")
+        raise ProjectError(404, "此工程没有对应的下载文件。")
     return _contained_file(_revision_folder(task_id, revision_id)[2], filename)
 
 
@@ -328,7 +328,7 @@ def revision_source(task_id, revision_id):
     _completed_job(source_id)
     source = _contained_file(job_dir(source_id).resolve(), "normalized.mp4")
     if _digest(source) != saved["manifest"]["source"]["sha256"]:
-        raise ProjectError(409, "�������õĹ�һ����Ƶ�Ѹı䣬��������Ϊԭ�زġ�")
+        raise ProjectError(409, "工程引用的归一化视频已改变，不能下载为原素材。")
     return source
 
 
@@ -336,14 +336,14 @@ def revision_source(task_id, revision_id):
 def open_revision_file(task_id, revision_id, filename):
     """Hash and download the same held handle, rather than reopening its path."""
     if filename not in DOWNLOAD_FILES:
-        raise ProjectError(404, "�˹���û�ж�Ӧ�������ļ���")
+        raise ProjectError(404, "此工程没有对应的下载文件。")
     saved = load_task_edl(task_id, revision_id)
     if filename not in saved["revision"]["files"]:
-        raise ProjectError(404, "�˹���û�ж�Ӧ�������ļ���")
+        raise ProjectError(404, "此工程没有对应的下载文件。")
     path = _contained_file(_revision_folder(task_id, revision_id)[2], filename)
     with open_media_source(path) as incoming:
         if hashlib.file_digest(incoming, "sha256").hexdigest() != saved["revision"]["files"][filename]:
-            raise ProjectError(409, "�����ļ��Ѹı䣬�޷�ʹ�ô˰汾��")
+            raise ProjectError(409, "下载文件已改变，无法使用此版本。")
         incoming.seek(0)
         yield incoming
 
@@ -356,7 +356,7 @@ def open_revision_source(task_id, revision_id):
     path = _contained_file(job_dir(source_id).resolve(), "normalized.mp4")
     with open_media_source(path) as incoming:
         if hashlib.file_digest(incoming, "sha256").hexdigest() != saved["manifest"]["source"]["sha256"]:
-            raise ProjectError(409, "�������õĹ�һ����Ƶ�Ѹı䣬��������Ϊԭ�زġ�")
+            raise ProjectError(409, "工程引用的归一化视频已改变，不能下载为原素材。")
         incoming.seek(0)
         yield incoming
 
