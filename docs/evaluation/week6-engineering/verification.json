@@ -1,5 +1,5 @@
 {
-  "status": "ready_for_browser_acceptance",
+  "status": "engineering_acceptance_passed",
   "frontend": {
     "tests": 117,
     "passed": 117,
@@ -29,9 +29,25 @@
   "rendered_roundtrip_frames": 587,
   "batch_specialist_frames": 28,
   "source_cut_error_frames": 0,
-  "verification_method": "direct_registered_route_functions_and_independent_frame_decode",
-  "web_ui_acceptance": "pending",
+  "verification_method": "real_browser_ui_and_browser_downloads_and_direct_registered_route_functions_and_independent_frame_decode",
+  "web_ui_acceptance": "passed",
   "deployment": "not_performed",
   "model_calls": 0,
-  "scope": "synthetic engineering material; not independent narrative quality or real-speech sync evaluation"
+  "scope": "synthetic engineering material; not independent narrative quality or real-speech sync evaluation",
+  "ci": {
+    "functional_code_commit": "1137b7d461f250632b5ee579402620b4b173dfba",
+    "workflow_run": 38358266113,
+    "checks": "four_of_four_passed",
+    "backend_windows": {
+      "tests": 720,
+      "skipped": 2,
+      "passed": 718
+    },
+    "backend_linux": {
+      "tests": 720,
+      "skipped": 3,
+      "passed": 717
+    },
+    "frontend_both_platforms": "passed"
+  }
 }
