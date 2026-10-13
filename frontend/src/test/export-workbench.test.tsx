@@ -91,7 +91,7 @@ describe('export workbench', () => {
     fireEvent.click(screen.getByRole('button', { name: '加入当前所选的新片段' }));
     expect(screen.getByLabelText('片段 100 源起帧')).toHaveValue(1001);
     expect(within(screen.getByRole('list', { name: '切点编辑草稿' })).getAllByRole('listitem')).toHaveLength(100);
-  });
+  }, 20_000); // Rendering 100 real editor rows can exceed Vitest's 5 s default on CI.
 
   it('saves exact edited source frames and reordered clips to a new revision, keeping selection and exports bound to their own versions', async () => {
     const create = vi.spyOn(api, 'saveEdits').mockResolvedValue(record(portraitRevision));
