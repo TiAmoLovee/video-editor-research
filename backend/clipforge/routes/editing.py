@@ -156,6 +156,34 @@ class SaveEditRequest(BaseModel):
         return values
 
 
+class SubtitleTimingEdit(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    cue_id: CandidateId
+    timeline_in_frame: int = Field(ge=0, le=2_147_483_647)
+    timeline_out_frame: int = Field(ge=1, le=2_147_483_647)
+
+
+class SubtitleTimingRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    evidence_id: CandidateId
+    edits: list[SubtitleTimingEdit] = Field(min_length=1, max_length=100)
+
+    @field_validator("evidence_id")
+    @classmethod
+    def nonblank_evidence(cls, value):
+        if not value.strip():
+            raise ValueError("请注明人工修时依据。")
+        return value
+
+    @field_validator("edits")
+    @classmethod
+    def distinct_valid_cues(cls, values):
+        if (any(not value.cue_id.strip() or value.timeline_in_frame >= value.timeline_out_frame for value in values)
+                or len({value.cue_id for value in values}) != len(values)):
+            raise ValueError("字幕编号须不同，字幕起帧须小于止帧。")
+        return values
+
+
 def _public_call(operation: Callable[[], T]) -> T:
     """Expose only the service's deliberately safe error messages."""
     try:
@@ -223,6 +251,20 @@ def save_edl_edit(task_id: UUID, revision_id: UUID, payload: SaveEditRequest) ->
 def create_portrait(task_id: UUID, revision_id: UUID) -> JSONResponse:
     def operation():
         record = editing_service.create_task_portrait(str(task_id), str(revision_id))
+        new_id = str(UUID(str(record['revision_id'])))
+        return JSONResponse(status_code=201, content=jsonable_encoder(record), headers={
+            **NO_STORE, 'Location': f'/tasks/{task_id}/edl/{new_id}'})
+    return _public_call(operation)
+
+
+@router.post(
+    '/{task_id}/edl/{revision_id}/portrait-fit', status_code=201,
+    summary='从保存的横屏 EDL 创建保留完整画面的 9:16 黑色留边版本',
+    description='完整画面等比缩放并居中留黑边；保留原素材、顺序和切点，创建独立 1080×1920 版本。',
+)
+def create_portrait_fit(task_id: UUID, revision_id: UUID) -> JSONResponse:
+    def operation():
+        record = editing_service.create_task_portrait(str(task_id), str(revision_id), mode='fit_pad')
         new_id = str(UUID(str(record['revision_id'])))
         return JSONResponse(status_code=201, content=jsonable_encoder(record), headers={
             **NO_STORE, 'Location': f'/tasks/{task_id}/edl/{new_id}'})
@@ -313,6 +355,23 @@ def create_subtitles(task_id: UUID, revision_id: UUID) -> JSONResponse:
         subtitle_id = str(UUID(str(record["subtitle_id"])))
         return JSONResponse(status_code=201, content=jsonable_encoder(record), headers={
             **NO_STORE, "Location": f"/tasks/{task_id}/edl/{revision_id}/subtitles/{subtitle_id}"})
+    return _public_call(operation)
+
+
+@router.post(
+    "/{task_id}/edl/{revision_id}/subtitles/{subtitle_id}/timing", status_code=201,
+    summary="按人工依据另存字幕修时版本",
+    description="仅接受原始字幕的局部整数帧修正，保留原转写、文字和排版；不会覆盖原字幕或重新调用模型。",
+)
+def create_retimed_subtitles(task_id: UUID, revision_id: UUID, subtitle_id: UUID,
+                            payload: SubtitleTimingRequest) -> JSONResponse:
+    def operation():
+        record = subtitling_service.create_retimed_task_subtitles(
+            str(task_id), str(revision_id), str(subtitle_id),
+            [edit.model_dump() for edit in payload.edits], evidence_id=payload.evidence_id)
+        new_id = str(UUID(str(record["subtitle_id"])))
+        return JSONResponse(status_code=201, content=jsonable_encoder(record), headers={
+            **NO_STORE, "Location": f"/tasks/{task_id}/edl/{revision_id}/subtitles/{new_id}"})
     return _public_call(operation)
 
 

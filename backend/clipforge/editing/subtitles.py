@@ -15,6 +15,7 @@ from clipforge.analysis.validation import validate_analysis
 from clipforge.editing.edl import _schema_validate, frame_rate, validate_edl
 
 ROOT = Path(__file__).resolve().parents[3]
+TIMING_VERSION = "0.2.0"
 POLICY = {
     "max_lines": 2, "target_cjk_characters_per_line": 18, "max_cue_seconds": 4,
     "pause_seconds": 0.45, "duration_tolerance_frames": 1,
@@ -214,7 +215,7 @@ def build_subtitles(edl, analyses: dict) -> dict:
     if not isinstance(analyses, dict) or set(analyses) != expected_ids:
         raise ValueError("analyses must contain exactly every EDL source id")
     rate = frame_rate(edl["profile"]["fps"])
-    policy = deepcopy(PORTRAIT_POLICY if edl["schema_version"] == "0.2.0" else POLICY)
+    policy = deepcopy(PORTRAIT_POLICY if edl["schema_version"] in ("0.2.0", "0.3.0") else POLICY)
     sources, cues, reports = [], [], []
     analysis_schema = _schema("analysis.schema.json")
     for source in edl["sources"]:
@@ -278,6 +279,9 @@ def build_subtitles(edl, analyses: dict) -> dict:
 
 
 def _validate_plan(plan):
+    if isinstance(plan, dict) and plan.get("schema_version") == TIMING_VERSION:
+        _validate_retimed_plan(plan)
+        return
     _strict_integers(plan)
     _schema_validate(plan, _schema("subtitles.schema.json"))
     frame_rate(plan["fps"])
@@ -328,10 +332,104 @@ def _validate_plan(plan):
         previous = cue["timeline_out_frame"]
 
 
+def _timing_edits(base_plan, edits, evidence_id):
+    """Validate explicit display-only changes, preserving the raw word evidence."""
+    if (not isinstance(evidence_id, str) or not 1 <= len(evidence_id) <= 200
+            or evidence_id != evidence_id.strip()
+            or any(ord(char) < 32 or ord(char) == 127 or 0xD800 <= ord(char) <= 0xDFFF
+                   for char in evidence_id)):
+        raise ValueError("subtitle timing evidence_id requires safe nonblank text of at most 200 characters")
+    if not isinstance(edits, list) or not 1 <= len(edits) <= 100:
+        raise ValueError("subtitle timing edits require 1–100 explicit cue changes")
+    cues = {cue["id"]: cue for cue in base_plan["cues"]}
+    by_id = {}
+    fields = {"cue_id", "timeline_in_frame", "timeline_out_frame"}
+    for edit in edits:
+        if (not isinstance(edit, dict) or set(edit) != fields
+                or not isinstance(edit["cue_id"], str) or edit["cue_id"] not in cues
+                or edit["cue_id"] in by_id
+                or any(type(edit[key]) is not int for key in ("timeline_in_frame", "timeline_out_frame"))):
+            raise ValueError("subtitle timing edit requires a unique known cue id and strict integer frame bounds")
+        original = cues[edit["cue_id"]]
+        if all(edit[key] == original[key] for key in ("timeline_in_frame", "timeline_out_frame")):
+            raise ValueError("subtitle timing edit must change the cue display range")
+        by_id[edit["cue_id"]] = deepcopy(edit)
+    return [by_id[cue["id"]] for cue in base_plan["cues"] if cue["id"] in by_id]
+
+
+def _retimed_plan(base_plan, edits, evidence_id):
+    normalized = _timing_edits(base_plan, edits, evidence_id)
+    result = deepcopy(base_plan)
+    result["schema_version"] = TIMING_VERSION
+    result["timing_revision"] = {"base_plan_sha256": _digest(base_plan), "evidence_id": evidence_id,
+                                 "edits": normalized}
+    by_id = {edit["cue_id"]: edit for edit in normalized}
+    for cue in result["cues"]:
+        if cue["id"] in by_id:
+            change = by_id[cue["id"]]
+            cue["timeline_in_frame"] = change["timeline_in_frame"]
+            cue["timeline_out_frame"] = change["timeline_out_frame"]
+    return result
+
+
+def _validate_retimed_plan(plan):
+    """Check display ranges and reconstruct the exact internally bound base.
+
+    Without EDL/analyses this proves internal consistency, not ASR accuracy or
+    the authenticity of an evidence label. Export entrypoints additionally use
+    validate_subtitles() to rebuild that base from its held original inputs.
+    """
+    _strict_integers(plan)
+    _schema_validate(plan, _schema("subtitles-v0.2.schema.json"))
+    base = deepcopy(plan)
+    record = base.pop("timing_revision")
+    base["schema_version"] = "0.1.0"
+    # Display times are the only overwritten fields. Original min/max word
+    # mappings reconstruct every original cue range without guessed offsets.
+    for cue in base["cues"]:
+        cue["timeline_in_frame"] = min(word["timeline_in_frame"] for word in cue["word_mappings"])
+        cue["timeline_out_frame"] = max(word["timeline_out_frame"] for word in cue["word_mappings"])
+    _validate_plan(base)
+    if record["base_plan_sha256"] != _digest(base):
+        raise ValueError("subtitle timing base_plan_sha256 differs from retained original-word evidence")
+    expected = _retimed_plan(base, record["edits"], record["evidence_id"])
+    if _canonical(plan) != _canonical(expected):
+        raise ValueError("subtitle timing plan differs from its exact recorded display edits")
+    reports = {row["clip_id"]: row for row in plan["clip_reports"]}
+    previous = 0
+    for cue in plan["cues"]:
+        report = reports[cue["clip_id"]]
+        if (not report["timeline_in_frame"] <= cue["timeline_in_frame"] < cue["timeline_out_frame"] <= report["timeline_out_frame"]
+                or cue["timeline_in_frame"] < previous):
+            raise ValueError("retimed subtitle must be nonempty, nonoverlapping and inside its selected clip")
+        if any(not _representable(cue, plan["fps"], scale) for scale in (100, 1000)):
+            raise ValueError("retimed subtitle display cannot be represented in both ASS and SRT within its clip")
+        previous = cue["timeline_out_frame"]
+
+
+def retime_subtitles(base_plan, edl, analyses, edits, *, evidence_id):
+    """Create an auditable display-only version; never alter ASR or old plans.
+
+    The caller supplies strict integer output frames based on named evidence.
+    This records a local timing correction, not a measured quality pass. A new
+    revision must start from the reconstructable original 0.1 subtitle plan.
+    """
+    if not isinstance(base_plan, dict) or base_plan.get("schema_version") != "0.1.0":
+        raise ValueError("subtitle timing revision requires an original 0.1.0 base plan")
+    validate_subtitles(base_plan, edl, analyses)
+    result = _retimed_plan(base_plan, edits, evidence_id)
+    _validate_plan(result)
+    return result
+
+
 def validate_subtitles(plan, edl, analyses):
     """Validate schema and rebuild every cue/evidence/hash from the original inputs."""
     _validate_plan(plan)
-    if _canonical(plan) != _canonical(build_subtitles(edl, analyses)):
+    expected = build_subtitles(edl, analyses)
+    if plan["schema_version"] == TIMING_VERSION:
+        record = plan["timing_revision"]
+        expected = _retimed_plan(expected, record["edits"], record["evidence_id"])
+    if _canonical(plan) != _canonical(expected):
         raise ValueError("subtitle plan differs from deterministic EDL/analysis reconstruction")
 
 

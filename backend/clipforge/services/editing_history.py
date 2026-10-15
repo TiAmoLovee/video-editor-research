@@ -18,7 +18,8 @@ REVISION_FIELDS = frozenset({"format_version", "task_id", "revision_id", "source
                              "clip_count", "duration_frames", "files", "derivation"})
 ARTIFACT_FIELDS = {
     "subtitle": frozenset({"format_version", "task_id", "revision_id", "subtitle_id", "created_at", "font_name",
-                            "edl_file_sha256", "analysis_file_sha256", "plan_content_sha256", "cue_count", "files"}),
+                            "edl_file_sha256", "analysis_file_sha256", "plan_content_sha256", "cue_count", "files",
+                            "timing_revision"}),
     "render": frozenset({"format_version", "task_id", "revision_id", "render_id", "created_at", "edl_file_sha256",
                           "edl_content_sha256", "profile", "total_frames", "output_bytes", "files", "subtitle_id",
                           "subtitle_plan_sha256", "subtitle_font_name"}),

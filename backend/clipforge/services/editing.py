@@ -165,13 +165,15 @@ No original analysis, task result, media or previous revision is overwritten.
         raise ProjectError(503, "媒体核验或工程保存失败，请检查 FFPROBE 配置及后台日志。") from error
 
 
-def create_task_portrait(task_id, revision_id):
+def create_task_portrait(task_id, revision_id, *, mode="center_crop"):
     """Derive a new 9:16 revision from saved selections, without reprobe/ASR.
 
     Keep the native media manifest and exact analysis/candidate snapshots.
     Only the new EDL's output profile/framing differs; the parent stays intact.
     """
     task_id, revision_id = _uuid(task_id), _uuid(revision_id)
+    if mode not in ("center_crop", "fit_pad"):
+        raise ProjectError(422, "竖屏模式无效。")
     saved = load_task_edl(task_id, revision_id)
     if saved["lineage_depth"] >= 16:
         raise ProjectError(422, "保存版本链已达到 16 层，请保留现有导出并开始新的采纳版本。")
@@ -184,7 +186,7 @@ def create_task_portrait(task_id, revision_id):
             original = json.load(inputs['project.edl.json'])
             if original != saved['edl']:
                 raise ProjectError(409, "保存的 EDL 在读取期间改变，未生成竖屏版本。")
-            project = create_portrait_edl(original)
+            project = create_portrait_edl(original, mode=mode)
             # No duplicate media copy: hold and verify the existing native source.
             media = stack.enter_context(open_revision_source(task_id, revision_id))
             new_id = str(uuid4())
@@ -206,7 +208,8 @@ def create_task_portrait(task_id, revision_id):
                 'source_task_id': saved['revision']['source_task_id'], 'created_at': now(),
                 'clip_count': len(project['clips']), 'duration_frames': project['duration_frames'],
                 'files': {name: _digest(folder / name) for name in sorted(FILES)},
-                'derivation': {'kind': 'center_crop_9_16', 'parent_revision_id': revision_id,
+                'derivation': {'kind': 'fit_pad_9_16' if mode == 'fit_pad' else 'center_crop_9_16',
+                               'parent_revision_id': revision_id,
                                'parent_edl_file_sha256': saved['revision']['files']['project.edl.json']},
             }
             _write_json(folder / 'revision.json', revision)
@@ -268,10 +271,13 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
             from clipforge.services.editing_changes import validate_saved_edit
             edit_record, lineage_depth = validate_saved_edit(
                 task_id, revision_id, revision, project, manifest, folder, visited)
-        elif project['schema_version'] == '0.2.0':
+        elif project['schema_version'] in ('0.2.0', '0.3.0'):
+            fit = project['schema_version'] == '0.3.0'
+            mode = 'fit_pad' if fit else 'center_crop'
+            kind = 'fit_pad_9_16' if fit else 'center_crop_9_16'
             derivation = revision['derivation']
             if (set(derivation) != {'kind', 'parent_revision_id', 'parent_edl_file_sha256'}
-                    or derivation['kind'] != 'center_crop_9_16'):
+                    or derivation['kind'] != kind):
                 raise ValueError('invalid portrait derivation')
             parent_id = _uuid(derivation['parent_revision_id'])
             if parent_id == revision_id:
@@ -284,7 +290,7 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
             original = load_task_edl(task_id, parent_id, _visited=visited)
             lineage_depth = original["lineage_depth"] + 1
             if (original['revision']['files']['project.edl.json'] != derivation['parent_edl_file_sha256']
-                    or project != create_portrait_edl(original['edl'])
+                    or project != create_portrait_edl(original['edl'], mode=mode)
                     or revision['source_task_id'] != original['revision']['source_task_id']
                     or any(revision['files'][name] != original['revision']['files'][name]
                            for name in FILES - {'project.edl.json'})):
@@ -297,7 +303,8 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
                     "format_version": 1, "task_id": task_id, "revision_id": revision_id,
                     "baseline_revision_id": root_id, "parent_revision_id": parent_id,
                     "editing_elapsed_ms": None, "elapsed_time_scope": "not_recorded",
-                    "origin": "automatic_center_crop_no_manual_operation",
+                    "origin": ("automatic_fit_pad_no_manual_operation" if fit else
+                               "automatic_center_crop_no_manual_operation"),
                     "effort": compare_edit_effort(baseline["edl"], project),
                     "step_effort": compare_edit_effort(original["edl"], project),
                 }

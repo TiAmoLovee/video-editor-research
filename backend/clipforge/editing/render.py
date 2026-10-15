@@ -368,7 +368,7 @@ def _sources(edl, source_root, stack, executable, deadline):
         actual = deepcopy(record["measured"]["source"])
         actual.update(id=source["id"], ref=source["ref"])
         expected_profile = ({key: source[key] for key in ("width", "height", "fps")}
-                            if edl["schema_version"] == "0.2.0" else edl["profile"])
+                            if edl["schema_version"] in ("0.2.0", "0.3.0") else edl["profile"])
         if actual != source or record["measured"]["profile"] != expected_profile:
             raise ValueError(f"measured source descriptor differs from EDL: {source['id']}")
         _check_source(record, deadline)
@@ -385,22 +385,30 @@ def _sample(frame, fps):
 def _filter_graph(edl):
     fps = edl["profile"]["fps"]
     sources = {source["id"]: source for source in edl["sources"]}
-    portrait = edl["schema_version"] == "0.2.0"
-    crops = {crop["source_id"]: crop for crop in edl["framing"]["sources"]} if portrait else {}
+    framing = edl.get("framing", {})
+    rectangles = {item["source_id"]: item for item in framing.get("sources", [])}
     has_audio = any(sources[clip["source_id"]]["audio_stream_index"] is not None for clip in edl["clips"])
     graph, decisions = [], []
     for index, clip in enumerate(edl["clips"]):
         source = sources[clip["source_id"]]
         start, end = clip["source_in_frame"], clip["source_out_frame"]
         geometry = "scale=w=iw:h=ih:"
-        if portrait:
-            crop = crops[clip["source_id"]]
+        padding = ""
+        if framing.get("mode") == "center_crop":
+            crop = rectangles[clip["source_id"]]
             geometry = (f"crop=w={crop['width']}:h={crop['height']}:x={crop['x']}:y={crop['y']},"
                         f"scale=w={edl['profile']['width']}:h={edl['profile']['height']}:")
+        elif framing.get("mode") == "fit_pad":
+            rectangle = rectangles[clip["source_id"]]
+            geometry = f"scale=w={rectangle['width']}:h={rectangle['height']}:"
+            # The saved even-pixel rectangle may round the aspect ratio by a
+            # fraction of a pixel; scale would otherwise compensate with SAR.
+            padding = (f",setsar=1,pad=w={edl['profile']['width']}:h={edl['profile']['height']}:"
+                       f"x={rectangle['x']}:y={rectangle['y']}:color=black")
         graph.append(f"[{index}:{source['video_stream_index']}]trim=start_frame={start}:end_frame={end},"
                      f"settb=expr={fps['den']}/{fps['num']},setpts=N,setsar=1,"
                      f"{geometry}in_range=auto:out_range=tv:in_color_matrix=bt709:out_color_matrix=bt709,"
-                     f"format=yuv420p[v{index}]")
+                     f"format=yuv420p{padding}[v{index}]")
         decision = {key: clip[key] for key in ("id", "source_id", "source_in_frame", "source_out_frame",
                                              "timeline_in_frame", "timeline_out_frame")}
         if has_audio:
@@ -540,8 +548,9 @@ def render_edl(edl, source_root, output, *, ffmpeg=None, ffprobe=None, timeout=3
     """Render new output exclusively; return measured facts and planned frame cuts.
 
 Sources must pass the measured manifest contract at the project frame rate.
-Version 0.1 preserves native dimensions; version 0.2 applies the saved native
-crop before scaling to the output profile. At most 128 clips are accepted. AAC encoding
+    Version 0.1 preserves native dimensions; version 0.2 applies the saved native
+crop before scaling; version 0.3 fits the complete source into its saved output
+rectangle and pads the remaining canvas. At most 128 clips are accepted. AAC encoding
 has codec priming/padding; sample decisions describe the pre-encode audio axis.
 Output frame PTS/count are measured, while content/order needs an independent
 frame-marker check (the report does not claim to infer content identity).
@@ -655,7 +664,7 @@ verified; no system-font fallback is accepted.
         report["subtitles"] = subtitles["report"]
         report["checks"].update(subtitle_plan_valid=True, subtitle_font_glyphs_present=True,
                                 subtitle_font_selected=True, subtitles_burned=True)
-    if data["schema_version"] == "0.2.0":
+    if data["schema_version"] in ("0.2.0", "0.3.0"):
         report["framing"] = deepcopy(data["framing"])
     return report
 

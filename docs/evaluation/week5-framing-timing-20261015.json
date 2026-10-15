@@ -1,0 +1,57 @@
+{
+  "format_version": 1,
+  "date": "2026-10-15",
+  "kind": "framing_and_subtitle_timing_calibration",
+  "base_main": "404d3273923d1251753725e60703e992a0fc9f22",
+  "features": [
+    "optional full-frame fit_pad portrait EDL 0.3",
+    "auditable display-only subtitle timing 0.2"
+  ],
+  "real_export": {
+    "frames": 1153,
+    "seconds": 38.43333333333333,
+    "source_ranges": [
+      [
+        851,
+        1455
+      ],
+      [
+        43,
+        592
+      ]
+    ],
+    "cut_frame": 604
+  },
+  "human_scope": "3 cues, 6 endpoints, one rater; two start corrections based on the same records",
+  "original_sample": {
+    "passed": 1,
+    "failed": 1,
+    "uncertain": 1
+  },
+  "corrections": [
+    {
+      "cue": "cue_0001_0002",
+      "start_frame": 135,
+      "end_frame": 210
+    },
+    {
+      "cue": "cue_0001_0006",
+      "start_frame": 587,
+      "end_frame": 604
+    }
+  ],
+  "calibration_is_independent_validation": false,
+  "all_cues_le_0_3_verified": false,
+  "quality_85_percent_verified": false,
+  "limitations": [
+    "ten cues were not human measured",
+    "single-rater timing corrections do not establish general content quality",
+    "full-frame padding preserves recorded player UI and reduces landscape subject size",
+    "native MLT renders checked; no new Shotcut GUI edit-save round trip"
+  ],
+  "media_evidence": {
+    "summary_sha256": "2ce3b619428d998a128b1f3897afd9ae0ad9f99badfb884c59908c7bd5a838fc",
+    "scope": "passed_local_calibrated_export_checks_not_independent_sync_acceptance"
+  },
+  "new_model_calls": 0
+}

@@ -1,4 +1,7 @@
 export interface Profile { width: number; height: number; fps: { num: number; den: number } }
+export interface FramingSource { source_id: string; x: number; y: number; width: number; height: number }
+export type EdlFraming = { mode: 'center_crop'; sources: FramingSource[] }
+  | { mode: 'fit_pad'; background: 'black'; sources: FramingSource[] };
 export interface EdlRevision {
   task_id: string;
   revision_id: string;
@@ -42,6 +45,8 @@ export interface SavedEdl {
   edl: {
     schema_version: string;
     profile: Profile;
+    framing?: EdlFraming;
+    sources?: { id: string; width: number; height: number }[];
     duration_frames: number;
     clips: {
       id: string;

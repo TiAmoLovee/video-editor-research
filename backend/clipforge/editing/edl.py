@@ -19,6 +19,7 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[3]
 VERSION = "0.1.0"
 PORTRAIT_VERSION = "0.2.0"
+PORTRAIT_FIT_VERSION = "0.3.0"
 MAX_FRAMES = 2147483647
 INTEGER_FIELDS = {
     "num", "den", "width", "height", "total_frames", "duration_frames",
@@ -50,7 +51,8 @@ def _schema_validate(value, schema):
 
 
 def _load_schema(version=VERSION):
-    filenames = {VERSION: "edl.schema.json", PORTRAIT_VERSION: "edl-v0.2.schema.json"}
+    filenames = {VERSION: "edl.schema.json", PORTRAIT_VERSION: "edl-v0.2.schema.json",
+                 PORTRAIT_FIT_VERSION: "edl-v0.3.schema.json"}
     if not isinstance(version, str) or version not in filenames:
         raise ValueError("unsupported EDL schema_version")
     return json.loads((ROOT / "schemas" / filenames[version]).read_text(encoding="utf-8"))
@@ -130,6 +132,29 @@ def _center_crop(source):
             "y": ((source["height"] - height) // 2) // 2 * 2, "width": width, "height": height}
 
 
+def _fit_pad(source, profile):
+    """Fit the complete source on a black canvas, rounding to even pixels.
+
+    Each scaled dimension is rounded to its nearest even integer, with ties up.
+    The even origin approximates the true center within one pixel. These are
+    output-canvas coordinates, never a rectangle to crop out of the source.
+    """
+    if source["width"] % 2 or source["height"] % 2:
+        raise ValueError("portrait sources require even native dimensions")
+    scale = min(Fraction(profile["width"], source["width"]),
+                Fraction(profile["height"], source["height"]))
+
+    def dimension(native, limit):
+        value = native * scale
+        rounded = 2 * ((value.numerator + value.denominator) // (2 * value.denominator))
+        return max(2, min(limit, rounded))
+
+    width = dimension(source["width"], profile["width"])
+    height = dimension(source["height"], profile["height"])
+    return {"source_id": source["id"], "x": ((profile["width"] - width) // 2) // 2 * 2,
+            "y": ((profile["height"] - height) // 2) // 2 * 2, "width": width, "height": height}
+
+
 def _portrait_framing(data):
     profile = data["profile"]
     if (profile["width"] % 2 or profile["height"] % 2
@@ -139,23 +164,36 @@ def _portrait_framing(data):
     original_schema = _load_schema()
     for source in data["sources"]:
         _schema_validate(source, {"$ref": "#/$defs/source", "$defs": original_schema["$defs"]})
-    expected = {"mode": "center_crop", "sources": [_center_crop(source) for source in data["sources"]]}
+    fit = data["schema_version"] == PORTRAIT_FIT_VERSION
+    expected = ({"mode": "fit_pad", "background": "black",
+                 "sources": [_fit_pad(source, profile) for source in data["sources"]]} if fit else
+                {"mode": "center_crop", "sources": [_center_crop(source) for source in data["sources"]]})
     if data["framing"] != expected:
-        raise ValueError("framing must cover every source with its canonical even center crop")
+        raise ValueError("framing must cover every source with its canonical even fit on black" if fit else
+                         "framing must cover every source with its canonical even center crop")
 
 
-def create_portrait_edl(edl, width=1080, height=1920):
-    """Derive fixed-center 9:16 framing while retaining every source/cut fact."""
+def create_portrait_edl(edl, width=1080, height=1920, *, mode="center_crop"):
+    """Derive explicit 9:16 framing while retaining every source/cut fact.
+
+    The default center crop retains the existing EDL 0.2.0 contract. Full-frame
+    fitting with black padding is a separate EDL 0.3.0 contract.
+    """
     validate_edl(edl)
     if edl["schema_version"] != VERSION:
         raise ValueError("portrait conversion requires an EDL 0.1.0 input")
     if (type(width) is not int or type(height) is not int or not 1 <= width <= 16384
             or not 1 <= height <= 16384 or width % 2 or height % 2 or width * 16 != height * 9):
         raise ValueError("portrait output requires even exact 9:16 JSON integer dimensions")
+    if mode not in ("center_crop", "fit_pad"):
+        raise ValueError("portrait mode must be center_crop or fit_pad")
     result = deepcopy(edl)
-    result["schema_version"] = PORTRAIT_VERSION
+    result["schema_version"] = PORTRAIT_FIT_VERSION if mode == "fit_pad" else PORTRAIT_VERSION
     result["profile"] = {"width": width, "height": height, "fps": deepcopy(edl["profile"]["fps"])}
-    result["framing"] = {"mode": "center_crop", "sources": [_center_crop(source) for source in edl["sources"]]}
+    result["framing"] = ({"mode": "fit_pad", "background": "black",
+                          "sources": [_fit_pad(source, result["profile"]) for source in edl["sources"]]}
+                         if mode == "fit_pad" else
+                         {"mode": "center_crop", "sources": [_center_crop(source) for source in edl["sources"]]})
     validate_edl(result)
     return result
 
@@ -168,7 +206,7 @@ def validate_edl(data):
     schema = _load_schema(version)
     _schema_validate(data, schema)
     _profile_sources(data["profile"], data["sources"], native_dimensions=version == VERSION)
-    if version == PORTRAIT_VERSION:
+    if version in (PORTRAIT_VERSION, PORTRAIT_FIT_VERSION):
         _portrait_framing(data)
     sources = {source["id"]: source for source in data["sources"]}
     clip_ids, baseline_ids, baseline_positions = set(), set(), set()
