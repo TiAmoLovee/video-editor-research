@@ -5,6 +5,8 @@ import * as api from '../api/editing';
 import type { ArtifactHistory, EdlPage, EdlRevision, SavedEdl, SubtitleRecord } from '../types/editing';
 import type { Candidate } from '../types/tasks';
 
+vi.mock('../components/BatchExportPanel', () => ({ BatchExportPanel: () => null }));
+
 const task = '11111111-1111-4111-8111-111111111111';
 const otherTask = '22222222-2222-4222-8222-222222222222';
 const revision = '33333333-3333-4333-8333-333333333333';
@@ -29,12 +31,35 @@ const props = () => ({ taskId: task, selected: candidates, onRemove: vi.fn(), on
 beforeEach(() => {
   vi.restoreAllMocks();
   sessionStorage.clear();
+  localStorage.setItem('clipforge:actor:v1', '测试编辑者');
   vi.spyOn(api, 'listEdls').mockResolvedValue(edlPage());
   vi.spyOn(api, 'getEdl').mockImplementation(async (_task, id) => saved(id));
   vi.spyOn(api, 'listArtifacts').mockResolvedValue(history());
 });
 
 describe('export workbench', () => {
+  it('requires a supplied actor, converts timecodes to exact frames, and blocks invalid time input', async () => {
+    localStorage.removeItem('clipforge:actor:v1');
+    const save = vi.spyOn(api, 'saveEdits').mockResolvedValue(record(portraitRevision));
+    render(<ExportWorkbench {...props()} />);
+    await screen.findByRole('button', { name: '编辑这个版本' });
+    fireEvent.click(screen.getByRole('button', { name: '编辑这个版本' }));
+    fireEvent.change(screen.getByLabelText('片段 1 开始时间'), { target: { value: '00:00:00.050000' } });
+    expect(screen.getByLabelText('片段 1 源起帧')).toHaveValue(2);
+    expect(screen.getByRole('button', { name: '保存修改为新版本' })).toBeDisabled();
+    fireEvent.change(screen.getByLabelText('编辑者姓名'), { target: { value: ' 小明 ' } });
+    expect(screen.getByLabelText('操作记录姓名')).toHaveValue(' 小明 ');
+    fireEvent.change(screen.getByLabelText('片段 1 结束时间'), { target: { value: '00:61:00' } });
+    expect(screen.getByRole('button', { name: '保存修改为新版本' })).toBeDisabled();
+    fireEvent.change(screen.getByLabelText('片段 1 结束时间'), { target: { value: '19.9' } });
+    expect(screen.getByLabelText('片段 1 源止帧')).toHaveValue(597);
+    fireEvent.click(screen.getByRole('button', { name: '保存修改为新版本' }));
+    await waitFor(() => expect(save).toHaveBeenCalledWith(task, revision, [
+      { candidate_id: 'candidate-2', source_in_frame: 2, source_out_frame: 597 },
+      { candidate_id: 'candidate-1', source_in_frame: 600, source_out_frame: 1200 },
+    ], expect.any(AbortSignal), '小明'));
+  });
+
   it('adds selected candidates using saved frame projections, supports deleting and re-adding, and saves them on the same baseline', async () => {
     const stored = saved();
     stored.available_clips = [{ candidate_id: 'new-candidate', source_in_frame: 1001, source_out_frame: 1499 }];
@@ -58,7 +83,7 @@ describe('export workbench', () => {
       { candidate_id: 'candidate-2', source_in_frame: 0, source_out_frame: 600 },
       { candidate_id: 'candidate-1', source_in_frame: 600, source_out_frame: 1200 },
       { candidate_id: 'new-candidate', source_in_frame: 1001, source_out_frame: 1499 },
-    ], expect.any(AbortSignal));
+    ], expect.any(AbortSignal), '测试编辑者');
     await waitFor(() => expect(screen.queryByRole('list', { name: '切点编辑草稿' })).not.toBeInTheDocument());
   });
 
@@ -114,7 +139,7 @@ describe('export workbench', () => {
     expect(create).toHaveBeenCalledWith(task, revision, [
       { candidate_id: 'candidate-1', source_in_frame: 600, source_out_frame: 1200 },
       { candidate_id: 'candidate-2', source_in_frame: 1, source_out_frame: 599 },
-    ], expect.any(AbortSignal));
+    ], expect.any(AbortSignal), '测试编辑者');
     expect(screen.queryByRole('list', { name: '切点编辑草稿' })).not.toBeInTheDocument();
     expect(supplied.onMove).not.toHaveBeenCalled();
     expect(supplied.onRemove).not.toHaveBeenCalled();
@@ -202,7 +227,7 @@ describe('export workbench', () => {
     const save = screen.getByRole('button', { name: '保存选择为剪辑版本' });
     fireEvent.click(save); fireEvent.click(save);
     expect(create).toHaveBeenCalledTimes(1);
-    expect(create).toHaveBeenCalledWith(task, ['candidate-2', 'candidate-1'], expect.any(AbortSignal));
+    expect(create).toHaveBeenCalledWith(task, ['candidate-2', 'candidate-1'], expect.any(AbortSignal), '测试编辑者');
     expect(screen.getByRole('button', { name: '刷新已保存记录' })).toBeDisabled();
     expect(supplied.onBusyChange).toHaveBeenCalledWith(true);
     await act(async () => finish(record()));

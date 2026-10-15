@@ -99,8 +99,9 @@ def available_edit_clips(task_id, revision_id, saved):
     return {"available_clips": available, "unavailable_edit_clip_count": unavailable}
 
 
-def _record(task_id, revision_id, parent, baseline, project, clips, elapsed_ms):
-    return {
+def _record(task_id, revision_id, parent, baseline, project, clips, elapsed_ms, *,
+            actor=None, created_at=None):
+    record = {
         "format_version": 1,
         "task_id": task_id,
         "revision_id": revision_id,
@@ -114,12 +115,25 @@ def _record(task_id, revision_id, parent, baseline, project, clips, elapsed_ms):
         "effort": compare_edit_effort(baseline["edl"], project),
         "step_effort": compare_edit_effort(parent["edl"], project),
     }
+    # Original format 1 remains readable without inventing an operator identity.
+    # New evidence is an immutable sidecar, leaving the frozen EDL unchanged.
+    if created_at is not None:
+        from clipforge.services.reviewing import clip_state, edit_operations, normalize_actor
+        actor = normalize_actor(actor, required=False)
+        before, after = clip_state(parent["edl"]), clip_state(project)
+        record.update(format_version=2, actor=actor,
+                      actor_scope="user_supplied_name" if actor is not None else "unrecorded",
+                      created_at=created_at, candidate_snapshot_sha256=parent["revision"]["files"]["candidates.json"],
+                      before=before, after=after, operations=edit_operations(before, after))
+    return record
 
 
-def create_task_edit(task_id, revision_id, clips, *, editing_elapsed_ms=None):
+def create_task_edit(task_id, revision_id, clips, *, editing_elapsed_ms=None, actor=None):
     """Save one explicit edit without probes, scoring, media copies or parent overwrites."""
     task_id, revision_id = editing._uuid(task_id), editing._uuid(revision_id)
     _requests(clips, editing_elapsed_ms)
+    from clipforge.services.reviewing import normalize_actor
+    actor = normalize_actor(actor, required=False)
     parent = editing.load_task_edl(task_id, revision_id)
     if parent["lineage_depth"] >= MAX_EDIT_DEPTH:
         raise editing.ProjectError(422, "保存版本链已达到 16 层，请保留现有导出并开始新的采纳版本。")
@@ -144,7 +158,9 @@ def create_task_edit(task_id, revision_id, clips, *, editing_elapsed_ms=None):
                     shutil.copyfileobj(inputs[name], outgoing)
                 if editing._digest(folder / name) != parent["revision"]["files"][name]:
                     raise ValueError("parent snapshot changed during edit publication")
-            record = _record(task_id, new_id, parent, baseline, project, clips, editing_elapsed_ms)
+            created_at = now()
+            record = _record(task_id, new_id, parent, baseline, project, clips, editing_elapsed_ms,
+                             actor=actor, created_at=created_at)
             editing._write_json(folder / EDIT_FILE, record)
             media.seek(0)
             if hashlib.file_digest(media, "sha256").hexdigest() != parent["manifest"]["source"]["sha256"]:
@@ -152,7 +168,7 @@ def create_task_edit(task_id, revision_id, clips, *, editing_elapsed_ms=None):
             files = editing.FILES | {EDIT_FILE}
             revision = {
                 "format_version": 1, "task_id": task_id, "revision_id": new_id,
-                "source_task_id": parent["revision"]["source_task_id"], "created_at": now(),
+                "source_task_id": parent["revision"]["source_task_id"], "created_at": created_at,
                 "clip_count": len(project["clips"]), "duration_frames": project["duration_frames"],
                 "files": {name: editing._digest(folder / name) for name in sorted(files)},
                 "derivation": {"kind": "manual_edit", "parent_revision_id": revision_id,
@@ -200,7 +216,17 @@ def validate_saved_edit(task_id, revision_id, revision, project, manifest, folde
     _requests(clips, elapsed_ms)
     candidates = editing._read_json(editing._contained_file(folder, "candidates.json"))
     expected_project = _build_project(parent["edl"], baseline["edl"], candidates, clips)
-    expected_record = _record(task_id, revision_id, parent, baseline, project, clips, elapsed_ms)
+    if type(record.get("format_version")) is not int or record["format_version"] not in (1, 2):
+        raise ValueError("invalid manual edit evidence version")
+    evidence = {}
+    if record["format_version"] == 2:
+        if record["created_at"] != revision["created_at"]:
+            raise ValueError("edit evidence time differs from revision commit")
+        evidence = {"actor": record["actor"], "created_at": revision["created_at"]}
+    try:
+        expected_record = _record(task_id, revision_id, parent, baseline, project, clips, elapsed_ms, **evidence)
+    except editing.ProjectError as error:
+        raise ValueError("invalid saved edit operator evidence") from error
     if project != expected_project or _canonical(record) != _canonical(expected_record):
         raise ValueError("edited project or measured changes differ from bound request")
     return record, parent["lineage_depth"] + 1

@@ -93,6 +93,9 @@ function validAvailableClips(value: unknown): boolean {
 function validEditRecord(value: unknown): boolean {
   return object(value) && typeof value.baseline_revision_id === 'string' && validId(value.baseline_revision_id)
     && typeof value.parent_revision_id === 'string' && validId(value.parent_revision_id)
+    && (value.actor === undefined || value.actor === null || (typeof value.actor === 'string'
+      && value.actor === value.actor.trim() && value.actor.length > 0 && value.actor.length <= 80))
+    && (value.created_at === undefined || (typeof value.created_at === 'string' && Number.isFinite(Date.parse(value.created_at))))
     && (value.editing_elapsed_ms === null || integer(value.editing_elapsed_ms))
     && validEffort(value.effort) && validEffort(value.step_effort);
 }
@@ -126,18 +129,20 @@ export function listArtifacts(task: string, revision: string, signal: AbortSigna
     && Array.isArray(value.renders) && value.renders.every(item => artifact(item, task, revision, 'render_id'))
     && Array.isArray(value.mlt_exports) && value.mlt_exports.every(item => artifact(item, task, revision, 'export_id')));
 }
-export function createEdl(task: string, ids: string[], signal: AbortSignal): Promise<EdlRevision> {
+export function createEdl(task: string, ids: string[], signal: AbortSignal, actor?: string): Promise<EdlRevision> {
   if (!ids.length || ids.length > 100 || new Set(ids).size !== ids.length || ids.some(id => typeof id !== 'string' || !id.trim() || id.length > 200)) throw new Error('请选择 1–100 个不重复的候选。');
-  return request(taskPath(task), signal, value => revisionRecord(value, task), { selected_ids: ids }, true);
+  if (actor !== undefined && (!actor.trim() || actor.trim().length > 80)) throw new Error('请填写 1–80 个字符的操作记录姓名。');
+  return request(taskPath(task), signal, value => revisionRecord(value, task), { selected_ids: ids, ...(actor !== undefined ? { actor: actor.trim() } : {}) }, true);
 }
-export function saveEdits(task: string, revision: string, clips: EditedClip[], signal: AbortSignal): Promise<EdlRevision> {
+export function saveEdits(task: string, revision: string, clips: EditedClip[], signal: AbortSignal, actor?: string): Promise<EdlRevision> {
   if (!clips.length || clips.length > 100 || new Set(clips.map(clip => clip.candidate_id)).size !== clips.length
     || clips.some(clip => typeof clip.candidate_id !== 'string' || !clip.candidate_id.trim() || clip.candidate_id.length > 200
       || !integer(clip.source_in_frame) || !integer(clip.source_out_frame) || clip.source_out_frame <= clip.source_in_frame)) {
     throw new Error('请保留 1–100 个不重复的片段，并输入有效的整数帧范围。');
   }
+  if (actor !== undefined && (!actor.trim() || actor.trim().length > 80)) throw new Error('请填写 1–80 个字符的编辑者姓名。');
   return request(`${revisionPath(task, revision)}/edits`, signal, value => revisionRecord(value, task) && object(value) && value.revision_id !== revision,
-    { clips, editing_elapsed_ms: null }, true);
+    { clips, editing_elapsed_ms: null, ...(actor !== undefined ? { actor: actor.trim() } : {}) }, true);
 }
 export const createPortrait = (task: string, revision: string, signal: AbortSignal): Promise<EdlRevision> => request(`${revisionPath(task, revision)}/portrait`, signal, value => revisionRecord(value, task), undefined, true);
 export const createSubtitles = (task: string, revision: string, signal: AbortSignal): Promise<SubtitleRecord> => request(`${revisionPath(task, revision)}/subtitles`, signal, value => artifact(value, task, revision, 'subtitle_id'), undefined, true);

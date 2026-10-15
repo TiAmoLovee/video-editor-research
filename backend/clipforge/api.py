@@ -12,6 +12,9 @@ from pydantic import BaseModel, Field
 from clipforge.queue.client import QueueUnavailable, read_result, submit_add
 from clipforge.routes.editing import router as editing_router
 from clipforge.routes.video import router as video_router
+from clipforge.routes.task_media import router as task_media_router
+from clipforge.routes.reviewing import router as reviewing_router
+from clipforge.routes.batch_export import router as batch_export_router
 
 app = FastAPI(
     title="ClipForge MVP-0",
@@ -20,6 +23,9 @@ app = FastAPI(
 )
 app.include_router(video_router)
 app.include_router(editing_router)
+app.include_router(task_media_router)
+app.include_router(reviewing_router)
+app.include_router(batch_export_router)
 
 
 def frontend_dir() -> Path:

@@ -23,7 +23,9 @@ def payload_fixture():
 class SaveEditRequestTests(unittest.TestCase):
     def test_valid_request_preserves_order_and_optional_elapsed(self):
         payload = payload_fixture()
-        self.assertEqual(editing.SaveEditRequest.model_validate(payload).model_dump(), payload)
+        model = editing.SaveEditRequest.model_validate(payload)
+        self.assertEqual(model.model_dump(exclude={"actor"}), payload)
+        self.assertIsNone(model.actor)
         payload.pop("editing_elapsed_ms")
         self.assertIsNone(editing.SaveEditRequest.model_validate(payload).editing_elapsed_ms)
         payload["editing_elapsed_ms"] = None
