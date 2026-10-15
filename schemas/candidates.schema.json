@@ -75,7 +75,7 @@
           ],
           "properties": {
             "version": {
-              "const": "topic-valley-v1"
+              "enum": ["topic-valley-v1", "topic-valley-v2"]
             },
             "options": {
               "type": "object",
@@ -133,7 +133,7 @@
     "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
     "warnings": {
       "type": "array", "uniqueItems": true,
-      "items": {"enum": ["no_sentences", "overlong_sentence_unit_skipped", "no_eligible_window", "topic_short_segment_skipped", "topic_long_segment_skipped", "topic_uninformative_text"]}
+      "items": {"enum": ["no_sentences", "overlong_sentence_unit_skipped", "no_eligible_window", "topic_short_segment_skipped", "topic_long_segment_skipped", "topic_uninformative_text", "topic_unsupported_cut_rejected", "topic_suspect_asr_coverage", "topic_coverage_detector_disagreement", "topic_unverified_compound_gap"]}
     }
   },
   "$defs": {

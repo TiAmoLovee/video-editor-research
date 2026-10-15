@@ -213,6 +213,30 @@ class ResultCacheTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, '分段记录'):
                 cache.validate_bundle(job_dir(first), job_dir(first) / 'source.mp4', job['result'], descriptor)
 
+    def test_guarded_topic_cache_has_new_identity_and_exact_v2_segmentation(self):
+        self.pipeline()
+        with patch.dict(os.environ, {'CLIPFORGE_CANDIDATE_GENERATOR': 'topic-valley-v1'}):
+            first = self.job()
+            self.assertFalse(process_video(first)['cache_hit'])
+        with patch.dict(os.environ, {'CLIPFORGE_CANDIDATE_GENERATOR': 'topic-valley-v2'}):
+            second = self.job()
+            self.assertFalse(process_video(second)['cache_hit'])
+            third = self.job()
+            self.assertTrue(process_video(third)['cache_hit'])
+            job = cache.get_job(second)
+            descriptor = self.descriptor(job_dir(second) / 'source.mp4',
+                                         job_dir(second) / 'shot_options.json', '', '')[1]
+            wrong = deepcopy(descriptor)
+            wrong['generation_settings']['version'] = 'topic-valley-v1'
+            with self.assertRaisesRegex(ValueError, '生成策略'):
+                cache.validate_bundle(job_dir(second), job_dir(second) / 'source.mp4', job['result'], wrong)
+        self.assertEqual(self.asr.call_count, 2)
+        report = json.loads((job_dir(second) / 'topic_segmentation.json').read_text(encoding='utf-8'))
+        self.assertEqual(report['version'], 'topic-valley-v2')
+        self.assertIn('word_coverage', report)
+        self.assertEqual((job_dir(second) / 'topic_segmentation.json').read_bytes(),
+                         (job_dir(third) / 'topic_segmentation.json').read_bytes())
+
     def test_missing_candidates_recomputes_and_configuration_change_misses(self):
         self.pipeline(); first=self.job();process_video(first)
         (job_dir(first)/'candidates.json').unlink()

@@ -1,6 +1,7 @@
 """faster-whisper 词级转写；输入保持归一化视频的完整时间轴。"""
 
 from functools import lru_cache
+import copy
 import hashlib
 from importlib.metadata import version
 import math
@@ -24,6 +25,15 @@ TRANSCRIBE_PARAMETERS = {"beam_size": 5, "temperature": 0.0, "word_timestamps": 
                          "condition_on_previous_text": False,
                          "no_speech_threshold": 0.6, "log_prob_threshold": -1.0,
                          "compression_ratio_threshold": 2.4, "task": "transcribe"}
+
+COVERAGE_RECOVERY_PARAMETERS = {
+    "version": "local-word-coverage-recovery-v1", "max_windows": 2,
+    "context_seconds": 5.0, "max_crop_seconds": 60.0,
+    "min_gap_seconds": 3.0, "min_silero_speech_seconds": 3.0,
+    "selection": "longest_gap_then_start", "attempts_per_gap": 1,
+    "failure_policy": "stop_recovery_without_retry",
+    "merge_policy": "insert_whole_words_inside_original_gap_only",
+}
 
 
 @lru_cache(maxsize=1)
@@ -60,10 +70,12 @@ def collect_words(segments, duration):
             clamped += (bounded_start, bounded_end) != (start, end)
             if bounded_start == bounded_end:
                 merged += 1
-                if words:
+                if words and bounded_start <= words[-1]["end"] + .05:
                     words[-1]["text"] += item.word
                     words[-1]["probability"] = None  # 合并后不冒充单个模型词的置信度。
                 else:
+                    # A zero-time token after a missing span belongs beside its
+                    # own timestamp, never to a word tens of seconds earlier.
                     pending += item.word
                 continue
             if words and bounded_start < words[-1]["start"]:
@@ -75,6 +87,145 @@ def collect_words(segments, duration):
     if pending:
         raise ValueError("转写只有零时长词，无法提供可靠的词级时间边界")
     return words, raw_segments, {"zero_duration_words_merged": merged, "boundary_words_clamped": clamped}
+
+
+def splice_gap_words(original_words, recovery_words, gap, *, crop_timing_clamped=False):
+    """Select whole recovered words; never trim or overwrite an original word."""
+    accepted, excluded = [], []
+    for word in recovery_words:
+        reason = None
+        if crop_timing_clamped:
+            reason = "crop_timing_was_clamped"
+        elif word["start"] < gap["start"] or word["end"] > gap["end"]:
+            reason = "not_wholly_inside_original_gap"
+        elif any(word["start"] < base["end"] and word["end"] > base["start"] for base in original_words):
+            reason = "overlaps_original_word"
+        if reason:
+            excluded.append({"word": copy.deepcopy(word), "reason": reason})
+        else:
+            accepted.append(copy.deepcopy(word))
+    return accepted, excluded
+
+
+def recover_word_coverage(audio, model, words, speech_gate, duration, *, language=None):
+    """Bounded local decoding of word-free gaps retained by the original VAD.
+
+    The caller supplies the already verified model and full-timeline PCM array.
+    Normal covered inputs cause no additional inference. Every original word
+    is retained (apart from deterministic IDs); raw recovery segments are kept
+    separately and can never be mistaken for the original decoder output.
+    """
+    from clipforge.analysis.coverage import audit_word_coverage
+
+    parameters = dict(COVERAGE_RECOVERY_PARAMETERS)
+    original = copy.deepcopy(words)
+
+    def audit(current):
+        return audit_word_coverage({
+            "media": {"duration_seconds": duration}, "words": current,
+            "analyzers": {"asr": {"parameters": {"speech_gate": speech_gate}}},
+        }, min_gap_seconds=parameters["min_gap_seconds"],
+           min_speech_seconds=parameters["min_silero_speech_seconds"])
+
+    before = audit(original)
+    report = {
+        "version": parameters["version"], "parameters": parameters,
+        "status": "not_needed", "attempt_count": 0, "inserted_word_count": 0,
+        "original_word_count": len(original), "original_raw_segments_preserved": True,
+        "coverage_before": before, "coverage_after": before, "attempts": [],
+        "original_words": original, "word_origins": [],
+        "interpretation": "Local ASR recovery is model evidence; it does not verify speech or event completeness.",
+    }
+    gaps = sorted(before["suspect_intervals"], key=lambda row: (-row["gap_seconds"], row["start"]))
+    if not gaps:
+        return copy.deepcopy(words), report
+    samples = math.ceil(duration * SAMPLE_RATE)
+    if len(audio) != samples:
+        raise ValueError("ASR recovery PCM length differs from the full video timeline")
+
+    inserted = []
+    stopped = False
+    for gap in gaps:
+        crop_first = max(0, math.floor((gap["start"] - parameters["context_seconds"]) * SAMPLE_RATE))
+        crop_last = min(samples, math.ceil((gap["end"] + parameters["context_seconds"]) * SAMPLE_RATE))
+        crop_start, crop_end = crop_first / SAMPLE_RATE, crop_last / SAMPLE_RATE
+        attempt = {"gap": copy.deepcopy(gap), "crop_start": crop_start, "crop_end": crop_end,
+                   "crop_first_sample": crop_first, "crop_last_sample": crop_last,
+                   "time_offset_seconds": crop_start, "requested_language": language,
+                   "transcribe_parameters": copy.deepcopy(TRANSCRIBE_PARAMETERS)}
+        if crop_end - crop_start > parameters["max_crop_seconds"]:
+            attempt.update(status="skipped", reason="crop_exceeds_bounded_duration")
+            report["attempts"].append(attempt)
+            continue
+        if report["attempt_count"] >= parameters["max_windows"]:
+            attempt.update(status="skipped", reason="bounded_attempt_limit")
+            report["attempts"].append(attempt)
+            continue
+        report["attempt_count"] += 1
+        attempt["attempt_number"] = report["attempt_count"]
+        started = time.perf_counter()
+        try:
+            generated, info = model.transcribe(audio[crop_first:crop_last], language=language,
+                                               **TRANSCRIBE_PARAMETERS)
+            local_words, local_raw, adjustments = collect_words(generated, crop_end - crop_start)
+            from clipforge.analysis.validation import _finite
+            _finite({"words": local_words, "raw_segments": local_raw,
+                     "language_probability": info.language_probability})
+            # Do not insert words whose timing was clipped at the decoded crop.
+            # Recovered words must also be wholly inside the ORIGINAL gap.
+            global_words = copy.deepcopy(local_words)
+            global_raw = copy.deepcopy(local_raw)
+            for word in global_words:
+                word["start"] += crop_start
+                word["end"] += crop_start
+            for segment in global_raw:
+                segment["start"] += crop_start
+                segment["end"] += crop_start
+                for word in segment["words"]:
+                    word["start"] += crop_start
+                    word["end"] += crop_start
+            attempt.update(detected_language=info.language, language_probability=info.language_probability,
+                           decoded_words=global_words, local_raw_segments=local_raw,
+                           raw_segments=global_raw, alignment_adjustments=adjustments,
+                           excluded_words=[], inserted_crop_word_ids=[])
+            accepted, excluded = splice_gap_words(
+                original, global_words, gap,
+                crop_timing_clamped=bool(adjustments["boundary_words_clamped"]))
+            attempt["excluded_words"] = excluded
+            attempt["inserted_crop_word_ids"] = [word["id"] for word in accepted]
+            if not accepted:
+                attempt.update(status="stopped", reason="no_safe_words_to_insert")
+                stopped = True
+            else:
+                attempt.update(status="inserted", inserted_word_count=len(accepted))
+                inserted.extend((word, attempt["attempt_number"]) for word in accepted)
+        except Exception as error:
+            attempt.update(status="stopped", reason="local_decode_failed", error_type=type(error).__name__)
+            stopped = True
+        attempt["elapsed_seconds"] = round(time.perf_counter() - started, 6)
+        report["attempts"].append(attempt)
+        if stopped:
+            break
+
+    entries = [(copy.deepcopy(word), {"source": "original", "original_word_id": word["id"]})
+               for word in original]
+    entries.extend((copy.deepcopy(word), {"source": "recovery", "attempt_number": attempt,
+                                         "crop_word_id": word["id"]}) for word, attempt in inserted)
+    entries.sort(key=lambda entry: (entry[0]["start"], entry[0]["end"], entry[0]["id"]))
+    result = []
+    for index, (word, origin) in enumerate(entries, 1):
+        word["id"] = f"w{index:06d}"
+        result.append(word)
+        report["word_origins"].append({"word_id": word["id"], **origin})
+    after = audit(result)
+    report.update(inserted_word_count=len(inserted), coverage_after=after)
+    if stopped:
+        report["status"] = "stopped_with_unverified_coverage"
+    elif inserted:
+        report["status"] = "recovered" if not after["suspect_intervals"] else "partially_recovered"
+    else:
+        report["status"] = "unresolved"
+    return result, report
 
 
 def pcm_has_signal(path, samples):
@@ -109,6 +260,7 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
     detected_language, language_probability, identity = None, None, None
     digital_silence_skipped = False
     speech_gate = None
+    coverage_recovery = None
     if has_audio:
         stream = next(s for s in raw["streams"] if s["index"] == meta["video"]["stream_index"])
         origin = float(stream.get("start_time", "0"))
@@ -127,6 +279,9 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
                     generated, info = model.transcribe(audio, language=requested_language, **TRANSCRIBE_PARAMETERS)
                     words, segments, diagnostics = collect_words(generated, duration)
                     detected_language, language_probability = info.language, info.language_probability
+                    words, coverage_recovery = recover_word_coverage(
+                        audio, model, words, speech_gate, duration,
+                        language=requested_language or detected_language)
             else:
                 digital_silence_skipped = True
     simplify_chinese = (requested_language or detected_language) == "zh"
@@ -140,6 +295,8 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
                   "model_revision": spec["revision"], "model_identity": identity,
                   "digital_silence_skipped": digital_silence_skipped,
                   "speech_gate": speech_gate,
+                  "coverage_recovery_parameters": dict(COVERAGE_RECOVERY_PARAMETERS),
+                  "coverage_recovery": coverage_recovery,
                   "text_normalization": {"tool": "opencc-python-reimplemented", "version": version("opencc-python-reimplemented"),
                                          "config": "t2s", "applied": simplify_chinese,
                                          "raw_segments_preserved": True},
