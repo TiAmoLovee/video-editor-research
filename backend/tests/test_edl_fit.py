@@ -106,9 +106,11 @@ class PortraitFitEDLTests(unittest.TestCase):
 
     def test_legacy_schemas_and_default_center_crop_contract_remain_unchanged(self):
         digests = {"edl.schema.json": "44e6c89aceeb095765c768ea59069df82437be8fee0a8c4c16e5df36ad9c26e8",
-                   "edl-v0.2.schema.json": "1a5b5921d5681ad998ecb2755697c6fcafaa25f185becfa0cc97db1ee5ca77ff"}
+                   "edl-v0.2.schema.json": "fe5b54e1ac01fa10664d36b9ce505509db43a43ece4607395b54c73af8d748fe"}
         for filename, digest in digests.items():
-            self.assertEqual(hashlib.sha256((edl.ROOT / "schemas" / filename).read_bytes()).hexdigest(), digest)
+            # Compare canonical repository bytes across LF/CRLF checkouts.
+            data = (edl.ROOT / "schemas" / filename).read_bytes().replace(b"\r\n", b"\n")
+            self.assertEqual(hashlib.sha256(data).hexdigest(), digest)
         self.assertEqual(edl.create_portrait_edl(fixture()),
                          edl.create_portrait_edl(fixture(), mode="center_crop"))
         self.assertEqual(edl.create_portrait_edl(fixture())["schema_version"], "0.2.0")

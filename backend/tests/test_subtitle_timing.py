@@ -152,8 +152,8 @@ class SubtitleTimingTests(unittest.TestCase):
 
     def test_new_schema_is_local_and_old_schema_bytes_remain_unchanged(self):
         original = subtitles.ROOT / "schemas/subtitles.schema.json"
-        self.assertEqual(hashlib.sha256(original.read_bytes()).hexdigest(),
-                         "3e796eeff63900651a13129e598a0cd2deef96e12dcc8cde0a567541cd6b725a")
+        self.assertEqual(hashlib.sha256(original.read_bytes().replace(b"\r\n", b"\n")).hexdigest(),
+                         "1bf60ccdd441b2a9e1534ba0436358ce448f69b379c1eab64ee288c3218476de")
         schema = subtitles._schema("subtitles-v0.2.schema.json")
         Draft202012Validator.check_schema(schema)
         project, analyses, base = fixture()
