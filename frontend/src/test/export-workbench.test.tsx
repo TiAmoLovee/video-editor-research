@@ -220,13 +220,54 @@ describe('export workbench', () => {
     await screen.findByRole('link', { name: '下载 SRT 字幕' });
     fireEvent.click(screen.getByRole('checkbox', { name: '导出时带字幕' }));
     expect(screen.getByRole('checkbox', { name: '导出时带字幕' })).toBeChecked();
-    fireEvent.click(screen.getByRole('button', { name: '生成 9:16 版本' }));
+    fireEvent.click(screen.getByRole('button', { name: '居中裁切 9:16' }));
     await waitFor(() => expect(screen.getByRole('link', { name: '下载 EDL' })).toHaveAttribute('href', api.edlFileUrl(task, portraitRevision, 'project.edl.json')));
     expect(createPortrait).toHaveBeenCalledWith(task, revision, expect.any(AbortSignal));
     expect(screen.getByLabelText('字幕版本')).toHaveValue('');
     expect(screen.getByRole('checkbox', { name: '导出时带字幕' })).not.toBeChecked();
     expect(screen.queryByRole('link', { name: '下载 SRT 字幕' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: '生成 9:16 版本' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '居中裁切 9:16' })).not.toBeInTheDocument();
+  });
+
+  it('creates a full-picture version, labels its framing, and exports only newly bound subtitles from that version', async () => {
+    const fitted = saved(portraitRevision);
+    fitted.edl.schema_version = '0.3.0';
+    fitted.edl.framing = { mode: 'fit_pad', background: 'black', sources: [{ source_id: 'media', x: 0, y: 656, width: 1080, height: 608 }] };
+    fitted.revision.derivation = { kind: 'fit_pad_9_16', parent_revision_id: revision };
+    vi.mocked(api.getEdl).mockImplementation(async (_task, id) => id === portraitRevision ? fitted : saved(id));
+    let fittedSubtitle: SubtitleRecord | undefined;
+    vi.mocked(api.listArtifacts).mockImplementation(async (_task, id) => ({ ...history(), subtitles: id === revision ? [subtitle()] : fittedSubtitle ? [fittedSubtitle] : [] }));
+    const fit = vi.spyOn(api, 'createFittedPortrait').mockResolvedValue(fitted.revision);
+    const crop = vi.spyOn(api, 'createPortrait');
+    const makeSubtitles = vi.spyOn(api, 'createSubtitles').mockImplementation(async () => {
+      fittedSubtitle = { ...subtitle(newSubtitle), revision_id: portraitRevision }; return fittedSubtitle;
+    });
+    const exportMp4 = vi.spyOn(api, 'createMp4').mockResolvedValue({ task_id: task, revision_id: portraitRevision,
+      render_id: renderId, created_at: '2026-10-15T08:00:00Z', profile: fitted.edl.profile, total_frames: 1200, output_bytes: 1000, subtitle_id: newSubtitle });
+    const exportMlt = vi.spyOn(api, 'createMlt').mockResolvedValue({ task_id: task, revision_id: portraitRevision,
+      export_id: exportId, created_at: '2026-10-15T08:00:00Z', profile: fitted.edl.profile, total_frames: 1200, clip_count: 2, subtitle_id: newSubtitle });
+    render(<ExportWorkbench {...props()} />);
+    await screen.findByRole('link', { name: '下载 SRT 字幕' });
+    fireEvent.click(screen.getByRole('checkbox', { name: '导出时带字幕' }));
+    const button = screen.getByRole('button', { name: '完整画面 9:16' });
+    expect(button).toHaveClass('ant-btn-primary');
+    expect(screen.getByRole('button', { name: '居中裁切 9:16' })).toBeInTheDocument();
+    fireEvent.click(button); fireEvent.click(button);
+    await screen.findByText('完整画面 9:16 · 等比缩放，黑色留边，保留画面内容。');
+    expect(fit).toHaveBeenCalledTimes(1);
+    expect(fit).toHaveBeenCalledWith(task, revision, expect.any(AbortSignal));
+    expect(crop).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('导出版本').querySelector('option:checked')?.textContent).toContain('完整画面 9:16');
+    expect(screen.getByRole('checkbox', { name: '导出时带字幕' })).not.toBeChecked();
+    expect(screen.queryByRole('link', { name: '下载 SRT 字幕' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '生成字幕' }));
+    await waitFor(() => expect(screen.getByRole('checkbox', { name: '导出时带字幕' })).toBeChecked());
+    expect(makeSubtitles).toHaveBeenCalledWith(task, portraitRevision, expect.any(AbortSignal));
+    fireEvent.click(screen.getByRole('button', { name: '导出 MP4' }));
+    await waitFor(() => expect(exportMp4).toHaveBeenCalledWith(task, portraitRevision, newSubtitle, expect.any(AbortSignal)));
+    await waitFor(() => expect(screen.getByRole('button', { name: '导出 Shotcut 工程' })).not.toBeDisabled());
+    fireEvent.click(screen.getByRole('button', { name: '导出 Shotcut 工程' }));
+    await waitFor(() => expect(exportMlt).toHaveBeenCalledWith(task, portraitRevision, newSubtitle, expect.any(AbortSignal)));
   });
 
   it('binds subtitle, MP4 and MLT requests and download URLs to the displayed saved revision', async () => {
@@ -343,9 +384,9 @@ describe('export workbench', () => {
     render(<ExportWorkbench {...props()} />);
     await screen.findByRole('link', { name: '下载 EDL' });
     vi.mocked(api.getEdl).mockRejectedValueOnce(new Error('读取失败'));
-    fireEvent.click(screen.getByRole('button', { name: '生成 9:16 版本' }));
+    fireEvent.click(screen.getByRole('button', { name: '居中裁切 9:16' }));
     await screen.findByText('操作已完成，但记录暂未载入。请先刷新已保存记录，确认结果后再继续。');
-    expect(screen.getByRole('button', { name: '生成 9:16 版本' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '居中裁切 9:16' })).toBeDisabled();
     expect(create).toHaveBeenCalledTimes(1);
   });
 
@@ -394,7 +435,7 @@ describe('export workbench', () => {
     const first = render(<ExportWorkbench {...props()} />);
     await screen.findByRole('link', { name: '下载 EDL' });
     vi.mocked(api.getEdl).mockRejectedValueOnce(new Error('读取失败'));
-    fireEvent.click(screen.getByRole('button', { name: '生成 9:16 版本' }));
+    fireEvent.click(screen.getByRole('button', { name: '居中裁切 9:16' }));
     await screen.findByText('操作已完成，但记录暂未载入。请先刷新已保存记录，确认结果后再继续。');
     expect(JSON.parse(sessionStorage.getItem(`clipforge:export-recovery:v1:${task}`)!)).toMatchObject({ preferred_revision: portraitRevision });
     first.unmount();
