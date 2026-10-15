@@ -14,11 +14,14 @@ import json
 import math
 
 from clipforge.analysis.validation import validate_analysis
+from clipforge.analysis.sentences import END_MARK, SENTENCE_PARAMETERS, split_sentences_with_trace
 from clipforge.decision.candidates import ROOT, WindowOptions, _units, content_hash
 from clipforge.decision.topics import features
 
 
 GENERATOR_VERSION = "topic-valley-v1"
+GUARDED_GENERATOR_VERSION = "topic-valley-v2"
+TOPIC_VERSIONS = (GENERATOR_VERSION, GUARDED_GENERATOR_VERSION)
 # Fixed resource ceilings, not corpus-fitted decision thresholds. Input is
 # rejected explicitly instead of truncated. Feature construction is linear in
 # text length; each boundary examines at most 2 * MAX_WINDOW_UNITS units.
@@ -153,7 +156,8 @@ def _valleys(boundaries, first, last):
     return proposals
 
 
-def segment_topics(analysis, options=None, *, analysis_schema=None):
+def segment_topics(analysis, options=None, *, analysis_schema=None,
+                   version=GENERATOR_VERSION):
     """Return complete segmentation plus accepted and rejected gap evidence.
 
     Indices and inclusive window ranges are zero-based. Hard pauses are applied
@@ -163,7 +167,29 @@ def segment_topics(analysis, options=None, *, analysis_schema=None):
     of its nearest accepted boundaries. Hard pauses may produce shorter units.
     """
     options = options or TopicOptions()
+    if version not in TOPIC_VERSIONS:
+        raise ValueError("unknown topic generator version")
     _validated_input(analysis, options, analysis_schema)
+    guarded = version == GUARDED_GENERATOR_VERSION
+    coverage = None
+    blocking_coverage = []
+    unverified_compound_ends = set()
+    if guarded:
+        from clipforge.analysis.coverage import audit_word_coverage
+        coverage = audit_word_coverage(analysis)
+        for gap in coverage["suspect_intervals"]:
+            detectors = gap["detectors"]
+            # Whisper's speech gate is Silero. A lone WebRTC/music disagreement
+            # remains visible, but is not treated as established missed speech.
+            detector = "silero_vad" if "silero_vad" in detectors else "webrtc_vad"
+            if detectors.get(detector, {}).get("speech_seconds", 0) >= 3.0:
+                blocking_coverage.append(gap)
+        if analysis['analyzers']['asr']['parameters'].get('sentence_rules') == SENTENCE_PARAMETERS:
+            replayed, trace = split_sentences_with_trace(analysis['words'])
+            if replayed != analysis['sentences']:
+                raise ValueError('current sentence rules cannot reproduce the guarded analysis')
+            unverified_compound_ends = {row['sentence_id'] for row in trace
+                                       if row['reason'] == 'unverified_compound_gap'}
     identity = content_hash(analysis)
     option_data = asdict(options)
     units = _units(analysis["sentences"])
@@ -189,6 +215,23 @@ def segment_topics(analysis, options=None, *, analysis_schema=None):
             "decision": "hard_pause" if hard else "not_valley",
             "reasons": ["gap_above_max_gap"] if hard else ["not_local_minimum_or_unbracketed"],
         })
+        if guarded:
+            # A length-based ASR chunk end supplies no utterance-end evidence.
+            # Use the existing ASR pause definition, not footage-specific words.
+            edge_sentences = [s for s in units[index]["sentences"]
+                              if s["end"] == units[index]["end"]]
+            terminal = bool(edge_sentences) and all(
+                END_MARK.search(s["text"].rstrip()) for s in edge_sentences)
+            pause = gap + 1e-9 >= SENTENCE_PARAMETERS["pause_seconds"]
+            boundaries[-1]["cut_support"] = {
+                "terminal_punctuation": terminal,
+                "pause_seconds_required": SENTENCE_PARAMETERS["pause_seconds"],
+                "pause_observed": pause,
+                "supported": terminal or pause,
+                "semantic_completeness_verified": False,
+                "compound_across_asr_gap": any(s['id'] in unverified_compound_ends
+                                              for s in edge_sentences),
+            }
 
     accepted = set(hard_splits)
     edges = [0, *hard_splits, len(units)]
@@ -221,7 +264,10 @@ def segment_topics(analysis, options=None, *, analysis_schema=None):
         eligible = []
         for index in proposals:
             boundary = boundaries[index]
-            if boundary["depth"] < options.min_depth:
+            if guarded and not boundary["cut_support"]["supported"]:
+                boundary["decision"] = "rejected"
+                boundary["reasons"] = ["no_utterance_end_evidence"]
+            elif boundary["depth"] < options.min_depth:
                 boundary["decision"] = "rejected"
                 boundary["reasons"] = ["below_min_depth"]
             else:
@@ -254,7 +300,17 @@ def segment_topics(analysis, options=None, *, analysis_schema=None):
             reasons.append("below_min_seconds")
         if duration > options.max_seconds:
             reasons.append("above_max_seconds")
-        key = {"analysis": identity, "version": GENERATOR_VERSION,
+        if guarded:
+            # Include adjoining endpoints: a no-word speech gap also makes the
+            # clips immediately before/after it unsafe to recommend unchanged.
+            if any(units[first]["start"] <= gap["end"]
+                   and units[last - 1]["end"] >= gap["start"]
+                   for gap in blocking_coverage):
+                reasons.append("suspect_asr_coverage")
+            if ((first > 0 and boundaries[first - 1]['cut_support']['compound_across_asr_gap'])
+                    or (last < len(units) and boundaries[last - 1]['cut_support']['compound_across_asr_gap'])):
+                reasons.append('unverified_compound_gap')
+        key = {"analysis": identity, "version": version,
                "options": option_data, "source_sentences": references}
         segments.append({
             "id": "t_" + content_hash(key), "first_unit": first, "last_unit": last - 1,
@@ -276,9 +332,17 @@ def segment_topics(analysis, options=None, *, analysis_schema=None):
         warnings.append("long_topic_segment_not_generated")
     if not any(s["eligible"] for s in segments):
         warnings.append("no_eligible_topic_segment")
-    return {
+    if guarded and any("no_utterance_end_evidence" in b["reasons"] for b in boundaries):
+        warnings.append("unsupported_topic_cut_rejected")
+    if guarded and coverage["suspect_intervals"]:
+        warnings.append("suspect_asr_coverage")
+    if guarded and len(blocking_coverage) < len(coverage["suspect_intervals"]):
+        warnings.append("coverage_detector_disagreement")
+    if guarded and any('unverified_compound_gap' in s['reasons'] for s in segments):
+        warnings.append('unverified_compound_gap')
+    result = {
         "schema_version": "0.1.0-draft.1", "artifact_kind": "topic_segmentation",
-        "version": GENERATOR_VERSION, "analysis_sha256": identity,
+        "version": version, "analysis_sha256": identity,
         "options": option_data,
         "method": "adjacent-window TF-IDF cosine valleys; relative peak prominence; Chinese 2/3-grams",
         "scope": "lexical topic boundary evidence; not semantic event-completeness verification",
@@ -292,18 +356,32 @@ def segment_topics(analysis, options=None, *, analysis_schema=None):
         "boundaries": boundaries, "segments": segments,
         "warnings": warnings, "model_requests": 0,
     }
+    if guarded:
+        result["word_coverage"] = coverage
+        result["blocking_coverage_intervals"] = blocking_coverage
+        result["cut_policy"] = {
+            "version": "utterance-evidence-v1",
+            "requirement": "terminal punctuation or existing ASR pause threshold",
+            "pause_seconds": SENTENCE_PARAMETERS["pause_seconds"],
+            "semantic_completeness_verified": False,
+            "unsupported_cuts": "reject valley; retain whole segment, never pad or force a shorter cut",
+            "suspect_coverage": "exclude adjoining/intersecting Silero-supported gaps; WebRTC fallback only when Silero is absent",
+            "single_detector_disagreement": "retain warning; not proof of missing speech",
+        }
+    return result
 
 
-def generate_topic_candidates(analysis, options=None, *, analysis_schema=None):
+def generate_topic_candidates(analysis, options=None, *, analysis_schema=None,
+                              version=GENERATOR_VERSION):
     """Generate only full eligible segments; never trim or join rejected ones."""
     options = options or TopicOptions()
-    report = segment_topics(analysis, options, analysis_schema=analysis_schema)
+    report = segment_topics(analysis, options, analysis_schema=analysis_schema, version=version)
     eligible = [s for s in report["segments"] if s["eligible"]]
     if len(eligible) > options.max_candidates:
         raise ValueError("话题候选数量超过 max_candidates；未截断或回退到句子滑窗")
     candidates = []
     for segment in eligible:
-        key = {"analysis": report["analysis_sha256"], "version": GENERATOR_VERSION,
+        key = {"analysis": report["analysis_sha256"], "version": version,
                "options": asdict(options), "source_sentences": segment["source_sentences"]}
         candidates.append({
             "id": "c_" + content_hash(key), "start": segment["start"],
@@ -320,12 +398,20 @@ def generate_topic_candidates(analysis, options=None, *, analysis_schema=None):
         warnings.append("topic_long_segment_skipped")
     if any(w.startswith("uninformative_") for w in report["warnings"]):
         warnings.append("topic_uninformative_text")
+    if "unsupported_topic_cut_rejected" in report["warnings"]:
+        warnings.append("topic_unsupported_cut_rejected")
+    if "suspect_asr_coverage" in report["warnings"]:
+        warnings.append("topic_suspect_asr_coverage")
+    if "coverage_detector_disagreement" in report["warnings"]:
+        warnings.append("topic_coverage_detector_disagreement")
+    if 'unverified_compound_gap' in report['warnings']:
+        warnings.append('topic_unverified_compound_gap')
     if not candidates:
         warnings.append("no_eligible_window")
     return {
         "schema_version": "0.1.0-draft.1", "artifact_kind": "candidate_windows",
         "stage": "generated", "input_result_kind": analysis["result_kind"],
         "analysis_sha256": report["analysis_sha256"], "media": deepcopy(analysis["media"]),
-        "generator": {"version": GENERATOR_VERSION, "options": asdict(options)},
+        "generator": {"version": version, "options": asdict(options)},
         "candidate_count": len(candidates), "candidates": candidates, "warnings": warnings,
     }

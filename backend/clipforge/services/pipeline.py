@@ -20,7 +20,7 @@ from clipforge.analysis.asr import transcribe_video
 from clipforge.analysis.combine import combine_analysis
 from clipforge.decision.audio import measure_audio
 from clipforge.decision.generation import (
-    TOPIC, effective_boundary_settings, generate_configured_candidates as generate_candidates,
+    TOPIC, TOPIC_VERSIONS, effective_boundary_settings, generate_configured_candidates as generate_candidates,
     settings_snapshot as generation_settings_snapshot,
 )
 from clipforge.decision.topic_segments import TopicOptions, segment_topics
@@ -190,8 +190,8 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
         update_job(task_id, 'RUNNING', stage, progress)
         windows = generate_candidates(analysis, settings=generation_settings)
         generation_files = {}
-        if windows.get('generator', {}).get('version') == TOPIC:
-            segmentation = segment_topics(analysis, TopicOptions(**generation_settings['options']))
+        if windows.get('generator', {}).get('version') in TOPIC_VERSIONS:
+            segmentation = segment_topics(analysis, TopicOptions(**generation_settings['options']), version=generation_settings['version'])
             save_json(folder / 'topic_segmentation.json', segmentation)
             generation_files['topic_segmentation.json'] = 'topic_segmentation.json'
         config = scoring_config or load_config()

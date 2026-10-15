@@ -1,0 +1,44 @@
+{
+  "version": "topic-cut-safety-v2-release-candidate",
+  "base_main": "3465e066d0424be7c7dd0866a5a998db97b379ed",
+  "generator": "topic-valley-v2",
+  "prior_rule_cohort": {
+    "single_rater": true,
+    "reviewed": 18,
+    "all_five_pass": 11,
+    "all_five_rate": 0.6111111111111112,
+    "selected_cohort_rule_auc": 0.6753246753246753,
+    "evaluation_scope": "selected rule Top-5 after stopped Qwen trial; now development/regression data"
+  },
+  "repair_preview": {
+    "candidate_counts": {
+      "Tim1": 3,
+      "Tim2": 1,
+      "Zhouyang1": 3,
+      "Zhouyang2": 3
+    },
+    "total_candidates": 10,
+    "new_renders": 5,
+    "frame_and_audio_lengths_verified": 10,
+    "human_boundary_feedback": "User accepted opening and ending after preview; no new per-clip five-check labels",
+    "human_five_check_pass_rate": null,
+    "selection_coverage_reduced": true,
+    "blind_independent_evaluation": false
+  },
+  "local_validation": {
+    "repair_tests_passed": 133,
+    "week5_compatibility_tests_passed": 104,
+    "ruff": "passed"
+  },
+  "remaining_limits": [
+    "No verified 85% all-five quality claim.",
+    "Pause/punctuation and VAD are evidence, not semantic-completeness proof.",
+    "Some uncertain or overlong topics are excluded; coverage is reported, not padded.",
+    "Semantic dangling-prefix correction remains unfinished.",
+    "Legacy Tim2 splice preserves original edge words; original decoder evidence is retained.",
+    "Audition rounds cuts outward; unified EDL retains nearest-half-up frame rounding."
+  ],
+  "deployment_at_commit_preparation": false,
+  "new_paid_model_requests": 0,
+  "new_video_uploads": 0
+}

@@ -71,6 +71,19 @@ class SentenceBoundaryTests(unittest.TestCase):
         self.assertEqual([s['text'] for s in result], ['“你好。”', '欢迎。'])
         self.verify(words, result)
 
+    def test_compound_cannot_hide_long_missing_asr_interval(self):
+        words = tokens(['欢迎', '小伙', '伴', '参加。'])
+        for word in words[2:]:
+            word['start'] += 30
+            word['end'] += 30
+        original = copy.deepcopy(words)
+        result = split_sentences(words)
+        self.verify(words, result)
+        self.assertEqual(words, original)
+        self.assertTrue(any(s['word_ids'][-1] == words[1]['id'] for s in result))
+        self.assertFalse(any(words[1]['id'] in s['word_ids']
+                             and words[2]['id'] in s['word_ids'] for s in result))
+
     def test_english_word_and_decimal_are_not_split(self):
         words = tokens([' Open', 'AI', ' costs ', '3', '.', '14', ' dollars.'])
         with patch.dict(SENTENCE_PARAMETERS, {'max_characters': 5}):

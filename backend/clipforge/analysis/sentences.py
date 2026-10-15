@@ -8,7 +8,8 @@ SOFT_MARK = re.compile(r'[,，:：、]([”’"\'）)】\]]*)$')
 CLOSERS = re.compile(r'^[”’"\'）)】\]]+$')
 LATIN = re.compile(r"[A-Za-z0-9]+(?:[.'’_-][A-Za-z0-9]+)*")
 SENTENCE_PARAMETERS = {
-    "rule_version": "2", "max_characters": 50, "max_seconds": 15.0,
+    "rule_version": "3", "max_characters": 50, "max_seconds": 15.0,
+    "max_compound_gap_seconds": 3.0,
     "limits_are_soft": True, "gap_seconds": 1.0, "pause_seconds": 0.4,
     "min_pause_characters": 12, "preferred_pause_seconds": 0.15,
     "lookahead_pause_seconds": 0.1, "extra_characters": 15, "extra_seconds": 3.0,
@@ -29,16 +30,24 @@ def _units(words):
     boundaries = {end for _, _, end in _tokenizer().tokenize(text, HMM=False)}
     for match in LATIN.finditer(text):
         boundaries.difference_update(range(match.start() + 1, match.end()))
-    units, pending, offset = [], [], 0
+    units, pending, offset, pending_max_end = [], [], 0, 0.0
     for i, word in enumerate(words):
         pending.append(word)
+        pending_max_end = max(pending_max_end, word["end"])
         offset += len(word["text"])
         next_closer = i + 1 < len(words) and CLOSERS.fullmatch(words[i + 1]["text"].strip())
-        if (offset in boundaries and not next_closer) or i == len(words) - 1:
+        # Text adjacency cannot justify joining tokens across a long ASR hole.
+        # Preserve normal compound/closing-quote protection at shorter pauses.
+        hard_time_gap = (i + 1 < len(words)
+                         and words[i + 1]["start"] - pending_max_end
+                         > SENTENCE_PARAMETERS["max_compound_gap_seconds"])
+        if hard_time_gap or (offset in boundaries and not next_closer) or i == len(words) - 1:
             units.append({"words": pending, "text": "".join(w["text"] for w in pending),
                           "start": min(w["start"] for w in pending),
-                          "end": max(w["end"] for w in pending)})
+                          "end": max(w["end"] for w in pending),
+                          "unverified_compound_gap": hard_time_gap and offset not in boundaries})
             pending = []
+            pending_max_end = 0.0
     return units
 
 
@@ -96,7 +105,8 @@ def _split_sentences(words, trace):
             if (gap >= SENTENCE_PARAMETERS["gap_seconds"]
                     or (gap >= SENTENCE_PARAMETERS["pause_seconds"]
                         and length >= SENTENCE_PARAMETERS["min_pause_characters"])):
-                flush(reason='pause')
+                flush(reason='unverified_compound_gap' if group[-1].get('unverified_compound_gap')
+                      else 'pause')
         while group and (sum(len(u["text"]) for u in group) + len(unit["text"]) > SENTENCE_PARAMETERS["max_characters"]
                          or max(unit["end"], *(u["end"] for u in group)) - group[0]["start"] > SENTENCE_PARAMETERS["max_seconds"]):
             if unit["start"] - max(u["end"] for u in group) >= SENTENCE_PARAMETERS["lookahead_pause_seconds"]:

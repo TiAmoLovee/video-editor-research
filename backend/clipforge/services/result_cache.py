@@ -21,7 +21,7 @@ from clipforge.decision.validation import validate_candidates
 from clipforge.decision.llm import safe_settings_snapshot
 from clipforge.decision.boundary_optimizer import settings_snapshot as boundary_settings_snapshot
 from clipforge.decision.generation import (
-    TOPIC, effective_boundary_settings, settings_snapshot as generation_settings_snapshot,
+    TOPIC, TOPIC_VERSIONS, effective_boundary_settings, settings_snapshot as generation_settings_snapshot,
 )
 from clipforge.decision.topic_segments import TopicOptions, segment_topics
 from clipforge.decision.boundary_media import validate_report
@@ -163,10 +163,10 @@ def validate_bundle(folder, source, result, descriptor):
     generation = descriptor.get('generation_settings')
     if generation is not None and windows['generator'] != generation:
         raise ValueError('缓存候选生成策略不匹配')
-    if windows['generator']['version'] == TOPIC:
+    if windows['generator']['version'] in TOPIC_VERSIONS:
         if ('topic_segmentation.json' not in result['files'] or
                 read('topic_segmentation.json') != segment_topics(
-                    analysis, TopicOptions(**windows['generator']['options']))):
+                    analysis, TopicOptions(**windows['generator']['options']), version=windows['generator']['version'])):
             raise ValueError('缓存话题分段记录不匹配')
     elif 'topic_segmentation.json' in result['files']:
         raise ValueError('句子窗口缓存不能带入话题分段记录')
