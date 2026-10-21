@@ -13,6 +13,7 @@ from pathlib import Path
 import shutil
 from uuid import UUID, uuid4
 
+from clipforge.decision.candidates import content_hash
 from clipforge.decision.scoring import validate_scored
 from clipforge.editing.edl import candidates_to_edl, create_portrait_edl, frame_rate, validate_edl
 from clipforge.editing.manifest import build_media_manifest, open_media_source
@@ -105,7 +106,40 @@ def _selected_ids(selected_ids, candidates):
         raise ProjectError(422, "选择中包含此任务不存在的候选编号。")
 
 
-def create_task_edl(task_id, selected_ids, *, ffprobe=None, timeout=90):
+def _response_preview_payload(task_id, analysis, proposal):
+    from clipforge.decision.response_candidates import build_response_candidates
+    from clipforge.decision.scoring import score_candidates
+
+    bundle = build_response_candidates(analysis, proposal)
+    # This path deliberately uses local rules only. Audio measurement is not
+    # fabricated; the existing scorer records its absence as zero contribution.
+    candidates = score_candidates(bundle["windows"], analysis)
+    preview = {"artifact_kind": "task_response_candidate_preview", "task_id": task_id,
+        "analysis_sha256": content_hash(analysis), "proposal_sha256": content_hash(proposal),
+        "bridge_sha256": bundle["bridge_sha256"], "candidates": candidates,
+        "event_audit": bundle["event_audit"], "requires_review": True,
+        "semantic_completeness_verified": False, "media_verified": False, "model_requests": 0}
+    preview["preview_sha256"] = content_hash(preview)
+    return preview
+
+
+def preview_task_response_candidates(task_id, proposal):
+    """Preview supplied hypotheses against this completed task; no writes/probe."""
+    task_id = _uuid(task_id)
+    job = _completed_job(task_id)
+    try:
+        analysis = _result_json(job, task_id, "analysis.json")
+        return _response_preview_payload(task_id, analysis, proposal)
+    except ProjectError:
+        raise
+    except (ValueError, KeyError, TypeError, RecursionError) as error:
+        raise ProjectError(409, "事件草案与此任务分析不匹配或未通过校验，未生成候选。") from error
+    except OSError as error:
+        raise ProjectError(503, "任务分析暂不可读，请检查后台日志。") from error
+
+
+def create_task_edl(task_id, selected_ids, *, ffprobe=None, timeout=90,
+                    response_proposal=None, response_preview_sha256=None):
     """Verify existing task media, then publish a new revision with a commit record.
 
 Each request is an explicit selection, not an automatic acceptance decision.
@@ -114,8 +148,17 @@ No original analysis, task result, media or previous revision is overwritten.
     task_id = _uuid(task_id)
     job = _completed_job(task_id)
     try:
-        candidates = _result_json(job, task_id, "candidates.json")
         analysis = _result_json(job, task_id, "analysis.json")
+        if response_proposal is not None:
+            preview = _response_preview_payload(task_id, analysis, response_proposal)
+            if (not isinstance(response_preview_sha256, str)
+                    or response_preview_sha256 != preview["preview_sha256"]):
+                raise ProjectError(409, "事件草案预览已改变或不属于此任务，请重新预览后明确选择。")
+            candidates = preview["candidates"]
+        elif response_preview_sha256 is not None:
+            raise ProjectError(422, "事件预览须同时提供完整草案。")
+        else:
+            candidates = _result_json(job, task_id, "candidates.json")
         validate_scored(candidates, analysis)
         _selected_ids(selected_ids, candidates)
         source_task_id, media = _normalized_source(task_id)
@@ -159,7 +202,7 @@ No original analysis, task result, media or previous revision is overwritten.
         return revision
     except ProjectError:
         raise
-    except (ValueError, KeyError, TypeError) as error:
+    except (ValueError, KeyError, TypeError, RecursionError) as error:
         raise ProjectError(409, "候选、分析或媒体描述未通过校验，未发布剪辑清单。") from error
     except (OSError, RuntimeError) as error:
         raise ProjectError(503, "媒体核验或工程保存失败，请检查 FFPROBE 配置及后台日志。") from error
@@ -267,6 +310,16 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
                 or revision["duration_frames"] != project["duration_frames"]):
             raise ValueError("revision media/timeline mismatch")
         edit_record, lineage_depth = None, 1
+        snapshot = _read_json(folder / "candidates.json")
+        generator = snapshot.get("generator") if isinstance(snapshot, dict) else None
+        if isinstance(generator, dict) and generator.get("version") == "whole-response-candidates-v1":
+            # A saved response project is verified from its own immutable
+            # snapshots, never from current task rankings or a cached preview.
+            validate_scored(snapshot, _read_json(folder / "analysis.json"))
+            if not manual and project["schema_version"] == "0.1.0":
+                selected = [clip["provenance"]["candidate_id"] for clip in project["clips"]]
+                if project != candidates_to_edl(snapshot, selected, native, manifest["profile"]):
+                    raise ValueError("response project differs from whole-event adoption snapshot")
         if manual:
             from clipforge.services.editing_changes import validate_saved_edit
             edit_record, lineage_depth = validate_saved_edit(
@@ -316,7 +369,7 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
         return result
     except ProjectError:
         raise
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, RecursionError) as error:
         raise ProjectError(409, "保存的剪辑清单或来源记录已改变，无法使用此版本。") from error
 
 

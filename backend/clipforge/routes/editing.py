@@ -142,6 +142,16 @@ class EditClipRequest(BaseModel):
     source_out_frame: int = Field(ge=1)
 
 
+class PreviewResponseRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    proposal: dict
+
+
+class CreateResponseEdlRequest(CreateEdlRequest):
+    proposal: dict
+    preview_sha256: Annotated[str, StringConstraints(strict=True, pattern=r"^[0-9a-f]{64}$")]
+
+
 class SaveEditRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     clips: list[EditClipRequest] = Field(min_length=1, max_length=100)
@@ -211,6 +221,25 @@ def create_edl(task_id: UUID, payload: CreateEdlRequest) -> JSONResponse:
             status_code=201, content=jsonable_encoder(revision),
             headers={**NO_STORE, "Location": f"/tasks/{task_id}/edl/{revision_id}"},
         )
+    return _public_call(operation)
+
+
+@router.post("/{task_id}/response-candidates", summary="从已有任务分析预览完整事件候选")
+def preview_response_candidates(task_id: UUID, payload: PreviewResponseRequest) -> JSONResponse:
+    def operation():
+        result = editing_service.preview_task_response_candidates(str(task_id), payload.proposal)
+        return JSONResponse(content=jsonable_encoder(result), headers=NO_STORE)
+    return _public_call(operation)
+
+
+@router.post("/{task_id}/response-edl", status_code=201, summary="从已核对的事件草案选择新剪辑版本")
+def create_response_edl(task_id: UUID, payload: CreateResponseEdlRequest) -> JSONResponse:
+    def operation():
+        revision = editing_service.create_task_edl(str(task_id), payload.selected_ids, timeout=90,
+            response_proposal=payload.proposal, response_preview_sha256=payload.preview_sha256)
+        revision_id = str(UUID(str(revision["revision_id"])))
+        return JSONResponse(status_code=201, content=jsonable_encoder(revision), headers={
+            **NO_STORE, "Location": f"/tasks/{task_id}/edl/{revision_id}"})
     return _public_call(operation)
 
 

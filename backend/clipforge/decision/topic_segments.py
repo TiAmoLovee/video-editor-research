@@ -21,7 +21,10 @@ from clipforge.decision.topics import features
 
 GENERATOR_VERSION = "topic-valley-v1"
 GUARDED_GENERATOR_VERSION = "topic-valley-v2"
-TOPIC_VERSIONS = (GENERATOR_VERSION, GUARDED_GENERATOR_VERSION)
+EVENT_GENERATOR_VERSION = "topic-valley-v3"
+CONTINUITY_GENERATOR_VERSION = "topic-valley-v4"
+TOPIC_VERSIONS = (GENERATOR_VERSION, GUARDED_GENERATOR_VERSION, EVENT_GENERATOR_VERSION,
+                  CONTINUITY_GENERATOR_VERSION)
 # Fixed resource ceilings, not corpus-fitted decision thresholds. Input is
 # rejected explicitly instead of truncated. Feature construction is linear in
 # text length; each boundary examines at most 2 * MAX_WINDOW_UNITS units.
@@ -156,6 +159,61 @@ def _valleys(boundaries, first, last):
     return proposals
 
 
+def _event_cut_evidence(units, boundaries, hard_splits, *, continuity=False):
+    """Index explicit dependencies in linear space, before proposing cuts.
+
+    Long quotation spans are saved once. A sweep stores only their active count
+    at each boundary, rather than duplicating the complete evidence at every
+    cut. Dependencies across hard media pauses cannot be joined; all affected
+    units stay in the report but cannot be recommended as complete fragments.
+    """
+    if continuity:
+        from clipforge.decision.event_continuity import build_event_continuity
+        report = build_event_continuity(units)
+    else:
+        from clipforge.decision.event_dependencies import build_event_dependencies
+        report = build_event_dependencies(units)
+    count = len(units)
+    active_delta, unresolved_delta = [0] * (count + 1), [0] * (count + 1)
+
+    def unresolved(first, last):
+        unresolved_delta[first] += 1
+        unresolved_delta[last + 1] -= 1
+
+    for link in report['links']:
+        first, last = link['first_unit'], link['last_unit']
+        active_delta[first] += 1
+        active_delta[last] -= 1
+        crosses_hard_pause = (bisect_left(hard_splits, first + 1)
+                              < bisect_left(hard_splits, last + 1))
+        link['retention'] = ('interrupted_by_hard_pause' if crosses_hard_pause
+                             else 'must_remain_in_one_segment')
+        if crosses_hard_pause:
+            unresolved(first, last)
+    for edge in report['open_edges']:
+        # A standalone 'this one' at the end can be a complete reference. Keep
+        # that ambiguity visible instead of turning it into a fabricated fail.
+        if edge['kind'] == 'unresolved_demonstrative':
+            edge['retention'] = 'warning_only_ambiguous_reference'
+            continue
+        first = 0 if edge['kind'] == 'quotation_missing_opener' else edge['unit']
+        last = count - 1 if edge['kind'] == 'quotation_missing_closer' else edge['unit']
+        edge['retention'] = 'unresolved_source_edge'
+        unresolved(first, last)
+    active, missing, unresolved_prefix = 0, 0, [0]
+    for index in range(count):
+        active += active_delta[index]
+        missing += unresolved_delta[index]
+        unresolved_prefix.append(unresolved_prefix[-1] + bool(missing))
+        if index < len(boundaries):
+            boundaries[index]['event_support'] = {
+                'active_dependencies': active,
+                'cut_allowed': active == 0,
+                'semantic_completeness_verified': False,
+            }
+    return report, unresolved_prefix
+
+
 def segment_topics(analysis, options=None, *, analysis_schema=None,
                    version=GENERATOR_VERSION):
     """Return complete segmentation plus accepted and rejected gap evidence.
@@ -170,7 +228,9 @@ def segment_topics(analysis, options=None, *, analysis_schema=None,
     if version not in TOPIC_VERSIONS:
         raise ValueError("unknown topic generator version")
     _validated_input(analysis, options, analysis_schema)
-    guarded = version == GUARDED_GENERATOR_VERSION
+    guarded = version in (GUARDED_GENERATOR_VERSION, EVENT_GENERATOR_VERSION,
+                          CONTINUITY_GENERATOR_VERSION)
+    event_aware = version in (EVENT_GENERATOR_VERSION, CONTINUITY_GENERATOR_VERSION)
     coverage = None
     blocking_coverage = []
     unverified_compound_ends = set()
@@ -233,6 +293,12 @@ def segment_topics(analysis, options=None, *, analysis_schema=None,
                                               for s in edge_sentences),
             }
 
+    event_report, unresolved_prefix = (None, None)
+    if event_aware:
+        event_report, unresolved_prefix = _event_cut_evidence(
+            units, boundaries, hard_splits,
+            continuity=version == CONTINUITY_GENERATOR_VERSION)
+
     accepted = set(hard_splits)
     edges = [0, *hard_splits, len(units)]
     for block_first, block_last in zip(edges, edges[1:]):
@@ -289,6 +355,17 @@ def segment_topics(analysis, options=None, *, analysis_schema=None,
                 boundary["decision"] = "accepted_valley"
                 boundary["reasons"] = []
 
+    if event_aware:
+        # Freeze the v2 greedy selection first. Rejecting an event cut earlier
+        # could release a conflicting nearby valley and introduce a different
+        # cut in the answer. V3 may only remove existing cuts, never reschedule.
+        for boundary in boundaries:
+            if (boundary['decision'] == 'accepted_valley'
+                    and not boundary['event_support']['cut_allowed']):
+                accepted.remove(boundary['after_unit'] + 1)
+                boundary['decision'] = 'rejected'
+                boundary['reasons'] = ['event_dependency_crosses_cut']
+
     segments = []
     cuts = [0, *sorted(accepted), len(units)] if units else []
     for first, last in zip(cuts, cuts[1:]):
@@ -310,6 +387,8 @@ def segment_topics(analysis, options=None, *, analysis_schema=None,
             if ((first > 0 and boundaries[first - 1]['cut_support']['compound_across_asr_gap'])
                     or (last < len(units) and boundaries[last - 1]['cut_support']['compound_across_asr_gap'])):
                 reasons.append('unverified_compound_gap')
+        if event_aware and unresolved_prefix[last] > unresolved_prefix[first]:
+            reasons.append('unresolved_event_dependency')
         key = {"analysis": identity, "version": version,
                "options": option_data, "source_sentences": references}
         segments.append({
@@ -340,6 +419,15 @@ def segment_topics(analysis, options=None, *, analysis_schema=None,
         warnings.append("coverage_detector_disagreement")
     if guarded and any('unverified_compound_gap' in s['reasons'] for s in segments):
         warnings.append('unverified_compound_gap')
+    if event_aware:
+        if any('event_dependency_crosses_cut' in b['reasons'] for b in boundaries):
+            warnings.append('event_cut_rejected')
+        if any('unresolved_event_dependency' in s['reasons'] for s in segments):
+            warnings.append('unresolved_event_dependency')
+        if (any(e['retention'] == 'warning_only_ambiguous_reference'
+                for e in event_report['open_edges'])
+                or event_report.get('ambiguities')):
+            warnings.append('ambiguous_event_reference')
     result = {
         "schema_version": "0.1.0-draft.1", "artifact_kind": "topic_segmentation",
         "version": version, "analysis_sha256": identity,
@@ -368,6 +456,23 @@ def segment_topics(analysis, options=None, *, analysis_schema=None,
             "suspect_coverage": "exclude adjoining/intersecting Silero-supported gaps; WebRTC fallback only when Silero is absent",
             "single_detector_disagreement": "retain warning; not proof of missing speech",
         }
+    if event_aware:
+        result['event_dependencies'] = event_report
+        result['event_policy'] = {
+            'version': 'surface-dependency-cuts-v1',
+            'semantic_completeness_verified': False,
+            'dependency_cuts': 'reject lexical cuts through explicit surface dependencies before generating candidates',
+            'baseline_cuts': 'freeze v2 greedy selection; only remove cuts, never reschedule rejected alternatives',
+            'hard_pauses': 'never bridge; retain and exclude fragments with interrupted dependencies',
+            'source_edges': 'exclude explicit missing continuation or quotation; ambiguous demonstratives warn only',
+            'duration_limits': 'retain whole linked segment; report short/long exclusions without truncation or fallback',
+        }
+        if version == CONTINUITY_GENERATOR_VERSION:
+            result['event_policy'].update(
+                version='paired-discourse-cuts-v2',
+                paired_evidence='implicit requests and causal relations require matching evidence on both sides',
+                answer_continuations='retain linked pending explanations beyond the first response unit',
+                closure_scope='no detected open slot is not semantic event-completeness verification')
     return result
 
 
@@ -406,6 +511,12 @@ def generate_topic_candidates(analysis, options=None, *, analysis_schema=None,
         warnings.append("topic_coverage_detector_disagreement")
     if 'unverified_compound_gap' in report['warnings']:
         warnings.append('topic_unverified_compound_gap')
+    if 'event_cut_rejected' in report['warnings']:
+        warnings.append('topic_event_cut_rejected')
+    if 'unresolved_event_dependency' in report['warnings']:
+        warnings.append('topic_event_dependency_unresolved')
+    if 'ambiguous_event_reference' in report['warnings']:
+        warnings.append('topic_event_dependency_warning')
     if not candidates:
         warnings.append("no_eligible_window")
     return {

@@ -10,6 +10,8 @@ from clipforge.decision.topic_segments import TopicOptions, generate_topic_candi
 LEGACY = 'sentence-window-v1'
 TOPIC = 'topic-valley-v1'
 GUARDED_TOPIC = 'topic-valley-v2'
+EVENT_TOPIC = 'topic-valley-v3'
+CONTINUITY_TOPIC = 'topic-valley-v4'
 
 
 def _options_type(version):
