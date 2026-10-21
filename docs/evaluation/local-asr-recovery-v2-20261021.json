@@ -1,0 +1,122 @@
+{
+  "version": "local-asr-coverage-recovery-v2-development-evidence",
+  "date": "2026-10-21",
+  "status": "local_verification_completed_not_deployed",
+  "original_frozen_local_cohort": {
+    "selected": 10,
+    "five_pass": 9,
+    "rate": 0.9,
+    "raters": 1,
+    "source_count": 4,
+    "sources_with_output": 3,
+    "not_population_guarantee": true,
+    "unchanged": true,
+    "not_primary_model_acceptance": true
+  },
+  "development_after_feedback": true,
+  "new_human_quality_rate": null,
+  "sources": [
+    {
+      "source": "Apple1",
+      "inserted_words": 1,
+      "candidates": 3,
+      "ranges": [
+        {
+          "start": 1.98,
+          "end": 82.94
+        },
+        {
+          "start": 84.15,
+          "end": 103.05
+        },
+        {
+          "start": 103.45,
+          "end": 126.34
+        }
+      ],
+      "recovery_status": "recovered"
+    },
+    {
+      "source": "Apple2",
+      "inserted_words": 90,
+      "candidates": 0,
+      "ranges": [],
+      "recovery_status": "stopped_with_unverified_coverage"
+    },
+    {
+      "source": "Kun1",
+      "inserted_words": 0,
+      "candidates": 3,
+      "ranges": [
+        {
+          "start": 34.45,
+          "end": 53.18
+        },
+        {
+          "start": 67.49,
+          "end": 116.18
+        },
+        {
+          "start": 116.78,
+          "end": 141.26
+        }
+      ],
+      "recovery_status": "stopped_with_unverified_coverage"
+    },
+    {
+      "source": "Kun2",
+      "inserted_words": 3,
+      "candidates": 4,
+      "ranges": [
+        {
+          "start": 5.85,
+          "end": 41.97
+        },
+        {
+          "start": 49.06,
+          "end": 89.6
+        },
+        {
+          "start": 132.64,
+          "end": 156.0
+        },
+        {
+          "start": 181.87,
+          "end": 197.34
+        }
+      ],
+      "recovery_status": "stopped_with_unverified_coverage"
+    }
+  ],
+  "preview": {
+    "frames": 688,
+    "duration_seconds": 22.933333333333334,
+    "original_end_seconds": 125.78,
+    "new_measured_end_seconds": 126.34,
+    "extra_frames": 17,
+    "source_audio_correlation": 0.9997503529260835,
+    "human_acceptance": null
+  },
+  "tests": {
+    "success": true,
+    "run": 141,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 25.690998199992464,
+    "scope": "ASR, sentences, topic safety, cache and EDL; HTTP video job tests not completed in sandbox"
+  },
+  "implementation_sha256": {
+    "asr": "9cb3afab17800d13c2f12d0f1f5d08d039626ce3cba331fdd597275ade8d647e",
+    "topics": "2d9ac383f2b099d80d279b9b4104c05367aca6400650614bb86b10e42dc3a269"
+  },
+  "new_provider_calls": 0,
+  "production_changed": false,
+  "unresolved": [
+    "Apple2 whole topic exceeds 90 seconds; no forced split",
+    "Some terminal recovery decodes stop safely; no retry",
+    "HTTP job acceptance in this sandbox did not complete"
+  ],
+  "primary_model_event_trial": "remains_failed_protocol_validation; no retry",
+  "old_historical_human_result": "11/18 unchanged"
+}
