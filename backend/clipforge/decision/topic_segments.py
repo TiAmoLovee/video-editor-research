@@ -244,6 +244,18 @@ def segment_topics(analysis, options=None, *, analysis_schema=None,
             detector = "silero_vad" if "silero_vad" in detectors else "webrtc_vad"
             if detectors.get(detector, {}).get("speech_seconds", 0) >= 3.0:
                 blocking_coverage.append(gap)
+        # A short final syllable cannot meet the long-gap audit threshold.
+        # If bounded ASR recovery still cannot cover that measured overhang,
+        # do not silently recommend the same truncated final utterance again.
+        recovery = analysis['analyzers']['asr']['parameters'].get('coverage_recovery') or {}
+        if recovery.get('version') == 'local-word-coverage-recovery-v2':
+            for gap in recovery.get('remaining_recovery_gaps', []):
+                if gap.get('reason') == 'terminal_speech_beyond_last_word':
+                    start, end = gap.get('start'), gap.get('end')
+                    if (type(start) not in (int, float) or type(end) not in (int, float)
+                            or not 0 <= start < end <= analysis['media']['duration_seconds']):
+                        raise ValueError('invalid unresolved terminal ASR interval')
+                    blocking_coverage.append(deepcopy(gap))
         if analysis['analyzers']['asr']['parameters'].get('sentence_rules') == SENTENCE_PARAMETERS:
             replayed, trace = split_sentences_with_trace(analysis['words'])
             if replayed != analysis['sentences']:

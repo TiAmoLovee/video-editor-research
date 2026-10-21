@@ -85,6 +85,24 @@ class SpeechGateTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "VAD unavailable"):
                 transcribe_video(self.source)
 
+    def test_detected_full_video_language_is_not_an_explicit_recovery_language(self):
+        from unittest.mock import Mock
+        for requested in (None, 'zh'):
+            with self.subTest(requested=requested):
+                word = Object(start=5, end=6, word='问题', probability=.9)
+                segment = Object(start=5, end=6, text=word.word, words=[word])
+                recognizer = Object(transcribe=Mock(return_value=(
+                    iter([segment]), Object(language='zh', language_probability=.99))))
+                gate = {'no_speech_skipped': False, 'speech_intervals': [{'start': 5, 'end': 6}]}
+                with patch.dict('os.environ', {'CLIPFORGE_ASR_LANGUAGE': ''}), \
+                     patch('clipforge.analysis.asr.prepare_speech', return_value=(object(), gate)), \
+                     patch('clipforge.analysis.asr._load_model', return_value=(recognizer, {})), \
+                     patch('clipforge.analysis.asr.recover_word_coverage',
+                           side_effect=lambda audio, model, words, gate, duration, **kwargs: (words, {})) as recovery:
+                    transcribe_video(self.source, language=requested)
+                self.assertEqual(recovery.call_args.kwargs['language'], requested)
+                self.assertEqual(recovery.call_args.kwargs['context_language'], 'zh')
+
 
 if __name__ == "__main__":
     unittest.main()

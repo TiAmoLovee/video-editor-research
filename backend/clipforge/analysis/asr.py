@@ -27,12 +27,16 @@ TRANSCRIBE_PARAMETERS = {"beam_size": 5, "temperature": 0.0, "word_timestamps": 
                          "compression_ratio_threshold": 2.4, "task": "transcribe"}
 
 COVERAGE_RECOVERY_PARAMETERS = {
-    "version": "local-word-coverage-recovery-v1", "max_windows": 2,
+    "version": "local-word-coverage-recovery-v2", "max_windows": 2,
     "context_seconds": 5.0, "max_crop_seconds": 60.0,
     "min_gap_seconds": 3.0, "min_silero_speech_seconds": 3.0,
     "selection": "longest_gap_then_start", "attempts_per_gap": 1,
     "failure_policy": "stop_recovery_without_retry",
     "merge_policy": "insert_whole_words_inside_original_gap_only",
+    "language_policy": "explicit_user_language_else_detect_inside_long_gap",
+    "language_detection_min_probability": 0.5,
+    "terminal_policy": "overhang_in_last_word_silero_interval_beyond_vad_padding",
+    "terminal_decode": "one_bounded_context_crop_without_second_vad",
 }
 
 
@@ -107,7 +111,39 @@ def splice_gap_words(original_words, recovery_words, gap, *, crop_timing_clamped
     return accepted, excluded
 
 
-def recover_word_coverage(audio, model, words, speech_gate, duration, *, language=None):
+def _recovery_gaps(words, speech_gate, duration, coverage):
+    """Keep long-gap coverage rules; also check a truncated final utterance.
+
+    A syllable shorter than three seconds cannot satisfy the long-gap audit.
+    Only a Silero interval containing the last word and continuing beyond its
+    configured padding can request the extra check. Later unrelated activity,
+    silence, and WebRTC/music disagreement do not qualify. This is decoding
+    evidence, never permission to extend a candidate without measured words.
+    """
+    gaps = copy.deepcopy(coverage['suspect_intervals'])
+    if not words or any(g['position'] in ('suffix', 'whole_media') for g in gaps):
+        return gaps
+    last = max(words, key=lambda w: w['end'])
+    padding = speech_gate.get('parameters', SPEECH_GATE_PARAMETERS).get(
+        'speech_pad_ms', SPEECH_GATE_PARAMETERS['speech_pad_ms']) / 1000
+    for interval in speech_gate.get('speech_intervals', []):
+        if (interval['start'] < last['end'] < interval['end']
+                and last['end'] - last['start'] > 0
+                and interval['end'] - last['end'] > padding + 1e-9):
+            gaps.append({
+                'start': last['end'], 'end': duration,
+                'gap_seconds': duration - last['end'], 'position': 'suffix',
+                'reason': 'terminal_speech_beyond_last_word',
+                'silero_interval': copy.deepcopy(interval),
+                'uncovered_speech_seconds': interval['end'] - last['end'],
+                'speech_pad_seconds': padding,
+            })
+            break
+    return gaps
+
+
+def recover_word_coverage(audio, model, words, speech_gate, duration, *, language=None,
+                          context_language=None):
     """Bounded local decoding of word-free gaps retained by the original VAD.
 
     The caller supplies the already verified model and full-timeline PCM array.
@@ -136,7 +172,8 @@ def recover_word_coverage(audio, model, words, speech_gate, duration, *, languag
         "original_words": original, "word_origins": [],
         "interpretation": "Local ASR recovery is model evidence; it does not verify speech or event completeness.",
     }
-    gaps = sorted(before["suspect_intervals"], key=lambda row: (-row["gap_seconds"], row["start"]))
+    gaps = sorted(_recovery_gaps(original, speech_gate, duration, before),
+                  key=lambda row: (-row["gap_seconds"], row["start"]))
     if not gaps:
         return copy.deepcopy(words), report
     samples = math.ceil(duration * SAMPLE_RATE)
@@ -149,10 +186,15 @@ def recover_word_coverage(audio, model, words, speech_gate, duration, *, languag
         crop_first = max(0, math.floor((gap["start"] - parameters["context_seconds"]) * SAMPLE_RATE))
         crop_last = min(samples, math.ceil((gap["end"] + parameters["context_seconds"]) * SAMPLE_RATE))
         crop_start, crop_end = crop_first / SAMPLE_RATE, crop_last / SAMPLE_RATE
+        decode_parameters = copy.deepcopy(TRANSCRIBE_PARAMETERS)
+        terminal = gap['reason'] == 'terminal_speech_beyond_last_word'
+        if terminal:
+            decode_parameters.pop('vad_parameters')
+            decode_parameters.update(vad_filter=False, max_new_tokens=256)
         attempt = {"gap": copy.deepcopy(gap), "crop_start": crop_start, "crop_end": crop_end,
                    "crop_first_sample": crop_first, "crop_last_sample": crop_last,
                    "time_offset_seconds": crop_start, "requested_language": language,
-                   "transcribe_parameters": copy.deepcopy(TRANSCRIBE_PARAMETERS)}
+                   "transcribe_parameters": decode_parameters}
         if crop_end - crop_start > parameters["max_crop_seconds"]:
             attempt.update(status="skipped", reason="crop_exceeds_bounded_duration")
             report["attempts"].append(attempt)
@@ -165,8 +207,39 @@ def recover_word_coverage(audio, model, words, speech_gate, duration, *, languag
         attempt["attempt_number"] = report["attempt_count"]
         started = time.perf_counter()
         try:
-            generated, info = model.transcribe(audio[crop_first:crop_last], language=language,
-                                               **TRANSCRIBE_PARAMETERS)
+            decode_language = language
+            if language is None and not terminal:
+                # Context may be spoken in another language. Detect on the
+                # missing audio itself, not the five-second context prefix.
+                first = math.floor(gap['start'] * SAMPLE_RATE)
+                last = math.ceil(gap['end'] * SAMPLE_RATE)
+                detected, probability, _ = model.detect_language(
+                    audio=audio[first:last], vad_filter=False)
+                if (not isinstance(detected, str) or not detected
+                        or not math.isfinite(probability)
+                        or not parameters['language_detection_min_probability'] <= probability <= 1):
+                    raise ValueError('uncertain missing-span language; recovery stopped')
+                decode_language = detected
+                attempt['gap_language_detection'] = {
+                    'language': detected, 'probability': probability,
+                    'first_sample': first, 'last_sample': last,
+                    'context_excluded': True,
+                }
+                if context_language is not None and detected != context_language:
+                    # Decoding an English answer together with its Chinese
+                    # question can translate the context and suppress the
+                    # actual answer even when language='en'. Keep the target
+                    # audio alone on an observed language switch.
+                    crop_first, crop_last = first, last
+                    crop_start, crop_end = first / SAMPLE_RATE, last / SAMPLE_RATE
+                    attempt.update(crop_start=crop_start, crop_end=crop_end,
+                        crop_first_sample=first, crop_last_sample=last,
+                        time_offset_seconds=crop_start,
+                        context_language=context_language,
+                        context_removed_for_language_switch=True)
+            attempt['decode_language'] = decode_language
+            generated, info = model.transcribe(audio[crop_first:crop_last], language=decode_language,
+                                               **decode_parameters)
             local_words, local_raw, adjustments = collect_words(generated, crop_end - crop_start)
             from clipforge.analysis.validation import _finite
             _finite({"words": local_words, "raw_segments": local_raw,
@@ -218,11 +291,13 @@ def recover_word_coverage(audio, model, words, speech_gate, duration, *, languag
         result.append(word)
         report["word_origins"].append({"word_id": word["id"], **origin})
     after = audit(result)
-    report.update(inserted_word_count=len(inserted), coverage_after=after)
+    remaining = _recovery_gaps(result, speech_gate, duration, after)
+    report.update(inserted_word_count=len(inserted), coverage_after=after,
+                  remaining_recovery_gaps=remaining)
     if stopped:
         report["status"] = "stopped_with_unverified_coverage"
     elif inserted:
-        report["status"] = "recovered" if not after["suspect_intervals"] else "partially_recovered"
+        report["status"] = "recovered" if not remaining else "partially_recovered"
     else:
         report["status"] = "unresolved"
     return result, report
@@ -281,7 +356,7 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
                     detected_language, language_probability = info.language, info.language_probability
                     words, coverage_recovery = recover_word_coverage(
                         audio, model, words, speech_gate, duration,
-                        language=requested_language or detected_language)
+                        language=requested_language, context_language=detected_language)
             else:
                 digital_silence_skipped = True
     simplify_chinese = (requested_language or detected_language) == "zh"

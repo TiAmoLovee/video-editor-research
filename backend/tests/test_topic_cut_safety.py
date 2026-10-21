@@ -136,6 +136,23 @@ class TopicCutSafetyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_candidates(corrupted, data)
 
+    def test_unresolved_short_terminal_recovery_blocks_only_adjoining_topic(self):
+        data = fixture([(0, 20), (25, 45)])
+        data['speech'] = [{'start': 0, 'end': 20}, {'start': 25, 'end': 45}]
+        data['silence'] = [{'start': 20, 'end': 25}, {'start': 45, 'end': 46}]
+        data['analyzers']['asr']['parameters']['coverage_recovery'] = {
+            'version': 'local-word-coverage-recovery-v2',
+            'remaining_recovery_gaps': [{'start': 45, 'end': 46,
+                'reason': 'terminal_speech_beyond_last_word'}]}
+        report = segment_topics(data, version=V2)
+        self.assertEqual(report['word_coverage']['suspect_interval_count'], 0)
+        self.assertIn('suspect_asr_coverage', report['segments'][-1]['reasons'])
+        result = generate_topic_candidates(data, version=V2)
+        self.assertEqual([(c['start'], c['end']) for c in result['candidates']], [(0, 20)])
+        validate_candidates(result, data)
+        data['analyzers']['asr']['parameters']['coverage_recovery']['remaining_recovery_gaps'] = []
+        self.assertEqual(generate_topic_candidates(data, version=V2)['candidate_count'], 2)
+
 
 if __name__ == '__main__':
     unittest.main()
