@@ -65,6 +65,7 @@ const dateLabel = (value: string) => {
   return Number.isNaN(date.getTime()) ? value : date.toLocaleString('zh-CN', { hour12: false });
 };
 const messageOf = (error: unknown) => error instanceof Error ? error.message : '暂时无法读取，请稍后刷新已保存记录。';
+const framingLabel = (kind?: string) => kind === 'fit_pad_9_16' ? '完整画面 9:16' : kind === 'center_crop_9_16' ? '居中裁切 9:16' : '';
 
 export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChange }: Props) {
   const [actor, setActor] = useActor();
@@ -285,11 +286,12 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
     <section aria-label="已保存的剪辑版本">
       <h3>已保存的剪辑版本</h3>
       {versions.length > 0 && <div className="export-version-picker"><label htmlFor={`edl-${taskId}`}>导出版本</label><select id={`edl-${taskId}`} value={revision ?? ''} disabled={!!busy || batchBusy || reading || !!editDraft} onChange={event => void chooseRevision(event.target.value)}>
-        {!revision && <option value="">请选择版本</option>}{versions.map(item => <option key={item.revision_id} value={item.revision_id}>{dateLabel(item.created_at)} · {item.clip_count} 条 · {item.profile.width}×{item.profile.height} · {shortId(item.revision_id)}</option>)}
+        {!revision && <option value="">请选择版本</option>}{versions.map(item => <option key={item.revision_id} value={item.revision_id}>{dateLabel(item.created_at)} · {item.clip_count} 条 · {item.profile.width}×{item.profile.height}{framingLabel(item.derivation?.kind) && ` · ${framingLabel(item.derivation?.kind)}`} · {shortId(item.revision_id)}</option>)}
       </select>{page.has_more && <Button size="small" disabled={!!busy || reading} onClick={() => void loadOlder()}>载入更早版本</Button>}</div>}
       {(page.unavailable_count > 0 || artifacts.unavailable_count > 0) && <p className="hint">部分旧记录暂时无法读取，未放入可下载列表。</p>}
       {!saved && !reading ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="尚未保存剪辑版本" /> : saved && profile && revision && <>
         <p className="export-current"><Tag color="purple">当前导出版本 {shortId(revision)}</Tag>{saved.edl.clips.length} 条 · {profile.width}×{profile.height} · {seconds} 秒</p>
+        {saved.edl.framing && <p className="hint">{saved.edl.framing.mode === 'fit_pad' ? '完整画面 9:16 · 等比缩放，黑色留边，保留画面内容。' : '居中裁切 9:16 · 会裁掉原画面两侧或上下边缘。'}</p>}
         {saved.revision.derivation && <p className="hint">此版本由 {shortId(saved.revision.derivation.parent_revision_id)} 生成。</p>}
         <ol className="export-saved-list" aria-label="已保存片段顺序">{saved.edl.clips.map((clip, index) => <li key={clip.id}>片段 {index + 1} · 成片内 {(clip.timeline_in_frame * profile.fps.den / profile.fps.num).toFixed(2)}–{(clip.timeline_out_frame * profile.fps.den / profile.fps.num).toFixed(2)} 秒</li>)}</ol>
         <section aria-label="调整保存版本的切点与顺序"><h3>调整切点与顺序</h3>
@@ -344,9 +346,10 @@ export function ExportWorkbench({ taskId, selected, onRemove, onMove, onBusyChan
         </section>}
         <div className="export-actions"><Button href={editing.edlFileUrl(taskId, revision, 'project.edl.json')} download>下载 EDL</Button><Button href={editing.edlFileUrl(taskId, revision, 'media-profile.json')} download>下载媒体描述</Button><Button href={editing.sourceUrl(taskId, revision)} download>下载工程所需源素材</Button>
           {saved.revision.files?.['edit-record.json'] && <Button href={editing.edlFileUrl(taskId, revision, 'edit-record.json')} download>下载人工修改记录</Button>}
-          {profile.width > profile.height && <Button disabled={disabled} onClick={() => void mutate('正在保存 9:16 竖屏版本…', async signal => ({ revision: (await editing.createPortrait(taskId, revision, signal)).revision_id }), true)}>生成 9:16 版本</Button>}
+          {profile.width > profile.height && <><Button type="primary" disabled={disabled} onClick={() => void mutate('正在保存完整画面 9:16 版本…', async signal => ({ revision: (await editing.createFittedPortrait(taskId, revision, signal)).revision_id }), true)}>完整画面 9:16</Button>
+            <Button disabled={disabled} onClick={() => void mutate('正在保存居中裁切 9:16 版本…', async signal => ({ revision: (await editing.createPortrait(taskId, revision, signal)).revision_id }), true)}>居中裁切 9:16</Button></>}
           <Button disabled={disabled} onClick={() => void mutate('正在生成并保存字幕…', async signal => { const item = await editing.createSubtitles(taskId, revision, signal); return { revision, subtitle: item.subtitle_id }; })}>生成字幕</Button></div>
-        <p className="hint">竖屏使用居中裁切。字幕来自原转写，可能有错字，下载后可以修改。</p>
+        <p className="hint">完整画面竖屏会等比缩放并以黑色留边补足 9:16；居中裁切会裁掉边缘。竖屏会保存为独立版本，请在新版本中生成字幕。字幕来自原转写，可能有错字，下载后可以修改。</p>
         <div className="export-subtitle-picker"><label htmlFor={`subtitle-${taskId}`}>字幕版本</label><select id={`subtitle-${taskId}`} disabled={!!busy || reading || !artifacts.subtitles.length} value={subtitleId} onChange={event => setSubtitleId(event.target.value)}>
           {!artifacts.subtitles.length && <option value="">请先生成字幕</option>}{artifacts.subtitles.map(item => <option key={item.subtitle_id} value={item.subtitle_id}>{dateLabel(item.created_at)} · {item.cue_count} 条 · {shortId(item.subtitle_id)}</option>)}
         </select><Checkbox checked={withSubtitles} disabled={!!busy || reading || !selectedSubtitle} onChange={event => setWithSubtitles(event.target.checked)}>导出时带字幕</Checkbox></div>

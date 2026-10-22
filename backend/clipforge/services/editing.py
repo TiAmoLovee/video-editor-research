@@ -13,6 +13,7 @@ from pathlib import Path
 import shutil
 from uuid import UUID, uuid4
 
+from clipforge.decision.candidates import content_hash
 from clipforge.decision.scoring import validate_scored
 from clipforge.editing.edl import candidates_to_edl, create_portrait_edl, frame_rate, validate_edl
 from clipforge.editing.manifest import build_media_manifest, open_media_source
@@ -105,7 +106,40 @@ def _selected_ids(selected_ids, candidates):
         raise ProjectError(422, "选择中包含此任务不存在的候选编号。")
 
 
-def create_task_edl(task_id, selected_ids, *, ffprobe=None, timeout=90, actor=None):
+def _response_preview_payload(task_id, analysis, proposal):
+    from clipforge.decision.response_candidates import build_response_candidates
+    from clipforge.decision.scoring import score_candidates
+
+    bundle = build_response_candidates(analysis, proposal)
+    # This path deliberately uses local rules only. Audio measurement is not
+    # fabricated; the existing scorer records its absence as zero contribution.
+    candidates = score_candidates(bundle["windows"], analysis)
+    preview = {"artifact_kind": "task_response_candidate_preview", "task_id": task_id,
+        "analysis_sha256": content_hash(analysis), "proposal_sha256": content_hash(proposal),
+        "bridge_sha256": bundle["bridge_sha256"], "candidates": candidates,
+        "event_audit": bundle["event_audit"], "requires_review": True,
+        "semantic_completeness_verified": False, "media_verified": False, "model_requests": 0}
+    preview["preview_sha256"] = content_hash(preview)
+    return preview
+
+
+def preview_task_response_candidates(task_id, proposal):
+    """Preview supplied hypotheses against this completed task; no writes/probe."""
+    task_id = _uuid(task_id)
+    job = _completed_job(task_id)
+    try:
+        analysis = _result_json(job, task_id, "analysis.json")
+        return _response_preview_payload(task_id, analysis, proposal)
+    except ProjectError:
+        raise
+    except (ValueError, KeyError, TypeError, RecursionError) as error:
+        raise ProjectError(409, "事件草案与此任务分析不匹配或未通过校验，未生成候选。") from error
+    except OSError as error:
+        raise ProjectError(503, "任务分析暂不可读，请检查后台日志。") from error
+
+
+def create_task_edl(task_id, selected_ids, *, ffprobe=None, timeout=90, actor=None,
+                    response_proposal=None, response_preview_sha256=None):
     """Verify existing task media, then publish a new revision with a commit record.
 
 Each request is an explicit selection, not an automatic acceptance decision.
@@ -116,8 +150,17 @@ No original analysis, task result, media or previous revision is overwritten.
     from clipforge.services.reviewing import normalize_actor
     actor = normalize_actor(actor, required=False)
     try:
-        candidates = _result_json(job, task_id, "candidates.json")
         analysis = _result_json(job, task_id, "analysis.json")
+        if response_proposal is not None:
+            preview = _response_preview_payload(task_id, analysis, response_proposal)
+            if (not isinstance(response_preview_sha256, str)
+                    or response_preview_sha256 != preview["preview_sha256"]):
+                raise ProjectError(409, "事件草案预览已改变或不属于此任务，请重新预览后明确选择。")
+            candidates = preview["candidates"]
+        elif response_preview_sha256 is not None:
+            raise ProjectError(422, "事件预览须同时提供完整草案。")
+        else:
+            candidates = _result_json(job, task_id, "candidates.json")
         validate_scored(candidates, analysis)
         _selected_ids(selected_ids, candidates)
         source_task_id, media = _normalized_source(task_id)
@@ -163,19 +206,21 @@ No original analysis, task result, media or previous revision is overwritten.
         return revision
     except ProjectError:
         raise
-    except (ValueError, KeyError, TypeError) as error:
+    except (ValueError, KeyError, TypeError, RecursionError) as error:
         raise ProjectError(409, "候选、分析或媒体描述未通过校验，未发布剪辑清单。") from error
     except (OSError, RuntimeError) as error:
         raise ProjectError(503, "媒体核验或工程保存失败，请检查 FFPROBE 配置及后台日志。") from error
 
 
-def create_task_portrait(task_id, revision_id):
+def create_task_portrait(task_id, revision_id, *, mode="center_crop"):
     """Derive a new 9:16 revision from saved selections, without reprobe/ASR.
 
     Keep the native media manifest and exact analysis/candidate snapshots.
     Only the new EDL's output profile/framing differs; the parent stays intact.
     """
     task_id, revision_id = _uuid(task_id), _uuid(revision_id)
+    if mode not in ("center_crop", "fit_pad"):
+        raise ProjectError(422, "竖屏模式无效。")
     saved = load_task_edl(task_id, revision_id)
     if saved["lineage_depth"] >= 16:
         raise ProjectError(422, "保存版本链已达到 16 层，请保留现有导出并开始新的采纳版本。")
@@ -188,7 +233,7 @@ def create_task_portrait(task_id, revision_id):
             original = json.load(inputs['project.edl.json'])
             if original != saved['edl']:
                 raise ProjectError(409, "保存的 EDL 在读取期间改变，未生成竖屏版本。")
-            project = create_portrait_edl(original)
+            project = create_portrait_edl(original, mode=mode)
             # No duplicate media copy: hold and verify the existing native source.
             media = stack.enter_context(open_revision_source(task_id, revision_id))
             new_id = str(uuid4())
@@ -210,7 +255,8 @@ def create_task_portrait(task_id, revision_id):
                 'source_task_id': saved['revision']['source_task_id'], 'created_at': now(),
                 'clip_count': len(project['clips']), 'duration_frames': project['duration_frames'],
                 'files': {name: _digest(folder / name) for name in sorted(FILES)},
-                'derivation': {'kind': 'center_crop_9_16', 'parent_revision_id': revision_id,
+                'derivation': {'kind': 'fit_pad_9_16' if mode == 'fit_pad' else 'center_crop_9_16',
+                               'parent_revision_id': revision_id,
                                'parent_edl_file_sha256': saved['revision']['files']['project.edl.json']},
             }
             _write_json(folder / 'revision.json', revision)
@@ -278,14 +324,27 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
                 or revision["duration_frames"] != project["duration_frames"]):
             raise ValueError("revision media/timeline mismatch")
         edit_record, lineage_depth = None, 1
+        snapshot = _read_json(folder / "candidates.json")
+        generator = snapshot.get("generator") if isinstance(snapshot, dict) else None
+        if isinstance(generator, dict) and generator.get("version") == "whole-response-candidates-v1":
+            # A saved response project is verified from its own immutable
+            # snapshots, never from current task rankings or a cached preview.
+            validate_scored(snapshot, _read_json(folder / "analysis.json"))
+            if not manual and project["schema_version"] == "0.1.0":
+                selected = [clip["provenance"]["candidate_id"] for clip in project["clips"]]
+                if project != candidates_to_edl(snapshot, selected, native, manifest["profile"]):
+                    raise ValueError("response project differs from whole-event adoption snapshot")
         if manual:
             from clipforge.services.editing_changes import validate_saved_edit
             edit_record, lineage_depth = validate_saved_edit(
                 task_id, revision_id, revision, project, manifest, folder, visited)
-        elif project['schema_version'] == '0.2.0':
+        elif project['schema_version'] in ('0.2.0', '0.3.0'):
+            fit = project['schema_version'] == '0.3.0'
+            mode = 'fit_pad' if fit else 'center_crop'
+            kind = 'fit_pad_9_16' if fit else 'center_crop_9_16'
             derivation = revision['derivation']
             if (set(derivation) != {'kind', 'parent_revision_id', 'parent_edl_file_sha256'}
-                    or derivation['kind'] != 'center_crop_9_16'):
+                    or derivation['kind'] != kind):
                 raise ValueError('invalid portrait derivation')
             parent_id = _uuid(derivation['parent_revision_id'])
             if parent_id == revision_id:
@@ -298,7 +357,7 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
             original = load_task_edl(task_id, parent_id, _visited=visited)
             lineage_depth = original["lineage_depth"] + 1
             if (original['revision']['files']['project.edl.json'] != derivation['parent_edl_file_sha256']
-                    or project != create_portrait_edl(original['edl'])
+                    or project != create_portrait_edl(original['edl'], mode=mode)
                     or revision['source_task_id'] != original['revision']['source_task_id']
                     or any(revision['files'][name] != original['revision']['files'][name]
                            for name in FILES - {'project.edl.json'})):
@@ -311,7 +370,8 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
                     "format_version": 1, "task_id": task_id, "revision_id": revision_id,
                     "baseline_revision_id": root_id, "parent_revision_id": parent_id,
                     "editing_elapsed_ms": None, "elapsed_time_scope": "not_recorded",
-                    "origin": "automatic_center_crop_no_manual_operation",
+                    "origin": ("automatic_fit_pad_no_manual_operation" if fit else
+                               "automatic_center_crop_no_manual_operation"),
                     "effort": compare_edit_effort(baseline["edl"], project),
                     "step_effort": compare_edit_effort(original["edl"], project),
                 }
@@ -323,7 +383,7 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
         return result
     except ProjectError:
         raise
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, RecursionError) as error:
         raise ProjectError(409, "保存的剪辑清单或来源记录已改变，无法使用此版本。") from error
 
 

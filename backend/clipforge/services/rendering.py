@@ -105,7 +105,7 @@ def create_task_render(task_id, revision_id, *, ffmpeg=None, ffprobe=None, timeo
                         or actual["total_frames"] != project["duration_frames"]
                         or actual["profile"] != project["profile"]):
                     raise ProjectError(409, "渲染结果与保存的 EDL 或实文件不一致，未发布成片。")
-                if project['schema_version'] == '0.2.0' and report.get('framing') != project['framing']:
+                if project['schema_version'] in ('0.2.0', '0.3.0') and report.get('framing') != project['framing']:
                     raise ProjectError(409, "成片裁剪配置与保存的 EDL 不一致，未发布成片。")
                 report = deepcopy(report)
                 report["output"]["path"] = "output.mp4"
@@ -189,7 +189,7 @@ def load_task_render(task_id, revision_id, render_id):
                 or report["output"]["total_frames"] != metadata["total_frames"]
                 or report["output"]["profile"] != metadata["profile"]):
             raise ValueError("render verification does not match its EDL/snapshot/output")
-        if snapshot['schema_version'] == '0.2.0' and report.get('framing') != snapshot['framing']:
+        if snapshot['schema_version'] in ('0.2.0', '0.3.0') and report.get('framing') != snapshot['framing']:
             raise ValueError('render framing differs from the saved EDL')
         if "subtitle_id" in metadata:
             from clipforge.editing.subtitles import to_ass, to_srt

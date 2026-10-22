@@ -170,7 +170,8 @@ def export_mlt(edl, source_root, require_media=True, *, subtitle_plan=None, anal
     ET.SubElement(background, "entry", {"producer": "black", "in": "0", "out": str(duration - 1)})
     chain_ids = {}
     clip_chains = {}
-    crops = {item['source_id']: item for item in edl.get('framing', {}).get('sources', [])}
+    framing = edl.get('framing', {})
+    rectangles = {item['source_id']: item for item in framing.get('sources', [])}
     for index, source in enumerate(edl["sources"]):
         chain_id = f"chain{index}"
         chain_ids[source["id"]] = chain_id
@@ -181,8 +182,8 @@ def export_mlt(edl, source_root, require_media=True, *, subtitle_plan=None, anal
                             "video_index": source["video_stream_index"],
                             "audio_index": -1 if source["audio_stream_index"] is None else source["audio_stream_index"],
                             "seekable": "1", "ignore_points": "0", "shotcut:caption": Path(resources[source["id"]]).name})
-        if source['id'] in crops:
-            crop = crops[source['id']]
+        if framing.get('mode') == 'center_crop':
+            crop = rectangles[source['id']]
             effect = ET.SubElement(chain, 'filter', {'id': f'crop{index}', 'in': '0',
                                                     'out': str(source['total_frames'] - 1)})
             # The loader's normalizing crop performs the operation before resize.
@@ -192,6 +193,19 @@ def export_mlt(edl, source_root, require_media=True, *, subtitle_plan=None, anal
                                  'right': source['width'] - crop['x'] - crop['width'],
                                  'bottom': source['height'] - crop['y'] - crop['height'],
                                  'clipforge:framing': 'center_crop'})
+        elif framing.get('mode') == 'fit_pad':
+            rectangle = rectangles[source['id']]
+            effect = ET.SubElement(chain, 'filter', {'id': f'fit{index}', 'in': '0',
+                                                    'out': str(source['total_frames'] - 1)})
+            # These are saved output coordinates. Request the native image and
+            # map it into that exact even rectangle before timeline subtitles.
+            _properties(effect, {'mlt_service': 'affine', 'background': 'colour:0',
+                                 'transition.rect': (f"{rectangle['x']} {rectangle['y']} "
+                                                     f"{rectangle['width']} {rectangle['height']} 1"),
+                                 'transition.distort': '1', 'transition.fill': '1',
+                                 'transition.b_scaled': '0', 'transition.halign': 'center',
+                                 'transition.valign': 'middle', 'use_normalized': '0',
+                                 'clipforge:framing': 'fit_pad'})
         if source['id'] in audio_sources:
             # A shared avformat decoder can lose audio at backward/repeated seeks.
             # Independent contexts reference the same bytes, without media copies.

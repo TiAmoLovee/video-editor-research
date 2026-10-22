@@ -1,0 +1,7 @@
+# Opt-in only after API and worker are built from the accepted v2 source.
+# Old API images cannot validate these candidates; this file does not deploy.
+services:
+  worker:
+    environment:
+      CLIPFORGE_CANDIDATE_GENERATOR: topic-valley-v2
+      CLIPFORGE_BOUNDARY_REPAIR: "0"

@@ -1,0 +1,338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClipForge EDL 0.3.0 full-frame fit portrait prototype",
+  "description": "Sequential integer-frame edits retain native source measurements and all original pixels. Output is even exact 9:16. Every complete source is fit on the black output canvas using the minimum width/height scale, with nearest even half-up dimensions clamped to the canvas and at least two pixels. Foreground origins are even and centered within one pixel. Source and timeline ranges remain half-open.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact_kind",
+    "profile",
+    "sources",
+    "clips",
+    "duration_frames",
+    "framing"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.3.0"
+    },
+    "artifact_kind": {
+      "const": "edit_decision_list"
+    },
+    "profile": {
+      "$ref": "#/$defs/profile"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "clips": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/clip"
+      }
+    },
+    "duration_frames": {
+      "$ref": "#/$defs/positive_frame"
+    },
+    "framing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "background",
+        "sources"
+      ],
+      "properties": {
+        "mode": {
+          "const": "fit_pad"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/framing_source"
+          }
+        },
+        "background": {
+          "const": "black"
+        }
+      },
+      "description": "Foreground rectangles in output canvas pixels, never source crop rectangles."
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "frame": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "positive_frame": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "fps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "num",
+        "den"
+      ],
+      "properties": {
+        "num": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "den": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width",
+        "height",
+        "fps"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "fps": {
+          "$ref": "#/$defs/fps"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ref",
+        "sha256",
+        "total_frames",
+        "width",
+        "height",
+        "fps",
+        "cfr",
+        "progressive",
+        "sample_aspect_num",
+        "sample_aspect_den",
+        "rotation_degrees",
+        "colorspace",
+        "video_stream_index",
+        "audio_stream_index"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "total_frames": {
+          "$ref": "#/$defs/positive_frame"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "fps": {
+          "$ref": "#/$defs/fps"
+        },
+        "cfr": {
+          "const": true
+        },
+        "progressive": {
+          "const": true
+        },
+        "sample_aspect_num": {
+          "const": 1
+        },
+        "sample_aspect_den": {
+          "const": 1
+        },
+        "rotation_degrees": {
+          "const": 0
+        },
+        "colorspace": {
+          "const": 709
+        },
+        "video_stream_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "audio_stream_index": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "clip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_id",
+        "source_in_frame",
+        "source_out_frame",
+        "timeline_in_frame",
+        "timeline_out_frame",
+        "provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_in_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "source_out_frame": {
+          "$ref": "#/$defs/positive_frame"
+        },
+        "timeline_in_frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "timeline_out_frame": {
+          "$ref": "#/$defs/positive_frame"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "candidate_id",
+            "candidate_document_sha256",
+            "original_source_id",
+            "original_source_sha256",
+            "original_start_seconds",
+            "original_end_seconds",
+            "original_in_frame",
+            "original_out_frame",
+            "original_selection_index",
+            "source_sentences"
+          ],
+          "properties": {
+            "candidate_id": {
+              "$ref": "#/$defs/id"
+            },
+            "candidate_document_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_source_id": {
+              "$ref": "#/$defs/id"
+            },
+            "original_source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_start_seconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "original_end_seconds": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "original_in_frame": {
+              "$ref": "#/$defs/frame"
+            },
+            "original_out_frame": {
+              "$ref": "#/$defs/positive_frame"
+            },
+            "original_selection_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "source_sentences": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        }
+      }
+    },
+    "framing_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16384,
+          "multipleOf": 2
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16384,
+          "multipleOf": 2
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 16384,
+          "multipleOf": 2
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 16384,
+          "multipleOf": 2
+        }
+      }
+    }
+  }
+}

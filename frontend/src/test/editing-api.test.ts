@@ -146,6 +146,42 @@ describe('saved export API', () => {
         source_out_frame: 300, timeline_in_frame: 1, timeline_out_frame: 301 }] }, manifest: {} })));
     await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
   });
+  it('reads full-picture framing only with an exact complete source mapping and keeps legacy EDLs readable', async () => {
+    const edl = { schema_version: '0.3.0', duration_frames: 300,
+      profile: { width: 1080, height: 1920, fps: { num: 30, den: 1 } }, sources: [{ id: 'source', width: 1920, height: 1080 }],
+      framing: { mode: 'fit_pad', background: 'black', sources: [{ source_id: 'source', x: 0, y: 656, width: 1080, height: 608 }] },
+      clips: [{ id: 'clip', source_id: 'source', source_in_frame: 0, source_out_frame: 300, timeline_in_frame: 0, timeline_out_frame: 300 }] };
+    const invalid = [
+      { ...edl, framing: { ...edl.framing, background: 'white' } },
+      { ...edl, framing: { ...edl.framing, mode: 'center_crop' } },
+      { ...edl, framing: { ...edl.framing, sources: [] } },
+      { ...edl, framing: { ...edl.framing, sources: [{ ...edl.framing.sources[0], source_id: 'unknown' }] } },
+      { ...edl, framing: { ...edl.framing, sources: [{ ...edl.framing.sources[0], y: 655 }] } },
+      { ...edl, framing: { ...edl.framing, sources: [{ ...edl.framing.sources[0], width: 1082 }] } },
+      { ...edl, sources: [...edl.sources, ...edl.sources], framing: { ...edl.framing, sources: [...edl.framing.sources, ...edl.framing.sources] } },
+      { ...edl, clips: [{ ...edl.clips[0], source_id: 'unmapped' }] },
+    ];
+    const fetcher = vi.fn();
+    for (const item of [edl, ...invalid, { ...edl, schema_version: '0.2.0', framing: { mode: 'center_crop', sources: [] } }]) {
+      fetcher.mockResolvedValueOnce(reply({ revision: record, edl: item, manifest: {} }));
+    }
+    vi.stubGlobal('fetch', fetcher);
+    expect((await api.getEdl(taskId, revisionId, signal())).edl.framing).toEqual(edl.framing);
+    for (const _item of invalid) await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
+    expect((await api.getEdl(taskId, revisionId, signal())).edl.schema_version).toBe('0.2.0');
+  });
+  it('creates a fitted child version once using its dedicated route and rejects a wrong parent or reused revision', async () => {
+    const child = { ...record, revision_id: subtitleId, derivation: { kind: 'fit_pad_9_16', parent_revision_id: revisionId } };
+    const fetcher = vi.fn().mockResolvedValueOnce(reply(child, 201))
+      .mockResolvedValueOnce(reply({ ...child, revision_id: revisionId }, 201))
+      .mockResolvedValueOnce(reply({ ...child, derivation: { ...child.derivation, parent_revision_id: subtitleId } }, 201));
+    vi.stubGlobal('fetch', fetcher);
+    expect(await api.createFittedPortrait(taskId, revisionId, signal())).toEqual(child);
+    expect(fetcher).toHaveBeenCalledWith(`/tasks/${taskId}/edl/${revisionId}/portrait-fit`, expect.objectContaining({ method: 'POST' }));
+    await expect(api.createFittedPortrait(taskId, revisionId, signal())).rejects.toBeInstanceOf(api.MutationUnknownError);
+    await expect(api.createFittedPortrait(taskId, revisionId, signal())).rejects.toBeInstanceOf(api.MutationUnknownError);
+    expect(fetcher).toHaveBeenCalledTimes(3);
+  });
   it('allows valid subtitle versions with zero cues', async () => {
     const subtitle = { ...record, subtitle_id: subtitleId, cue_count: 0, font_name: 'Noto Sans CJK SC' };
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply({ subtitles: [subtitle], renders: [], mlt_exports: [], unavailable_count: 0 })));

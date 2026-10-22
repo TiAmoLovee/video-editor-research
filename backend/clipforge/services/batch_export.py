@@ -103,7 +103,7 @@ def _validate_report(report, project, digest):
             or report["output"]["total_frames"] != project["duration_frames"]
             or report["clips"] != _filter_graph(project)[2]):
         raise ValueError("per-clip render verification differs from saved frame decisions")
-    if project["schema_version"] == "0.2.0" and report.get("framing") != project["framing"]:
+    if project["schema_version"] in ("0.2.0", "0.3.0") and report.get("framing") != project["framing"]:
         raise ValueError("per-clip framing mismatch")
 
 

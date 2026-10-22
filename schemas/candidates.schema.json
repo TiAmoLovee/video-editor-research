@@ -75,7 +75,7 @@
           ],
           "properties": {
             "version": {
-              "const": "topic-valley-v1"
+              "enum": ["topic-valley-v1", "topic-valley-v2", "topic-valley-v3", "topic-valley-v4"]
             },
             "options": {
               "type": "object",
@@ -126,14 +126,15 @@
               }
             }
           }
-        }
+        },
+        {"type": "object", "additionalProperties": false, "required": ["version", "options", "proposal"], "properties": {"version": {"const": "whole-response-candidates-v1"}, "options": {"$ref": "#/properties/generator/oneOf/0/properties/options"}, "proposal": {"type": "object"}}}
       ]
     },
     "candidate_count": {"type": "integer", "minimum": 0},
     "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
     "warnings": {
       "type": "array", "uniqueItems": true,
-      "items": {"enum": ["no_sentences", "overlong_sentence_unit_skipped", "no_eligible_window", "topic_short_segment_skipped", "topic_long_segment_skipped", "topic_uninformative_text"]}
+      "items": {"enum": ["no_sentences", "overlong_sentence_unit_skipped", "no_eligible_window", "topic_short_segment_skipped", "topic_long_segment_skipped", "topic_uninformative_text", "topic_unsupported_cut_rejected", "topic_suspect_asr_coverage", "topic_coverage_detector_disagreement", "topic_unverified_compound_gap", "topic_event_cut_rejected", "topic_event_dependency_unresolved", "topic_event_dependency_warning", "response_review_required", "response_event_skipped", "response_unresolved_source_end", "response_no_eligible_event"]}
     }
   },
   "$defs": {

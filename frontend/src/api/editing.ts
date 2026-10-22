@@ -108,8 +108,9 @@ function validEffort(value: unknown): boolean {
     && integer(value.removed_clip_count) && integer(value.minimum_moved_clip_count);
 }
 function validTimeline(value: unknown): boolean {
-  if (!object(value) || !['0.1.0', '0.2.0'].includes(value.schema_version as string) || !profile(value.profile)
+  if (!object(value) || !['0.1.0', '0.2.0', '0.3.0'].includes(value.schema_version as string) || !profile(value.profile)
     || !integer(value.duration_frames) || !Array.isArray(value.clips) || !value.clips.length || value.clips.length > 128) return false;
+  if (value.schema_version === '0.3.0' && !validFitFraming(value)) return false;
   let end = 0;
   const ids = new Set<string>();
   for (const clip of value.clips) {
@@ -122,6 +123,31 @@ function validTimeline(value: unknown): boolean {
     end = clip.timeline_out_frame;
   }
   return end === value.duration_frames;
+}
+function validFitFraming(value: Record<string, unknown>): boolean {
+  const output = value.profile;
+  const framing = value.framing;
+  if (!object(output) || !integer(output.width) || !integer(output.height) || output.width % 2 || output.height % 2
+    || output.width * 16 !== output.height * 9 || !object(framing) || framing.mode !== 'fit_pad' || framing.background !== 'black'
+    || Object.keys(framing).some(key => !['mode', 'background', 'sources'].includes(key))
+    || !Array.isArray(value.sources) || !value.sources.length || !Array.isArray(framing.sources)
+    || framing.sources.length !== value.sources.length) return false;
+  const sourceIds = new Set<string>();
+  for (const source of value.sources) {
+    if (!object(source) || typeof source.id !== 'string' || !source.id || sourceIds.has(source.id)
+      || !integer(source.width) || !source.width || !integer(source.height) || !source.height) return false;
+    sourceIds.add(source.id);
+  }
+  const mappedIds = new Set<string>();
+  for (const rect of framing.sources) {
+    if (!object(rect) || Object.keys(rect).some(key => !['source_id', 'x', 'y', 'width', 'height'].includes(key))
+      || typeof rect.source_id !== 'string' || !sourceIds.has(rect.source_id) || mappedIds.has(rect.source_id)
+      || !integer(rect.x) || rect.x % 2 || !integer(rect.y) || rect.y % 2
+      || !integer(rect.width) || rect.width < 2 || rect.width % 2 || !integer(rect.height) || rect.height < 2 || rect.height % 2
+      || rect.x + rect.width > output.width || rect.y + rect.height > output.height) return false;
+    mappedIds.add(rect.source_id);
+  }
+  return Array.isArray(value.clips) && value.clips.every(clip => object(clip) && typeof clip.source_id === 'string' && mappedIds.has(clip.source_id));
 }
 export function listArtifacts(task: string, revision: string, signal: AbortSignal): Promise<ArtifactHistory> {
   return request(`${revisionPath(task, revision)}/artifacts`, signal, value => object(value) && integer(value.unavailable_count)
@@ -145,6 +171,9 @@ export function saveEdits(task: string, revision: string, clips: EditedClip[], s
     { clips, editing_elapsed_ms: null, ...(actor !== undefined ? { actor: actor.trim() } : {}) }, true);
 }
 export const createPortrait = (task: string, revision: string, signal: AbortSignal): Promise<EdlRevision> => request(`${revisionPath(task, revision)}/portrait`, signal, value => revisionRecord(value, task), undefined, true);
+export const createFittedPortrait = (task: string, revision: string, signal: AbortSignal): Promise<EdlRevision> => request(`${revisionPath(task, revision)}/portrait-fit`, signal,
+  value => revisionRecord(value, task) && object(value) && value.revision_id !== revision && object(value.derivation)
+    && value.derivation.kind === 'fit_pad_9_16' && value.derivation.parent_revision_id === revision, undefined, true);
 export const createSubtitles = (task: string, revision: string, signal: AbortSignal): Promise<SubtitleRecord> => request(`${revisionPath(task, revision)}/subtitles`, signal, value => artifact(value, task, revision, 'subtitle_id'), undefined, true);
 export function createMp4(task: string, revision: string, subtitle: string | undefined, signal: AbortSignal): Promise<RenderRecord> {
   const base = subtitle ? versionPath(task, revision, 'subtitles', subtitle) : revisionPath(task, revision);
