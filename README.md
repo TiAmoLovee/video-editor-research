@@ -1,12 +1,12 @@
 # ClipForge 智剪工坊
 
-**统一工作台：[老师使用与验收指南](docs/WEEK6_TEACHER_GUIDE.md)**。第六周功能已与最新第四、第五周修复整合；转写联动、候选复核、时码编辑、审计及逐片导出位于同一个任务详情页，保留原整段回答、完整画面竖屏和字幕修时。线上入口只在部署及访问核验后发布。
+**统一工作台：[老师使用与验收指南](docs/WEEK6_TEACHER_GUIDE.md)**。第六周功能已与最新第四、第五周修复整合；转写联动、候选复核、时码编辑、审计及逐片导出位于同一个任务详情页，保留原整段回答、完整画面竖屏和字幕修时。整合版本已合并到 `main`；下载代码后按下方 Docker 步骤在自己的电脑运行。
 
-**第六周交互工作台：[功能与验收说明](docs/WEEK6_DELIVERY.md)**。新增转写点击跳转、候选采纳／驳回保存、精确时码编辑、姓名及前后值审计、按保存版本逐片导出 ZIP。真实浏览器修改、保存、重新导出及下载验收通过；合成素材成片与批量片段逐帧切点误差均为 0 帧。Windows、Linux 四项 CI 检查通过，当前未部署。
+**第六周交互工作台：[功能与验收说明](docs/WEEK6_DELIVERY.md)**。新增转写点击跳转、候选采纳／驳回保存、精确时码编辑、姓名及前后值审计、按保存版本逐片导出 ZIP。真实浏览器修改、保存、重新导出及下载验收通过；合成素材成片与批量片段逐帧切点误差均为 0 帧。Windows、Linux 四项 CI 检查通过；整合版本已在本机原工作台验证，原 23 个任务保留。下载的代码不包含这些本机任务或私人素材。
 
 **第四周老师反馈整改：[话题候选生成](docs/TOPIC_GENERATION.md)**。已实现生成前的相邻窗口相似度谷点分段，候选只取完整话题段。New1–4 的开发回放由 600 个滑窗变为 17 个候选，未生成的短段及首次失败诊断保留；未评价的新边界不沿用旧标签。新策略暂为明确启用的实验，尚未替换生产流程，不能宣称质量达到 85%。
 
-**[采纳后的人工修改量](docs/MANUAL_EDIT_EFFORT.md)** 已在本地接入统一 EDL 和网页编辑：按源帧调整、增删和重排，保存新版本并保留采纳基线；区分最终净变化和父子版本本次变化，不从保存时间猜测耗时。旧 EDL Schema 保持原样；尚未部署或收集独立素材数据。
+**[采纳后的人工修改量](docs/MANUAL_EDIT_EFFORT.md)** 已在本地接入统一 EDL 和网页编辑：按源帧调整、增删和重排，保存新版本并保留采纳基线；区分最终净变化和父子版本本次变化，不从保存时间猜测耗时。旧 EDL Schema 保持原样；该功能已随整合版本部署到本机，独立素材数据仍待收集。
 
 **第五周本地交付：[功能与验收核对](docs/WEEK5_DELIVERY.md) · [统一 EDL 与第二周衔接](docs/WEEK2_TO_WEEK5.md) · [网页导出与历史恢复](docs/WEB_EXPORT.md)**。已打通明确选择候选 → 保存 EDL → 精确 MP4／可继续编辑的 MLT，包含固定中心 9:16、SRT／ASS 和字幕烧录。真实网页导出及播放跳转、五例 Shotcut 实际打开另存与整数切点回读均通过。新 MLT 字幕将文字与样式分开保存，实际中文全文替换、两行编辑、另存及原生渲染通过；旧版导出按保存的策略继续核验。隔离 Linux 的合成 EDL 导出及 HTTP 范围读取已通过，用户已确认三处人声字幕无明显同步问题，≤0.3 秒尚未量化记录。Test3 的固定中心取景会丢失说话人，建议保留横屏；尺寸和帧序通过不代表取景合格。第五周 PR #8 已合并，2026-10-13 核对本机 8200 服务可读取原任务及新版导出工作台；这些导出检查不等于第四周叙事质量已经达标。
 
@@ -56,13 +56,28 @@ compose.yaml                 本地容器编排
 
 ## Docker 启动（用于完整流程）
 
-安装 Git、Docker Desktop，启用 Linux 容器。先按 [ASR 说明](docs/ASR_ANALYSIS.md) 将固定版本模型准备到 models/faster-whisper-base；模型由 worker 只读挂载。然后在项目根目录执行：
+安装并启动 Docker Desktop，启用 Linux 容器。从 GitHub 的 **Code → Download ZIP** 下载并解压，或克隆本仓库；在含 `compose.yaml` 的项目根目录打开 PowerShell。只用 Docker 运行时不需要另外安装 Git、Python、Node.js 或 FFmpeg，也不需要模型服务的 API Key。
+
+首次运行先构建镜像，再用 worker 镜像下载并校验固定版本的本地语音模型（base，约 148 MB）。模型不包含在代码 ZIP 中，首次构建和下载需要网络。下载命令只对这一次容器开放模型目录写入；正常 worker 仍只读挂载模型。
 
 ```powershell
 docker compose config --quiet
-docker compose up -d --build
+docker compose build api worker
+if ($LASTEXITCODE -ne 0) { throw "镜像构建失败，请检查上方输出" }
+
+New-Item -ItemType Directory -Force models | Out-Null
+$modelDir = (Resolve-Path models).Path
+docker compose run --rm --no-deps --user 0 --volume "${modelDir}:/model-download" worker python -m clipforge.analysis.model --model base --directory /model-download/faster-whisper-base
+if ($LASTEXITCODE -ne 0) { throw "模型准备失败，请检查上方输出" }
+
+docker compose up -d
+docker compose exec -T worker python -m clipforge.analysis.model --model base --directory /models/faster-whisper-base --check
 docker compose ps
 ```
+
+默认使用本地 ASR 与规则评分，模型边界优化关闭；不需要配置 `compose.llm.yaml` 或 `compose.boundary.yaml`。已有且校验通过的模型会直接复用，不重复下载。
+
+新电脑的任务列表初始为空。上传一条自己准备的、约 30–90 秒且讲话清晰的视频，等待分析完成，再按[老师使用指南](docs/WEEK6_TEACHER_GUIDE.md)检查转写联动、候选复核、时码编辑、审计和逐片 ZIP 导出。无讲话或过短的视频可能没有可复核候选。
 
 打开 [工作台](http://127.0.0.1:8200/)；[接口文档](http://127.0.0.1:8200/docs)用于开发检查。地址指向访问者自己的电脑，GitHub 不运行这些服务。
 
@@ -181,3 +196,4 @@ $video = Read-Host "请输入要处理的视频完整路径"
 | [Week1Work.mlt](docs/samples/Week1Work.mlt) | 手工工程样本，需 Shotcut 和对应原素材 |
 
 第二周进一步说明：[归一化](docs/NORMALIZATION.md)、[切片](docs/SPLITTING.md)、[队列](docs/QUEUE.md)、[视频接口](docs/VIDEO_TASKS.md)、[网页操作](docs/WEB_UI.md)、[周报](docs/WEEKLY.md)。
+
