@@ -1,0 +1,238 @@
+{
+  "status": "passed",
+  "task_id": "61111111-1111-4111-8111-111111111111",
+  "revision_id": "b103e717-375b-439c-a78e-91fd74e40a66",
+  "parent_revision_id": "fe34fa6b-6d85-4fb1-899c-9ae62fd9225e",
+  "render_id": "805dd702-e85b-4dc3-8a22-6e6f14f55ecb",
+  "batch_export_id": "37398eb2-6f00-492f-bcbb-24dc695b9030",
+  "verification_method": "direct_registered_route_functions",
+  "asgi_probe": {
+    "method": "httpx_asgi_transport",
+    "status": "timed_out",
+    "timeout_seconds": 15,
+    "limitation": "The read-only /health ASGI probe hung in this desktop environment; no mutations were attempted."
+  },
+  "actual_asgi_http_roundtrip": false,
+  "direct_registered_route_roundtrip": true,
+  "web_ui": false,
+  "web_ui_edit_save_render": false,
+  "browser_verification": "not_performed_localhost_unreachable",
+  "actor": "第六周自动验收",
+  "clips": [
+    {
+      "candidate_id": "c_34b602279cc784182c458713c14d5e002cf6df89d8982533800fb500eee8aac8",
+      "source_in_frame": 303,
+      "source_out_frame": 595
+    },
+    {
+      "candidate_id": "c_3f28d8207ab6ddfd182a2e9ffe96416a93ad46e2b0900ba385ccb9d521633c0d",
+      "source_in_frame": 2,
+      "source_out_frame": 297
+    }
+  ],
+  "total_frames": 587,
+  "review_request_recovery_verified": true,
+  "review_idempotency_verified": true,
+  "batch_idempotency_verified": true,
+  "batch_zip_hashes_verified": true,
+  "streaming_range_response_verified": true,
+  "audit_before_after_verified": true,
+  "audit_event_count": 4,
+  "request_count": 22,
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews",
+      "status_code": 200,
+      "seconds": 1.547,
+      "response_bytes": 771,
+      "response_sha256": "9a5091cb8f48472071a177569a81a7b6985af99bf2ee19186e1c86a23f1433f5"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews",
+      "status_code": 201,
+      "seconds": 0.156,
+      "response_bytes": 916,
+      "response_sha256": "c9229e015c60ae734daeb645e34cc66d45148ffe4571c47b17f871d359b2e6ce"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews/requests/12793871-0b68-490d-8f16-d03a6b7ad761",
+      "status_code": 200,
+      "seconds": 0.016,
+      "response_bytes": 916,
+      "response_sha256": "7309bd7da2d4d32f947135b079cddbf7ba6626f8d673c098d67d6307c8baa80a"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews",
+      "status_code": 201,
+      "seconds": 0.109,
+      "response_bytes": 916,
+      "response_sha256": "7309bd7da2d4d32f947135b079cddbf7ba6626f8d673c098d67d6307c8baa80a"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews",
+      "status_code": 201,
+      "seconds": 0.141,
+      "response_bytes": 952,
+      "response_sha256": "528620d7d672cb980d43c82b7c5fc2b45ab6d956c46f36dbf0c1f75da1e4e183"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews/requests/bc2871cb-82eb-4de4-a2c2-2d8fdc1d9ce7",
+      "status_code": 200,
+      "seconds": 0.016,
+      "response_bytes": 952,
+      "response_sha256": "efcde28259040233192c4b859c88d7b474ad9576077caa2dfbb0eb7341feecc5"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews",
+      "status_code": 201,
+      "seconds": 0.031,
+      "response_bytes": 952,
+      "response_sha256": "efcde28259040233192c4b859c88d7b474ad9576077caa2dfbb0eb7341feecc5"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews/requests/e9cc1ad4-d8f5-46fb-ab04-5533b3990844",
+      "status_code": 404,
+      "seconds": 0.016,
+      "response_bytes": 61,
+      "response_sha256": "d7e91c09dd33b080ca9c5678cd3a06039a7a0fec5d2eb5b54a9cdc5b6a987bb0"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl",
+      "status_code": 201,
+      "seconds": 0.453,
+      "response_bytes": 683,
+      "response_sha256": "bd12bedbaae9be76f3b797a39fa5c05f0beee985a136bed2276e2afe81a2f77d"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/fe34fa6b-6d85-4fb1-899c-9ae62fd9225e/edits",
+      "status_code": 201,
+      "seconds": 0.781,
+      "response_bytes": 1045,
+      "response_sha256": "09bbd31e9edd24f2ffed947df0cfe14c28fe36a46eb12e54fa17c27e22297319"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/b103e717-375b-439c-a78e-91fd74e40a66",
+      "status_code": 200,
+      "seconds": 0.484,
+      "response_bytes": 15319,
+      "response_sha256": "896ce56b7a3e9926406b68cb98178da5f934a9e69fcd835d4fef19d99aa8f5ab"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/fe34fa6b-6d85-4fb1-899c-9ae62fd9225e",
+      "status_code": 200,
+      "seconds": 0.219,
+      "response_bytes": 3686,
+      "response_sha256": "4d84a78dc9af5b2b382340f42516cb14e0466fcbacd18683aa2e4453c19086ea"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/b103e717-375b-439c-a78e-91fd74e40a66/renders",
+      "status_code": 201,
+      "seconds": 2.297,
+      "response_bytes": 758,
+      "response_sha256": "cd958059fc7d42cbf456cc11ef44cd193631e3d6cb142c12a8e16e642165554f"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/b103e717-375b-439c-a78e-91fd74e40a66/renders/805dd702-e85b-4dc3-8a22-6e6f14f55ecb",
+      "status_code": 200,
+      "seconds": 0.375,
+      "response_bytes": 2592,
+      "response_sha256": "50664dbf183446c253c584d22a8390388202983317ab48bec60355271a917b4d"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/b103e717-375b-439c-a78e-91fd74e40a66/exports/batch",
+      "status_code": 201,
+      "seconds": 2.734,
+      "response_bytes": 943,
+      "response_sha256": "3c7ba1a98fbff224cc675c8d0c0b042d35f065998da64c5e5359e94ad50037aa"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/b103e717-375b-439c-a78e-91fd74e40a66/exports/batch/37398eb2-6f00-492f-bcbb-24dc695b9030",
+      "status_code": 200,
+      "seconds": 0.344,
+      "response_bytes": 5483,
+      "response_sha256": "e9f938dc1bdfce000be774a234985ef9b9ab1431924f47624d559d342a573c4d"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/b103e717-375b-439c-a78e-91fd74e40a66/exports/batch",
+      "status_code": 201,
+      "seconds": 0.781,
+      "response_bytes": 943,
+      "response_sha256": "3c7ba1a98fbff224cc675c8d0c0b042d35f065998da64c5e5359e94ad50037aa"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/edl/b103e717-375b-439c-a78e-91fd74e40a66/exports/batch/37398eb2-6f00-492f-bcbb-24dc695b9030/files/clips.zip",
+      "status_code": 200,
+      "seconds": 0.594,
+      "response_bytes": 526772,
+      "response_sha256": "100110b0ad51d90fc4835bb16bfc017be4e8f9f38def8ba607e3800a2b40939b"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/source",
+      "status_code": 206,
+      "seconds": 0.078,
+      "response_bytes": 1024,
+      "response_sha256": "44426c8c8a316069c8b583b47393352bb908d0c43d8275cb8610a042caee2df4"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/reviews",
+      "status_code": 200,
+      "seconds": 0.157,
+      "response_bytes": 1021,
+      "response_sha256": "18c0ffe9876276a8ce5a7daf13186f9bb0b33afe7e11d1057cbaf58906558722"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/audit",
+      "status_code": 200,
+      "seconds": 0.5,
+      "response_bytes": 5716,
+      "response_sha256": "edc72e39aa478a82f5dae2bdf99d8e5061b4ba7e5cb094f54ad71dd4b121b715"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/61111111-1111-4111-8111-111111111111/audit/download",
+      "status_code": 200,
+      "seconds": 0.39,
+      "response_bytes": 7888,
+      "response_sha256": "dd09033f7f62705f2c6f96e9ef335761d37471cba5c738d509a947785d2a0689"
+    }
+  ],
+  "original_job_unchanged": true,
+  "source_media_unchanged": true,
+  "model_calls": 0,
+  "asr_calls": 0,
+  "independent_all_frame_decode": false,
+  "scope": "Real backend routes and real FFmpeg/FFprobe; authored synthetic material. Independent frame decoding runs separately. Browser click/playback behavior is not verified.",
+  "seed_material_contract": {
+    "sample_aspect_ratio": "1:1",
+    "color_space": "bt709",
+    "color_transfer": "bt709",
+    "color_primaries": "bt709",
+    "frame_filter": "setsar=1,setparams=color_primaries=bt709:color_trc=bt709:colorspace=bt709",
+    "failed_attempts_preserved": [
+      "seed-attempt-1",
+      "seed-attempt-2"
+    ],
+    "user_materials_changed": false
+  }
+}

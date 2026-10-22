@@ -1,0 +1,19 @@
+{
+  "status": "source_integration_tests_passed",
+  "date": "2026-10-22",
+  "upstream_main": "a43a4b16b268e79b409b7fba6b5fb9ec30ced400",
+  "previous_week6_head": "6b81d5c71bfeb79f2fe5d61f02b45db9524c5dad",
+  "frontend": {"tests": 121, "passed": 121, "typecheck": "passed", "build": "passed"},
+  "backend_targeted": {"tests": 193, "passed": 193, "failures": 0, "errors": 0, "skipped": 0},
+  "new_regressions": [
+    "whole-response adoption forwards actor into baseline audit",
+    "new whole-response candidates do not reuse earlier review snapshots",
+    "EDL 0.3 framing is verified while creating and loading batch exports",
+    "missing or changed framing is rejected",
+    "batch work locks the selected version and preserves fit/crop version identity",
+    "real fit_pad batch clips retain source-frame identity, margins and audio sample budgets"
+  ],
+  "preserved": ["ASR coverage recovery v2", "whole-response candidates", "word-span EDL 0.3", "portrait fit", "subtitle timing", "original task storage"],
+  "real_media_new_fit_batch": {"source_ranges": [[1, 6], [37, 43]], "frames": 11, "all_source_frame_ids_match": true},
+  "scope": "Source integration and isolated local tests. Deployment, browser operations and teacher HTTPS access require separate runtime evidence."
+}

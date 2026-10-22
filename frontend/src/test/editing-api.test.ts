@@ -10,6 +10,17 @@ const signal = () => new AbortController().signal;
 afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
 
 describe('saved export API', () => {
+  it('sends the user supplied actor for adoption and edits without inventing an identity', async () => {
+    const fetcher = vi.fn().mockResolvedValueOnce(reply(record, 201)).mockResolvedValueOnce(reply({ ...record, revision_id: subtitleId }, 201));
+    vi.stubGlobal('fetch', fetcher);
+    await api.createEdl(taskId, ['first'], signal(), ' 小明 ');
+    expect(JSON.parse(fetcher.mock.calls[0][1].body)).toEqual({ selected_ids: ['first'], actor: '小明' });
+    const clips = [{ candidate_id: 'first', source_in_frame: 1, source_out_frame: 20 }];
+    await api.saveEdits(taskId, revisionId, clips, signal(), ' 小明 ');
+    expect(JSON.parse(fetcher.mock.calls[1][1].body)).toEqual({ clips, editing_elapsed_ms: null, actor: '小明' });
+    expect(() => api.saveEdits(taskId, revisionId, clips, signal(), ' ')).toThrow('姓名');
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
   it('preserves explicit selection order and sends one POST', async () => {
     const fetcher = vi.fn().mockResolvedValue(reply(record, 201)); vi.stubGlobal('fetch', fetcher);
     expect(await api.createEdl(taskId, ['second', 'first'], signal())).toEqual(record);
@@ -80,6 +91,21 @@ describe('saved export API', () => {
     expect((await api.getEdl(taskId, revisionId, signal())).available_clips).toEqual([projection]);
     await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
     await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
+  });
+  it('rejects malformed audit identity or timestamp before rendering saved edits', async () => {
+    const effort = { net_boundary_adjustment_seconds: 0, adjusted_clip_count: 0, added_clip_count: 0,
+      removed_clip_count: 0, minimum_moved_clip_count: 0 };
+    const saved = { revision: record, edl: { schema_version: '0.1.0', duration_frames: 300,
+      profile: { width: 160, height: 90, fps: { num: 30, den: 1 } }, clips: [{ id: 'clip', source_id: 'source',
+        source_in_frame: 0, source_out_frame: 300, timeline_in_frame: 0, timeline_out_frame: 300 }] },
+      edit_record: { baseline_revision_id: revisionId, parent_revision_id: subtitleId, editing_elapsed_ms: null,
+        effort, step_effort: effort, actor: '测试编辑者', created_at: '2026-10-13T07:00:00Z' } };
+    const fetcher = vi.fn().mockResolvedValueOnce(reply(saved)); vi.stubGlobal('fetch', fetcher);
+    expect((await api.getEdl(taskId, revisionId, signal())).edit_record?.actor).toBe('测试编辑者');
+    for (const patch of [{ actor: {} }, { actor: ' ' }, { actor: 'a'.repeat(81) }, { created_at: {} }, { created_at: 'invalid' }]) {
+      fetcher.mockResolvedValueOnce(reply({ ...saved, edit_record: { ...saved.edit_record, ...patch } }));
+      await expect(api.getEdl(taskId, revisionId, signal())).rejects.toThrow('格式');
+    }
   });
   it('marks lost creation responses as unknown without retry', async () => {
     const fetcher = vi.fn().mockRejectedValue(new TypeError('connection lost')); vi.stubGlobal('fetch', fetcher);

@@ -34,6 +34,8 @@ export interface EditEffort {
   minimum_moved_clip_count: number;
 }
 export interface EditRecord {
+  actor?: string | null;
+  created_at?: string;
   baseline_revision_id: string;
   parent_revision_id: string;
   editing_elapsed_ms: number | null;

@@ -138,7 +138,7 @@ def preview_task_response_candidates(task_id, proposal):
         raise ProjectError(503, "任务分析暂不可读，请检查后台日志。") from error
 
 
-def create_task_edl(task_id, selected_ids, *, ffprobe=None, timeout=90,
+def create_task_edl(task_id, selected_ids, *, ffprobe=None, timeout=90, actor=None,
                     response_proposal=None, response_preview_sha256=None):
     """Verify existing task media, then publish a new revision with a commit record.
 
@@ -147,6 +147,8 @@ No original analysis, task result, media or previous revision is overwritten.
 """
     task_id = _uuid(task_id)
     job = _completed_job(task_id)
+    from clipforge.services.reviewing import normalize_actor
+    actor = normalize_actor(actor, required=False)
     try:
         analysis = _result_json(job, task_id, "analysis.json")
         if response_proposal is not None:
@@ -190,7 +192,9 @@ No original analysis, task result, media or previous revision is overwritten.
             revision = {"format_version": 1, "task_id": task_id, "revision_id": revision_id,
                         "source_task_id": source_task_id, "created_at": now(),
                         "clip_count": len(project["clips"]), "duration_frames": project["duration_frames"],
-                        "files": {name: _digest(target / name) for name in sorted(FILES)}}
+                        "files": {name: _digest(target / name) for name in sorted(FILES)},
+                        "actor": actor,
+                        "actor_scope": "user_supplied_name" if actor is not None else "unrecorded"}
             # Written last: a complete, valid commit record plus matching file
             # hashes is required by every reader. No directory rename/hardlink
             # is needed, and unfinished revisions can never be read as valid.
@@ -292,6 +296,16 @@ def load_task_edl(task_id, revision_id, *, _visited=frozenset()):
                 or revision["task_id"] != task_id or revision["revision_id"] != revision_id
                 or set(revision["files"]) != expected_files):
             raise ValueError("invalid revision identity/files")
+        if "actor" in revision or "actor_scope" in revision:
+            from clipforge.services.reviewing import normalize_actor
+            try:
+                actor = normalize_actor(revision["actor"], required=False)
+            except ProjectError as error:
+                raise ValueError("invalid saved adoption operator") from error
+            if (actor != revision["actor"]
+                    or revision["actor_scope"] != ("user_supplied_name" if actor is not None else "unrecorded")
+                    or "derivation" in revision):
+                raise ValueError("invalid adoption operator record")
         _uuid(revision["source_task_id"])
         for filename in expected_files:
             if _digest(_contained_file(folder, filename)) != revision["files"][filename]:
