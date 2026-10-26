@@ -1,0 +1,921 @@
+{
+  "date": "2026-10-26",
+  "model": "qwen-plus",
+  "protocol": "llm-v2",
+  "prompt_sha256": "56885e12bfaf914956ff7781d3d09d0add0c2bbf5311b3ee9c1dd3fba306ef7b",
+  "frozen_candidate_denominator": 18,
+  "requests_attempted": 18,
+  "valid_pairs": 14,
+  "invalid_assessments": 4,
+  "not_attempted": 0,
+  "retry_count": 0,
+  "labels_or_old_scores_sent_to_model": false,
+  "changed_human_labels": false,
+  "rule_weight_changes": false,
+  "new_accounted_tokens": 12417,
+  "cumulative_research_tokens": 140874,
+  "research_limit": 200000,
+  "provider_balance_verified": false,
+  "first_round_failure_preserved": true,
+  "failed_R003_not_retried": true,
+  "failure_reason_R003": "conciseness quote added one character absent from the original continuous text",
+  "continuation_scope": "Only the 15 never-attempted frozen payloads. Candidate validation failures with known usage stay missing; transport, HTTP, quota, unknown usage and budget failures stop sends.",
+  "metrics": {
+    "scope": "same-candidate development diagnostic, no weight tuning or human relabeling",
+    "frozen_denominator": 18,
+    "valid_pairs": 14,
+    "coverage": 0.7777777777777778,
+    "legacy_36_human_label_coverage": {
+      "frozen_denominator": 36,
+      "valid_pairs": 14,
+      "coverage": 0.3888888888888889,
+      "note": "coverage only; four-check New1/New2 labels and five-check Tim/Zhouyang labels are not pooled for AUC"
+    },
+    "groups": [
+      {
+        "source_name": "New1",
+        "frozen_denominator": 10,
+        "valid_llm_pairs": 9,
+        "coverage": 0.9,
+        "full_cohort_model_ranking_observed": false,
+        "rule_full_cohort_primary": {
+          "eligible": 8,
+          "positive": 5,
+          "negative": 3,
+          "auc": 0.2,
+          "auc_pairs": 15,
+          "auc_ties": 0,
+          "top_k": 5,
+          "top_k_positive": 2,
+          "precision_at_k": 0.4,
+          "top_sample_ids": [
+            "S02",
+            "S01",
+            "S07",
+            "S04",
+            "S06"
+          ],
+          "cutoff_tie_expected_precision": 0.4,
+          "cutoff_tie_min_precision": 0.4,
+          "cutoff_tie_max_precision": 0.4
+        },
+        "paired_primary_rule": {
+          "eligible": 8,
+          "positive": 5,
+          "negative": 3,
+          "auc": 0.2,
+          "auc_pairs": 15,
+          "auc_ties": 0,
+          "top_k": 5,
+          "top_k_positive": 2,
+          "precision_at_k": 0.4,
+          "top_sample_ids": [
+            "S02",
+            "S01",
+            "S07",
+            "S04",
+            "S06"
+          ],
+          "cutoff_tie_expected_precision": 0.4,
+          "cutoff_tie_min_precision": 0.4,
+          "cutoff_tie_max_precision": 0.4
+        },
+        "paired_primary_llm": {
+          "eligible": 8,
+          "positive": 5,
+          "negative": 3,
+          "auc": 0.8666666666666667,
+          "auc_pairs": 15,
+          "auc_ties": 2,
+          "top_k": 5,
+          "top_k_positive": 4,
+          "precision_at_k": 0.8,
+          "top_sample_ids": [
+            "S02",
+            "S06",
+            "S01",
+            "S08",
+            "S09"
+          ],
+          "cutoff_tie_expected_precision": 0.8,
+          "cutoff_tie_min_precision": 0.8,
+          "cutoff_tie_max_precision": 0.8
+        },
+        "paired_uncertain_not_pass_rule": {
+          "eligible": 9,
+          "positive": 5,
+          "negative": 4,
+          "auc": 0.25,
+          "auc_pairs": 20,
+          "auc_ties": 0,
+          "top_k": 5,
+          "top_k_positive": 2,
+          "precision_at_k": 0.4,
+          "top_sample_ids": [
+            "S02",
+            "S01",
+            "S07",
+            "S04",
+            "S06"
+          ],
+          "cutoff_tie_expected_precision": 0.4,
+          "cutoff_tie_min_precision": 0.4,
+          "cutoff_tie_max_precision": 0.4
+        },
+        "paired_uncertain_not_pass_llm": {
+          "eligible": 9,
+          "positive": 5,
+          "negative": 4,
+          "auc": 0.9,
+          "auc_pairs": 20,
+          "auc_ties": 2,
+          "top_k": 5,
+          "top_k_positive": 4,
+          "precision_at_k": 0.8,
+          "top_sample_ids": [
+            "S02",
+            "S06",
+            "S01",
+            "S08",
+            "S09"
+          ],
+          "cutoff_tie_expected_precision": 0.8,
+          "cutoff_tie_min_precision": 0.8,
+          "cutoff_tie_max_precision": 0.8
+        },
+        "partial_top_k_scope": "best among successfully scored labeled subset only; missing candidates may change full-cohort ranking"
+      },
+      {
+        "source_name": "New2",
+        "frozen_denominator": 8,
+        "valid_llm_pairs": 5,
+        "coverage": 0.625,
+        "full_cohort_model_ranking_observed": false,
+        "rule_full_cohort_primary": {
+          "eligible": 8,
+          "positive": 7,
+          "negative": 1,
+          "auc": 0.5714285714285714,
+          "auc_pairs": 7,
+          "auc_ties": 0,
+          "top_k": 5,
+          "top_k_positive": 4,
+          "precision_at_k": 0.8,
+          "top_sample_ids": [
+            "S08",
+            "S04",
+            "S05",
+            "S06",
+            "S02"
+          ],
+          "cutoff_tie_expected_precision": 0.8,
+          "cutoff_tie_min_precision": 0.8,
+          "cutoff_tie_max_precision": 0.8
+        },
+        "paired_primary_rule": {
+          "eligible": 5,
+          "positive": 5,
+          "negative": 0,
+          "auc": null,
+          "auc_pairs": 0,
+          "auc_ties": 0,
+          "top_k": 5,
+          "top_k_positive": 5,
+          "precision_at_k": 1.0,
+          "top_sample_ids": [
+            "S05",
+            "S06",
+            "S07",
+            "S03",
+            "S01"
+          ],
+          "cutoff_tie_expected_precision": 1.0,
+          "cutoff_tie_min_precision": 1.0,
+          "cutoff_tie_max_precision": 1.0
+        },
+        "paired_primary_llm": {
+          "eligible": 5,
+          "positive": 5,
+          "negative": 0,
+          "auc": null,
+          "auc_pairs": 0,
+          "auc_ties": 0,
+          "top_k": 5,
+          "top_k_positive": 5,
+          "precision_at_k": 1.0,
+          "top_sample_ids": [
+            "S05",
+            "S01",
+            "S03",
+            "S06",
+            "S07"
+          ],
+          "cutoff_tie_expected_precision": 1.0,
+          "cutoff_tie_min_precision": 1.0,
+          "cutoff_tie_max_precision": 1.0
+        },
+        "paired_uncertain_not_pass_rule": {
+          "eligible": 5,
+          "positive": 5,
+          "negative": 0,
+          "auc": null,
+          "auc_pairs": 0,
+          "auc_ties": 0,
+          "top_k": 5,
+          "top_k_positive": 5,
+          "precision_at_k": 1.0,
+          "top_sample_ids": [
+            "S05",
+            "S06",
+            "S07",
+            "S03",
+            "S01"
+          ],
+          "cutoff_tie_expected_precision": 1.0,
+          "cutoff_tie_min_precision": 1.0,
+          "cutoff_tie_max_precision": 1.0
+        },
+        "paired_uncertain_not_pass_llm": {
+          "eligible": 5,
+          "positive": 5,
+          "negative": 0,
+          "auc": null,
+          "auc_pairs": 0,
+          "auc_ties": 0,
+          "top_k": 5,
+          "top_k_positive": 5,
+          "precision_at_k": 1.0,
+          "top_sample_ids": [
+            "S05",
+            "S01",
+            "S03",
+            "S06",
+            "S07"
+          ],
+          "cutoff_tie_expected_precision": 1.0,
+          "cutoff_tie_min_precision": 1.0,
+          "cutoff_tie_max_precision": 1.0
+        },
+        "partial_top_k_scope": "best among successfully scored labeled subset only; missing candidates may change full-cohort ranking"
+      }
+    ],
+    "label_policy": "exclude uncertain from primary; retain as not-pass in sensitivity; no missing score imputation",
+    "tie_policy": "AUC ties half; descending score/source hash/candidate ID; report Top-k cutoff tie bounds",
+    "model_failures_and_unsent_are_not_rule_fallback": true,
+    "independent_validation": false
+  },
+  "rows": [
+    {
+      "source_name": "New1",
+      "sample_id": "S01",
+      "candidate_id": "c_1b16dbbbde328434fa15af15cd79a0a0c74468b6a63d8905a1c10402ab642931",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 72.06,
+      "end": 99.62,
+      "text_sha256": "2974d12392e322c5252c423e894cbd8b8eb75b47c001eb6da27e78073dcc4f19",
+      "sentence_ids_sha256": "a4644affaca40a3872410da6e4b3ce8c36b0d6073ed0151b001dbd1fd5532d79",
+      "label_status": "negative",
+      "rule_score": 43.033507,
+      "request_id": "R001",
+      "llm_score": 50,
+      "llm_status": "valid_score",
+      "payload_sha256": "7be1daeff25488beabdd415ec47ac49657f3f04aedad04eb35122a6cc31bea55",
+      "assessment": {
+        "completeness": {
+          "score": 20,
+          "finding": "incomplete",
+          "quote_sha256": "84ebc72406a183fce51d36b1c71f6df7a82c035a32d3c6b7272334d1629fe0f6"
+        },
+        "clarity": {
+          "score": 15,
+          "finding": "unclear_reference",
+          "quote_sha256": "9f131ab6832a563a522cae5ede2eb50d3ad48935a384a24de6f2fcfd6fcc0b59"
+        },
+        "engagement": {
+          "score": 10,
+          "finding": "limited",
+          "quote_sha256": "447b27c554658c42037d51ff9abd5d14784b49b9f275e5efc7a29fc12830061d"
+        },
+        "conciseness": {
+          "score": 5,
+          "finding": "repetition",
+          "quote_sha256": "c48d21b26066557d9862aca467a1002951ba77b5739ba4c883a93e63dd5a7482"
+        }
+      },
+      "provider_body_sha256": "e862298141937ffd80d8c416a06802d7bc674b618d86c57097afe5610b823ed2"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S02",
+      "candidate_id": "c_34bb8950b48037975f832feb449026380157b01d172fe38cf23e1f39c7f99d67",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 16.28,
+      "end": 46.68,
+      "text_sha256": "c5bf706ec9176689c8eb8420831c6f4f3860092b5dd881abfbacf74044e92778",
+      "sentence_ids_sha256": "1b7cbe8c9f886f580f6161a83311b7d8321a11b21bbda3cc32a31350be548084",
+      "label_status": "positive",
+      "rule_score": 44.266547,
+      "request_id": "R002",
+      "llm_score": 57,
+      "llm_status": "valid_score",
+      "payload_sha256": "2389e1d4635cd1efdffe8ed0dbf169528559d19678ddb1b331e45ba608b8030d",
+      "assessment": {
+        "completeness": {
+          "score": 25,
+          "finding": "incomplete",
+          "quote_sha256": "d7fed019a21df6f367f74ee808ff6a1309e7e38172bb57809c12d81a36008682"
+        },
+        "clarity": {
+          "score": 15,
+          "finding": "unclear_reference",
+          "quote_sha256": "0b06f34b28ffe4a73afbc4ca57598c32a36df7150b069cb49129e7445fc0ac5d"
+        },
+        "engagement": {
+          "score": 12,
+          "finding": "concrete_detail",
+          "quote_sha256": "f9098d4679d9635b43847ce9d6e8cc2b6faf4f108462f5bbd0afc8189b1b2083"
+        },
+        "conciseness": {
+          "score": 5,
+          "finding": "repetition",
+          "quote_sha256": "ba95be03bb2de63cbdc637abed35ea57b7b5210978ae240223878159a1269d92"
+        }
+      },
+      "provider_body_sha256": "58dabe43a06377f9239f94de820b65382699dca82458c19faadc4b5d51eec37a"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S03",
+      "candidate_id": "c_3b3a8f845df76cf873e7986a40c9de20900b1207a01e694e48a06405b02e996f",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 16.28,
+      "end": 88.68,
+      "text_sha256": "80f648720e18b8ba15ddea02e2af1bbcc821f43930630211d389f19a2a3564b3",
+      "sentence_ids_sha256": "0e8e4e2f984a397bb6b49a8a23be3af1df039f23fadcac520ceb85f4a99f57dc",
+      "label_status": "uncertain",
+      "rule_score": 25.518951,
+      "request_id": "R003",
+      "llm_score": null,
+      "llm_status": "invalid_assessment_or_response",
+      "payload_sha256": "e29bc65743e7efb2161600583b5b7e36079a723c312b4f4113adb1d7806fa493",
+      "provider_body_sha256": "a60fde142b5a3f372d2d0c4cae2c762edc6d2f7056e2d1a90c47b88f50397bec"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S04",
+      "candidate_id": "c_663a3bcc439f6428867264d33aebdec5c2c80ddab05ccbbc56acc806c7a6033d",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 61.07,
+      "end": 88.68,
+      "text_sha256": "c874e970c1d07f0391b7b9c2ecb4f1c9059dad183599469717685a15db0b05ca",
+      "sentence_ids_sha256": "cdf0b563fa4bc225184f402701b973b8f828d1a87ec1dcd690e2da4812243037",
+      "label_status": "negative",
+      "rule_score": 42.722852,
+      "request_id": "R004",
+      "llm_score": 25,
+      "llm_status": "valid_score",
+      "payload_sha256": "2e32d99b7a43d48f8b076281df955ed2867de006a3675dd062122c5013221388",
+      "assessment": {
+        "completeness": {
+          "score": 10,
+          "finding": "incomplete",
+          "quote_sha256": "2ae44ae4386968cd05f1a56441a54e9bfcd0e79f6c93c23a7b68c484d1b7a01c"
+        },
+        "clarity": {
+          "score": 5,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "cabecf80ded1cd35b1e9ff2558937d1940cfa0fa2f94643716e4282a13c2b789"
+        },
+        "engagement": {
+          "score": 8,
+          "finding": "question",
+          "quote_sha256": "c071b9206a37074c5c8254c872f46edc8ada23232ef728c1ca974ec8b48d8958"
+        },
+        "conciseness": {
+          "score": 2,
+          "finding": "repetition",
+          "quote_sha256": "9fca15024f25f7c8ebbb7e43b9237a749af9505cb0720f3d67c26e8777f44bc9"
+        }
+      },
+      "provider_body_sha256": "06e1999f9f3ad8bffaf8181a4e9b18a2b333b436a00fe466e6d734107e3ad17a"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S05",
+      "candidate_id": "c_77370885175551135d678513e1619f312db08d08426f193bf1d7628783dfb96c",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 47.36,
+      "end": 81.32,
+      "text_sha256": "01c558fd6bc8de2d9e4e01582e05cd71543a1c831eca6b18eef7905a64c19fc6",
+      "sentence_ids_sha256": "4dcb8ae1f334757d8c93ab296202a155a056ba3ac712efe1c6a20051483ab08a",
+      "label_status": "uncertain",
+      "rule_score": 40.236135,
+      "request_id": "R005",
+      "llm_score": 28,
+      "llm_status": "valid_score",
+      "payload_sha256": "137efecb34152169344d6b979f77bdc200a0050a6bf52207b7582c35bb026b2e",
+      "assessment": {
+        "completeness": {
+          "score": 10,
+          "finding": "incomplete",
+          "quote_sha256": "5ba1e3c0eb6361618e95cb63fa67ce0fbf15d0778b54c86b8e528f944f4ae4ab"
+        },
+        "clarity": {
+          "score": 10,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "cabecf80ded1cd35b1e9ff2558937d1940cfa0fa2f94643716e4282a13c2b789"
+        },
+        "engagement": {
+          "score": 5,
+          "finding": "limited",
+          "quote_sha256": "75afbaa19443515267f0d87e7e99e9df97d2834f44b4688a04e27122164e5c46"
+        },
+        "conciseness": {
+          "score": 3,
+          "finding": "repetition",
+          "quote_sha256": "3da7728690b98623de84e8d40be85c0df896e2617477af9285463b799d710b85"
+        }
+      },
+      "provider_body_sha256": "2fa4a62c7a57477eff150ebaf489f0af34d9ee8c2556f0b48ff794814f029681"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S06",
+      "candidate_id": "c_801cd003381620a963426b6db4719211362fcec604ca81c1c7737058955d6eee",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 5.5,
+      "end": 36.24,
+      "text_sha256": "5ff27925435729be83ec11017b7e47a9cc693c284be4077ab72d2b9c1a6b7c9f",
+      "sentence_ids_sha256": "5a0b1c3c8674ff49d3d531eaac194c9a6ca4c17f4cd5cc17026770c72d3511b2",
+      "label_status": "positive",
+      "rule_score": 40.98088,
+      "request_id": "R006",
+      "llm_score": 55,
+      "llm_status": "valid_score",
+      "payload_sha256": "8ee067d9a4329e344ee8f2c15fc7f8d3a53dc23f21c7310edfd52ced164fa580",
+      "assessment": {
+        "completeness": {
+          "score": 20,
+          "finding": "incomplete",
+          "quote_sha256": "9388b5dfb51bff52c94a5bb100f799d3733e10d4f734586b053e28c22e2d8fbf"
+        },
+        "clarity": {
+          "score": 15,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "de79c6cdc3a74b3eb5df333a2dbc5a55d3fd8399405049961f3ac372de2c078d"
+        },
+        "engagement": {
+          "score": 15,
+          "finding": "concrete_detail",
+          "quote_sha256": "0f6f0d3c84e6e4b89232db67be75ffd7d3f012d0b7315ba2bedf21fe2009db14"
+        },
+        "conciseness": {
+          "score": 5,
+          "finding": "repetition",
+          "quote_sha256": "fbb0eb8bd26358748c975aabb76092fe22eef670f9fcabf8132a7579bb6ad309"
+        }
+      },
+      "provider_body_sha256": "bb352af17e99df55c1eaf18f2177aa5a2893601b3b02524bccf39342f23077c5"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S07",
+      "candidate_id": "c_c08f3278b0c3754e13bdb7260b8ddb8e730ef69f93dd2b8e6507a1ec553a6f80",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 36.76,
+      "end": 64.57,
+      "text_sha256": "7e0b8987207618c4ceacfda1e9afdef4441161c6f1dc4753e708b7f28f097fc6",
+      "sentence_ids_sha256": "168c6ad4e3a5a529e1536a792be23a76d2180dedc55ce64711e5078670fe4986",
+      "label_status": "negative",
+      "rule_score": 42.919009,
+      "request_id": "R007",
+      "llm_score": 45,
+      "llm_status": "valid_score",
+      "payload_sha256": "3011d568ced8ecdaeda88caabfc7807a4604386935f34cb8de364a41d6dd94bc",
+      "assessment": {
+        "completeness": {
+          "score": 20,
+          "finding": "incomplete",
+          "quote_sha256": "7a2b540fb328b9bf75152c332526d4cf0edeacefe80bb903febc1f3d1ce1f5be"
+        },
+        "clarity": {
+          "score": 10,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "cce5bf78d1e76ee9431c1b874540728d82380b8033c2c2adae145a73773002ac"
+        },
+        "engagement": {
+          "score": 10,
+          "finding": "limited",
+          "quote_sha256": "4b0895cd975d03f563e262c1617b4ad2bb35392778c33ffe21f180e515931b61"
+        },
+        "conciseness": {
+          "score": 5,
+          "finding": "repetition",
+          "quote_sha256": "4b0895cd975d03f563e262c1617b4ad2bb35392778c33ffe21f180e515931b61"
+        }
+      },
+      "provider_body_sha256": "528ac17fbac0e40f25b568c2972addeae43f7ad658985840a6f7cd11b568fcc5"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S08",
+      "candidate_id": "c_de509d76da8a4def2da039a7ddb204c5a0707712fd5cc637005b0b4e6166a14d",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 100.24,
+      "end": 129.04,
+      "text_sha256": "5054cb4e6b2280ecf007af0a66d9800534eb44fbe1b6910000ee44c2b61f5ba4",
+      "sentence_ids_sha256": "130d922f886a35a471ec738c018d223f741e1d180ebd7dece4a93a158f816e3e",
+      "label_status": "positive",
+      "rule_score": 39.79657,
+      "request_id": "R008",
+      "llm_score": 50,
+      "llm_status": "valid_score",
+      "payload_sha256": "1012b6283880cb72b64a5e768f94a514b63ad000128b0614e121dfe61c416de9",
+      "assessment": {
+        "completeness": {
+          "score": 20,
+          "finding": "needs_context",
+          "quote_sha256": "c84545597b6b1820f77caa8e10e78445b5b87e56552fbd23e8ec00ce17ac4b02"
+        },
+        "clarity": {
+          "score": 15,
+          "finding": "unclear_reference",
+          "quote_sha256": "98ff8d98027ca7697f7b19f52b760debf9c7ef3f08b292dfef963e3dbc5ef1cf"
+        },
+        "engagement": {
+          "score": 10,
+          "finding": "limited",
+          "quote_sha256": "8a6176697c7266c9479e3fdfc65f2b26c98542a33be455dfa2c0d40f22827955"
+        },
+        "conciseness": {
+          "score": 5,
+          "finding": "repetition",
+          "quote_sha256": "f38dd52e215eae2e20bb2b78981075cd129c07c9e08f2337f95c187df5c0d863"
+        }
+      },
+      "provider_body_sha256": "90a2bb7ba217e6e1d8d903994ee5670420d65a3ebd359cfa92b8d5ccc57bb316"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S09",
+      "candidate_id": "c_e53b72f4d3bdd049414f914bb575e264a21aeda1cf4381e3a3eac8b837adfd12",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 36.76,
+      "end": 124.86,
+      "text_sha256": "b7af77180de8627013ef531086e6470f23fc8ff54b63692f6c293b638c3b7849",
+      "sentence_ids_sha256": "18fdd7bbc23ca767a919c0e2370eee01c3db82b4d00ee7121ea90496a14c8c16",
+      "label_status": "positive",
+      "rule_score": 23.229572,
+      "request_id": "R009",
+      "llm_score": 50,
+      "llm_status": "valid_score",
+      "payload_sha256": "adb537e359d40e6ed499d454b1add2f9e3f4df8622958d6245910c6d627736c4",
+      "assessment": {
+        "completeness": {
+          "score": 20,
+          "finding": "needs_context",
+          "quote_sha256": "cce5bf78d1e76ee9431c1b874540728d82380b8033c2c2adae145a73773002ac"
+        },
+        "clarity": {
+          "score": 15,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "cabecf80ded1cd35b1e9ff2558937d1940cfa0fa2f94643716e4282a13c2b789"
+        },
+        "engagement": {
+          "score": 10,
+          "finding": "limited",
+          "quote_sha256": "4b0895cd975d03f563e262c1617b4ad2bb35392778c33ffe21f180e515931b61"
+        },
+        "conciseness": {
+          "score": 5,
+          "finding": "repetition",
+          "quote_sha256": "4b0895cd975d03f563e262c1617b4ad2bb35392778c33ffe21f180e515931b61"
+        }
+      },
+      "provider_body_sha256": "0e1b0a553b2d2b6097206dfdfc7f6046c7619043e7d05468763a3991466469f1"
+    },
+    {
+      "source_name": "New1",
+      "sample_id": "S10",
+      "candidate_id": "c_f60850b943484f0acc42876afb652462d96c022ce102f5fcf3e41145e81efb48",
+      "source_sha256": "305ffc3abe75fa973e518e7dfb2dbc160388b739760ddb2a7e0d1d9af0f630fb",
+      "normalized_sha256": "ab258a44d6c82ad4c99975e0077493fc6388fc0e0639e42a26b55ba17006f87a",
+      "analysis_sha256": "b613b8cd81e31702abd917327e8a7d5149e2806e97df1124f15b1d66a67f6114",
+      "start": 81.5,
+      "end": 116.88,
+      "text_sha256": "e4dbf711a5ae10eb39e61752a12799af47ba0f42b77edaf7e4349fcea3ddc942",
+      "sentence_ids_sha256": "d967064d7fbd9a45b4c70dfccf07808f1955e4e9bc2fcab448f52623aded75fe",
+      "label_status": "positive",
+      "rule_score": 37.840573,
+      "request_id": "R010",
+      "llm_score": 47,
+      "llm_status": "valid_score",
+      "payload_sha256": "891b5d95a1b329db5ec84b176724f06da43f02da222f268a3ac8735abab43f9f",
+      "assessment": {
+        "completeness": {
+          "score": 20,
+          "finding": "needs_context",
+          "quote_sha256": "36aba67b0ec55e122506540a64b41f9bc6c5468548dde7b6b4d393636310f8ad"
+        },
+        "clarity": {
+          "score": 15,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "0a110768ffdac6e1bc2f97aa56d3d4ff492950ad04613eb98f40d47bb02e4d58"
+        },
+        "engagement": {
+          "score": 8,
+          "finding": "limited",
+          "quote_sha256": "f38dd52e215eae2e20bb2b78981075cd129c07c9e08f2337f95c187df5c0d863"
+        },
+        "conciseness": {
+          "score": 4,
+          "finding": "repetition",
+          "quote_sha256": "79d4639f46e186412ec59b003ff98ed4535d2dfdda8b36a38331d1ade35e5fa7"
+        }
+      },
+      "provider_body_sha256": "ddbcabe4e6f7cc1a69acddd3ff626bd68266959ed097bb400db5424f101f5742"
+    },
+    {
+      "source_name": "New2",
+      "sample_id": "S01",
+      "candidate_id": "c_0d383edfb6d49123bff0a29815750e3fdd9315489c8b3ddbd1e089a65733e5ca",
+      "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+      "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "start": 62.72,
+      "end": 78.22,
+      "text_sha256": "1382bff0cbfc65d83aef8917291a660c2f05f9cab8d1c234930641b3fff23bf8",
+      "sentence_ids_sha256": "ea53bf131a22d6d2a485d34760dd1c896d2e1f66f4a09060e9b060de178f9f2e",
+      "label_status": "positive",
+      "rule_score": 24.563227,
+      "request_id": "R011",
+      "llm_score": 22,
+      "llm_status": "valid_score",
+      "payload_sha256": "9442114068717429e60379f992366ae79e78bc75698753dd6aed355304d9a2b6",
+      "assessment": {
+        "completeness": {
+          "score": 10,
+          "finding": "incomplete",
+          "quote_sha256": "a51c04c336add45ee356d7c41ce7198b0bf34132b35392d2881f81166ef06f59"
+        },
+        "clarity": {
+          "score": 5,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "a51c04c336add45ee356d7c41ce7198b0bf34132b35392d2881f81166ef06f59"
+        },
+        "engagement": {
+          "score": 5,
+          "finding": "limited",
+          "quote_sha256": "a51c04c336add45ee356d7c41ce7198b0bf34132b35392d2881f81166ef06f59"
+        },
+        "conciseness": {
+          "score": 2,
+          "finding": "repetition",
+          "quote_sha256": "c44210eeb4436a228c5e11e4e159bf32e4999f61b8201d5bee4979b6f1d86573"
+        }
+      },
+      "provider_body_sha256": "72fd5a7c5e9aada3e6d7cf73f319597268798b275963dba54af850e315d9ca4f"
+    },
+    {
+      "source_name": "New2",
+      "sample_id": "S02",
+      "candidate_id": "c_67fbc094cc94e938701fb157a2b20633e1315c5d90d502e6e477f8a1559e3da4",
+      "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+      "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "start": 2.78,
+      "end": 26.05,
+      "text_sha256": "6f9f377ed24c86f7171aeddd52b0b4e5064f687800b75122a591048d01e17aef",
+      "sentence_ids_sha256": "5a0b1c3c8674ff49d3d531eaac194c9a6ca4c17f4cd5cc17026770c72d3511b2",
+      "label_status": "negative",
+      "rule_score": 30.960363,
+      "request_id": "R012",
+      "llm_score": null,
+      "llm_status": "invalid_assessment_or_response",
+      "payload_sha256": "26110f18bbb27af97aee6cff0ec3e0e8176a0da66c5bf180a37678df7ff4403d",
+      "provider_body_sha256": "9906deffbd449b369315c61cd2841eebb7604db4cd4d1d8e2fb0a05f26371589"
+    },
+    {
+      "source_name": "New2",
+      "sample_id": "S03",
+      "candidate_id": "c_728335f870a6e6747d45c0d9ef01e31f03933203dd085169b35597077979d3e9",
+      "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+      "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "start": 130.99,
+      "end": 146.03,
+      "text_sha256": "f5e86ad62281704fa002bd567c74454a2bf5dd69dec7b9e5c7be93ce7a793ea4",
+      "sentence_ids_sha256": "cace6cefa6263bb7e9772f16436a1cec831227a623881775b91ecc982ed119a3",
+      "label_status": "positive",
+      "rule_score": 25.737711,
+      "request_id": "R013",
+      "llm_score": 22,
+      "llm_status": "valid_score",
+      "payload_sha256": "c0b6807963950985a360ca5cd548aa4bc0dea4df3d2038bb2a85709848acebc7",
+      "assessment": {
+        "completeness": {
+          "score": 10,
+          "finding": "incomplete",
+          "quote_sha256": "aacb17521cd41d19c079f370d04e130c9487d4bae3f25cadabd4c578daeca980"
+        },
+        "clarity": {
+          "score": 5,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "7f1a154cc5f629c97b080a8380de1fad1fe2ee6ac18003a0107431773dacfe4e"
+        },
+        "engagement": {
+          "score": 5,
+          "finding": "limited",
+          "quote_sha256": "ca98a3104f80f540152e5ae486622007217c074a0c1c1ac39fae724c1234c643"
+        },
+        "conciseness": {
+          "score": 2,
+          "finding": "repetition",
+          "quote_sha256": "c74b8b1799f1467d3d995c82ee5354cbc22e68a614f1a21d5dcd1591b8714f9b"
+        }
+      },
+      "provider_body_sha256": "a6388590465bb6106e7e7183171cd87ce0946dcf29dca67110863d09ad800671"
+    },
+    {
+      "source_name": "New2",
+      "sample_id": "S04",
+      "candidate_id": "c_a8e174af8d3290e8384ab31a8b74ab8b5a20f8fa2499aedad5d8ed3e9236ef53",
+      "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+      "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "start": 46.91,
+      "end": 78.22,
+      "text_sha256": "727c399374918c6ff9582658c69a7f257c71c8015ad599f27fa9824d075103fa",
+      "sentence_ids_sha256": "b28784e3927466c57af7e6b8e8413d6668cfc6a5011b19884ebcaed36936cf44",
+      "label_status": "positive",
+      "rule_score": 47.781808,
+      "request_id": "R014",
+      "llm_score": null,
+      "llm_status": "invalid_assessment_or_response",
+      "payload_sha256": "73ed6aada5135d3a5653d9dd1e0ce8f44097e39eb1f873fdd165222b3fe5406a",
+      "provider_body_sha256": "29dd69353a1fe67333d4fb797a5b7ee6fe88bb65fa6a146e69b0914ff3f354b7"
+    },
+    {
+      "source_name": "New2",
+      "sample_id": "S05",
+      "candidate_id": "c_aadafec0c9bfd1f848ed3bc69162a2329aff8d917f1c2ae04fc9fef0fac5dcaf",
+      "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+      "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "start": 123.39,
+      "end": 153.65,
+      "text_sha256": "6ba66e3573cfde0420209ece5c2e419c9862673ad6539b8621c04355aaf5ce31",
+      "sentence_ids_sha256": "33f25e5633d50c2dc8ba719caaa8032b43fece74816c4549a560308e57671db5",
+      "label_status": "positive",
+      "rule_score": 34.741275,
+      "request_id": "R015",
+      "llm_score": 25,
+      "llm_status": "valid_score",
+      "payload_sha256": "6a87368222bfb262b11bca6dc8f0a6064ce54b2b5ac9ff9787cc2c29e0c49ff4",
+      "assessment": {
+        "completeness": {
+          "score": 10,
+          "finding": "incomplete",
+          "quote_sha256": "1af3d38b6a97c6bcb94a17e0d66957ad81385dadd699e78467326e4c69cc8e0c"
+        },
+        "clarity": {
+          "score": 5,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "641fd48a476152f34e162607c84b8fa8fc00f610c54e405a49eab17d9c41da20"
+        },
+        "engagement": {
+          "score": 8,
+          "finding": "concrete_detail",
+          "quote_sha256": "ca98a3104f80f540152e5ae486622007217c074a0c1c1ac39fae724c1234c643"
+        },
+        "conciseness": {
+          "score": 2,
+          "finding": "repetition",
+          "quote_sha256": "3db4c9c4b0fc6f310530d5b8f2ebd98740fa664f65c387b4a1a67bb6bfed3548"
+        }
+      },
+      "provider_body_sha256": "e0c23ec0dfcc443749bc284137d577555c22359eefa42edf393898b1ea3a4ef3"
+    },
+    {
+      "source_name": "New2",
+      "sample_id": "S06",
+      "candidate_id": "c_c35c979380b4f15864d40891f0d97b8d0ed9786064a336edc49572138e76dda1",
+      "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+      "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "start": 109.3,
+      "end": 138.45,
+      "text_sha256": "9325ece64cfe1cd61797932ae0bd193a066e921c17f5b34b65bd2e4d1ed12d48",
+      "sentence_ids_sha256": "6d75aeff75a8c35cad2017aa8a629a26bc70477d00595af5ababa1cfc998805b",
+      "label_status": "positive",
+      "rule_score": 34.553879,
+      "request_id": "R016",
+      "llm_score": 22,
+      "llm_status": "valid_score",
+      "payload_sha256": "c2db4530d583cdb14b44c189eb76dab416fe1451788605074b512e30630a3a85",
+      "assessment": {
+        "completeness": {
+          "score": 10,
+          "finding": "incomplete",
+          "quote_sha256": "b0bed89d896ce2ac505952950e959fbe93673d0fe2bf944c2a8852306d601a80"
+        },
+        "clarity": {
+          "score": 5,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "434ab01afe70672c7018577a05c124215c76c0121e36845739812b76254fb6d1"
+        },
+        "engagement": {
+          "score": 5,
+          "finding": "limited",
+          "quote_sha256": "c2408fb50f64aba1237e840ab9f97440247bdf3f4bfd3b21238691570ce363c7"
+        },
+        "conciseness": {
+          "score": 2,
+          "finding": "repetition",
+          "quote_sha256": "434ab01afe70672c7018577a05c124215c76c0121e36845739812b76254fb6d1"
+        }
+      },
+      "provider_body_sha256": "d23b97b3cd18f42f3f1667d126a8c04f85ad1385caff815ada5b3ff3a50ee650"
+    },
+    {
+      "source_name": "New2",
+      "sample_id": "S07",
+      "candidate_id": "c_ed402807938191fe7bceb124de139f76cf39ff34e985ccb7c57fc3d1732cc814",
+      "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+      "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "start": 81.53,
+      "end": 105.73,
+      "text_sha256": "447259d48a5283c6b26aef8e99ee471875716a8f8cb7546ddf8602576a0f9495",
+      "sentence_ids_sha256": "351e2aa69ca701ad4691f1a155475f11cc900e2b45163f3b40e59d4e9cfb9fb0",
+      "label_status": "positive",
+      "rule_score": 30.314266,
+      "request_id": "R017",
+      "llm_score": 22,
+      "llm_status": "valid_score",
+      "payload_sha256": "c1bcdc5cc286cd80e39cd737e17d4a826c025b9d5ea4deaf59c63861b10afa1c",
+      "assessment": {
+        "completeness": {
+          "score": 10,
+          "finding": "incomplete",
+          "quote_sha256": "7e788f74e2705f1856e915999a26a3b260e3fdb9a6259bd3c004d18e741baf71"
+        },
+        "clarity": {
+          "score": 5,
+          "finding": "transcription_uncertain",
+          "quote_sha256": "79ca28ea0bba45ca5a4aedb22a1146ee29eb6296e8f457c35577e626e42abb50"
+        },
+        "engagement": {
+          "score": 5,
+          "finding": "limited",
+          "quote_sha256": "7b877bc46d4527234341a1d116cdf129e211da1e655775e3c34864b09eee43e2"
+        },
+        "conciseness": {
+          "score": 2,
+          "finding": "filler",
+          "quote_sha256": "e84434d931b178b84530771e01046d186c3d36ee384a2b2abca477fcc0e39531"
+        }
+      },
+      "provider_body_sha256": "c58737f016abf19c2bef7b770a77f255d19bf40288eadf86c4fddf12dfa7b585"
+    },
+    {
+      "source_name": "New2",
+      "sample_id": "S08",
+      "candidate_id": "c_f1dd1304eabcb19efd547f2f2986aa358faaf901a877046a736bd481859186ef",
+      "source_sha256": "180acfc8d608b6ddafa3e1269df5e82f9ccc573d55453d505020f4460e6e8e2b",
+      "normalized_sha256": "3c26b4f86e0a350111ca6f8498411ab7c0233a8564195915ce6cd86ce7998639",
+      "analysis_sha256": "f35c1459302452a30d6a4dcb7474321f11637b29f9d70c60253e3d71ee7d213c",
+      "start": 30.12,
+      "end": 60.32,
+      "text_sha256": "a20ed3720b6304454a88b4adcfb5d213dfb287f8067b09070e34272eb7cbfcf7",
+      "sentence_ids_sha256": "168c6ad4e3a5a529e1536a792be23a76d2180dedc55ce64711e5078670fe4986",
+      "label_status": "positive",
+      "rule_score": 48.866461,
+      "request_id": "R018",
+      "llm_score": null,
+      "llm_status": "invalid_assessment_or_response",
+      "payload_sha256": "6a4dc5ce4fd4e47e0402046fc05d15b1cb324e48da3deeba34d882e4b38d65bc",
+      "provider_body_sha256": "6e34862e8c75485c44501c9881e04460ac823ba5cdaedbbb14930238d454faf0"
+    }
+  ],
+  "scope": "Same-candidate development diagnostic. Invalid scores are missing, never replaced with a rule fallback. Metrics use identical scored-and-labeled subsets; no generalization or independent validation claim.",
+  "private_raw_responses_or_full_transcripts_published": false
+}
