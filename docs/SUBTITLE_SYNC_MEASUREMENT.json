@@ -1,0 +1,516 @@
+{
+  "format_version": 1,
+  "report_date": "2026-10-26",
+  "measurement_date": "2026-10-15",
+  "status": "same_sample_calibration_quantified_not_independent_sync_acceptance",
+  "batch_id": "real-sync-test3-34511a8e-20261015",
+  "observer": "user",
+  "scope": "three cues, six endpoints, single rater; same observations used for display-start calibration",
+  "threshold_seconds": 0.3,
+  "delta_definition": "caption_time_minus_speech_time; negative means caption early, positive means caption late",
+  "interval_formula": "[caption_lower - speech_upper, caption_upper - speech_lower]",
+  "uncertainty_kind": "observer recorded +/- 0.10 seconds; not a statistical confidence interval",
+  "fps": {
+    "num": 30,
+    "den": 1
+  },
+  "export_profile": {
+    "width": 1080,
+    "height": 1920
+  },
+  "duration_frames": 1153,
+  "cue_count": 13,
+  "human_measured_cue_count": 3,
+  "human_measured_endpoint_count": 6,
+  "unmeasured_cue_count": 10,
+  "original_cue_counts": {
+    "passed": 1,
+    "failed": 1,
+    "uncertain": 1
+  },
+  "original_human_sample_passed": false,
+  "same_calibration_endpoint_count_within_tolerance": 6,
+  "calibrated_max_abs_error_upper_bound_seconds": 0.29333333333333333,
+  "calibrated_max_abs_error_upper_bound_exact": "22/75",
+  "independent_post_calibration_validation": false,
+  "all_13_cues_within_0_3_verified": false,
+  "current_main_shotcut_gui_validation_included": false,
+  "edl_unchanged_during_calibration": true,
+  "original_asr_and_word_mappings_preserved": true,
+  "targets": [
+    {
+      "target_id": "sync-1",
+      "cue_id": "cue_0001_0002",
+      "observed_speech_start_seconds": 4.5,
+      "observed_speech_end_seconds": 7.01,
+      "observation_uncertainty_seconds": 0.1,
+      "original_cue_status": "failed",
+      "original": {
+        "start": {
+          "caption_interval_seconds": [
+            3.433333333333333,
+            3.466666666666667
+          ],
+          "caption_interval_exact": [
+            "103/30",
+            "52/15"
+          ],
+          "speech_interval_seconds": [
+            4.4,
+            4.6
+          ],
+          "speech_interval_exact": [
+            "22/5",
+            "23/5"
+          ],
+          "delta_interval_seconds": [
+            -1.1666666666666667,
+            -0.9333333333333333
+          ],
+          "delta_interval_exact": [
+            "-7/6",
+            "-14/15"
+          ],
+          "absolute_error_upper_bound_seconds": 1.1666666666666667,
+          "absolute_error_upper_bound_exact": "7/6",
+          "interval_classification": "outside_tolerance"
+        },
+        "end": {
+          "caption_interval_seconds": [
+            6.966666666666667,
+            7.0
+          ],
+          "caption_interval_exact": [
+            "209/30",
+            "7"
+          ],
+          "speech_interval_seconds": [
+            6.91,
+            7.11
+          ],
+          "speech_interval_exact": [
+            "691/100",
+            "711/100"
+          ],
+          "delta_interval_seconds": [
+            -0.14333333333333334,
+            0.09
+          ],
+          "delta_interval_exact": [
+            "-43/300",
+            "9/100"
+          ],
+          "absolute_error_upper_bound_seconds": 0.14333333333333334,
+          "absolute_error_upper_bound_exact": "43/300",
+          "interval_classification": "within_tolerance"
+        }
+      },
+      "calibrated": {
+        "start": {
+          "caption_interval_seconds": [
+            4.466666666666667,
+            4.5
+          ],
+          "caption_interval_exact": [
+            "67/15",
+            "9/2"
+          ],
+          "speech_interval_seconds": [
+            4.4,
+            4.6
+          ],
+          "speech_interval_exact": [
+            "22/5",
+            "23/5"
+          ],
+          "delta_interval_seconds": [
+            -0.13333333333333333,
+            0.1
+          ],
+          "delta_interval_exact": [
+            "-2/15",
+            "1/10"
+          ],
+          "absolute_error_upper_bound_seconds": 0.13333333333333333,
+          "absolute_error_upper_bound_exact": "2/15",
+          "interval_classification": "within_tolerance"
+        },
+        "end": {
+          "caption_interval_seconds": [
+            6.966666666666667,
+            7.0
+          ],
+          "caption_interval_exact": [
+            "209/30",
+            "7"
+          ],
+          "speech_interval_seconds": [
+            6.91,
+            7.11
+          ],
+          "speech_interval_exact": [
+            "691/100",
+            "711/100"
+          ],
+          "delta_interval_seconds": [
+            -0.14333333333333334,
+            0.09
+          ],
+          "delta_interval_exact": [
+            "-43/300",
+            "9/100"
+          ],
+          "absolute_error_upper_bound_seconds": 0.14333333333333334,
+          "absolute_error_upper_bound_exact": "43/300",
+          "interval_classification": "within_tolerance"
+        }
+      },
+      "display_start_was_changed": true,
+      "within_tolerance_on_same_calibration_observations": true,
+      "calibrated_caption_interval_source": "calibrated_export_summary",
+      "saved_display_start_frame": 135,
+      "actual_mp4_first_visible_frame": 135
+    },
+    {
+      "target_id": "sync-2",
+      "cue_id": "cue_0001_0006",
+      "observed_speech_start_seconds": 19.57,
+      "observed_speech_end_seconds": 19.94,
+      "observation_uncertainty_seconds": 0.1,
+      "original_cue_status": "uncertain",
+      "original": {
+        "start": {
+          "caption_interval_seconds": [
+            19.266666666666666,
+            19.3
+          ],
+          "caption_interval_exact": [
+            "289/15",
+            "193/10"
+          ],
+          "speech_interval_seconds": [
+            19.47,
+            19.67
+          ],
+          "speech_interval_exact": [
+            "1947/100",
+            "1967/100"
+          ],
+          "delta_interval_seconds": [
+            -0.4033333333333333,
+            -0.17
+          ],
+          "delta_interval_exact": [
+            "-121/300",
+            "-17/100"
+          ],
+          "absolute_error_upper_bound_seconds": 0.4033333333333333,
+          "absolute_error_upper_bound_exact": "121/300",
+          "interval_classification": "uncertain"
+        },
+        "end": {
+          "caption_interval_seconds": [
+            20.1,
+            20.133333333333333
+          ],
+          "caption_interval_exact": [
+            "201/10",
+            "302/15"
+          ],
+          "speech_interval_seconds": [
+            19.84,
+            20.04
+          ],
+          "speech_interval_exact": [
+            "496/25",
+            "501/25"
+          ],
+          "delta_interval_seconds": [
+            0.06,
+            0.29333333333333333
+          ],
+          "delta_interval_exact": [
+            "3/50",
+            "22/75"
+          ],
+          "absolute_error_upper_bound_seconds": 0.29333333333333333,
+          "absolute_error_upper_bound_exact": "22/75",
+          "interval_classification": "within_tolerance"
+        }
+      },
+      "calibrated": {
+        "start": {
+          "caption_interval_seconds": [
+            19.566666666666666,
+            19.6
+          ],
+          "caption_interval_exact": [
+            "587/30",
+            "98/5"
+          ],
+          "speech_interval_seconds": [
+            19.47,
+            19.67
+          ],
+          "speech_interval_exact": [
+            "1947/100",
+            "1967/100"
+          ],
+          "delta_interval_seconds": [
+            -0.10333333333333333,
+            0.13
+          ],
+          "delta_interval_exact": [
+            "-31/300",
+            "13/100"
+          ],
+          "absolute_error_upper_bound_seconds": 0.13,
+          "absolute_error_upper_bound_exact": "13/100",
+          "interval_classification": "within_tolerance"
+        },
+        "end": {
+          "caption_interval_seconds": [
+            20.1,
+            20.133333333333333
+          ],
+          "caption_interval_exact": [
+            "201/10",
+            "302/15"
+          ],
+          "speech_interval_seconds": [
+            19.84,
+            20.04
+          ],
+          "speech_interval_exact": [
+            "496/25",
+            "501/25"
+          ],
+          "delta_interval_seconds": [
+            0.06,
+            0.29333333333333333
+          ],
+          "delta_interval_exact": [
+            "3/50",
+            "22/75"
+          ],
+          "absolute_error_upper_bound_seconds": 0.29333333333333333,
+          "absolute_error_upper_bound_exact": "22/75",
+          "interval_classification": "within_tolerance"
+        }
+      },
+      "display_start_was_changed": true,
+      "within_tolerance_on_same_calibration_observations": true,
+      "calibrated_caption_interval_source": "calibrated_export_summary",
+      "saved_display_start_frame": 587,
+      "actual_mp4_first_visible_frame": 588
+    },
+    {
+      "target_id": "sync-3",
+      "cue_id": "cue_0002_0005",
+      "observed_speech_start_seconds": 30.25,
+      "observed_speech_end_seconds": 30.8,
+      "observation_uncertainty_seconds": 0.1,
+      "original_cue_status": "passed",
+      "original": {
+        "start": {
+          "caption_interval_seconds": [
+            30.133333333333333,
+            30.166666666666668
+          ],
+          "caption_interval_exact": [
+            "452/15",
+            "181/6"
+          ],
+          "speech_interval_seconds": [
+            30.15,
+            30.35
+          ],
+          "speech_interval_exact": [
+            "603/20",
+            "607/20"
+          ],
+          "delta_interval_seconds": [
+            -0.21666666666666667,
+            0.016666666666666666
+          ],
+          "delta_interval_exact": [
+            "-13/60",
+            "1/60"
+          ],
+          "absolute_error_upper_bound_seconds": 0.21666666666666667,
+          "absolute_error_upper_bound_exact": "13/60",
+          "interval_classification": "within_tolerance"
+        },
+        "end": {
+          "caption_interval_seconds": [
+            30.9,
+            30.933333333333334
+          ],
+          "caption_interval_exact": [
+            "309/10",
+            "464/15"
+          ],
+          "speech_interval_seconds": [
+            30.7,
+            30.9
+          ],
+          "speech_interval_exact": [
+            "307/10",
+            "309/10"
+          ],
+          "delta_interval_seconds": [
+            0.0,
+            0.23333333333333334
+          ],
+          "delta_interval_exact": [
+            "0",
+            "7/30"
+          ],
+          "absolute_error_upper_bound_seconds": 0.23333333333333334,
+          "absolute_error_upper_bound_exact": "7/30",
+          "interval_classification": "within_tolerance"
+        }
+      },
+      "calibrated": {
+        "start": {
+          "caption_interval_seconds": [
+            30.133333333333333,
+            30.166666666666668
+          ],
+          "caption_interval_exact": [
+            "452/15",
+            "181/6"
+          ],
+          "speech_interval_seconds": [
+            30.15,
+            30.35
+          ],
+          "speech_interval_exact": [
+            "603/20",
+            "607/20"
+          ],
+          "delta_interval_seconds": [
+            -0.21666666666666667,
+            0.016666666666666666
+          ],
+          "delta_interval_exact": [
+            "-13/60",
+            "1/60"
+          ],
+          "absolute_error_upper_bound_seconds": 0.21666666666666667,
+          "absolute_error_upper_bound_exact": "13/60",
+          "interval_classification": "within_tolerance"
+        },
+        "end": {
+          "caption_interval_seconds": [
+            30.9,
+            30.933333333333334
+          ],
+          "caption_interval_exact": [
+            "309/10",
+            "464/15"
+          ],
+          "speech_interval_seconds": [
+            30.7,
+            30.9
+          ],
+          "speech_interval_exact": [
+            "307/10",
+            "309/10"
+          ],
+          "delta_interval_seconds": [
+            0.0,
+            0.23333333333333334
+          ],
+          "delta_interval_exact": [
+            "0",
+            "7/30"
+          ],
+          "absolute_error_upper_bound_seconds": 0.23333333333333334,
+          "absolute_error_upper_bound_exact": "7/30",
+          "interval_classification": "within_tolerance"
+        }
+      },
+      "display_start_was_changed": false,
+      "within_tolerance_on_same_calibration_observations": true,
+      "calibrated_caption_interval_source": "original_result_reused_for_unchanged_cue_no_new_observation"
+    }
+  ],
+  "source_artifacts": {
+    "observations": {
+      "file_name": "observations.json",
+      "bytes": 817,
+      "sha256": "8852e4355b4139ac207521529994a0dff75a837d0f4f606851c9a0a21b59111c"
+    },
+    "original_result": {
+      "file_name": "result.json",
+      "bytes": 4291,
+      "sha256": "f71cc9230c5250705dc5a851368790430e886d72ac74bb25b2bec7a1f2fccfe6"
+    },
+    "original_frame_review": {
+      "file_name": "caption-frame-review.json",
+      "bytes": 2032,
+      "sha256": "e012854ed2af7216561a5ff1e9e5a37146d84f90939e4a0df1f243a02be22170"
+    },
+    "measurement_batch": {
+      "file_name": "batch.json",
+      "bytes": 78796,
+      "sha256": "37843fccabd8c7b45ee8f085dd4750be84a0acb8f0fd5456b1750aff95afb7e0"
+    },
+    "calibrated_export_summary": {
+      "file_name": "summary.json",
+      "bytes": 6911,
+      "sha256": "2ce3b619428d998a128b1f3897afd9ae0ad9f99badfb884c59908c7bd5a838fc"
+    },
+    "calibrated_project.edl.json": {
+      "file_name": "project.edl.json",
+      "bytes": 3097,
+      "sha256": "583bd39d6bf82b132fecdcd5a127fa3d88971468e04730aefc1b3c16095740fc"
+    },
+    "calibrated_base-subtitles.json": {
+      "file_name": "base-subtitles.json",
+      "bytes": 91371,
+      "sha256": "f19ba7573353e18ba580f6e5794a8e5283a05a2185c44396682aec72a7618721"
+    },
+    "calibrated_subtitles.json": {
+      "file_name": "subtitles.json",
+      "bytes": 91879,
+      "sha256": "3c8bee2426f8a4595e320c7892be2bef14ac4c602dee4d33a3d88efa970fb578"
+    },
+    "calibrated_captions.ass": {
+      "file_name": "captions.ass",
+      "bytes": 2194,
+      "sha256": "34f4bd01a2caeb7b5724bb84d0b0fd593f2eb17a39f8e4300268f22534a35591"
+    },
+    "calibrated_captions.srt": {
+      "file_name": "captions.srt",
+      "bytes": 1033,
+      "sha256": "4a4dddebe43fc23d0da2bc9a82d5abeba2513ec6f94fc0e467f283a74ca868d6"
+    },
+    "calibrated_project.mlt": {
+      "file_name": "project.mlt",
+      "bytes": 21303,
+      "sha256": "2d187e203464726efe029e43aa01f0ae556bb69430a099ff1e9e5994ccc2577d"
+    },
+    "calibrated_output.mp4": {
+      "file_name": "output.mp4",
+      "bytes": 20402333,
+      "sha256": "dd10d2c0dd4228475118846f2bb457fe0bd8fe5538ff6162433d469a59f95e41"
+    },
+    "calibrated_correction-verification.json": {
+      "file_name": "correction-verification.json",
+      "bytes": 3354,
+      "sha256": "b087379690ea997bb9517094f7b44bd2cb8814f1c9125982f8c5317002fce921"
+    }
+  },
+  "limitations": [
+    "Only three of thirteen cues have human speech measurements; ten remain unmeasured.",
+    "The same single-rater observations selected the two start corrections and evaluated the resulting intervals.",
+    "Sync-3 uses its unchanged original caption frame intervals; it has no new post-calibration human observation.",
+    "The maximum 22/75-second bound is conditional on the recorded uncertainty and caption frame intervals; it is not a generalization or statistical confidence claim.",
+    "This report does not establish a new GUI edit/save round trip, all-cue synchronization, or narrative quality."
+  ],
+  "this_report_new_asr_calls": 0,
+  "this_report_new_cloud_calls": 0,
+  "this_report_new_renders": 0
+}

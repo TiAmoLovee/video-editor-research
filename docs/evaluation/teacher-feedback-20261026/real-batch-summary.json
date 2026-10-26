@@ -1,0 +1,104 @@
+{
+  "status": "passed_in_isolated_real_media_experiment",
+  "method": "actual batch-export service with real measured private media; not mock, not synthetic markers, not browser HTTP",
+  "source": {
+    "width": 1920,
+    "height": 1080,
+    "fps": "30/1",
+    "frames": 6856,
+    "seconds": 228.53333333333333,
+    "sha256": "d19f411829bd6b25e0c312ba5987127190ac0bd7fdb2ce47cb854f20ecc3a647",
+    "analysis_result_kind": "measured"
+  },
+  "saved_source_ranges": [
+    [
+      3600,
+      3900
+    ],
+    [
+      600,
+      900
+    ],
+    [
+      2700,
+      3000
+    ]
+  ],
+  "clips": 3,
+  "frames_per_clip": 300,
+  "seconds_per_clip": 10,
+  "total_output_frames": 900,
+  "total_output_seconds": 30,
+  "batch_timeout_seconds": 90,
+  "batch_elapsed_seconds": 75.906,
+  "source_preparation_measurement_timeout_seconds": 360,
+  "ui_adoption_90_second_endpoint_validated": false,
+  "minimum_full_resolution_frame_ssim": 0.988409,
+  "maximum_frame_luma_mae_at_128x72": 0.4100477397441864,
+  "unique_expected_neighbour_matches": 783,
+  "ambiguous_neighbour_matches": 117,
+  "all_frames_expected_match_within_predeclared_tolerance": true,
+  "unique_zero_frame_error_claimed_for_ambiguous_frames": false,
+  "audio": {
+    "codec": "aac",
+    "sample_rate": 48000,
+    "channels": 2,
+    "each_duration_seconds": 10.0,
+    "human_speech_sync_measured": false
+  },
+  "zip_crc_edl_manifest_clip_hashes_verified": true,
+  "original_source_analysis_candidates_parent_edl_unchanged": true,
+  "original_isolated_job_record_unchanged": true,
+  "initial_failure": {
+    "timeout_seconds": 90,
+    "elapsed_seconds": 88.734,
+    "http_equivalent_status": 503,
+    "stage": "repeated source full decode/count before batch publication",
+    "published_exports": 0,
+    "baseline_evidence_retained": true
+  },
+  "fix": "Actual source measurement is cached only within one active batch holding its read lock; each reuse rechecks identity and SHA; every output is fully scanned. Ordinary render retains its default independent verification. Batch scan counts and validates every decoded frame once instead of repeating a second full count pass.",
+  "regression": {
+    "tests": 50,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": true,
+    "initial_run_environment_failure": "CLI children lacked PYTHONPATH; fixed child environment, no business code change"
+  },
+  "application_files": [
+    {
+      "path": "backend/clipforge/services/batch_export.py",
+      "bytes": 20576,
+      "sha256": "926509251c65933167ca9c14fb5703023fb93323d40a3be5070dcd97ad7b4164"
+    },
+    {
+      "path": "backend/clipforge/editing/render.py",
+      "bytes": 38149,
+      "sha256": "6136813d6b3280f6c7eef4286135abf9346c824753610ee476e5fba480c1ffbc"
+    },
+    {
+      "path": "backend/clipforge/editing/manifest.py",
+      "bytes": 21668,
+      "sha256": "c83408edef67d55a8747712e09bb3550d3879856521b6fec0ad153af8d435594"
+    },
+    {
+      "path": "backend/tests/test_batch_source_verification.py",
+      "bytes": 7443,
+      "sha256": "03163f22fd4845e3350217d36c3da93dc4a0fa616a563726d0f854ae438ff969"
+    }
+  ],
+  "model_calls": 0,
+  "asr_calls": 0,
+  "production_writes": 0,
+  "private_media_or_transcript_published": false,
+  "scope_limits": [
+    "Single private material and one real run; not a throughput benchmark or semantic quality evaluation.",
+    "All 900 output frames decoded and compared; 117 static/repeated neighbour frames do not establish unique temporal identity.",
+    "Batch uses production 90-second budget; preparation saved EDL used a separate 360-second measurement budget.",
+    "No browser HTTP or deployed release claim."
+  ],
+  "source_visual_inspection_real_recorded_scene": true,
+  "synthetic_frame_markers_used": false,
+  "source_line_endings": "LF canonicalized after semantic testing; no code behavior change"
+}

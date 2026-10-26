@@ -136,7 +136,7 @@ def _parent(task_id, revision_id):
 
 def create_task_batch_export(task_id, revision_id, request_id, *, ffmpeg=None, ffprobe=None, timeout=90):
     """One explicit UUID request publishes at most one ZIP; never retry rendering."""
-    from clipforge.editing.render import render_edl
+    from clipforge.editing.render import _BatchSourceVerification, render_edl
     if type(timeout) is not int or not 1 <= timeout <= 86400:
         raise ProjectError(422, "超时时间必须是 1–86400 秒的整数。")
     deadline = time.monotonic() + timeout
@@ -164,13 +164,14 @@ def create_task_batch_export(task_id, revision_id, request_id, *, ffmpeg=None, f
             if json.load(edl_input) != project:
                 raise ProjectError(409, "保存的剪辑清单在读取期间改变，未开始批量导出。")
             media = stack.enter_context(_source(saved, deadline))
+            batch_context = stack.enter_context(_BatchSourceVerification())
             source_root = job_dir(saved["revision"]["source_task_id"]).resolve()
             items, bytes_written = [], 0
             for index, clip in enumerate(project["clips"], start=1):
                 single = _clip_project(project, clip)
                 output = folder / f"{index:03d}.mp4"
                 report = render_edl(single, source_root, output, ffmpeg=ffmpeg, ffprobe=ffprobe,
-                                    timeout=_budget(deadline))
+                                    timeout=_budget(deadline), _batch_context=batch_context)
                 with open_media_source(_file(folder, output.name)) as incoming:
                     digest = _hash_handle(incoming, deadline)
                     _validate_report(report, single, digest)

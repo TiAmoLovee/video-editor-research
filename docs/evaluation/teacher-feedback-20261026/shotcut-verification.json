@@ -1,0 +1,137 @@
+{
+  "status": "passed_real_1080p_shotcut_gui_open_seek_save_reopen_and_native_roundtrip",
+  "date": "2026-10-26",
+  "base_main": "5baf5c504274e01bed64b791e79dd73e07db1dde",
+  "shotcut_version": "Shotcut version 26.8.1",
+  "mlt_version": "7.41.0",
+  "source": {
+    "base_main": "5baf5c504274e01bed64b791e79dd73e07db1dde",
+    "source_kind": "real_recorded_speech_video",
+    "source_sha256": "8ebfb3551bac936974775529113faedf86e5993b50b1cf87d72aae395763d983",
+    "source_probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "30/1",
+          "nb_frames": "2178"
+        }
+      ]
+    },
+    "project_profile": {
+      "width": 1080,
+      "height": 1920,
+      "fps": {
+        "num": 30,
+        "den": 1
+      }
+    },
+    "source_ranges": [
+      [
+        851,
+        1455
+      ],
+      [
+        43,
+        592
+      ]
+    ],
+    "timeline_ranges": [
+      [
+        0,
+        604
+      ],
+      [
+        604,
+        1153
+      ]
+    ],
+    "duration_frames": 1153,
+    "cue_count": 13,
+    "current_main_export_mlt_sha256": "2d187e203464726efe029e43aa01f0ae556bb69430a099ff1e9e5994ccc2577d",
+    "gui_verified": true,
+    "same_human_calibration_plan": true,
+    "new_independent_human_timing": false
+  },
+  "gui_observations": [
+    {
+      "step": "cut_before",
+      "frame": 603,
+      "displayed_time": "00:00:20.100",
+      "screenshot_sha256": "da6d9937945f7f6dd19b3bd828887cfaa2432b8f296be93f5c49549c58749478"
+    },
+    {
+      "step": "cut_after",
+      "frame": 604,
+      "displayed_time": "00:00:20.133",
+      "screenshot_sha256": "b097ab833152e0685fc32e4665411e32d7c415aabae7db8e6234bdf985d37632"
+    },
+    {
+      "step": "source_1080p_properties_first_clip",
+      "frame": null,
+      "displayed_time": null,
+      "screenshot_sha256": "3b82666822c9ca6834f6d51601aaca918065e2231c7f01ef5b35a623e6493670"
+    },
+    {
+      "step": "gui_saved",
+      "frame": null,
+      "displayed_time": null,
+      "screenshot_sha256": "666738aac295f579eefb9b6b1cd9e9caf587b02cfc8a629923ad938b7ba842f8"
+    },
+    {
+      "step": "gui_reopened_last_frame",
+      "frame": 1152,
+      "displayed_time": "00:00:38.400",
+      "screenshot_sha256": "3272a1cb55839d01230e09304ef0caa58da0ad458f7b49bc588c50e5e6376234"
+    }
+  ],
+  "saved_ranges_half_open": [
+    [
+      851,
+      1455
+    ],
+    [
+      43,
+      592
+    ]
+  ],
+  "duration_frames": 1153,
+  "duration_seconds": "1153/30",
+  "saved_qtext_filters": 14,
+  "subtitle_text_and_ranges_unchanged": true,
+  "inclusive_mlt_outs_converted_to_half_open": true,
+  "input_project_sha256": "2d187e203464726efe029e43aa01f0ae556bb69430a099ff1e9e5994ccc2577d",
+  "gui_saved_project_sha256": "a1e71c0e206d070d23e5fa96e3aad3194c3ad307d0de57485d2032fbaf0d8bf6",
+  "native_saved_gui_checks": [
+    {
+      "window": "first",
+      "timeline_frames": [
+        0
+      ],
+      "native_input_vs_saved_rgb_mae": 0.0,
+      "native_frames": 1
+    },
+    {
+      "window": "cut",
+      "timeline_frames": [
+        603,
+        604
+      ],
+      "native_input_vs_saved_rgb_mae": 0.0,
+      "native_frames": 2
+    },
+    {
+      "window": "last",
+      "timeline_frames": [
+        1152
+      ],
+      "native_input_vs_saved_rgb_mae": 0.0,
+      "native_frames": 1
+    }
+  ],
+  "scope": "Real recorded 1080p source; actual GUI seeks at the cut, save-as and reopen. Native roundtrip samples four fixed frames, not a new human narrative or full speech-sync assessment.",
+  "production_changes": 0,
+  "new_model_calls": 0
+}

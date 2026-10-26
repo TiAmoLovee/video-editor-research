@@ -348,22 +348,57 @@ def _check_source(record, deadline, *, hash_content=False):
     _check_identity(record["path"], record["identity"])
 
 
-def _sources(edl, source_root, stack, executable, deadline):
+class _BatchSourceVerification:
+    """One in-process batch lifetime, retaining real measurements and read locks.
+
+    Starts empty: historical manifests cannot populate this context. Only a
+    successful actual source measurement is cached, and every reuse rechecks
+    the held file identity and full SHA. Never shared globally or persisted.
+    """
+
+    def __init__(self):
+        self._stack = ExitStack()
+        self._records = {}
+        self._active = False
+        self._used = False
+
+    def __enter__(self):
+        if self._used:
+            raise ValueError("batch source verification context cannot be reopened")
+        self._used = self._active = True
+        return self
+
+    def __exit__(self, *exception):
+        self._active = False
+        self._records.clear()
+        return self._stack.__exit__(*exception)
+
+
+def _sources(edl, source_root, stack, executable, deadline, batch_context=None):
+    if batch_context is not None and (type(batch_context) is not _BatchSourceVerification
+                                      or not batch_context._active):
+        raise ValueError("an active measured batch source context is required")
     records, by_id = {}, {}
     for source in edl["sources"]:
         path = Path(resolve_source_ref(source["ref"], source_root, require_media=True))
-        # Windows normcase also deduplicates references with different casing.
         key = os.path.normcase(str(path))
         if key not in records:
-            incoming = stack.enter_context(open_media_source(path))
-            record = {"path": path, "handle": incoming, "identity": _identity(os.fstat(incoming.fileno())),
-                      "sha256": source["sha256"], "source_ids": []}
-            _check_source(record, deadline, hash_content=True)
-            measured = build_media_manifest(path, source_id=source["id"], ref=source["ref"],
-                                            ffprobe=executable, timeout=_manifest_budget(deadline),
-                                            expected_fps=source["fps"])
-            record["measured"] = measured
+            cached = batch_context._records.get(key) if batch_context is not None else None
+            if cached is None:
+                owner = batch_context._stack if batch_context is not None else stack
+                incoming = owner.enter_context(open_media_source(path))
+                record = {"path": path, "handle": incoming, "identity": _identity(os.fstat(incoming.fileno())),
+                          "sha256": source["sha256"]}
+                _check_source(record, deadline, hash_content=True)
+                options = {"_single_decode": True} if batch_context is not None else {}
+                record["measured"] = build_media_manifest(
+                    path, source_id=source["id"], ref=source["ref"], ffprobe=executable,
+                    timeout=_manifest_budget(deadline), expected_fps=source["fps"], **options)
+            else:
+                record = dict(cached)
+                _check_source(record, deadline, hash_content=True)
             records[key] = record
+            record["source_ids"] = []
         record = records[key]
         actual = deepcopy(record["measured"]["source"])
         actual.update(id=source["id"], ref=source["ref"])
@@ -372,6 +407,8 @@ def _sources(edl, source_root, stack, executable, deadline):
         if actual != source or record["measured"]["profile"] != expected_profile:
             raise ValueError(f"measured source descriptor differs from EDL: {source['id']}")
         _check_source(record, deadline)
+        if batch_context is not None:
+            batch_context._records[key] = {key: value for key, value in record.items() if key != "source_ids"}
         record["source_ids"].append(source["id"])
         by_id[source["id"]] = record
     return list(records.values()), by_id
@@ -544,7 +581,7 @@ def _publish(incoming, target, expected_sha256, deadline):
 
 
 def render_edl(edl, source_root, output, *, ffmpeg=None, ffprobe=None, timeout=3600,
-               subtitle_plan=None, analyses=None, font_file=None, font_name=None) -> dict:
+               subtitle_plan=None, analyses=None, font_file=None, font_name=None, _batch_context=None) -> dict:
     """Render new output exclusively; return measured facts and planned frame cuts.
 
 Sources must pass the measured manifest contract at the project frame rate.
@@ -584,7 +621,7 @@ verified; no system-font fallback is accepted.
         subtitles = None
         if subtitle_plan is not None:
             subtitles = _subtitle_state(stack, subtitle_plan, data, analyses, font_file, font_name, ffmpeg, deadline)
-        records, by_id = _sources(data, source_root, stack, ffprobe, deadline)
+        records, by_id = _sources(data, source_root, stack, ffprobe, deadline, _batch_context)
         target.parent.mkdir(parents=True, exist_ok=True)
         # Older Windows FFmpeg builds cannot chdir to or open filter scripts
         # beyond MAX_PATH. Subtitle mode uses the OS temp directory and fixed
@@ -636,7 +673,8 @@ verified; no system-font fallback is accepted.
         with open_media_source(temporary) as verified:
             measured = build_media_manifest(temporary, source_id="rendered", ref=target.as_posix(),
                                             ffprobe=ffprobe, timeout=_manifest_budget(deadline),
-                                            expected_fps=data["profile"]["fps"])
+                                            expected_fps=data["profile"]["fps"],
+                                            **({"_single_decode": True} if _batch_context is not None else {}))
             source = measured["source"]
             if measured["profile"] != data["profile"] or source["total_frames"] != data["duration_frames"]:
                 raise ValueError("rendered output frame count/profile differs from the saved EDL")

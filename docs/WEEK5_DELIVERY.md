@@ -1,5 +1,7 @@
 # 第五周本地交付核对
 
+> 2026-10-26 补充：第五周代码已与第六周整合到 main。新版真实 1080p 源的 Shotcut GUI 打开、切点时码、另存重开已完成；字幕已归档 3 条、6 端点的人工数字及同样本校准，另外 10 条未独立测量。见[本轮修改记录](WEEK6_FEEDBACK.md)与[字幕数字报告](SUBTITLE_SYNC_MEASUREMENT.md)。下文保留各历史日期的状态和范围。
+
 2026-10-12。第五周 [草稿 PR #8](https://github.com/TiAmoLovee/video-editor-research/pull/8) 已更新至 `9397f03`。MLT 历史字段修复后，GitHub Linux 后端及两平台前端检查通过；Windows 后端 605 项测试仅 1 项失败：检出时 LF→CRLF 改变了冻结 EDL Schema 的字节 SHA。本次仅增加该 Schema 的 Git 原始字节保留规则，已真实复现原失败，并验证 Windows 换行配置开启及关闭时均保留原件；7 项相关测试及 Ruff 通过，修复后的 GitHub 检查等待推送确认。字幕三处定性同步确认和原隔离容器证据保留，严格 ≤0.3 秒仍未量化。尚未合并或部署。
 
 ## 完成的功能与最新验证

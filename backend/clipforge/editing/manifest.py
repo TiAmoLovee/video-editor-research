@@ -358,9 +358,11 @@ cooperative; ordinary noncooperative writes are caught by mtime/ctime checks.
 
 
 def build_media_manifest(video: Path, *, source_id="normalized", ref=None, ffprobe=None,
-                         timeout=3600, expected_fps=None) -> dict:
+                         timeout=3600, expected_fps=None, _single_decode=False) -> dict:
     """Return exactly profile/source from measured, unchanged local media."""
     _timeout(timeout)
+    if type(_single_decode) is not bool:
+        raise ValueError("single-decode verification policy must be boolean")
     fps = deepcopy(DEFAULT_FPS if expected_fps is None else expected_fps)
     expected = frame_rate(fps)
     if not isinstance(source_id, str) or not source_id:
@@ -381,10 +383,12 @@ def build_media_manifest(video: Path, *, source_id="normalized", ref=None, ffpro
     with open_media_source(path) as incoming:
         if _identity(os.fstat(incoming.fileno())) != initial:
             raise ValueError("source file changed before verification lock")
-        return _measure_locked(path, incoming, initial, source_id, reference, executable, timeout, fps, expected)
+        return _measure_locked(path, incoming, initial, source_id, reference, executable, timeout, fps, expected,
+                               single_decode=_single_decode)
 
 
-def _measure_locked(path, incoming, initial, source_id, reference, executable, timeout, fps, expected):
+def _measure_locked(path, incoming, initial, source_id, reference, executable, timeout, fps, expected, *,
+                    single_decode=False):
     deadline = time.monotonic() + timeout
     raw = _probe_details(path, executable, _remaining(deadline))
     metadata = normalize_metadata(raw, str(path))
@@ -402,10 +406,15 @@ def _measure_locked(path, incoming, initial, source_id, reference, executable, t
     if any(_ratio(stream.get(field), field) != expected for field in ("avg_frame_rate", "r_frame_rate")):
         raise ValueError("source reported fps does not match the explicitly expected fps")
     frames = _scan_frames(path, executable, stream, fps, deadline)
-    counted = read_frame_count(path, video_index, executable, _remaining(deadline),
-                               count_frames=True, runner=_probe_text)
-    if frames != counted:
-        raise ValueError("frame timestamp count differs from independently decoded frame count")
+    # _scan_frames already decodes and counts every frame while validating
+    # properties and the full CFR/PTS grid. A locked batch avoids decoding the
+    # identical source/output again solely for a second count. Ordinary calls
+    # retain the independent second pass.
+    if not single_decode:
+        counted = read_frame_count(path, video_index, executable, _remaining(deadline),
+                                   count_frames=True, runner=_probe_text)
+        if frames != counted:
+            raise ValueError("frame timestamp count differs from independently decoded frame count")
     _check_identity(path, initial)
     if _identity(os.fstat(incoming.fileno())) != initial:
         raise ValueError("source file changed before hashing")
