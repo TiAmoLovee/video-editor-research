@@ -131,7 +131,13 @@ def render_plan(manifest, source, output, ffmpeg, ffprobe):
                    '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p', '-threads', '2', '-fps_mode', 'cfr']
         if audio:
             rate = int(audio['sample_rate'])
-            command += ['-map', '0:a:0', '-af', f'atrim=start_sample={round(first*rate/30)}:end_sample={round(last*rate/30)},asetpts=PTS-STARTPTS',
+            samples = round((last-first)*rate/30)
+            # Native audio may end before the final CFR video frame. Preserve
+            # the selected audio, pad only its missing tail, and bound the
+            # pre-encode sample count without relaxing the checks below.
+            command += ['-map', '0:a:0', '-af',
+                        f'atrim=start_sample={round(first*rate/30)}:end_sample={round(last*rate/30)},'
+                        f'asetpts=PTS-STARTPTS,apad=whole_len={samples},atrim=end_sample={samples},asetpts=N/SR/TB',
                         '-c:a', 'aac', '-b:a', '128k', '-ar', str(rate)]
         command += ['-movflags', '+faststart', str(target)]
         subprocess.run(command, check=True, capture_output=True, timeout=600)

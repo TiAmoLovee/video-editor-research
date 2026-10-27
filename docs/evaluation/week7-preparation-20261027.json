@@ -1,0 +1,430 @@
+{
+  "schema_version": "week7-final-preparation-v1",
+  "generated_at": "2026-10-27T09:35:11.311933+00:00",
+  "campaign_id": "41e3c235bfc250d32141cbd24eabadde6eb4e5ed2c6b44da919976418fffee34",
+  "protocol_sha256": "8065ee72493d5d24b0471f66f0f1bb60578628496f68c6f5d3fa40372cf017a9",
+  "source_inventory_sha256": "e0074dc9fc839fc246a2b6f8dbe5956b7d76cbba81186f5979b7c2384ff4af69",
+  "source_count": 30,
+  "byte_distinct_source_count": 30,
+  "original_total_seconds": 4713.149999,
+  "original_total_bytes": 3941265143,
+  "source_group_independence_content_verified": false,
+  "strata": {
+    "development_known": 21,
+    "newly_added_user_attested_distinct": 9
+  },
+  "source_status_counts": {
+    "completed": 30
+  },
+  "rateable_clip_count": 141,
+  "planned_slot_count": 150,
+  "group_count": 6,
+  "ready_video_seconds_per_rater": 4165.466666666666,
+  "selection": "main sentence-window-v1 / rule-v1 / time NMS IoU .5 / Top5; no manual filtering",
+  "review_copy": "540p H.264/AAC, CFR30, outward rounding at most one frame",
+  "asr_mode_counts": {
+    "verified_compatible_same_run_reuse": 25,
+    "verified_corrected_local_experiment_reused": 1,
+    "one_new_transcribe_video_run_with_bounded_internal_recovery": 4
+  },
+  "asr_mode_note": "Top-level transcribe_video runs, not underlying decoder invocation counts. Original bounded recovery attempts remain separately recorded.",
+  "sources_with_pcm_gate_adjustments": 5,
+  "asr_coverage_after_status_counts": {
+    "suspect_coverage": 7,
+    "clear": 23
+  },
+  "asr_coverage_note": "VAD and ASR disagreement flags only; not CER, timing-error or semantic quality measurements. Frozen defaults retained; no post-hoc quality filtering.",
+  "preview_mode_counts": {
+    "verified_identical_frame_bytes_reused": 25,
+    "fresh_corrected_exact_range_render": 4,
+    "fresh_corrected_exact_range_render_with_terminal_audio_padding": 1
+  },
+  "cold_full_application_rtf_measured": false,
+  "original_failures_preserved": true,
+  "original_baseline_status_counts": {
+    "completed": 25,
+    "failed": 5
+  },
+  "original_baseline_failed_sources": [
+    "V012",
+    "V015",
+    "V013",
+    "V027",
+    "V028"
+  ],
+  "frozen_analysis_code_changed_files": [
+    "backend/clipforge/analysis/asr.py"
+  ],
+  "preview_only_supplement": {
+    "source_id": "V027",
+    "receipt_sha256": "0870cd78c096b70ef8179818169dcefe0c86d8f126d7b18efc199eb347f21e90",
+    "renderer_sha256": "c48f9cd018b035e98bca717d009d78b57a6d36c7f6a093e197c3a3f9fdecb21c",
+    "new_selected_candidates": false,
+    "added_tail_zero_samples": 3008,
+    "sample_rate_hz": 48000,
+    "inference_runs": 0
+  },
+  "human_answers_read": false,
+  "human_review_status": "pending",
+  "semantic_completeness": null,
+  "top5_human_acceptance": null,
+  "cohen_kappa": null,
+  "gui_playback_acceptance_claimed": false,
+  "audit_sha256": "c25d8a8349f174a08b08c271f937ccd906e81f44f0223ad79ef9e19961c84457",
+  "ui_verification_sha256": "7dbdfcaf1644e303305bee7cf0833a56d28e0e9791ddaf905333f9da3a19d08d",
+  "pending_human_review_report_sha256": "eb9f844cfa3de1596cff8d7d36ef16ba35166553451efc3520c147e1e1f38d53",
+  "groups": [
+    {
+      "group": 1,
+      "clips": 25,
+      "video_seconds": 776.8000000000001,
+      "manifest_sha256": "15be26a25c35a7253553f12d76ab72430503e7c0d919d5ff5a41fbe3284ffdd0"
+    },
+    {
+      "group": 2,
+      "clips": 23,
+      "video_seconds": 671.5666666666667,
+      "manifest_sha256": "571c33f5faebc665cb484a56136cc0fb597ca168e561920471ddd5bebdbf057a"
+    },
+    {
+      "group": 3,
+      "clips": 25,
+      "video_seconds": 722.1333333333333,
+      "manifest_sha256": "fb17cb613d6bcc2091200a0236ab552eaab618c3b7704535e98dbfcdc08cc0d2"
+    },
+    {
+      "group": 4,
+      "clips": 25,
+      "video_seconds": 787.0333333333334,
+      "manifest_sha256": "6b5548092a4b84550393ca8b742e7bd09e57a384f45aa68f117c319afaa18c47"
+    },
+    {
+      "group": 5,
+      "clips": 23,
+      "video_seconds": 653.3,
+      "manifest_sha256": "28b4a5528a8b4936e5b4f40eb594047de83c1f57c0b69d44d3ec3ba1d694b789"
+    },
+    {
+      "group": 6,
+      "clips": 20,
+      "video_seconds": 554.6333333333332,
+      "manifest_sha256": "4b5b9b1f304a1a82bfaa5d75f7ba40f761999f0f7ab7ed0e26085c63f663d0bf"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "V030",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "suspect_coverage",
+      "bounded_asr_recovery_attempt_count": 2,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V020",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V029",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V012",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_corrected_local_experiment_reused",
+      "terminal_pcm_adjustments": 1,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "fresh_corrected_exact_range_render"
+    },
+    {
+      "source_id": "V021",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V002",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 2,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V016",
+      "status": "completed",
+      "selected_clips": 3,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V022",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V015",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "one_new_transcribe_video_run_with_bounded_internal_recovery",
+      "terminal_pcm_adjustments": 1,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "fresh_corrected_exact_range_render"
+    },
+    {
+      "source_id": "V019",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "suspect_coverage",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V014",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V024",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V004",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V011",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "suspect_coverage",
+      "bounded_asr_recovery_attempt_count": 2,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V006",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "suspect_coverage",
+      "bounded_asr_recovery_attempt_count": 2,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V001",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V005",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V013",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "one_new_transcribe_video_run_with_bounded_internal_recovery",
+      "terminal_pcm_adjustments": 1,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "fresh_corrected_exact_range_render"
+    },
+    {
+      "source_id": "V003",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V008",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "suspect_coverage",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V007",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V017",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V009",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V023",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V027",
+      "status": "completed",
+      "selected_clips": 3,
+      "asr_mode": "one_new_transcribe_video_run_with_bounded_internal_recovery",
+      "terminal_pcm_adjustments": 1,
+      "asr_coverage_after_status": "suspect_coverage",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "fresh_corrected_exact_range_render_with_terminal_audio_padding"
+    },
+    {
+      "source_id": "V010",
+      "status": "completed",
+      "selected_clips": 2,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V025",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V026",
+      "status": "completed",
+      "selected_clips": 3,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 0,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V018",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "verified_compatible_same_run_reuse",
+      "terminal_pcm_adjustments": 0,
+      "asr_coverage_after_status": "clear",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "verified_identical_frame_bytes_reused"
+    },
+    {
+      "source_id": "V028",
+      "status": "completed",
+      "selected_clips": 5,
+      "asr_mode": "one_new_transcribe_video_run_with_bounded_internal_recovery",
+      "terminal_pcm_adjustments": 1,
+      "asr_coverage_after_status": "suspect_coverage",
+      "bounded_asr_recovery_attempt_count": 1,
+      "preview_mode": "fresh_corrected_exact_range_render"
+    }
+  ],
+  "offline_delivery": {
+    "status": "passed",
+    "campaign_id": "41e3c235bfc250d32141cbd24eabadde6eb4e5ed2c6b44da919976418fffee34",
+    "archive_filename": "Week7-30videos-independent-review.zip",
+    "archive_sha256": "944df78e4a18616a2a563cab0335e5ec1a4a0fd5a125b51c5e9f869adf67f10e",
+    "all_archive_entries_crc_and_sha256_verified": true,
+    "review_file_count": 174,
+    "rateable_clip_count": 141,
+    "groups": 6,
+    "sources": 30,
+    "human_review_status": "pending",
+    "private_media_maps_or_transcripts_included": false,
+    "completed_at": "2026-10-27T09:35:14.721098+00:00"
+  }
+}
