@@ -318,6 +318,51 @@ def pcm_has_signal(path, samples):
     return nonzero
 
 
+def _speech_gate_on_video_timeline(speech_gate, duration, *, pcm_samples, sample_rate):
+    """Convert only a proven sub-sample terminal PCM extent to the CFR endpoint.
+
+    Silero reports integer sample boundaries. ceil(video_duration * 16000)
+    can extend the extracted PCM by less than one sample. This is the sole
+    permitted correction; general coverage and word validation stay strict.
+    """
+    if (isinstance(duration, bool) or not isinstance(duration, (int, float))
+            or not math.isfinite(duration) or duration <= 0
+            or type(sample_rate) is not int or sample_rate != SAMPLE_RATE
+            or type(pcm_samples) is not int or pcm_samples != math.ceil(duration * sample_rate)):
+        raise ValueError("Silero PCM length/rate must match the full video timeline")
+    if not isinstance(speech_gate, dict) or not isinstance(speech_gate.get("speech_intervals"), list):
+        raise ValueError("Invalid Silero VAD intervals for video timeline conversion")
+    corrected = copy.deepcopy(speech_gate)
+    raw_gate = copy.deepcopy(speech_gate)
+    pcm_end = pcm_samples / sample_rate
+    adjustments = []
+    for index, row in enumerate(corrected["speech_intervals"]):
+        if not isinstance(row, dict) or "start" not in row or "end" not in row:
+            raise ValueError("Invalid Silero VAD interval for video timeline conversion")
+        start, end = row["start"], row["end"]
+        if (isinstance(start, bool) or isinstance(end, bool)
+                or not isinstance(start, (int, float)) or not isinstance(end, (int, float))
+                or not math.isfinite(start) or not math.isfinite(end)
+                or start < 0 or start > end):
+            raise ValueError("Invalid Silero VAD interval for video timeline conversion")
+        if end > duration:
+            overshoot = end - duration
+            if end != pcm_end or not 0 < overshoot < 1 / sample_rate or start > duration:
+                raise ValueError("Silero VAD interval exceeds the verified terminal PCM boundary")
+            row["end"] = duration
+            adjustments.append({"interval_index": index, "field": "end", "before": end,
+                                "after": duration, "overshoot_samples": overshoot * sample_rate,
+                                "reason": "terminal_pcm_ceil_quantization"})
+    if adjustments and "retained_seconds" in corrected:
+        corrected["retained_seconds"] = sum(row["end"] - row["start"]
+                                             for row in corrected["speech_intervals"])
+    metadata = {"version": "silero-pcm-to-cfr-boundary-v1", "sample_rate_hz": sample_rate,
+                "actual_pcm_samples": pcm_samples, "expected_pcm_samples": math.ceil(duration * sample_rate),
+                "video_duration_seconds": duration, "pcm_duration_seconds": pcm_end,
+                "raw_gate": raw_gate, "adjustments": adjustments}
+    return corrected, metadata
+
+
 def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, language=None):
     spec = model_spec()
     source = Path(video_path).expanduser().resolve()
@@ -335,6 +380,7 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
     detected_language, language_probability, identity = None, None, None
     digital_silence_skipped = False
     speech_gate = None
+    speech_gate_boundary = None
     coverage_recovery = None
     if has_audio:
         stream = next(s for s in raw["streams"] if s["index"] == meta["video"]["stream_index"])
@@ -347,6 +393,8 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
                         math.ceil(duration * SAMPLE_RATE), media_tool("ffmpeg", ffmpeg))
             if pcm_has_signal(pcm, math.ceil(duration * SAMPLE_RATE)):
                 audio, speech_gate = prepare_speech(pcm, math.ceil(duration * SAMPLE_RATE))
+                speech_gate, speech_gate_boundary = _speech_gate_on_video_timeline(
+                    speech_gate, duration, pcm_samples=len(audio), sample_rate=SAMPLE_RATE)
                 # 全部非语音时不加载 Whisper，也不让空音频进入语言检测/解码。
                 if not speech_gate["no_speech_skipped"]:
                     model, identity = _load_model(str(model_directory(model_dir, model_name=spec["name"])), spec["name"])
@@ -369,7 +417,7 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
                   "device": "cpu", "compute_type": "int8", "cpu_threads": 4, "num_workers": 1,
                   "model_revision": spec["revision"], "model_identity": identity,
                   "digital_silence_skipped": digital_silence_skipped,
-                  "speech_gate": speech_gate,
+                  "speech_gate": speech_gate, "speech_gate_boundary": speech_gate_boundary,
                   "coverage_recovery_parameters": dict(COVERAGE_RECOVERY_PARAMETERS),
                   "coverage_recovery": coverage_recovery,
                   "text_normalization": {"tool": "opencc-python-reimplemented", "version": version("opencc-python-reimplemented"),

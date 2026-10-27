@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-27",
+  "kind": "real_media_engineering_repair_not_human_quality_evaluation",
+  "source_alias": "V012",
+  "source_sha256": "22f2494c450b67c273f3ac4d2ef9cb4de9952911610e6f3b1f4b35b05ac62dd9",
+  "normalized_sha256": "cdab04186f11dafaa0e50168e24cb5696741bac333ba8ed4b817a3b662dde5c2",
+  "video_frames": 2624,
+  "fps": "30/1",
+  "video_seconds": 87.46666666666667,
+  "sample_rate_hz": 16000,
+  "pcm_samples": 1399467,
+  "raw_silero_last_interval": [
+    81.784,
+    87.4666875
+  ],
+  "corrected_last_end": 87.46666666666667,
+  "exact_pcm_overhang_seconds": "1/48000",
+  "exact_pcm_overhang_samples": "1/3",
+  "correction_policy": "Only the verified full 16k PCM ceil length, exact terminal PCM end and less than one sample overhang; preserve raw values; no generic coverage/word tolerance",
+  "fixed_model": "Systran/faster-whisper-base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "cpu_threads": 4,
+  "unit_tests": {
+    "run": 63,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "independent_memory_assertions": 19,
+  "real_corrected_asr": {
+    "status": "passed",
+    "seconds": 27.080326,
+    "words": 282,
+    "sentences": 11,
+    "coverage_status": "clear",
+    "extra_recovery_attempts": 0,
+    "strict_original_combine_schema_and_word_bounds": true,
+    "latency_is_isolated": false,
+    "full_application_rtf_claimed": false
+  },
+  "external_model_api_calls": 0,
+  "old_frozen_failure_preserved": true,
+  "human_quality_pass_rate_claimed": false,
+  "raw_transcript_or_media_published": false,
+  "asr_code_sha256": "adb1b1c78fd7faf0933ee04a8163ad1092cdb12d082bbed49cacdebe2fd18fe2"
+}

@@ -33,6 +33,11 @@ class ChineseTests(unittest.TestCase):
                 simplify_words([{"text": "字"}])
 
 
+class AudioFixture:
+    def __len__(self):
+        return 160000  # Ten seconds at the actual 16 kHz PCM rate.
+
+
 class SpeechGateTests(unittest.TestCase):
     def setUp(self):
         folder = tempfile.TemporaryDirectory()
@@ -49,7 +54,7 @@ class SpeechGateTests(unittest.TestCase):
 
     def test_nonzero_audio_without_speech_does_not_load_whisper(self):
         gate = {"no_speech_skipped": True, "speech_intervals": [], "retained_seconds": 0}
-        with patch("clipforge.analysis.asr.prepare_speech", return_value=([], gate)), \
+        with patch("clipforge.analysis.asr.prepare_speech", return_value=(AudioFixture(), gate)), \
              patch("clipforge.analysis.asr._load_model") as load:
             result = transcribe_video(self.source)
         load.assert_not_called()
@@ -63,7 +68,7 @@ class SpeechGateTests(unittest.TestCase):
         word = Object(start=5, end=6, word="音樂與講話", probability=.9)
         segment = Object(start=5, end=6, text=word.word, words=[word])
         gate = {"no_speech_skipped": False, "speech_intervals": [{"start": 4.8, "end": 6.2}]}
-        audio = object()
+        audio = AudioFixture()
         with patch("clipforge.analysis.asr.prepare_speech", return_value=(audio, gate)), \
              patch("clipforge.analysis.asr._load_model") as load:
             model = load.return_value = (Object(), {})
@@ -95,7 +100,7 @@ class SpeechGateTests(unittest.TestCase):
                     iter([segment]), Object(language='zh', language_probability=.99))))
                 gate = {'no_speech_skipped': False, 'speech_intervals': [{'start': 5, 'end': 6}]}
                 with patch.dict('os.environ', {'CLIPFORGE_ASR_LANGUAGE': ''}), \
-                     patch('clipforge.analysis.asr.prepare_speech', return_value=(object(), gate)), \
+                     patch('clipforge.analysis.asr.prepare_speech', return_value=(AudioFixture(), gate)), \
                      patch('clipforge.analysis.asr._load_model', return_value=(recognizer, {})), \
                      patch('clipforge.analysis.asr.recover_word_coverage',
                            side_effect=lambda audio, model, words, gate, duration, **kwargs: (words, {})) as recovery:
