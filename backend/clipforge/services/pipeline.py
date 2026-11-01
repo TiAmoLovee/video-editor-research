@@ -5,7 +5,7 @@ import logging
 import os
 import time
 from contextlib import ExitStack
-from clipforge.config import media_tool
+from clipforge.config import SourceDurationError, media_tool, validate_source_duration
 from pathlib import Path
 import zipfile
 
@@ -74,6 +74,7 @@ def process_video(task_id: str) -> dict:
                             reused_stages=['normalizing', 'analyzing_shots', 'analyzing_speech',
                                            'transcribing', 'combining_analysis', 'scoring_candidates', 'splitting'])
                 meta = json.loads((folder/'media_meta.json').read_text(encoding='utf-8'))
+                validate_source_duration(meta)
                 meta['source_file'] = job['source_name']
                 save_json(folder/'media_meta.json', meta)
                 previous = restored['result']
@@ -94,11 +95,12 @@ def process_video(task_id: str) -> dict:
                     # 分析成功而索引写入失败时，保留本次成功结果，下次继续正常处理。
                     logger.warning('Result cache publication failed for %s', task_id, exc_info=True)
             return result
-        except Exception:
+        except Exception as error:
             current = get_job(task_id)
             if current and current['status'] == 'RUNNING':
                 update_job(task_id, 'FAILED', current['stage'], current['progress'],
-                           error='视频结果复用或打包失败，请查看 worker 日志。')
+                           error=str(error) if isinstance(error, SourceDurationError) else
+                           '视频结果复用或打包失败，请查看 worker 日志。')
             raise
 
 
@@ -155,6 +157,7 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
             boundary_settings or boundary_settings_snapshot(), generation_settings)
         source = folder / job["source_key"]
         original = normalize_metadata(probe_video(str(source), ffprobe), str(source))
+        validate_source_duration(original)
         original["source_file"] = job["source_name"]
         save_json(folder / "media_meta.json", original)
 
@@ -233,9 +236,10 @@ def _process_uncached(task_id, cache_info, started, *, scoring_config=None, deci
         for clip in plan["clips"]:
             files[clip["file"]] = f"clips/{clip['file']}"
         return finish_task(task_id, folder, plan, files, cache_info, started)
-    except Exception:
+    except Exception as error:
         logger.exception("Video task %s failed at %s", task_id, stage)
         (folder / "result.zip.tmp").unlink(missing_ok=True)
         update_job(task_id, "FAILED", stage, progress,
-                   error=f"视频处理在 {stage} 阶段失败，请查看 worker 日志。")
+                   error=str(error) if isinstance(error, SourceDurationError) else
+                   f"视频处理在 {stage} 阶段失败，请查看 worker 日志。")
         raise

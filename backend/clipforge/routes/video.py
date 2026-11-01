@@ -4,6 +4,8 @@ from pathlib import Path, PureWindowsPath
 import json
 import logging
 import shutil
+import errno
+import sqlite3
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Response, UploadFile
@@ -30,7 +32,8 @@ def video_history(limit: int = Query(20, ge=1, le=100), offset: int = Query(0, g
 @router.post("", status_code=202, summary="上传视频并提交后台处理",
              responses={413: {"description": "文件超过 1 GiB"},
                         415: {"description": "不支持的扩展名"},
-                        503: {"description": "提交结果不确定，请保留返回的任务编号"}})
+                        503: {"description": "存储暂不可用或队列提交结果不确定，请保留已返回的任务编号"},
+                        507: {"description": "存储空间不足，视频未提交"}})
 def upload_video(response: Response, file: UploadFile = File(...), shot_options: str | None = Form(None)):
     try:
         options = parse_options(shot_options)
@@ -47,9 +50,11 @@ def upload_video(response: Response, file: UploadFile = File(...), shot_options:
         raise HTTPException(413, "当前单个视频最大为 1 GiB。")
     task_id = str(uuid4())
     folder = job_dir(task_id)
-    folder.mkdir(parents=True, exist_ok=False)
+    folder_created = False
     source_key = "source" + suffix
     try:
+        folder.mkdir(parents=True, exist_ok=False)
+        folder_created = True
         size = 0
         with (folder / source_key).open("xb") as destination:
             while chunk := file.file.read(1024 * 1024):
@@ -63,9 +68,19 @@ def upload_video(response: Response, file: UploadFile = File(...), shot_options:
             (folder / "shot_options.json").write_text(
                 json.dumps(options, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
         create_job(task_id, source_name, source_key)
+    except (OSError, sqlite3.Error) as error:
+        if folder_created:
+            shutil.rmtree(folder, ignore_errors=True)
+        logger.exception('Failed to store uploaded video %s', task_id)
+        full = (getattr(error, 'errno', None) in (errno.ENOSPC, getattr(errno, 'EDQUOT', errno.ENOSPC))
+                or getattr(error, 'sqlite_errorcode', None) == sqlite3.SQLITE_FULL)
+        if full:
+            raise HTTPException(507, '[STORAGE_FULL] 存储空间不足，视频未提交，请释放空间后重试。') from None
+        raise HTTPException(503, '[STORAGE_UNAVAILABLE] 暂时无法保存视频，请检查存储后重试。') from None
     except BaseException:
         # 只清理刚由服务生成的 UUID 目录；该任务尚未发送到队列。
-        shutil.rmtree(folder)
+        if folder_created:
+            shutil.rmtree(folder, ignore_errors=True)
         raise
     finally:
         file.file.close()

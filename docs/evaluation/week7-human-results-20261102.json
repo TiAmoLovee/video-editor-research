@@ -1,0 +1,1805 @@
+{
+  "schema_version": "week7-human-aggregate-report-v1",
+  "generated_at": "2026-11-01T17:20:45.264448+00:00",
+  "status": "complete",
+  "campaign_id": "41e3c235bfc250d32141cbd24eabadde6eb4e5ed2c6b44da919976418fffee34",
+  "provenance": {
+    "upstream_schema": "week7-formal30-human-summary-v1",
+    "upstream_generated_at": "2026-11-01T17:19:03.034281+00:00",
+    "upstream_summary_sha256": "7064ce8c81e813780c0351faa7a7af8724202830f07206e0ef5f2e67436e5ebf",
+    "frozen_summary_tool_sha256": "cfe8771d13ea0ccc701ef989f661da9f28b6c070ad1efde68a28db4fce45125f",
+    "report_tool_sha256": "ed956c2a079f5465c8ea5d8be99f753758304335af63a6b3ac90254ece910d62",
+    "scope": "Completed upstream summary checked for internal consistency; not a new campaign/export revalidation."
+  },
+  "fixed_source_denominator": 30,
+  "planned_clip_slots": 150,
+  "actual_rateable_clip_count": 141,
+  "unfilled_planned_slots": 9,
+  "source_outcomes": {
+    "status_counts": {
+      "completed": 30
+    },
+    "planned_slots_lost_to_source_failure": 0,
+    "planned_slots_unfilled_no_candidates": 0,
+    "planned_slots_unfilled_insufficient_candidates": 9,
+    "source_failure_is_a_human_rejection": false
+  },
+  "completed_paired_group_count": 6,
+  "statistics": {
+    "fixed_clip_denominator": 141,
+    "primary_analysis": "pooled_raw_answers_nominal_three_category_accept_Cohen_kappa",
+    "accept_nominal_three_class": {
+      "labels": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "denominator": 141,
+      "matrix": [
+        [
+          55,
+          23,
+          0
+        ],
+        [
+          20,
+          42,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "rater_A_counts": {
+        "yes": 78,
+        "no": 62,
+        "uncertain": 1
+      },
+      "rater_B_counts": {
+        "yes": 75,
+        "no": 66,
+        "uncertain": 0
+      },
+      "agreement_count": 97,
+      "Po": 0.6879432624113475,
+      "Pe": 0.5000754489210805,
+      "expected_agreement_numerator": 9942,
+      "expected_agreement_denominator": 19881,
+      "kappa": 0.3757923332327196,
+      "null_reason": null,
+      "single_category_margin": {
+        "A": false,
+        "B": false
+      }
+    },
+    "accept_yes_vs_rest_sensitivity": {
+      "labels": [
+        "yes",
+        "not_yes"
+      ],
+      "denominator": 141,
+      "matrix": [
+        [
+          55,
+          23
+        ],
+        [
+          20,
+          43
+        ]
+      ],
+      "rater_A_counts": {
+        "yes": 78,
+        "not_yes": 63
+      },
+      "rater_B_counts": {
+        "yes": 75,
+        "not_yes": 66
+      },
+      "agreement_count": 98,
+      "Po": 0.6950354609929078,
+      "Pe": 0.5033952014486193,
+      "expected_agreement_numerator": 10008,
+      "expected_agreement_denominator": 19881,
+      "kappa": 0.3859009419629292,
+      "null_reason": null,
+      "single_category_margin": {
+        "A": false,
+        "B": false
+      }
+    },
+    "all_question_nominal_metrics": {
+      "opening_complete": {
+        "labels": [
+          "yes",
+          "no",
+          "uncertain"
+        ],
+        "denominator": 141,
+        "matrix": [
+          [
+            96,
+            33,
+            0
+          ],
+          [
+            3,
+            9,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "rater_A_counts": {
+          "yes": 129,
+          "no": 12,
+          "uncertain": 0
+        },
+        "rater_B_counts": {
+          "yes": 99,
+          "no": 42,
+          "uncertain": 0
+        },
+        "agreement_count": 105,
+        "Po": 0.7446808510638298,
+        "Pe": 0.6677229515617926,
+        "expected_agreement_numerator": 13275,
+        "expected_agreement_denominator": 19881,
+        "kappa": 0.23160762942779292,
+        "null_reason": null,
+        "single_category_margin": {
+          "A": false,
+          "B": false
+        }
+      },
+      "ending_complete": {
+        "labels": [
+          "yes",
+          "no",
+          "uncertain"
+        ],
+        "denominator": 141,
+        "matrix": [
+          [
+            60,
+            29,
+            0
+          ],
+          [
+            4,
+            48,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "rater_A_counts": {
+          "yes": 89,
+          "no": 52,
+          "uncertain": 0
+        },
+        "rater_B_counts": {
+          "yes": 64,
+          "no": 77,
+          "uncertain": 0
+        },
+        "agreement_count": 108,
+        "Po": 0.7659574468085106,
+        "Pe": 0.4879030229867713,
+        "expected_agreement_numerator": 9700,
+        "expected_agreement_denominator": 19881,
+        "kappa": 0.5429722031234653,
+        "null_reason": null,
+        "single_category_margin": {
+          "A": false,
+          "B": false
+        }
+      },
+      "understandable": {
+        "labels": [
+          "yes",
+          "no",
+          "uncertain"
+        ],
+        "denominator": 141,
+        "matrix": [
+          [
+            107,
+            24,
+            3
+          ],
+          [
+            5,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "rater_A_counts": {
+          "yes": 134,
+          "no": 7,
+          "uncertain": 0
+        },
+        "rater_B_counts": {
+          "yes": 112,
+          "no": 26,
+          "uncertain": 3
+        },
+        "agreement_count": 109,
+        "Po": 0.7730496453900709,
+        "Pe": 0.7640460741411398,
+        "expected_agreement_numerator": 15190,
+        "expected_agreement_denominator": 19881,
+        "kappa": 0.038158175229162226,
+        "null_reason": null,
+        "single_category_margin": {
+          "A": false,
+          "B": false
+        }
+      },
+      "no_unrelated_content": {
+        "labels": [
+          "yes",
+          "no",
+          "uncertain"
+        ],
+        "denominator": 141,
+        "matrix": [
+          [
+            79,
+            47,
+            1
+          ],
+          [
+            5,
+            8,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "rater_A_counts": {
+          "yes": 127,
+          "no": 14,
+          "uncertain": 0
+        },
+        "rater_B_counts": {
+          "yes": 84,
+          "no": 55,
+          "uncertain": 2
+        },
+        "agreement_count": 87,
+        "Po": 0.6170212765957447,
+        "Pe": 0.5753231728786279,
+        "expected_agreement_numerator": 11438,
+        "expected_agreement_denominator": 19881,
+        "kappa": 0.09818784792135497,
+        "null_reason": null,
+        "single_category_margin": {
+          "A": false,
+          "B": false
+        }
+      },
+      "event_coherent": {
+        "labels": [
+          "yes",
+          "no",
+          "uncertain"
+        ],
+        "denominator": 141,
+        "matrix": [
+          [
+            75,
+            37,
+            0
+          ],
+          [
+            11,
+            18,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "rater_A_counts": {
+          "yes": 112,
+          "no": 29,
+          "uncertain": 0
+        },
+        "rater_B_counts": {
+          "yes": 86,
+          "no": 55,
+          "uncertain": 0
+        },
+        "agreement_count": 93,
+        "Po": 0.6595744680851063,
+        "Pe": 0.5647100246466475,
+        "expected_agreement_numerator": 11227,
+        "expected_agreement_denominator": 19881,
+        "kappa": 0.21793390339727295,
+        "null_reason": null,
+        "single_category_margin": {
+          "A": false,
+          "B": false
+        }
+      },
+      "accept": {
+        "labels": [
+          "yes",
+          "no",
+          "uncertain"
+        ],
+        "denominator": 141,
+        "matrix": [
+          [
+            55,
+            23,
+            0
+          ],
+          [
+            20,
+            42,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "rater_A_counts": {
+          "yes": 78,
+          "no": 62,
+          "uncertain": 1
+        },
+        "rater_B_counts": {
+          "yes": 75,
+          "no": 66,
+          "uncertain": 0
+        },
+        "agreement_count": 97,
+        "Po": 0.6879432624113475,
+        "Pe": 0.5000754489210805,
+        "expected_agreement_numerator": 9942,
+        "expected_agreement_denominator": 19881,
+        "kappa": 0.3757923332327196,
+        "null_reason": null,
+        "single_category_margin": {
+          "A": false,
+          "B": false
+        }
+      }
+    },
+    "per_rater": {
+      "A": {
+        "fixed_clip_denominator": 141,
+        "boundary": {
+          "yes_count": 82,
+          "yes_rate": 0.5815602836879432
+        },
+        "semantic_complete_five_items": {
+          "yes_count": 70,
+          "yes_rate": 0.49645390070921985
+        },
+        "accept": {
+          "yes_count": 78,
+          "yes_rate": 0.5531914893617021
+        },
+        "question_yes_counts": {
+          "opening_complete": 129,
+          "ending_complete": 89,
+          "understandable": 134,
+          "no_unrelated_content": 127,
+          "event_coherent": 112,
+          "accept": 78
+        },
+        "question_yes_rates": {
+          "opening_complete": 0.9148936170212766,
+          "ending_complete": 0.6312056737588653,
+          "understandable": 0.950354609929078,
+          "no_unrelated_content": 0.900709219858156,
+          "event_coherent": 0.7943262411347518,
+          "accept": 0.5531914893617021
+        },
+        "uncertain_counts_by_question": {
+          "opening_complete": 0,
+          "ending_complete": 0,
+          "understandable": 0,
+          "no_unrelated_content": 0,
+          "event_coherent": 0,
+          "accept": 1
+        },
+        "uncertain_rates_by_question": {
+          "opening_complete": 0.0,
+          "ending_complete": 0.0,
+          "understandable": 0.0,
+          "no_unrelated_content": 0.0,
+          "event_coherent": 0.0,
+          "accept": 0.0070921985815602835
+        },
+        "clips_with_any_uncertain": 1
+      },
+      "B": {
+        "fixed_clip_denominator": 141,
+        "boundary": {
+          "yes_count": 52,
+          "yes_rate": 0.36879432624113473
+        },
+        "semantic_complete_five_items": {
+          "yes_count": 46,
+          "yes_rate": 0.3262411347517731
+        },
+        "accept": {
+          "yes_count": 75,
+          "yes_rate": 0.5319148936170213
+        },
+        "question_yes_counts": {
+          "opening_complete": 99,
+          "ending_complete": 64,
+          "understandable": 112,
+          "no_unrelated_content": 84,
+          "event_coherent": 86,
+          "accept": 75
+        },
+        "question_yes_rates": {
+          "opening_complete": 0.7021276595744681,
+          "ending_complete": 0.45390070921985815,
+          "understandable": 0.7943262411347518,
+          "no_unrelated_content": 0.5957446808510638,
+          "event_coherent": 0.6099290780141844,
+          "accept": 0.5319148936170213
+        },
+        "uncertain_counts_by_question": {
+          "opening_complete": 0,
+          "ending_complete": 0,
+          "understandable": 3,
+          "no_unrelated_content": 2,
+          "event_coherent": 0,
+          "accept": 0
+        },
+        "uncertain_rates_by_question": {
+          "opening_complete": 0.0,
+          "ending_complete": 0.0,
+          "understandable": 0.02127659574468085,
+          "no_unrelated_content": 0.014184397163120567,
+          "event_coherent": 0.0,
+          "accept": 0.0
+        },
+        "clips_with_any_uncertain": 3
+      }
+    },
+    "uncertain_is_excluded": false,
+    "group_kappas_averaged": false
+  },
+  "strata": {
+    "development_known": {
+      "fixed_source_denominator": 21,
+      "planned_clip_slots": 105,
+      "actual_published_clip_count": 99,
+      "source_status_counts": {
+        "completed": 21
+      },
+      "statistics": {
+        "fixed_clip_denominator": 99,
+        "primary_analysis": "pooled_raw_answers_nominal_three_category_accept_Cohen_kappa",
+        "accept_nominal_three_class": {
+          "labels": [
+            "yes",
+            "no",
+            "uncertain"
+          ],
+          "denominator": 99,
+          "matrix": [
+            [
+              41,
+              16,
+              0
+            ],
+            [
+              14,
+              27,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "rater_A_counts": {
+            "yes": 57,
+            "no": 41,
+            "uncertain": 1
+          },
+          "rater_B_counts": {
+            "yes": 55,
+            "no": 44,
+            "uncertain": 0
+          },
+          "agreement_count": 68,
+          "Po": 0.6868686868686869,
+          "Pe": 0.5039281705948373,
+          "expected_agreement_numerator": 4939,
+          "expected_agreement_denominator": 9801,
+          "kappa": 0.36877828054298645,
+          "null_reason": null,
+          "single_category_margin": {
+            "A": false,
+            "B": false
+          }
+        },
+        "accept_yes_vs_rest_sensitivity": {
+          "labels": [
+            "yes",
+            "not_yes"
+          ],
+          "denominator": 99,
+          "matrix": [
+            [
+              41,
+              16
+            ],
+            [
+              14,
+              28
+            ]
+          ],
+          "rater_A_counts": {
+            "yes": 57,
+            "not_yes": 42
+          },
+          "rater_B_counts": {
+            "yes": 55,
+            "not_yes": 44
+          },
+          "agreement_count": 69,
+          "Po": 0.696969696969697,
+          "Pe": 0.5084175084175084,
+          "expected_agreement_numerator": 4983,
+          "expected_agreement_denominator": 9801,
+          "kappa": 0.3835616438356164,
+          "null_reason": null,
+          "single_category_margin": {
+            "A": false,
+            "B": false
+          }
+        },
+        "all_question_nominal_metrics": {
+          "opening_complete": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 99,
+            "matrix": [
+              [
+                70,
+                20,
+                0
+              ],
+              [
+                2,
+                7,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 90,
+              "no": 9,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 72,
+              "no": 27,
+              "uncertain": 0
+            },
+            "agreement_count": 77,
+            "Po": 0.7777777777777778,
+            "Pe": 0.6859504132231405,
+            "expected_agreement_numerator": 6723,
+            "expected_agreement_denominator": 9801,
+            "kappa": 0.29239766081871343,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "ending_complete": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 99,
+            "matrix": [
+              [
+                47,
+                19,
+                0
+              ],
+              [
+                4,
+                29,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 66,
+              "no": 33,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 51,
+              "no": 48,
+              "uncertain": 0
+            },
+            "agreement_count": 76,
+            "Po": 0.7676767676767676,
+            "Pe": 0.5050505050505051,
+            "expected_agreement_numerator": 4950,
+            "expected_agreement_denominator": 9801,
+            "kappa": 0.5306122448979592,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "understandable": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 99,
+            "matrix": [
+              [
+                74,
+                18,
+                2
+              ],
+              [
+                4,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 94,
+              "no": 5,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 78,
+              "no": 19,
+              "uncertain": 2
+            },
+            "agreement_count": 75,
+            "Po": 0.7575757575757576,
+            "Pe": 0.757779818385879,
+            "expected_agreement_numerator": 7427,
+            "expected_agreement_denominator": 9801,
+            "kappa": -0.0008424599831508003,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "no_unrelated_content": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 99,
+            "matrix": [
+              [
+                57,
+                34,
+                0
+              ],
+              [
+                2,
+                5,
+                1
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 91,
+              "no": 8,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 59,
+              "no": 39,
+              "uncertain": 1
+            },
+            "agreement_count": 62,
+            "Po": 0.6262626262626263,
+            "Pe": 0.5796347311498826,
+            "expected_agreement_numerator": 5681,
+            "expected_agreement_denominator": 9801,
+            "kappa": 0.11092233009708738,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "event_coherent": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 99,
+            "matrix": [
+              [
+                54,
+                27,
+                0
+              ],
+              [
+                7,
+                11,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 81,
+              "no": 18,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 61,
+              "no": 38,
+              "uncertain": 0
+            },
+            "agreement_count": 65,
+            "Po": 0.6565656565656566,
+            "Pe": 0.573921028466483,
+            "expected_agreement_numerator": 5625,
+            "expected_agreement_denominator": 9801,
+            "kappa": 0.1939655172413793,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "accept": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 99,
+            "matrix": [
+              [
+                41,
+                16,
+                0
+              ],
+              [
+                14,
+                27,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 57,
+              "no": 41,
+              "uncertain": 1
+            },
+            "rater_B_counts": {
+              "yes": 55,
+              "no": 44,
+              "uncertain": 0
+            },
+            "agreement_count": 68,
+            "Po": 0.6868686868686869,
+            "Pe": 0.5039281705948373,
+            "expected_agreement_numerator": 4939,
+            "expected_agreement_denominator": 9801,
+            "kappa": 0.36877828054298645,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          }
+        },
+        "per_rater": {
+          "A": {
+            "fixed_clip_denominator": 99,
+            "boundary": {
+              "yes_count": 61,
+              "yes_rate": 0.6161616161616161
+            },
+            "semantic_complete_five_items": {
+              "yes_count": 55,
+              "yes_rate": 0.5555555555555556
+            },
+            "accept": {
+              "yes_count": 57,
+              "yes_rate": 0.5757575757575758
+            },
+            "question_yes_counts": {
+              "opening_complete": 90,
+              "ending_complete": 66,
+              "understandable": 94,
+              "no_unrelated_content": 91,
+              "event_coherent": 81,
+              "accept": 57
+            },
+            "question_yes_rates": {
+              "opening_complete": 0.9090909090909091,
+              "ending_complete": 0.6666666666666666,
+              "understandable": 0.9494949494949495,
+              "no_unrelated_content": 0.9191919191919192,
+              "event_coherent": 0.8181818181818182,
+              "accept": 0.5757575757575758
+            },
+            "uncertain_counts_by_question": {
+              "opening_complete": 0,
+              "ending_complete": 0,
+              "understandable": 0,
+              "no_unrelated_content": 0,
+              "event_coherent": 0,
+              "accept": 1
+            },
+            "uncertain_rates_by_question": {
+              "opening_complete": 0.0,
+              "ending_complete": 0.0,
+              "understandable": 0.0,
+              "no_unrelated_content": 0.0,
+              "event_coherent": 0.0,
+              "accept": 0.010101010101010102
+            },
+            "clips_with_any_uncertain": 1
+          },
+          "B": {
+            "fixed_clip_denominator": 99,
+            "boundary": {
+              "yes_count": 43,
+              "yes_rate": 0.43434343434343436
+            },
+            "semantic_complete_five_items": {
+              "yes_count": 38,
+              "yes_rate": 0.3838383838383838
+            },
+            "accept": {
+              "yes_count": 55,
+              "yes_rate": 0.5555555555555556
+            },
+            "question_yes_counts": {
+              "opening_complete": 72,
+              "ending_complete": 51,
+              "understandable": 78,
+              "no_unrelated_content": 59,
+              "event_coherent": 61,
+              "accept": 55
+            },
+            "question_yes_rates": {
+              "opening_complete": 0.7272727272727273,
+              "ending_complete": 0.5151515151515151,
+              "understandable": 0.7878787878787878,
+              "no_unrelated_content": 0.5959595959595959,
+              "event_coherent": 0.6161616161616161,
+              "accept": 0.5555555555555556
+            },
+            "uncertain_counts_by_question": {
+              "opening_complete": 0,
+              "ending_complete": 0,
+              "understandable": 2,
+              "no_unrelated_content": 1,
+              "event_coherent": 0,
+              "accept": 0
+            },
+            "uncertain_rates_by_question": {
+              "opening_complete": 0.0,
+              "ending_complete": 0.0,
+              "understandable": 0.020202020202020204,
+              "no_unrelated_content": 0.010101010101010102,
+              "event_coherent": 0.0,
+              "accept": 0.0
+            },
+            "clips_with_any_uncertain": 2
+          }
+        },
+        "uncertain_is_excluded": false,
+        "group_kappas_averaged": false
+      },
+      "interpretation": "Descriptive mixed-exposure stratum; not an all-unseen random independent sample."
+    },
+    "newly_added_user_attested_distinct": {
+      "fixed_source_denominator": 9,
+      "planned_clip_slots": 45,
+      "actual_published_clip_count": 42,
+      "source_status_counts": {
+        "completed": 9
+      },
+      "statistics": {
+        "fixed_clip_denominator": 42,
+        "primary_analysis": "pooled_raw_answers_nominal_three_category_accept_Cohen_kappa",
+        "accept_nominal_three_class": {
+          "labels": [
+            "yes",
+            "no",
+            "uncertain"
+          ],
+          "denominator": 42,
+          "matrix": [
+            [
+              14,
+              7,
+              0
+            ],
+            [
+              6,
+              15,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "rater_A_counts": {
+            "yes": 21,
+            "no": 21,
+            "uncertain": 0
+          },
+          "rater_B_counts": {
+            "yes": 20,
+            "no": 22,
+            "uncertain": 0
+          },
+          "agreement_count": 29,
+          "Po": 0.6904761904761905,
+          "Pe": 0.5,
+          "expected_agreement_numerator": 882,
+          "expected_agreement_denominator": 1764,
+          "kappa": 0.38095238095238093,
+          "null_reason": null,
+          "single_category_margin": {
+            "A": false,
+            "B": false
+          }
+        },
+        "accept_yes_vs_rest_sensitivity": {
+          "labels": [
+            "yes",
+            "not_yes"
+          ],
+          "denominator": 42,
+          "matrix": [
+            [
+              14,
+              7
+            ],
+            [
+              6,
+              15
+            ]
+          ],
+          "rater_A_counts": {
+            "yes": 21,
+            "not_yes": 21
+          },
+          "rater_B_counts": {
+            "yes": 20,
+            "not_yes": 22
+          },
+          "agreement_count": 29,
+          "Po": 0.6904761904761905,
+          "Pe": 0.5,
+          "expected_agreement_numerator": 882,
+          "expected_agreement_denominator": 1764,
+          "kappa": 0.38095238095238093,
+          "null_reason": null,
+          "single_category_margin": {
+            "A": false,
+            "B": false
+          }
+        },
+        "all_question_nominal_metrics": {
+          "opening_complete": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 42,
+            "matrix": [
+              [
+                26,
+                13,
+                0
+              ],
+              [
+                1,
+                2,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 39,
+              "no": 3,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 27,
+              "no": 15,
+              "uncertain": 0
+            },
+            "agreement_count": 28,
+            "Po": 0.6666666666666666,
+            "Pe": 0.6224489795918368,
+            "expected_agreement_numerator": 1098,
+            "expected_agreement_denominator": 1764,
+            "kappa": 0.11711711711711711,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "ending_complete": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 42,
+            "matrix": [
+              [
+                13,
+                10,
+                0
+              ],
+              [
+                0,
+                19,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 23,
+              "no": 19,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 13,
+              "no": 29,
+              "uncertain": 0
+            },
+            "agreement_count": 32,
+            "Po": 0.7619047619047619,
+            "Pe": 0.481859410430839,
+            "expected_agreement_numerator": 850,
+            "expected_agreement_denominator": 1764,
+            "kappa": 0.5404814004376368,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "understandable": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 42,
+            "matrix": [
+              [
+                33,
+                6,
+                1
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 40,
+              "no": 2,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 34,
+              "no": 7,
+              "uncertain": 1
+            },
+            "agreement_count": 34,
+            "Po": 0.8095238095238095,
+            "Pe": 0.7789115646258503,
+            "expected_agreement_numerator": 1374,
+            "expected_agreement_denominator": 1764,
+            "kappa": 0.13846153846153847,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "no_unrelated_content": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 42,
+            "matrix": [
+              [
+                22,
+                13,
+                1
+              ],
+              [
+                3,
+                3,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 36,
+              "no": 6,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 25,
+              "no": 16,
+              "uncertain": 1
+            },
+            "agreement_count": 25,
+            "Po": 0.5952380952380952,
+            "Pe": 0.564625850340136,
+            "expected_agreement_numerator": 996,
+            "expected_agreement_denominator": 1764,
+            "kappa": 0.0703125,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "event_coherent": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 42,
+            "matrix": [
+              [
+                21,
+                10,
+                0
+              ],
+              [
+                4,
+                7,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 31,
+              "no": 11,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 25,
+              "no": 17,
+              "uncertain": 0
+            },
+            "agreement_count": 28,
+            "Po": 0.6666666666666666,
+            "Pe": 0.5453514739229025,
+            "expected_agreement_numerator": 962,
+            "expected_agreement_denominator": 1764,
+            "kappa": 0.26683291770573564,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          },
+          "accept": {
+            "labels": [
+              "yes",
+              "no",
+              "uncertain"
+            ],
+            "denominator": 42,
+            "matrix": [
+              [
+                14,
+                7,
+                0
+              ],
+              [
+                6,
+                15,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "rater_A_counts": {
+              "yes": 21,
+              "no": 21,
+              "uncertain": 0
+            },
+            "rater_B_counts": {
+              "yes": 20,
+              "no": 22,
+              "uncertain": 0
+            },
+            "agreement_count": 29,
+            "Po": 0.6904761904761905,
+            "Pe": 0.5,
+            "expected_agreement_numerator": 882,
+            "expected_agreement_denominator": 1764,
+            "kappa": 0.38095238095238093,
+            "null_reason": null,
+            "single_category_margin": {
+              "A": false,
+              "B": false
+            }
+          }
+        },
+        "per_rater": {
+          "A": {
+            "fixed_clip_denominator": 42,
+            "boundary": {
+              "yes_count": 21,
+              "yes_rate": 0.5
+            },
+            "semantic_complete_five_items": {
+              "yes_count": 15,
+              "yes_rate": 0.35714285714285715
+            },
+            "accept": {
+              "yes_count": 21,
+              "yes_rate": 0.5
+            },
+            "question_yes_counts": {
+              "opening_complete": 39,
+              "ending_complete": 23,
+              "understandable": 40,
+              "no_unrelated_content": 36,
+              "event_coherent": 31,
+              "accept": 21
+            },
+            "question_yes_rates": {
+              "opening_complete": 0.9285714285714286,
+              "ending_complete": 0.5476190476190477,
+              "understandable": 0.9523809523809523,
+              "no_unrelated_content": 0.8571428571428571,
+              "event_coherent": 0.7380952380952381,
+              "accept": 0.5
+            },
+            "uncertain_counts_by_question": {
+              "opening_complete": 0,
+              "ending_complete": 0,
+              "understandable": 0,
+              "no_unrelated_content": 0,
+              "event_coherent": 0,
+              "accept": 0
+            },
+            "uncertain_rates_by_question": {
+              "opening_complete": 0.0,
+              "ending_complete": 0.0,
+              "understandable": 0.0,
+              "no_unrelated_content": 0.0,
+              "event_coherent": 0.0,
+              "accept": 0.0
+            },
+            "clips_with_any_uncertain": 0
+          },
+          "B": {
+            "fixed_clip_denominator": 42,
+            "boundary": {
+              "yes_count": 9,
+              "yes_rate": 0.21428571428571427
+            },
+            "semantic_complete_five_items": {
+              "yes_count": 8,
+              "yes_rate": 0.19047619047619047
+            },
+            "accept": {
+              "yes_count": 20,
+              "yes_rate": 0.47619047619047616
+            },
+            "question_yes_counts": {
+              "opening_complete": 27,
+              "ending_complete": 13,
+              "understandable": 34,
+              "no_unrelated_content": 25,
+              "event_coherent": 25,
+              "accept": 20
+            },
+            "question_yes_rates": {
+              "opening_complete": 0.6428571428571429,
+              "ending_complete": 0.30952380952380953,
+              "understandable": 0.8095238095238095,
+              "no_unrelated_content": 0.5952380952380952,
+              "event_coherent": 0.5952380952380952,
+              "accept": 0.47619047619047616
+            },
+            "uncertain_counts_by_question": {
+              "opening_complete": 0,
+              "ending_complete": 0,
+              "understandable": 1,
+              "no_unrelated_content": 1,
+              "event_coherent": 0,
+              "accept": 0
+            },
+            "uncertain_rates_by_question": {
+              "opening_complete": 0.0,
+              "ending_complete": 0.0,
+              "understandable": 0.023809523809523808,
+              "no_unrelated_content": 0.023809523809523808,
+              "event_coherent": 0.0,
+              "accept": 0.0
+            },
+            "clips_with_any_uncertain": 1
+          }
+        },
+        "uncertain_is_excluded": false,
+        "group_kappas_averaged": false
+      },
+      "interpretation": "Descriptive mixed-exposure stratum; not an all-unseen random independent sample."
+    }
+  },
+  "supplementary": {
+    "source_balanced": {
+      "rateable_source_count": 30,
+      "sources_without_rateable_clips": 0,
+      "method": "Arithmetic mean of per-source yes rates, over sources with rateable clips only.",
+      "interpretation": "Descriptive supplementary means; no independent-sample inference or fabricated rates for empty sources.",
+      "per_rater": {
+        "A": {
+          "boundary": 0.5888888888888889,
+          "semantic_complete_five_items": 0.4988888888888889,
+          "accept": 0.5566666666666665
+        },
+        "B": {
+          "boundary": 0.3511111111111111,
+          "semantic_complete_five_items": 0.31111111111111117,
+          "accept": 0.5133333333333333
+        }
+      }
+    },
+    "accept_overlap": {
+      "fixed_clip_denominator": 141,
+      "both_yes": 55,
+      "one_yes": 43,
+      "neither_yes": 43,
+      "interpretation": "Observed overlap, not consensus or adjudicated truth; neither_yes includes uncertain."
+    },
+    "question_margins": {
+      "A": {
+        "opening_complete": {
+          "yes": 129,
+          "no": 12,
+          "uncertain": 0
+        },
+        "ending_complete": {
+          "yes": 89,
+          "no": 52,
+          "uncertain": 0
+        },
+        "understandable": {
+          "yes": 134,
+          "no": 7,
+          "uncertain": 0
+        },
+        "no_unrelated_content": {
+          "yes": 127,
+          "no": 14,
+          "uncertain": 0
+        },
+        "event_coherent": {
+          "yes": 112,
+          "no": 29,
+          "uncertain": 0
+        },
+        "accept": {
+          "yes": 78,
+          "no": 62,
+          "uncertain": 1
+        }
+      },
+      "B": {
+        "opening_complete": {
+          "yes": 99,
+          "no": 42,
+          "uncertain": 0
+        },
+        "ending_complete": {
+          "yes": 64,
+          "no": 77,
+          "uncertain": 0
+        },
+        "understandable": {
+          "yes": 112,
+          "no": 26,
+          "uncertain": 3
+        },
+        "no_unrelated_content": {
+          "yes": 84,
+          "no": 55,
+          "uncertain": 2
+        },
+        "event_coherent": {
+          "yes": 86,
+          "no": 55,
+          "uncertain": 0
+        },
+        "accept": {
+          "yes": 75,
+          "no": 66,
+          "uncertain": 0
+        }
+      }
+    },
+    "questions_by_non_yes_count": {
+      "A": [
+        {
+          "question": "accept",
+          "no_count": 62,
+          "uncertain_count": 1,
+          "non_yes_count": 63
+        },
+        {
+          "question": "ending_complete",
+          "no_count": 52,
+          "uncertain_count": 0,
+          "non_yes_count": 52
+        },
+        {
+          "question": "event_coherent",
+          "no_count": 29,
+          "uncertain_count": 0,
+          "non_yes_count": 29
+        },
+        {
+          "question": "no_unrelated_content",
+          "no_count": 14,
+          "uncertain_count": 0,
+          "non_yes_count": 14
+        },
+        {
+          "question": "opening_complete",
+          "no_count": 12,
+          "uncertain_count": 0,
+          "non_yes_count": 12
+        },
+        {
+          "question": "understandable",
+          "no_count": 7,
+          "uncertain_count": 0,
+          "non_yes_count": 7
+        }
+      ],
+      "B": [
+        {
+          "question": "ending_complete",
+          "no_count": 77,
+          "uncertain_count": 0,
+          "non_yes_count": 77
+        },
+        {
+          "question": "accept",
+          "no_count": 66,
+          "uncertain_count": 0,
+          "non_yes_count": 66
+        },
+        {
+          "question": "no_unrelated_content",
+          "no_count": 55,
+          "uncertain_count": 2,
+          "non_yes_count": 57
+        },
+        {
+          "question": "event_coherent",
+          "no_count": 55,
+          "uncertain_count": 0,
+          "non_yes_count": 55
+        },
+        {
+          "question": "opening_complete",
+          "no_count": 42,
+          "uncertain_count": 0,
+          "non_yes_count": 42
+        },
+        {
+          "question": "understandable",
+          "no_count": 26,
+          "uncertain_count": 3,
+          "non_yes_count": 29
+        }
+      ]
+    }
+  },
+  "privacy": {
+    "individual_answers_published": false,
+    "sample_or_source_identifiers_published": false,
+    "original_filenames_or_local_paths_published": false
+  },
+  "limits": [
+    "Uncertain remains in the three-class primary agreement and fixed denominators.",
+    "Source-balanced rates supplement the original clip-weighted results; no confidence intervals or targets are inferred.",
+    "This selected Top5 cohort does not measure full-pool ranking discrimination or compare rule and LLM scorers.",
+    "Source failures or unfilled slots are not human no answers. No disagreement is adjudicated.",
+    "One originally blank question was explicitly answered by the user on behalf of rater A and recorded separately; no other answers changed.",
+    "The 21 development-known and 9 user-attested new sources remain distinct descriptive strata.",
+    "Same-source and overlapping clips are not 141 independent source videos. No confidence intervals are claimed.",
+    "Question frequencies identify review priorities; they do not independently establish the technical cause of a cut failure."
+  ],
+  "measurement_date": "2026-11-02",
+  "frozen_protocol_sha256": "8065ee72493d5d24b0471f66f0f1bb60578628496f68c6f5d3fa40372cf017a9",
+  "input_provenance": {
+    "collected_individual_browser_exports": 12,
+    "originally_complete_exports": 11,
+    "originally_in_progress_exports": 1,
+    "original_answered_question_count": 1691,
+    "expected_question_count": 1692,
+    "explicit_user_relayed_rater_supplements": 1,
+    "effective_input_composition": {
+      "byte_identical_complete_browser_exports": 11,
+      "explicitly_supplemented_individual_export": 1
+    },
+    "original_exports_preserved_byte_for_byte": true,
+    "original_export_time_retained_supplement_time_recorded_separately": true,
+    "supplement_receipt_sha256": "f0226e73f41e8a1b8b512d2dd2f00b35541de3be7234c070e66bc42ff586a0b7",
+    "collection_receipt_sha256": "0f8e4a537eda60ae21c6a887a4ec8e3d2c2a70cb262f9da51edc8bae752ebb7a",
+    "independence": "Each rater confirmed independence in the export. The single supplement was explicitly relayed by the user for rater A; no external verification of independence.",
+    "not_twelve_unmodified_complete_browser_exports": true,
+    "original_export_fingerprints": [
+      {
+        "group": 1,
+        "rater": "A",
+        "sha256": "b60f432d9a6a2548b10a26e6ddad8f6acbb36ffca10b23d9c3732ccddb5f6234",
+        "bytes": 9471
+      },
+      {
+        "group": 2,
+        "rater": "A",
+        "sha256": "680b5e8a4517c6b5ada8de902a13bbf5f6cf47af1089a202c5838a47786a7b07",
+        "bytes": 8772
+      },
+      {
+        "group": 3,
+        "rater": "A",
+        "sha256": "9688082f71932307e224fab9652a5d5f6a7d453983e1cb1132941e12cba5a8d0",
+        "bytes": 9455
+      },
+      {
+        "group": 4,
+        "rater": "A",
+        "sha256": "250bda6288d974d3ee05c3412d35a3df3495f4ef27a5527b3169a2b014919cf3",
+        "bytes": 9458
+      },
+      {
+        "group": 5,
+        "rater": "A",
+        "sha256": "eb548e727446e539015e6e4b554583f5133284b2397d5ce05f202360a0b49ede",
+        "bytes": 8752
+      },
+      {
+        "group": 6,
+        "rater": "A",
+        "sha256": "98ba20026463205594c0d27ae18bd247d8370920b2fb2cc0c071286c47f79408",
+        "bytes": 7715
+      },
+      {
+        "group": 1,
+        "rater": "B",
+        "sha256": "fb66ff81de087c1cff3e5035b95430c95759ebc05ce78847c6e2a6afa480d873",
+        "bytes": 9465
+      },
+      {
+        "group": 2,
+        "rater": "B",
+        "sha256": "592e61c9693e63889f4320f70577b747aeafe37d09c569788363951019657219",
+        "bytes": 8719
+      },
+      {
+        "group": 3,
+        "rater": "B",
+        "sha256": "d08a2f9435570fbcc7a125212257c81aa5de071f497f8c43783651e13b9d7d0a",
+        "bytes": 9418
+      },
+      {
+        "group": 4,
+        "rater": "B",
+        "sha256": "798d105ca48bbb982fed6e1e3f59675b0fa75fb763fc84bf969be42d8931346a",
+        "bytes": 9470
+      },
+      {
+        "group": 5,
+        "rater": "B",
+        "sha256": "c31b6cbe8b2801e7d93a8c27e17810f54b8dc5eb164563b1296de1544d5decf9",
+        "bytes": 8724
+      },
+      {
+        "group": 6,
+        "rater": "B",
+        "sha256": "b1747a5069f3034eb3f5db8f176fe5b80fa04010e7392e0854ce3eb81101f4d9",
+        "bytes": 7709
+      }
+    ]
+  },
+  "groups": [
+    {
+      "batch_index": 1,
+      "batch_id": "8f9428fa09dae3a6b24770841c88aaf663a97def8fae9a8538eb60e293f1ea23",
+      "manifest_sha256": "15be26a25c35a7253553f12d76ab72430503e7c0d919d5ff5a41fbe3284ffdd0",
+      "sample_count": 25,
+      "status": "complete"
+    },
+    {
+      "batch_index": 2,
+      "batch_id": "89e534140d25098695b7d45540425c2c86a90647810e1247ca5ef3c1c89d8ebf",
+      "manifest_sha256": "571c33f5faebc665cb484a56136cc0fb597ca168e561920471ddd5bebdbf057a",
+      "sample_count": 23,
+      "status": "complete"
+    },
+    {
+      "batch_index": 3,
+      "batch_id": "448275a175e60412e041aec3119f121598366b8b29b94063a2e5427f0468803a",
+      "manifest_sha256": "fb17cb613d6bcc2091200a0236ab552eaab618c3b7704535e98dbfcdc08cc0d2",
+      "sample_count": 25,
+      "status": "complete"
+    },
+    {
+      "batch_index": 4,
+      "batch_id": "ceb1adfd0432c01aecee48cf14db0791b5a94ed2a1ecfee111c6e957d1ba83eb",
+      "manifest_sha256": "6b5548092a4b84550393ca8b742e7bd09e57a384f45aa68f117c319afaa18c47",
+      "sample_count": 25,
+      "status": "complete"
+    },
+    {
+      "batch_index": 5,
+      "batch_id": "8736515d8c852bcb5cc7ff948788917da7ae8eef1a3537ed35fc562c6e18ba5a",
+      "manifest_sha256": "28b4a5528a8b4936e5b4f40eb594047de83c1f57c0b69d44d3ec3ba1d694b789",
+      "sample_count": 23,
+      "status": "complete"
+    },
+    {
+      "batch_index": 6,
+      "batch_id": "528499f0ab9fa163930d1ddea05f7a5765a6be7429ba3a02ae24a39144380689",
+      "manifest_sha256": "4b5b9b1f304a1a82bfaa5d75f7ba40f761999f0f7ab7ed0e26085c63f663d0bf",
+      "sample_count": 20,
+      "status": "complete"
+    }
+  ],
+  "target_comparison": {
+    "boundary": {
+      "reference": 0.85,
+      "definition": "Both opening_complete and ending_complete are yes.",
+      "taskbook_page": 9,
+      "met_per_rater": {
+        "A": false,
+        "B": false
+      }
+    },
+    "selected_top5_accept": {
+      "reference": 0.6,
+      "reference_is_approximate": true,
+      "taskbook_page": 10,
+      "met_per_rater": {
+        "A": false,
+        "B": false
+      }
+    },
+    "semantic_five_items": {
+      "separate_stricter_descriptive_measure": true,
+      "not_the_85_percent_boundary_target": true
+    },
+    "kappa": {
+      "mandatory_pass_threshold_not_imposed": true
+    },
+    "these_are_self_check_references_not_internship_pass_fail_gates": true
+  },
+  "evaluation_scope": {
+    "human_metrics_complete": true,
+    "boundary_reference_met_by_both": false,
+    "top5_approximate_reference_met_by_both": false,
+    "full_pool_auc_measured": false,
+    "formal_rule_vs_llm_comparison": false,
+    "new_reference_cer_measured": false,
+    "new_reference_shot_f1_measured": false,
+    "new_independent_subtitle_timing_measurement": false,
+    "new_isolated_end_to_end_cpu_rtf": null,
+    "gpu_rtf": null,
+    "post_feedback_models_or_parameter_changes": false
+  }
+}

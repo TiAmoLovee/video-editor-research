@@ -139,7 +139,7 @@ class VideoJobTests(unittest.TestCase):
             return plan
 
         with patch("clipforge.services.pipeline.probe_video", return_value={}), \
-             patch("clipforge.services.pipeline.normalize_metadata", return_value={}), \
+             patch("clipforge.services.pipeline.normalize_metadata", return_value={'duration_seconds':1}), \
              patch("clipforge.services.pipeline.normalize_video", side_effect=normalize), \
              patch("clipforge.services.pipeline.detect_shots", return_value={"shots": [{"start": 0, "end": 1 / 30}]}), \
              patch("clipforge.services.pipeline.detect_speech", return_value={"speech": [], "silence": []}), \
@@ -177,7 +177,7 @@ class VideoJobTests(unittest.TestCase):
                 response, _ = self.submit()
                 task_id = response.json()["task_id"]
                 with patch("clipforge.services.pipeline.probe_video", return_value={}), \
-                     patch("clipforge.services.pipeline.normalize_metadata", return_value={}), \
+                     patch("clipforge.services.pipeline.normalize_metadata", return_value={'duration_seconds':1}), \
                      patch("clipforge.services.pipeline.normalize_video", return_value={}), \
                      patch("clipforge.services.pipeline.detect_shots", return_value={}), \
                      patch("clipforge.services.pipeline.detect_speech", return_value={}), \
@@ -198,7 +198,7 @@ class VideoJobTests(unittest.TestCase):
         response, _ = self.submit()
         task_id = response.json()["task_id"]
         with patch("clipforge.services.pipeline.probe_video", return_value={}), \
-             patch("clipforge.services.pipeline.normalize_metadata", return_value={}), \
+             patch("clipforge.services.pipeline.normalize_metadata", return_value={'duration_seconds':1}), \
              patch("clipforge.services.pipeline.normalize_video", return_value={}), \
              patch("clipforge.services.pipeline.detect_shots", return_value={}), \
              patch("clipforge.services.pipeline.detect_speech", side_effect=RuntimeError("bad audio")), \
@@ -215,7 +215,7 @@ class VideoJobTests(unittest.TestCase):
         response, _ = self.submit()
         task_id = response.json()["task_id"]
         with patch("clipforge.services.pipeline.probe_video", return_value={}), \
-             patch("clipforge.services.pipeline.normalize_metadata", return_value={}), \
+             patch("clipforge.services.pipeline.normalize_metadata", return_value={'duration_seconds':1}), \
              patch("clipforge.services.pipeline.normalize_video", return_value={}), \
              patch("clipforge.services.pipeline.detect_shots", side_effect=ValueError("incomplete frames")), \
              patch("clipforge.services.pipeline.split_video") as split:
