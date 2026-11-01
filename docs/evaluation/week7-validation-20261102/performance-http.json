@@ -1,0 +1,451 @@
+{
+  "schema_version": "week7-native-http-performance-summary-v1",
+  "generated_at": "2026-11-01T18:42:58.335491+00:00",
+  "client_date": "2026-11-02",
+  "status": "measurement_complete_both_cold_references_not_met",
+  "scope": "One predeclared real source; CPU then CUDA, each cold followed by one cache hit, fixed order and no repetitions.",
+  "source_count": 1,
+  "predeclared_source_id": "V030",
+  "source_sha256": "6f534573bfaa36838f330e96f717455efdc71b02e16684d4ff38c8832ea706eb",
+  "source_bytes": 91014067,
+  "source_duration_seconds": 186.116667,
+  "source_selection": "First source in the previously frozen formal30 processing order; not selected by quality labels or timing.",
+  "hardware": {
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9",
+    "cpu_identifier": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "logical_processor_count": 16,
+    "physical_memory_bytes": 16558161920,
+    "physical_memory_available_before_services_bytes": 4481609728,
+    "cpu_model": "AMD Ryzen 9 5900HX with Radeon Graphics",
+    "gpu_model": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "gpu_total_memory_mib_reported": 8192,
+    "gpu_driver_version": "617.42",
+    "gpu_memory_is_capacity_not_measured_peak": true
+  },
+  "runtime_versions": {
+    "celery": "5.6.3",
+    "kombu": "5.6.2",
+    "redis": "6.4.0",
+    "uvicorn": "0.53.0",
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.6.0",
+    "numpy": "2.2.6",
+    "opencv-python-headless": "4.12.0.88",
+    "scenedetect": "0.6.7.1"
+  },
+  "official_runtime_packages": [
+    {
+      "package": "pywin32",
+      "version": "311",
+      "sha256": "3ce80b34b22b17ccbd937a6e78e7225d80c52f5ab9940fe0506a1a16f3dab503",
+      "bytes": 9508308
+    },
+    {
+      "package": "nvidia-cublas-cu12",
+      "version": "12.4.5.8",
+      "sha256": "5a796786da89203a0657eda402bcdcec6180254a8ac22d72213abc42069522dc",
+      "bytes": 396895858
+    },
+    {
+      "package": "nvidia-cudnn-cu12",
+      "version": "9.1.0.70",
+      "sha256": "6278562929433d68365a07a4a1546c237ba2849852c0d4b2262a486e805b977a",
+      "bytes": 679925892
+    }
+  ],
+  "model": {
+    "repository": "Systran/faster-whisper-base",
+    "revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+    "sha256": {
+      "config.json": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+      "model.bin": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+      "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+      "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+    }
+  },
+  "transport": "Native Uvicorn real HTTP API + separate Celery solo worker + filesystem broker, SQLite task states. Not a Docker/Redis benchmark.",
+  "e2e_timing": "Before first HTTP upload byte through entire ZIP response saved locally, including upload, queue, full worker task/cache publication, polling and download. Service/dependency/model-file preparation and post-download audit excluded.",
+  "service_startup_seconds_excluded": {
+    "cpu": 2.3336573999840766,
+    "cuda": 2.4039781999308616
+  },
+  "execution_control": "Owned single worker, fresh per-run data/broker, cold then warm; host not exclusive, other applications not closed, OS disk caches uncontrolled.",
+  "runs": {
+    "cpu": [
+      {
+        "phase": "cold",
+        "e2e_seconds": 499.97949369996786,
+        "e2e_rtf": 2.686376785911215,
+        "upload_seconds": 0.6249367999844253,
+        "download_seconds": 0.18207809992600232,
+        "cold_reference_rtf": 1.5,
+        "this_one_source_meets_cold_reference": false,
+        "cache_hit": false,
+        "actual_transcribe_calls_current_task": 3,
+        "requested_device": "cpu",
+        "requested_compute_type": "int8",
+        "actual_backend_current_task": {
+          "device": "cpu",
+          "compute_type": "int8_float32",
+          "backend_class": "ctranslate2._ext.Whisper",
+          "wrapper_class": "faster_whisper.transcribe.WhisperModel"
+        },
+        "cached_original_backend": null,
+        "asr_component_elapsed_seconds_stored": 24.392426,
+        "asr_component_elapsed_is_current_task": true,
+        "word_count": 505,
+        "raw_segment_count": 73,
+        "candidate_count": 107,
+        "clip_count": 7,
+        "total_frames": 5584,
+        "shot_count": 12,
+        "shot_cut_count": 11,
+        "shot_component_elapsed_seconds_stored": 312.462428,
+        "shot_component_elapsed_is_current_task": true,
+        "shot_component_seconds_over_cold_e2e": 0.6249504868443769,
+        "observed_poll_stage_transitions": [
+          {
+            "status": "QUEUED",
+            "stage": "queued",
+            "elapsed_seconds": 0.6478576000081375
+          },
+          {
+            "status": "RUNNING",
+            "stage": "probing",
+            "elapsed_seconds": 1.1622534000780433
+          },
+          {
+            "status": "RUNNING",
+            "stage": "normalizing",
+            "elapsed_seconds": 1.6750229999888688
+          },
+          {
+            "status": "RUNNING",
+            "stage": "analyzing_shots",
+            "elapsed_seconds": 81.25708530005068
+          },
+          {
+            "status": "RUNNING",
+            "stage": "analyzing_speech",
+            "elapsed_seconds": 393.76671850006096
+          },
+          {
+            "status": "RUNNING",
+            "stage": "transcribing",
+            "elapsed_seconds": 394.0227278000675
+          },
+          {
+            "status": "RUNNING",
+            "stage": "scoring_candidates",
+            "elapsed_seconds": 418.5985925999703
+          },
+          {
+            "status": "RUNNING",
+            "stage": "splitting",
+            "elapsed_seconds": 419.3832861999981
+          },
+          {
+            "status": "RUNNING",
+            "stage": "packaging",
+            "elapsed_seconds": 499.137196799973
+          },
+          {
+            "status": "SUCCEEDED",
+            "stage": "done",
+            "elapsed_seconds": 499.39382070000283
+          }
+        ],
+        "memory": {
+          "nominal_sample_interval_seconds": 0.25,
+          "observed_mean_sample_interval_seconds": 0.2782995616926403,
+          "observed_max_sample_interval_seconds": 0.537709700060077,
+          "sample_count": 1797,
+          "sampled_peak_aggregate_working_set_bytes": 1486974976,
+          "sampled_peak_aggregate_private_commit_bytes": 2671456256,
+          "unreadable_observed_owned_process_count": 0,
+          "gpu_vram_measured": false
+        },
+        "downloaded_zip_bytes": 51346612,
+        "downloaded_zip_sha256": "033e84397d4cd2b65ce38868512f3c8515d531209f1c1bb9b623cd5057116a79",
+        "zip_entry_count": 18,
+        "all_zip_entry_crc_and_server_file_sha_verified": true,
+        "schema_validated_artifact_count": 5,
+        "uploaded_source_sha256_verified": true
+      },
+      {
+        "phase": "warm",
+        "e2e_seconds": 1.968436500057578,
+        "e2e_rtf": 0.010576358000530807,
+        "upload_seconds": 0.41675800003577024,
+        "download_seconds": 0.24632410006597638,
+        "cold_reference_rtf": null,
+        "this_one_source_meets_cold_reference": null,
+        "cache_hit": true,
+        "actual_transcribe_calls_current_task": 0,
+        "requested_device": "cpu",
+        "requested_compute_type": "int8",
+        "actual_backend_current_task": null,
+        "cached_original_backend": {
+          "device": "cpu",
+          "compute_type": "int8_float32",
+          "backend_class": "ctranslate2._ext.Whisper",
+          "wrapper_class": "faster_whisper.transcribe.WhisperModel"
+        },
+        "asr_component_elapsed_seconds_stored": 24.392426,
+        "asr_component_elapsed_is_current_task": false,
+        "word_count": 505,
+        "raw_segment_count": 73,
+        "candidate_count": 107,
+        "clip_count": 7,
+        "total_frames": 5584,
+        "shot_count": 12,
+        "shot_cut_count": 11,
+        "shot_component_elapsed_seconds_stored": 312.462428,
+        "shot_component_elapsed_is_current_task": false,
+        "shot_component_seconds_over_cold_e2e": null,
+        "observed_poll_stage_transitions": [
+          {
+            "status": "QUEUED",
+            "stage": "queued",
+            "elapsed_seconds": 0.43469430005643517
+          },
+          {
+            "status": "RUNNING",
+            "stage": "probing",
+            "elapsed_seconds": 0.6896314000478014
+          },
+          {
+            "status": "SUCCEEDED",
+            "stage": "done",
+            "elapsed_seconds": 1.7216193000786006
+          }
+        ],
+        "memory": {
+          "nominal_sample_interval_seconds": 0.25,
+          "observed_mean_sample_interval_seconds": 0.2669206857182352,
+          "observed_max_sample_interval_seconds": 0.27363370009697974,
+          "sample_count": 8,
+          "sampled_peak_aggregate_working_set_bytes": 581324800,
+          "sampled_peak_aggregate_private_commit_bytes": 1576165376,
+          "unreadable_observed_owned_process_count": 0,
+          "gpu_vram_measured": false
+        },
+        "downloaded_zip_bytes": 51346872,
+        "downloaded_zip_sha256": "eb5175adf2af3f07db73e29601e6f40a58e053feaf1218ddc9492efe32fb589c",
+        "zip_entry_count": 18,
+        "all_zip_entry_crc_and_server_file_sha_verified": true,
+        "schema_validated_artifact_count": 5,
+        "uploaded_source_sha256_verified": true
+      }
+    ],
+    "cuda": [
+      {
+        "phase": "cold",
+        "e2e_seconds": 509.2120416999096,
+        "e2e_rtf": 2.7359830256357944,
+        "upload_seconds": 0.7401746999239549,
+        "download_seconds": 0.2007799999555573,
+        "cold_reference_rtf": 0.3,
+        "this_one_source_meets_cold_reference": false,
+        "cache_hit": false,
+        "actual_transcribe_calls_current_task": 2,
+        "requested_device": "cuda",
+        "requested_compute_type": "float16",
+        "actual_backend_current_task": {
+          "device": "cuda",
+          "compute_type": "float16",
+          "backend_class": "ctranslate2._ext.Whisper",
+          "wrapper_class": "faster_whisper.transcribe.WhisperModel"
+        },
+        "cached_original_backend": null,
+        "asr_component_elapsed_seconds_stored": 9.960566,
+        "asr_component_elapsed_is_current_task": true,
+        "word_count": 513,
+        "raw_segment_count": 73,
+        "candidate_count": 115,
+        "clip_count": 7,
+        "total_frames": 5584,
+        "shot_count": 12,
+        "shot_cut_count": 11,
+        "shot_component_elapsed_seconds_stored": 327.506358,
+        "shot_component_elapsed_is_current_task": true,
+        "shot_component_seconds_over_cold_e2e": 0.6431630267553787,
+        "observed_poll_stage_transitions": [
+          {
+            "status": "QUEUED",
+            "stage": "queued",
+            "elapsed_seconds": 0.7643071999773383
+          },
+          {
+            "status": "RUNNING",
+            "stage": "probing",
+            "elapsed_seconds": 1.2772687999531627
+          },
+          {
+            "status": "RUNNING",
+            "stage": "normalizing",
+            "elapsed_seconds": 1.789764399989508
+          },
+          {
+            "status": "RUNNING",
+            "stage": "analyzing_shots",
+            "elapsed_seconds": 83.90885089989752
+          },
+          {
+            "status": "RUNNING",
+            "stage": "analyzing_speech",
+            "elapsed_seconds": 411.4456255999394
+          },
+          {
+            "status": "RUNNING",
+            "stage": "transcribing",
+            "elapsed_seconds": 411.96868619997986
+          },
+          {
+            "status": "RUNNING",
+            "stage": "scoring_candidates",
+            "elapsed_seconds": 422.05674059991725
+          },
+          {
+            "status": "RUNNING",
+            "stage": "splitting",
+            "elapsed_seconds": 423.08086939994246
+          },
+          {
+            "status": "RUNNING",
+            "stage": "packaging",
+            "elapsed_seconds": 508.35150439990684
+          },
+          {
+            "status": "SUCCEEDED",
+            "stage": "done",
+            "elapsed_seconds": 508.60779009992257
+          }
+        ],
+        "memory": {
+          "nominal_sample_interval_seconds": 0.25,
+          "observed_mean_sample_interval_seconds": 0.2795455322899707,
+          "observed_max_sample_interval_seconds": 0.5708182000089437,
+          "sample_count": 1822,
+          "sampled_peak_aggregate_working_set_bytes": 2147979264,
+          "sampled_peak_aggregate_private_commit_bytes": 3721814016,
+          "unreadable_observed_owned_process_count": 0,
+          "gpu_vram_measured": false
+        },
+        "downloaded_zip_bytes": 51326476,
+        "downloaded_zip_sha256": "a09cf7a3de130d0fcd278e840a03ecc3272be7d7de249438220c19391620696a",
+        "zip_entry_count": 18,
+        "all_zip_entry_crc_and_server_file_sha_verified": true,
+        "schema_validated_artifact_count": 5,
+        "uploaded_source_sha256_verified": true
+      },
+      {
+        "phase": "warm",
+        "e2e_seconds": 1.885150199988857,
+        "e2e_rtf": 0.010128862881414359,
+        "upload_seconds": 0.3419271999737248,
+        "download_seconds": 0.20825880009215325,
+        "cold_reference_rtf": null,
+        "this_one_source_meets_cold_reference": null,
+        "cache_hit": true,
+        "actual_transcribe_calls_current_task": 0,
+        "requested_device": "cuda",
+        "requested_compute_type": "float16",
+        "actual_backend_current_task": null,
+        "cached_original_backend": {
+          "device": "cuda",
+          "compute_type": "float16",
+          "backend_class": "ctranslate2._ext.Whisper",
+          "wrapper_class": "faster_whisper.transcribe.WhisperModel"
+        },
+        "asr_component_elapsed_seconds_stored": 9.960566,
+        "asr_component_elapsed_is_current_task": false,
+        "word_count": 513,
+        "raw_segment_count": 73,
+        "candidate_count": 115,
+        "clip_count": 7,
+        "total_frames": 5584,
+        "shot_count": 12,
+        "shot_cut_count": 11,
+        "shot_component_elapsed_seconds_stored": 327.506358,
+        "shot_component_elapsed_is_current_task": false,
+        "shot_component_seconds_over_cold_e2e": null,
+        "observed_poll_stage_transitions": [
+          {
+            "status": "RUNNING",
+            "stage": "probing",
+            "elapsed_seconds": 0.37874119996558875
+          },
+          {
+            "status": "RUNNING",
+            "stage": "packaging",
+            "elapsed_seconds": 1.4205068999435753
+          },
+          {
+            "status": "SUCCEEDED",
+            "stage": "done",
+            "elapsed_seconds": 1.6763473999453709
+          }
+        ],
+        "memory": {
+          "nominal_sample_interval_seconds": 0.25,
+          "observed_mean_sample_interval_seconds": 0.26501827141536133,
+          "observed_max_sample_interval_seconds": 0.26919869997072965,
+          "sample_count": 8,
+          "sampled_peak_aggregate_working_set_bytes": 1247174656,
+          "sampled_peak_aggregate_private_commit_bytes": 2635845632,
+          "unreadable_observed_owned_process_count": 0,
+          "gpu_vram_measured": false
+        },
+        "downloaded_zip_bytes": 51326736,
+        "downloaded_zip_sha256": "ef6b7b14687f4164efdbc721ff1e7e9341db9e5185f2ac58575e09dfedc19819",
+        "zip_entry_count": 18,
+        "all_zip_entry_crc_and_server_file_sha_verified": true,
+        "schema_validated_artifact_count": 5,
+        "uploaded_source_sha256_verified": true
+      }
+    ]
+  },
+  "comparability": {
+    "same_raw_original_and_upload_sha256": true,
+    "same_application_harness_dependency_fingerprints": true,
+    "same_normalized_media_sha256": "df3feb3758abf9018bbc45b8a6f7f61ed1354d810643709b6ca136289e5a4907",
+    "same_normalized_format": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "total_frames": 5584
+    },
+    "same_shot_cut_frames_and_parameters": true,
+    "shot_cut_count": 11,
+    "same_rule_config_and_generator": true,
+    "same_seven_fixed_output_clip_bytes": true,
+    "different_runtime_cache_keys": true,
+    "same_recognition_or_candidate_outputs": false,
+    "asr_workloads_note": "CPU/CUDA words, candidates and bounded recovery call counts differ; elapsed observations are not a paired equal-output causal speedup estimate."
+  },
+  "diagnosis": "Scene analysis accounts for roughly63%/64% of the two cold E2E observations. These observations identify a priority for profiling this source, not a general bottleneck or proof of any proposed optimization.",
+  "verification": {
+    "full_audit_sha256": "f0ab0897586663099274134eb11d20051cbef3436c8a93bb78f52119c1c9be7d",
+    "all_four_download_zip_sha_crc_and_server_artifact_bytes_verified": true,
+    "all_four_uploaded_original_sha256_verified": true,
+    "model_source_application_harness_dependency_hashes_verified": true,
+    "official_extracted_runtime_files_verified": 657,
+    "installed_backend_files_verified": 38,
+    "new_media_redecode_performed": false,
+    "media_frame_scope": "Production split pipeline probes/counts retained; this audit binds frame plans and stored artifacts by schema/counts/SHA, without repeating full video decoding.",
+    "owned_process_cleanup": "Owned launcher and actual worker process IDs absent from current process inventory; transient historical child PIDs can be recycled.",
+    "owned_port_cleanup": "Root-authorized exclusive loopback rebind succeeded on8387/8388, immediately closed without listen; earlier connection probes were inconclusive.",
+    "owned_port_cleanup_receipt_sha256": "fa41e5c65f667bde695ea94dc0c49803ef7e42deaf1ea8d7cfd1c6c61441057d",
+    "production_port_8200_probed": false
+  },
+  "limits": [
+    "Single source, fixed CPU-then-CUDA order, non-exclusive host; not a repeated benchmark or formal causal CPU/GPU speed comparison.",
+    "Cold means fresh worker and empty application result cache, with already available model/dependencies and uncontrolled OS disk caches.",
+    "Warm component elapsed values are stored originals; zero new ASR calls, not new inference timings or a cold target pass.",
+    "Nominal250ms memory sampling has observed intervals reported per case; short child processes can be missed. Working sets may share pages; private usage is commit, not GPU VRAM or unique physical RAM.",
+    "No new CER/F1, semantic quality or30-source acceptance claim follows from these performance runs.",
+    "Three/two transcribe calls reflect the existing bounded recovery path; no benchmark task retry or output-based source selection."
+  ]
+}

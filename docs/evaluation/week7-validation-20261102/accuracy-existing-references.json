@@ -1,0 +1,154 @@
+{
+  "schema_version": "week7-reference-rescore-v1",
+  "generated_at": "2026-11-01T18:02:45.734082+00:00",
+  "client_date": "2026-11-02",
+  "campaign_id": "41e3c235bfc250d32141cbd24eabadde6eb4e5ed2c6b44da919976418fffee34",
+  "operation": "rescore_existing_predictions_against_existing_human_references",
+  "new_asr_or_detector_runs": 0,
+  "new_human_reference_labels": 0,
+  "fixed_current_source_denominator": 30,
+  "current_frozen_shot_accuracy": {
+    "scope": "exact-match historical development references; current frozen default predictions",
+    "reference_source_count": 9,
+    "source_coverage_rate": 0.3,
+    "reference_cuts": 174,
+    "predicted_cuts": 30,
+    "negative_no_content_cut_references": 3,
+    "tolerance_frames": 3,
+    "tolerance_seconds": 0.1,
+    "matching": "maximum-cardinality ordered one-to-one internal cuts; exclude frame0/end",
+    "media_identity": "source SHA exact; normalized SHA/fps/framecount/duration/time-reference exact",
+    "normalized_media_bytes_rehashed_this_run": false,
+    "prediction_analyzer": {
+      "status": "ok",
+      "tool": "PySceneDetect.ContentDetector",
+      "version": "0.6.7.1",
+      "model": null,
+      "parameters": {
+        "threshold": 27.0,
+        "min_scene_len_frames": 15,
+        "downscale": 1,
+        "auto_downscale": false,
+        "frame_skip": 0,
+        "weights": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "luma_only": false,
+        "kernel_size": null,
+        "filter_mode": "MERGE",
+        "interpolation": "LINEAR"
+      }
+    },
+    "micro": {
+      "tp": 13,
+      "fp": 17,
+      "fn": 161,
+      "precision": 0.43333333333333335,
+      "recall": 0.07471264367816093,
+      "f1": 0.12745098039215685
+    },
+    "exact_frame_micro": {
+      "tp": 13,
+      "fp": 17,
+      "fn": 161,
+      "precision": 0.43333333333333335,
+      "recall": 0.07471264367816093,
+      "f1": 0.12745098039215685
+    },
+    "by_category": {
+      "interview": {
+        "tp": 1,
+        "fp": 6,
+        "fn": 45,
+        "precision": 0.14285714285714285,
+        "recall": 0.021739130434782608,
+        "f1": 0.03773584905660377
+      },
+      "course": {
+        "tp": 0,
+        "fp": 5,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": null,
+        "f1": 0.0
+      },
+      "vlog": {
+        "tp": 12,
+        "fp": 6,
+        "fn": 116,
+        "precision": 0.6666666666666666,
+        "recall": 0.09375,
+        "f1": 0.1643835616438356
+      }
+    },
+    "all_nine_sources_are_development_known": true,
+    "independent_new_holdout": false,
+    "reference_provenance": "User approximate complete-video cut lists/confirmed no-content-cuts; assistant adjacent-frame localization. Not independent double frame labels.",
+    "target_f1_reference": 0.75,
+    "target_met_on_this_subset": false
+  },
+  "historical_robust_regression_context": {
+    "scope": "Archived measured ROI-robust detector predictions; no rerun or replacement of frozen default",
+    "same_nine_exact_sources": {
+      "tp": 167,
+      "fp": 47,
+      "fn": 7,
+      "precision": 0.780373831775701,
+      "recall": 0.9597701149425287,
+      "f1": 0.8608247422680413
+    },
+    "all_twelve_historical_sources": {
+      "tp": 169,
+      "fp": 48,
+      "fn": 8,
+      "precision": 0.7788018433179723,
+      "recall": 0.9548022598870056,
+      "f1": 0.8578680203045685
+    },
+    "comparison_is_not_a_controlled_single_factor_ablation": true,
+    "roi_and_method_and_spacing_differ_from_current_default": true
+  },
+  "historical_asr_character_accuracy": {
+    "scope": "Historical development Test3 small-model deployed output, outside current thirty sources",
+    "new_asr_run": false,
+    "new_holdout_accuracy": null,
+    "reference_sha256": "bc81e7e2af81a09d1d809b07f8423248a356d3f6c56e6badff5ddab1787f3e25",
+    "prediction_sha256": "c3af9f7d00a02c103c4678d539b7514e951ce4f0b4794e0998be656c612b5597",
+    "source_sha256": "28e60a8048f36d658072e848b129fbdd8e369b2f7103801863bed0ed7d3822be",
+    "normalized_sha256": "8ebfb3551bac936974775529113faedf86e5993b50b1cf87d72aae395763d983",
+    "duration_seconds": 72.6,
+    "model": "Systran/faster-whisper-small",
+    "model_revision": "536b0662742c02347bc0e980a01041f333bce120",
+    "text_normalization": "NFKC then casefold; remove whitespace and Unicode punctuation; preserve numerals and letters; no semantic rewrites",
+    "edit_alignment_ties": "diagonal before deletion before insertion",
+    "reference_characters": 231,
+    "hypothesis_characters": 231,
+    "edit_distance": 43,
+    "substitutions": 25,
+    "deletions": 9,
+    "insertions": 9,
+    "correct": 197,
+    "cer": 0.18614718614718614,
+    "human_reference": "User watched and typed five verified text blocks; completeness not independently checked; no per-word human timestamps"
+  },
+  "remaining_reference_gaps": {
+    "current_sources_without_existing_shot_reference": 21,
+    "current_sources_with_existing_verbatim_human_transcript": 0,
+    "newly_added_nine_sources_with_existing_shot_or_text_reference": 0,
+    "already_completed_dual_clip_quality_reviews_must_not_be_repeated": true,
+    "minimum_new_human_work_if_new_accuracy_is_required": "Independent verbatim text and shot-boundary reference on explicitly bounded new-source samples, plus separate subtitle endpoint measurements; do not repeat the 141-clip highlighter questionnaire.",
+    "full_current_thirty_source_asr_cer": null,
+    "full_current_thirty_source_shot_f1": null
+  },
+  "script_sha256": "f737e88592adcc89939a33fa7b5966a53d8e744302878791e3eea591f594385f",
+  "limits": [
+    "This run evaluates fixed outputs and does not tune parameters using these labels.",
+    "Historical robust F1 cannot be substituted for current default ContentDetector F1.",
+    "These existing references are development diagnostics, not independent new holdout evidence.",
+    "Human endpoint timestamps are not inferred from ASR or VAD; subtitle sync belongs to a separate measurement.",
+    "No media was decoded, models run, new reference labels inferred, or frozen input altered."
+  ]
+}

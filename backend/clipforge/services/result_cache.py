@@ -14,6 +14,7 @@ from uuid import UUID, uuid4
 
 from clipforge.analysis.combine import combine_analysis
 from clipforge.analysis.model import model_directory, model_spec, verify_model
+from clipforge.analysis.runtime import runtime_settings, validate_cached_runtime
 from clipforge.analysis.options import parse_options
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.scoring import load_config, validate_scored
@@ -59,7 +60,8 @@ def fingerprint(source, options, ffmpeg, ffprobe):
     generation = generation_settings_snapshot()
     descriptor = {'format': FORMAT, 'source_sha256': sha256(source),
                   'source_suffix': Path(source).suffix.lower(), 'shot_options': options,
-                  'model': identity, 'language': os.environ.get('CLIPFORGE_ASR_LANGUAGE') or None,
+                  'model': identity, 'asr_runtime': runtime_settings(),
+                  'language': os.environ.get('CLIPFORGE_ASR_LANGUAGE') or None,
                   'implementation': code, 'schema_sha256': sha256(schema),
                   'decision_schema_sha256': {name: sha256(schema.parent / name) for name in
                                             ('candidates.schema.json', 'scored_candidates.schema.json', 'llm_candidates.schema.json')},
@@ -154,7 +156,10 @@ def validate_bundle(folder, source, result, descriptor):
     options = parse_options(options_path.read_text(encoding='utf-8')) if options_path.is_file() else None
     if options != descriptor['shot_options']:
         raise ValueError('缓存选区或模式不匹配')
-    analysis = combine_analysis(source, read('shots.json'), read('vad.json'), read('asr.json'))
+    asr = read('asr.json')
+    if 'asr_runtime' in descriptor:
+        validate_cached_runtime(asr['analyzer']['parameters'], descriptor['asr_runtime'])
+    analysis = combine_analysis(source, read('shots.json'), read('vad.json'), asr)
     if analysis != read('analysis.json') or analysis['media']['source_sha256'] != descriptor['source_sha256']:
         raise ValueError('缓存分析身份或内容不匹配')
     windows, candidates = read('candidate_windows.json'), read('candidates.json')

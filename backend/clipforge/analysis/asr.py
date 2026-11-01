@@ -12,6 +12,7 @@ import time
 import wave
 
 from clipforge.analysis.model import model_spec, model_directory, verify_model
+from clipforge.analysis.runtime import runtime_settings
 from clipforge.analysis.chinese import simplify_words
 from clipforge.analysis.speech_gate import SPEECH_GATE_PARAMETERS, prepare_speech
 from clipforge.analysis.sentences import SENTENCE_PARAMETERS, split_sentences
@@ -41,12 +42,12 @@ COVERAGE_RECOVERY_PARAMETERS = {
 
 
 @lru_cache(maxsize=1)
-def _load_model(directory, model_name):
+def _load_model(directory, model_name, device="cpu", compute_type="int8"):
     # 模型对象在单个 worker 进程内复用；不是分析结果缓存。
+    runtime = runtime_settings(device=device, compute_type=compute_type)
     identity = verify_model(directory, model_name)
     from faster_whisper import WhisperModel
-    model = WhisperModel(directory, device="cpu", compute_type="int8", cpu_threads=4,
-                         num_workers=1, local_files_only=True)
+    model = WhisperModel(directory, **runtime, local_files_only=True)
     return model, identity
 
 
@@ -365,6 +366,7 @@ def _speech_gate_on_video_timeline(speech_gate, duration, *, pcm_samples, sample
 
 def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, language=None):
     spec = model_spec()
+    runtime = runtime_settings()
     source = Path(video_path).expanduser().resolve()
     started = time.perf_counter()
     probe = media_tool("ffprobe", ffprobe)
@@ -397,7 +399,12 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
                     speech_gate, duration, pcm_samples=len(audio), sample_rate=SAMPLE_RATE)
                 # 全部非语音时不加载 Whisper，也不让空音频进入语言检测/解码。
                 if not speech_gate["no_speech_skipped"]:
-                    model, identity = _load_model(str(model_directory(model_dir, model_name=spec["name"])), spec["name"])
+                    selected_directory = str(model_directory(model_dir, model_name=spec["name"]))
+                    if runtime['device'] == 'cpu' and runtime['compute_type'] == 'int8':
+                        model, identity = _load_model(selected_directory, spec['name'])
+                    else:
+                        model, identity = _load_model(selected_directory, spec['name'],
+                                                      runtime['device'], runtime['compute_type'])
                     # 使用相同的 VAD 参数；库负责删去区间后的词级时间还原。
                     generated, info = model.transcribe(audio, language=requested_language, **TRANSCRIBE_PARAMETERS)
                     words, segments, diagnostics = collect_words(generated, duration)
@@ -414,7 +421,7 @@ def transcribe_video(video_path, ffmpeg=None, ffprobe=None, *, model_dir=None, l
         digest = hashlib.file_digest(file, "sha256").hexdigest()
     parameters = {**TRANSCRIBE_PARAMETERS, "requested_language": requested_language,
                   "detected_language": detected_language, "language_probability": language_probability,
-                  "device": "cpu", "compute_type": "int8", "cpu_threads": 4, "num_workers": 1,
+                  **runtime,
                   "model_revision": spec["revision"], "model_identity": identity,
                   "digital_silence_skipped": digital_silence_skipped,
                   "speech_gate": speech_gate, "speech_gate_boundary": speech_gate_boundary,

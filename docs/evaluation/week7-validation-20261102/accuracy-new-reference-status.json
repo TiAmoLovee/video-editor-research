@@ -1,0 +1,267 @@
+{
+  "schema_version": "week7-new-human-accuracy-public-v1",
+  "generated_at": "2026-11-01T19:09:51.426770+00:00",
+  "client_date": "2026-11-02",
+  "campaign_id": "e60d0c99e403ebde45d822a66d003f976f4b23d690905d862112260e0dd7adec",
+  "parent_campaign_id": "41e3c235bfc250d32141cbd24eabadde6eb4e5ed2c6b44da919976418fffee34",
+  "status": "completed_fixed_sample_evaluation",
+  "human_references_fabricated": false,
+  "fixed_current_source_denominator": 30,
+  "new_excerpt_count": 3,
+  "new_excerpt_audio_seconds": 60,
+  "new_whole_shot_source_count": 1,
+  "fixed_word_timing_target_count": 20,
+  "manifest_sha256": "54eac73403f92ec4ac2d061da605fd930e9a75caab62bbaa619c8e1b45edf07b",
+  "selection_private_sha256": "46619ca3631448e83715514b6a12d1ac5576b47e52e2ee0278494be040ede88a",
+  "machine_exact_excerpt_asr": {
+    "fixed_excerpts": 3,
+    "completed_excerpts": 3,
+    "top_level_transcribe_calls": 3,
+    "model": "Systran/faster-whisper-base",
+    "runtime": {
+      "device": "cpu",
+      "compute_type": "int8",
+      "cpu_threads": 4,
+      "num_workers": 1
+    },
+    "summary_sha256": "374b8fb3f4368107bb9c983540ba68856140e4fb38a4bfcc8b669809a3a3bbd2",
+    "statuses": [
+      {
+        "excerpt_id": "A01",
+        "status": "completed"
+      },
+      {
+        "excerpt_id": "A02",
+        "status": "completed"
+      },
+      {
+        "excerpt_id": "A03",
+        "status": "completed"
+      }
+    ],
+    "human_labels_used_for_machine_predictions": false
+  },
+  "new_excerpt_asr_cer": {
+    "fixed_excerpt_denominator": 3,
+    "fixed_audio_seconds": 60,
+    "full_reference_and_prediction_excerpts": 3,
+    "partial_human_reference_excerpts": 0,
+    "no_speech_human_reference_excerpts": 0,
+    "failed_machine_prediction_excerpts": 0,
+    "all_three_eligible": true,
+    "primary_pooled_cer": 0.3092105263157895,
+    "primary_reference_characters": 304,
+    "primary_edit_distance": 94,
+    "primary_null_reason": null,
+    "available_full_reference_subset_descriptive": {
+      "contributing_excerpts": 3,
+      "reference_characters": 304,
+      "edit_distance": 94,
+      "cer": 0.3092105263157895,
+      "substitutions": 64,
+      "deletions": 19,
+      "insertions": 11
+    },
+    "partial_text_markers_scored_as_characters": false,
+    "empty_reference_policy": "Human-confirmed no speech has zero reference characters; machine output counts as insertions. Per-excerpt CER is undefined at denominator0. Include insertions in pooled numerator when other references have characters.",
+    "normalization": "NFKC/casefold; remove whitespace and Unicode punctuation; no number equivalence or semantic rewrite",
+    "per_excerpt": [
+      {
+        "excerpt_id": "A01",
+        "reference_status": "complete",
+        "human_reference_declared_complete": true,
+        "machine_prediction_available": true,
+        "character_metrics": {
+          "reference_characters": 74,
+          "hypothesis_characters": 74,
+          "edit_distance": 29,
+          "substitutions": 15,
+          "deletions": 7,
+          "insertions": 7,
+          "correct": 52,
+          "cer": 0.3918918918918919
+        },
+        "metric_status": "scored"
+      },
+      {
+        "excerpt_id": "A02",
+        "reference_status": "complete",
+        "human_reference_declared_complete": true,
+        "machine_prediction_available": true,
+        "character_metrics": {
+          "reference_characters": 129,
+          "hypothesis_characters": 126,
+          "edit_distance": 31,
+          "substitutions": 20,
+          "deletions": 7,
+          "insertions": 4,
+          "correct": 102,
+          "cer": 0.24031007751937986
+        },
+        "metric_status": "scored"
+      },
+      {
+        "excerpt_id": "A03",
+        "reference_status": "complete",
+        "human_reference_declared_complete": true,
+        "machine_prediction_available": true,
+        "character_metrics": {
+          "reference_characters": 101,
+          "hypothesis_characters": 96,
+          "edit_distance": 34,
+          "substitutions": 29,
+          "deletions": 5,
+          "insertions": 0,
+          "correct": 67,
+          "cer": 0.33663366336633666
+        },
+        "metric_status": "scored"
+      }
+    ]
+  },
+  "new_whole_source_shot_f1": {
+    "scope": "One fixed newly-added source; new human cut list, original frozen default prediction",
+    "fixed_source_denominator": 1,
+    "duration_seconds": 205.8,
+    "reference_cuts": 39,
+    "prediction_cuts": 43,
+    "tolerance_frames": 3,
+    "tolerance_seconds": 0.1,
+    "tp": 38,
+    "fp": 5,
+    "fn": 1,
+    "precision": 0.8837209302325582,
+    "recall": 0.9743589743589743,
+    "f1": 0.926829268292683,
+    "correct_no_cuts": false,
+    "prediction_sha256": "fa8118932e8607d12d9a9eef59d6b81a3e445089b8da3d1558970c4d461ec5d1",
+    "prediction_analyzer": {
+      "status": "ok",
+      "tool": "PySceneDetect.ContentDetector",
+      "version": "0.6.7.1",
+      "model": null,
+      "parameters": {
+        "threshold": 27.0,
+        "min_scene_len_frames": 15,
+        "downscale": 1,
+        "auto_downscale": false,
+        "frame_skip": 0,
+        "weights": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "luma_only": false,
+        "kernel_size": null,
+        "filter_mode": "MERGE",
+        "interpolation": "LINEAR"
+      }
+    },
+    "independent_double_frame_annotation": false
+  },
+  "mixed_historical9_plus_new1_shot_f1": {
+    "scope": "Descriptive mixed-exposure10 sources; preserve old9/new1 separate strata",
+    "historical_development_source_count": 9,
+    "newly_added_source_count": 1,
+    "historical_development_micro": {
+      "tp": 13,
+      "fp": 17,
+      "fn": 161,
+      "precision": 0.43333333333333335,
+      "recall": 0.07471264367816093,
+      "f1": 0.12745098039215685
+    },
+    "new_source_micro": {
+      "tp": 38,
+      "fp": 5,
+      "fn": 1,
+      "precision": 0.8837209302325582,
+      "recall": 0.9743589743589743,
+      "f1": 0.926829268292683
+    },
+    "mixed_micro": {
+      "tp": 51,
+      "fp": 22,
+      "fn": 162,
+      "precision": 0.6986301369863014,
+      "recall": 0.23943661971830985,
+      "f1": 0.35664335664335667
+    },
+    "is_full_thirty_source_accuracy": false
+  },
+  "independent_word_timing": {
+    "fixed_target_denominator": 20,
+    "threshold_seconds": 0.3,
+    "target_reference_status_counts": {
+      "locatable": 19,
+      "mismatch": 1,
+      "unlocatable": 0
+    },
+    "timing_classification_counts": {
+      "pass": 15,
+      "fail": 4,
+      "uncertain": 0,
+      "not_measurable": 1
+    },
+    "verified_both_endpoints_within_threshold_count": 15,
+    "verified_within_threshold_rate_fixed_twenty": 0.75,
+    "measurable_target_count": 19,
+    "measurable_endpoint_count": 38,
+    "measurable_subset_endpoint_mae_seconds": 0.16670175438596552,
+    "measurable_subset_maximum_absolute_point_error_seconds": 0.7550000000000026,
+    "measurable_subset_maximum_absolute_error_bound_seconds": 0.7600000000000026,
+    "mismatch_or_unlocatable_excluded_from_fixed_denominator": false,
+    "point_metrics_scope": "Measured locatable endpoints only; human uncertainty remains in conservative pass/fail/uncertain classification.",
+    "new_excerpt_asr_word_times_substituted_for_predeclared_full_asr_targets": false,
+    "target_prediction_scope": "Original predeclared full-source ASR word times translated into fixed20s core timeline; independent new excerpt ASR is used for CER only.",
+    "uncertainty_source": "Post-export self-reported uniform estimate, not externally or instrumentally verified.",
+    "threshold_classification_conditional_on_declared_uncertainty": true
+  },
+  "full_thirty_source_cer": null,
+  "full_thirty_source_shot_f1": null,
+  "limits": [
+    "Three fixed new-source excerpts and one whole new-source cut list are a small descriptive validation sample, not thirty-source gold coverage.",
+    "Human independence is self-declared; source distinctness is user-attested rather than externally verified.",
+    "Do not tune parameters or change the cohort using these reference outcomes.",
+    "Partially unintelligible reference text remains a gap; markers are not CER characters.",
+    "No-speech references can reveal insertions; undefined zero-denominator CER is not automatically zero.",
+    "Word mismatch/unlocatable entries remain among twenty fixed targets; no timestamps are imputed.",
+    "Word timestamp accuracy is distinct from rendered subtitle appearance/speech alignment.",
+    "Existing 141-clip quality ratings are preserved and are not replaced or repeated.",
+    "Word threshold classifications are conditional on the post-export self-reported uniform uncertainty; this estimate is not externally verified or a statistical confidence interval."
+  ],
+  "blind_reference_sha256": "035f46e967db101d3eaa9709a1de425fcdb92ffad407de8c5ff522fd900f409b",
+  "word_reference_sha256": "7445dc5a28a3842c22f657aa35b2b5e0a5c3a2d773cd2727434790c2cd56770c",
+  "reference_provenance": {
+    "original_blind_export_sha256": "e8ccae61daed31a61a6dc70f43a05d19bd650313c96bde2d3adb80839cbe75fe",
+    "effective_blind_reference_sha256": "035f46e967db101d3eaa9709a1de425fcdb92ffad407de8c5ff522fd900f409b",
+    "metadata_derivation_receipt_sha256": "edb922f208987fb1428d4740188f774401aa9e1abcfc2bebfb3ae671e6abc421",
+    "original_reviewer_code_blank": true,
+    "anonymous_technical_tracking_code_assigned_by_agent": true,
+    "tracking_code_is_not_a_user_supplied_or_verified_identity": true,
+    "derived_fields_only": [
+      "/reviewer",
+      "/complete"
+    ],
+    "all_original_text_cut_review_and_independence_answers_unchanged": true,
+    "original_export_bytes_unchanged": true,
+    "actual_human_word_reference_sha256": "7445dc5a28a3842c22f657aa35b2b5e0a5c3a2d773cd2727434790c2cd56770c",
+    "actual_word_release_receipt_sha256": "2943bc1a55ad9d29649e7f3571d2fe637552f6b8ef51391a855131f7b40beed4",
+    "private_scoring_report_sha256": "557af8762fa4eba2149a194a8e03673057af581eb55fe8571796b49cd9e3746f",
+    "portable_scorer_sha256": "3f729d10e7a94d74c1fcc51103669361c52802645471ca9c0551ef6dffc90e24",
+    "word_reference_values_imputed": false,
+    "word_supplement": {
+      "original_export_sha256": "ae867467ef6efdd98c8faf9278074f9d48e9e2a00ee09b3c43bb6cfa2c681c60",
+      "effective_reference_sha256": "7445dc5a28a3842c22f657aa35b2b5e0a5c3a2d773cd2727434790c2cd56770c",
+      "supplement_receipt_sha256": "235d0ec4ee962bd26e18fe1753ad13aeb4dfb635f4095833ad44a2f08134e581",
+      "uncertainty_source": "explicit_user_supplement",
+      "supplemented_locatable_targets": 19,
+      "uniform_uncertainty_seconds": 0.005,
+      "derived_completion_flags": true,
+      "original_human_start_end_or_mismatch_changed": false,
+      "original_export_bytes_unchanged": true,
+      "independent_recomputation_receipt_sha256": "8f11ac7a6a6a52737008346fa0bbc9958d976b1900e1d6e1ed04ec7216d37873"
+    }
+  }
+}
