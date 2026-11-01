@@ -1,0 +1,60 @@
+{
+  "schema_version": "week7-new-human-accuracy-public-v1",
+  "generated_at": "2026-11-01T18:42:15.297728+00:00",
+  "client_date": "2026-11-02",
+  "campaign_id": "e60d0c99e403ebde45d822a66d003f976f4b23d690905d862112260e0dd7adec",
+  "parent_campaign_id": "41e3c235bfc250d32141cbd24eabadde6eb4e5ed2c6b44da919976418fffee34",
+  "status": "pending_blind_human_reference",
+  "human_references_fabricated": false,
+  "fixed_current_source_denominator": 30,
+  "new_excerpt_count": 3,
+  "new_excerpt_audio_seconds": 60,
+  "new_whole_shot_source_count": 1,
+  "fixed_word_timing_target_count": 20,
+  "manifest_sha256": "54eac73403f92ec4ac2d061da605fd930e9a75caab62bbaa619c8e1b45edf07b",
+  "selection_private_sha256": "46619ca3631448e83715514b6a12d1ac5576b47e52e2ee0278494be040ede88a",
+  "machine_exact_excerpt_asr": {
+    "fixed_excerpts": 3,
+    "completed_excerpts": 3,
+    "top_level_transcribe_calls": 3,
+    "model": "Systran/faster-whisper-base",
+    "runtime": {
+      "device": "cpu",
+      "compute_type": "int8",
+      "cpu_threads": 4,
+      "num_workers": 1
+    },
+    "summary_sha256": "374b8fb3f4368107bb9c983540ba68856140e4fb38a4bfcc8b669809a3a3bbd2",
+    "statuses": [
+      {
+        "excerpt_id": "A01",
+        "status": "completed"
+      },
+      {
+        "excerpt_id": "A02",
+        "status": "completed"
+      },
+      {
+        "excerpt_id": "A03",
+        "status": "completed"
+      }
+    ],
+    "human_labels_used_for_machine_predictions": false
+  },
+  "new_excerpt_asr_cer": null,
+  "new_whole_source_shot_f1": null,
+  "mixed_historical9_plus_new1_shot_f1": null,
+  "independent_word_timing": null,
+  "full_thirty_source_cer": null,
+  "full_thirty_source_shot_f1": null,
+  "limits": [
+    "Three fixed new-source excerpts and one whole new-source cut list are a small descriptive validation sample, not thirty-source gold coverage.",
+    "Human independence is self-declared; source distinctness is user-attested rather than externally verified.",
+    "Do not tune parameters or change the cohort using these reference outcomes.",
+    "Partially unintelligible reference text remains a gap; markers are not CER characters.",
+    "No-speech references can reveal insertions; undefined zero-denominator CER is not automatically zero.",
+    "Word mismatch/unlocatable entries remain among twenty fixed targets; no timestamps are imputed.",
+    "Word timestamp accuracy is distinct from rendered subtitle appearance/speech alignment.",
+    "Existing 141-clip quality ratings are preserved and are not replaced or repeated."
+  ]
+}

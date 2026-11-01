@@ -1,0 +1,23 @@
+{
+  "schema_version": "week7-new-subtitle-reference-status-public-v1",
+  "client_date": "2026-11-02",
+  "status": "pending_actual_human_speech_observations",
+  "fixed_cues": 10,
+  "fixed_speech_endpoints": 20,
+  "interior_caption_transitions": 18,
+  "file_edge_caption_transitions": 2,
+  "new_human_timestamps_received": 0,
+  "new_sync_error_metrics": null,
+  "old_calibration_cues_counted_as_new": 0,
+  "listening_audio_seconds": 45.60004,
+  "manifest_sha256": "6ea2f6c098e85031e8012ae12ceb8d761768f3bd28b96a1a48ef13049cdf4ecd",
+  "caption_boundary_evidence_sha256": "ce083e2c49fee04b7e1769f0c10a6dd5e6058d12902a184b08c7cab403fcd483",
+  "scorer_sha256": "4a2b3506c17bdfb694d32a3e016ab44f98d4b28d250eeca491c315c9016d6c30",
+  "measurement_method": "Independent human audio ranges versus decoded caption transitions; observational uncertainty retained.",
+  "limits": [
+    "No model or VAD times are treated as human truth.",
+    "Ten untouched cues belong to one previous render; not multi-source unseen subtitle accuracy.",
+    "Two file-edge transitions remain unbracketed rather than automatically passing.",
+    "Private audio, observer names and individual timing answers are not published."
+  ]
+}

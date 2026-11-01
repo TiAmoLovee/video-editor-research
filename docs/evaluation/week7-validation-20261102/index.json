@@ -1,0 +1,16 @@
+{
+  "schema_version": "week7-validation-index-v1",
+  "client_date": "2026-11-02",
+  "status": "automatic_tests_complete_human_references_pending",
+  "original_141_clip_dual_review_complete": true,
+  "performance_cpu_cuda_http_complete": true,
+  "new_independent_reference_metrics_complete": false,
+  "all_quality_or_performance_targets_claimed_passed": false,
+  "files": {
+    "accuracy-existing-references.json": "a701aa0f42110756974d89b60202e8fbff6bf5950634084bba77cecdea0dc928",
+    "accuracy-new-reference-status.json": "21912b01078b131795c4446de7004739e15d52c7f5b4cb7dfbc3c76ea41366af",
+    "performance-http.json": "713b29c81adae7d8a5a7f56803b1e38cc95dd730e9734afa74fb99d52840112b",
+    "subtitle-reference-status.json": "921bd449ddbda661d5792d37c6334bc13078b5c04954361c93fbfeeb2ffbe929"
+  },
+  "individual_answers_or_private_media_published": false
+}
