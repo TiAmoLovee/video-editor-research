@@ -1,23 +1,621 @@
 {
-  "schema_version": "week7-new-subtitle-reference-status-public-v1",
+  "schema_version": "week7-subtitle-actual-reference-public-v1",
+  "generated_at": "2026-11-01T18:54:32.529419+00:00",
   "client_date": "2026-11-02",
-  "status": "pending_actual_human_speech_observations",
-  "fixed_cues": 10,
-  "fixed_speech_endpoints": 20,
-  "interior_caption_transitions": 18,
-  "file_edge_caption_transitions": 2,
-  "new_human_timestamps_received": 0,
-  "new_sync_error_metrics": null,
-  "old_calibration_cues_counted_as_new": 0,
-  "listening_audio_seconds": 45.60004,
-  "manifest_sha256": "6ea2f6c098e85031e8012ae12ceb8d761768f3bd28b96a1a48ef13049cdf4ecd",
-  "caption_boundary_evidence_sha256": "ce083e2c49fee04b7e1769f0c10a6dd5e6058d12902a184b08c7cab403fcd483",
-  "scorer_sha256": "4a2b3506c17bdfb694d32a3e016ab44f98d4b28d250eeca491c315c9016d6c30",
-  "measurement_method": "Independent human audio ranges versus decoded caption transitions; observational uncertainty retained.",
+  "status": "submitted_human_ranges_scored_threshold_not_verified_for_all_targets",
+  "protocol_id": "03e509a8271c4c2075e5a25690a30c9f5f65d2741f0f6a35ea8a7ea7ec4eaa50",
+  "source_count": 1,
+  "independence": "Confirmed by the submitting observer; not externally verified.",
+  "fixed_cue_count": 10,
+  "fixed_speech_endpoint_count": 20,
+  "submitted_human_measured_endpoint_count": 20,
+  "caption_bracketed_endpoint_count": 18,
+  "caption_file_edge_endpoint_count": 2,
+  "endpoint_classification_counts": {
+    "file_edge_transition_not_bracketed": 2,
+    "within_tolerance": 12,
+    "outside_tolerance": 3,
+    "uncertain": 3
+  },
+  "cue_classification_counts": {
+    "not_fully_measurable": 1,
+    "outside_tolerance": 3,
+    "within_tolerance": 3,
+    "uncertain": 3
+  },
+  "cues_with_at_least_one_unbracketed_caption_endpoint": 2,
+  "uncertain_cues_also_containing_an_unbracketed_endpoint": 1,
+  "cue_classification_precedence": "Any definite outside endpoint; else both within; else any uncertain; otherwise not fully measurable. Counts are exclusive; edge flags are separately retained.",
+  "threshold_exact_seconds": "3/10",
+  "delta_definition": "Visible caption time minus independently marked speech time; negative means caption early.",
+  "classification_rule": "Within only when the complete error interval is inside [-3/10,+3/10]; outside only when entirely beyond a limit; crossing remains uncertain.",
+  "verified_within_endpoint_rate_fixed_twenty": 0.6,
+  "verified_within_endpoint_rate_bracketed_eighteen_descriptive": 0.6666666666666666,
+  "verified_both_endpoints_within_cue_rate_fixed_ten": 0.3,
+  "all_fixed_endpoints_verified_within_threshold": false,
+  "all_fixed_cues_verified_within_threshold": false,
+  "bracketed_endpoint_error_summary": {
+    "denominator": 18,
+    "maximum_absolute_error_observational_bounds": {
+      "exact_seconds": [
+        "433/600",
+        "151/200"
+      ],
+      "seconds": [
+        0.7216666666666667,
+        0.755
+      ]
+    },
+    "maximum_absolute_error_upper_bound_exact_seconds": "151/200",
+    "maximum_absolute_error_upper_bound_seconds": 0.755,
+    "mean_absolute_error_observational_bounds": {
+      "exact_seconds": [
+        "40379/216000",
+        "23653/96000"
+      ],
+      "seconds": [
+        0.1869398148148148,
+        0.24638541666666666
+      ]
+    },
+    "point_mae_seconds": null,
+    "interpretation": "Bounds implied by the observed caption and human speech brackets, not a point MAE or confidence interval. Two unbracketed file-edge endpoints are outside this eighteen-endpoint error bound."
+  },
+  "anonymous_per_cue_error_results": [
+    {
+      "anonymous_target_id": "T01",
+      "cue_status": "not_fully_measurable",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": true,
+          "delta_interval": null,
+          "absolute_error_bounds": null,
+          "classification": "file_edge_transition_not_bracketed"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "4/125",
+              "49/750"
+            ],
+            "seconds": [
+              0.032,
+              0.06533333333333333
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "4/125",
+              "49/750"
+            ],
+            "seconds": [
+              0.032,
+              0.06533333333333333
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T02",
+      "cue_status": "outside_tolerance",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-151/200",
+              "-433/600"
+            ],
+            "seconds": [
+              -0.755,
+              -0.7216666666666667
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "433/600",
+              "151/200"
+            ],
+            "seconds": [
+              0.7216666666666667,
+              0.755
+            ]
+          },
+          "classification": "outside_tolerance"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-167/1500",
+              "-39/500"
+            ],
+            "seconds": [
+              -0.11133333333333334,
+              -0.078
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "39/500",
+              "167/1500"
+            ],
+            "seconds": [
+              0.078,
+              0.11133333333333334
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T03",
+      "cue_status": "within_tolerance",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-14159/48000",
+              "-12559/48000"
+            ],
+            "seconds": [
+              -0.2949791666666667,
+              -0.26164583333333336
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "12559/48000",
+              "14159/48000"
+            ],
+            "seconds": [
+              0.26164583333333336,
+              0.2949791666666667
+            ]
+          },
+          "classification": "within_tolerance"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "907/16000",
+              "4321/48000"
+            ],
+            "seconds": [
+              0.0566875,
+              0.09002083333333333
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "907/16000",
+              "4321/48000"
+            ],
+            "seconds": [
+              0.0566875,
+              0.09002083333333333
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T04",
+      "cue_status": "within_tolerance",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "21/250",
+              "44/375"
+            ],
+            "seconds": [
+              0.084,
+              0.11733333333333333
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "21/250",
+              "44/375"
+            ],
+            "seconds": [
+              0.084,
+              0.11733333333333333
+            ]
+          },
+          "classification": "within_tolerance"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-3/125",
+              "7/750"
+            ],
+            "seconds": [
+              -0.024,
+              0.009333333333333334
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "0",
+              "3/125"
+            ],
+            "seconds": [
+              0.0,
+              0.024
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T05",
+      "cue_status": "uncertain",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-461/1000",
+              "-277/1500"
+            ],
+            "seconds": [
+              -0.461,
+              -0.18466666666666667
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "277/1500",
+              "461/1000"
+            ],
+            "seconds": [
+              0.18466666666666667,
+              0.461
+            ]
+          },
+          "classification": "uncertain"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-869/3000",
+              "-769/3000"
+            ],
+            "seconds": [
+              -0.2896666666666667,
+              -0.25633333333333336
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "769/3000",
+              "869/3000"
+            ],
+            "seconds": [
+              0.25633333333333336,
+              0.2896666666666667
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T06",
+      "cue_status": "outside_tolerance",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-19103/48000",
+              "-17503/48000"
+            ],
+            "seconds": [
+              -0.39797916666666666,
+              -0.36464583333333334
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "17503/48000",
+              "19103/48000"
+            ],
+            "seconds": [
+              0.36464583333333334,
+              0.39797916666666666
+            ]
+          },
+          "classification": "outside_tolerance"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-7903/48000",
+              "-2101/16000"
+            ],
+            "seconds": [
+              -0.16464583333333332,
+              -0.1313125
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "2101/16000",
+              "7903/48000"
+            ],
+            "seconds": [
+              0.1313125,
+              0.16464583333333332
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T07",
+      "cue_status": "uncertain",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-21887/48000",
+              "-7999/48000"
+            ],
+            "seconds": [
+              -0.45597916666666666,
+              -0.16664583333333333
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "7999/48000",
+              "21887/48000"
+            ],
+            "seconds": [
+              0.16664583333333333,
+              0.45597916666666666
+            ]
+          },
+          "classification": "uncertain"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-69/16000",
+              "1393/48000"
+            ],
+            "seconds": [
+              -0.0043125,
+              0.029020833333333333
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "0",
+              "1393/48000"
+            ],
+            "seconds": [
+              0.0,
+              0.029020833333333333
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T08",
+      "cue_status": "outside_tolerance",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-69/125",
+              "-389/750"
+            ],
+            "seconds": [
+              -0.552,
+              -0.5186666666666667
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "389/750",
+              "69/125"
+            ],
+            "seconds": [
+              0.5186666666666667,
+              0.552
+            ]
+          },
+          "classification": "outside_tolerance"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-631/3000",
+              "-177/1000"
+            ],
+            "seconds": [
+              -0.21033333333333334,
+              -0.177
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "177/1000",
+              "631/3000"
+            ],
+            "seconds": [
+              0.177,
+              0.21033333333333334
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T09",
+      "cue_status": "within_tolerance",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-9/500",
+              "23/1500"
+            ],
+            "seconds": [
+              -0.018,
+              0.015333333333333332
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "0",
+              "9/500"
+            ],
+            "seconds": [
+              0.0,
+              0.018
+            ]
+          },
+          "classification": "within_tolerance"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-199/3000",
+              "-33/1000"
+            ],
+            "seconds": [
+              -0.06633333333333333,
+              -0.033
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "33/1000",
+              "199/3000"
+            ],
+            "seconds": [
+              0.033,
+              0.06633333333333333
+            ]
+          },
+          "classification": "within_tolerance"
+        }
+      }
+    },
+    {
+      "anonymous_target_id": "T10",
+      "cue_status": "uncertain",
+      "endpoints": {
+        "speech_start": {
+          "human_status": "measured",
+          "caption_file_edge": false,
+          "delta_interval": {
+            "exact_seconds": [
+              "-3187/9600",
+              "-2867/9600"
+            ],
+            "seconds": [
+              -0.33197916666666666,
+              -0.29864583333333333
+            ]
+          },
+          "absolute_error_bounds": {
+            "exact_seconds": [
+              "2867/9600",
+              "3187/9600"
+            ],
+            "seconds": [
+              0.29864583333333333,
+              0.33197916666666666
+            ]
+          },
+          "classification": "uncertain"
+        },
+        "speech_end": {
+          "human_status": "measured",
+          "caption_file_edge": true,
+          "delta_interval": null,
+          "absolute_error_bounds": null,
+          "classification": "file_edge_transition_not_bracketed"
+        }
+      }
+    }
+  ],
+  "provenance": {
+    "original_human_export_sha256": "d663b1db729106e2835be2d6207e5bbcdec1a26d7d7a9907d107f977f1d3e920",
+    "manifest_sha256": "6ea2f6c098e85031e8012ae12ceb8d761768f3bd28b96a1a48ef13049cdf4ecd",
+    "caption_boundary_evidence_sha256": "ce083e2c49fee04b7e1769f0c10a6dd5e6058d12902a184b08c7cab403fcd483",
+    "portable_private_result_sha256": "d030f24b92817a663edb98a922c1ac0ceb7abc11ea454fd4cda14520b3b2600b",
+    "portable_scorer_sha256": "4a2b3506c17bdfb694d32a3e016ab44f98d4b28d250eeca491c315c9016d6c30",
+    "independent_recomputation_script_sha256": "1b5282727efaf11fea6850e86747cf78cd9a3246d0a35207e4732ac0b0b0d808",
+    "independent_recomputation_matches_portable_result": true,
+    "original_human_export_unchanged": true,
+    "protected_old_inputs_unchanged": true,
+    "new_model_calls": 0,
+    "new_media_renders": 0,
+    "new_media_decodes_for_this_recomputation": 0
+  },
+  "old_calibration_cues_pooled_as_new": 0,
+  "calibration_or_label_changes_after_receiving_this_reference": false,
+  "privacy": {
+    "observer_name_published": false,
+    "human_transcript_published": false,
+    "actual_human_endpoint_timestamps_published": false,
+    "local_paths_published": false
+  },
   "limits": [
-    "No model or VAD times are treated as human truth.",
-    "Ten untouched cues belong to one previous render; not multi-source unseen subtitle accuracy.",
-    "Two file-edge transitions remain unbracketed rather than automatically passing.",
-    "Private audio, observer names and individual timing answers are not published."
+    "These ten previously untimed cues belong to one existing calibrated render; not multi-source unseen accuracy.",
+    "The three previous calibration cues are kept separate and do not increase this new-reference sample.",
+    "Two file-edge caption transitions lack an outside-file adjacent frame and are retained, never automatically passing.",
+    "Extra original-source audio context for two cues permits mapped speech before output zero or after EOF; no speech time was invented.",
+    "All twenty submitted human endpoints and ten cues remain in their fixed denominators. Error bounds use only eighteen bracketed caption endpoints.",
+    "All three definite failures are early caption starts. Error patterns suggest future review, not permission to silently calibrate or rewrite the frozen media.",
+    "This measurement does not establish that every caption is within0.3s, nor overall recognition or narrative quality."
   ]
 }
