@@ -1,6 +1,6 @@
 # Offline formal review tools
 
-These scripts preserve the validated Week 7 review UI and summary implementation. They use local files and Python 3.11's standard library. They do not upload media, run models, download files, or modify individual answers. No real media, answers, or completed human evaluation is included here; the two reviewers still need to supply their independent answers.
+These scripts preserve the validated Week 7 review UI and summary implementation. They use local files and Python 3.11's standard library. They do not upload media, run models, download files, or modify individual answers. No real media or individual answers are included here. The completed 2026-11-02 aggregate and provenance are published in docs/evaluation/week7-human-results-20261102.json; the twelve original individual exports and explicit one-question supplement remain local.
 
 ## Build the local review pages
 
@@ -12,7 +12,7 @@ Input is a frozen `week7-dual-review-v2` public manifest and its adjacent `media
 
 The builder writes generated pages beside the input manifest; use an intended local review package directory. Both Python tools are byte-identical to the validated campaign versions.
 
-## Summarize future answer exports
+## Summarize individual answer exports
 
 ~~~text
 python tools/week7_review/summarize_human_reviews.py --root CAMPAIGN_ROOT --answers ANSWER_EXPORT_DIRECTORY --output NEW_SUMMARY.json
@@ -33,3 +33,14 @@ python -m ruff check tools/week7_review backend/tests/test_week7_review_summary.
 
 All 21 tests generate fabricated manifests, source statuses, non-video placeholder bytes, and answers in temporary directories. They use no real campaign data, external libraries, models, browsers, or network services. Paths resolve from the test file, and fixtures use the operating system's temporary directory for Windows/Linux CI.
 
+
+## Publish a completed aggregate
+
+~~~text
+python tools/week7_review/report_human_results.py --summary COMPLETED_PRIVATE_SUMMARY.json --output NEW_AGGREGATE.json
+python -m unittest discover -s backend/tests -p "test_week7*.py" -v
+~~~
+
+The additional tool requires the completed frozen summary, rejects incomplete or inconsistent input, and recomputes every primary and stratum statistic. It emits aggregate statistics only: no individual answer rows, sample/source identifiers, original filenames, or local paths. Source-balanced means and acceptance overlap are descriptive supplements, never an adjudicated answer or independent-sample confidence interval. The 34 tests comprise 21 frozen-summary tests and 13 additional report tests, all with synthetic data.
+
+Missing answers are not imputed. In the actual 2026-11-02 run, eleven original exports were complete and one had a single blank. The user explicitly relayed evaluator A's answer after a targeted question. All originals remain unchanged; an explicitly derived input and separate ledger bind the three changed JSON values (answer plus completion flags), original time, supplement time, and hashes. Public assembly adds that provenance separately; the report CLI does not infer or silently apply supplements. Later corrections likewise require explicit attribution and a new output path.

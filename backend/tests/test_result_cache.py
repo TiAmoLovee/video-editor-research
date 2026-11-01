@@ -61,7 +61,8 @@ class ResultCacheTests(unittest.TestCase):
                                  'media':dict(media),'analyzer':example['analyzers'][short],
                                  **{name:deepcopy(example[name]) for name in fields}}
         stack.enter_context(patch('clipforge.services.pipeline.probe_video', return_value={}))
-        stack.enter_context(patch('clipforge.services.pipeline.normalize_metadata', return_value={'source_file':'source.mp4'}))
+        stack.enter_context(patch('clipforge.services.pipeline.normalize_metadata', return_value={
+            'source_file':'source.mp4', 'duration_seconds':example['media']['duration_seconds']}))
         def normalize(source, destination, *args):
             Path(destination).write_bytes(b'normalized-test'); return {'video':{'width':1920,'height':1080}}
         self.normalize = stack.enter_context(patch('clipforge.services.pipeline.normalize_video', side_effect=normalize))

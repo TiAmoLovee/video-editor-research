@@ -41,7 +41,7 @@ class ShotOptionsTests(unittest.TestCase):
             self.assertFalse((job_dir(plain.json()['task_id'])/'shot_options.json').exists())
             normalized = {'video': {'width': 1920, 'height': 1080}}
             with patch('clipforge.services.pipeline.probe_video', return_value={}), \
-                 patch('clipforge.services.pipeline.normalize_metadata', return_value={}), \
+                 patch('clipforge.services.pipeline.normalize_metadata', return_value={'duration_seconds':1}), \
                  patch('clipforge.services.pipeline.normalize_video', return_value=normalized), \
                  patch('clipforge.services.pipeline.detect_shots', side_effect=RuntimeError('stop-after-options')) as detector:
                 with self.assertRaisesRegex(RuntimeError, 'stop-after-options'):

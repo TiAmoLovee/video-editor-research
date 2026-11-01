@@ -1,0 +1,334 @@
+{
+  "schema_version": "week7-system-results-public-v1",
+  "report_date": "2026-11-02",
+  "status": "bounded_system_checks_complete_with_measurement_gaps",
+  "performance_observed": {
+    "observations_date": "2026-10-27",
+    "analysis_date": "2026-11-02",
+    "campaign_id": "610a047426ef7bc041696d8e000575a7b7a09df1a0a5e90e4f2b0df855fe33d0",
+    "fixed_source_count": 30,
+    "status_counts": {
+      "completed": 25,
+      "failed": 5
+    },
+    "cold_analysis": true,
+    "analysis_cache_hit": false,
+    "actual_full_application": false,
+    "performance_is_isolated_single_task": false,
+    "up_to_two_concurrent_source_runners": true,
+    "all_source_duration_seconds": 4713.149999,
+    "all_observed_runner_seconds_sum": 19789.823207999998,
+    "all_runner_seconds": {
+      "n": 30,
+      "sum": 19789.823207999998,
+      "mean": 659.6607736,
+      "median": 690.5763565,
+      "min": 205.224114,
+      "max": 1002.60589,
+      "p90_nearest_rank": 935.168782
+    },
+    "successful_runner_seconds": {
+      "n": 25,
+      "sum": 17780.952425,
+      "mean": 711.238097,
+      "median": 769.442158,
+      "min": 205.224114,
+      "max": 1002.60589,
+      "p90_nearest_rank": 968.638743
+    },
+    "failed_runner_seconds": {
+      "n": 5,
+      "sum": 2008.8707829999998,
+      "mean": 401.7741566,
+      "median": 398.650528,
+      "min": 333.685206,
+      "max": 466.795727,
+      "p90_nearest_rank": 466.795727
+    },
+    "successful_candidate_analysis_seconds": {
+      "n": 25,
+      "sum": 15523.349994,
+      "mean": 620.93399976,
+      "median": 625.898747,
+      "min": 182.411805,
+      "max": 894.932155,
+      "p90_nearest_rank": 864.650966
+    },
+    "successful_observed_runner_ratio": {
+      "n": 25,
+      "sum": 107.39926436311447,
+      "mean": 4.29597057452458,
+      "median": 4.312694948556359,
+      "min": 2.4076403592591733,
+      "max": 5.204208035170781,
+      "p90_nearest_rank": 5.08120223822755
+    },
+    "successful_runner_seconds_sum": 17780.952425,
+    "successful_source_duration_seconds_sum": 4121.1999989999995,
+    "successful_runner_seconds_sum_over_successful_source_duration_sum": 4.314508499785138,
+    "cpu_e2e_rtf_target_evaluated": false,
+    "gpu_e2e_rtf": null,
+    "successful_stage_summary": {
+      "source_precheck": {
+        "n": 25,
+        "sum": 4.271453,
+        "mean": 0.17085812,
+        "median": 0.163056,
+        "min": 0.018155,
+        "max": 0.426971,
+        "p90_nearest_rank": 0.302399,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.00024023979047778983
+      },
+      "runtime_precheck": {
+        "n": 25,
+        "sum": 21.854457000000004,
+        "mean": 0.87417828,
+        "median": 0.787127,
+        "min": 0.546212,
+        "max": 2.167615,
+        "p90_nearest_rank": 1.345702,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.0012291625755184168
+      },
+      "normalization": {
+        "n": 25,
+        "sum": 1978.9241029999998,
+        "mean": 79.15696412,
+        "median": 79.606693,
+        "min": 18.014713,
+        "max": 128.438302,
+        "p90_nearest_rank": 123.63419,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.11130084116017859
+      },
+      "shots": {
+        "n": 25,
+        "sum": 12341.038720000004,
+        "mean": 493.6415488,
+        "median": 519.491468,
+        "min": 144.956195,
+        "max": 736.584194,
+        "p90_nearest_rank": 649.488288,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.6940983680192881
+      },
+      "vad": {
+        "n": 25,
+        "sum": 14.907744999999998,
+        "mean": 0.5963098,
+        "median": 0.557108,
+        "min": 0.385626,
+        "max": 1.489593,
+        "p90_nearest_rank": 0.677512,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.0008384579053770041
+      },
+      "asr": {
+        "n": 25,
+        "sum": 1136.2906739999999,
+        "mean": 45.45162696,
+        "median": 38.012098,
+        "min": 18.047861,
+        "max": 165.507454,
+        "p90_nearest_rank": 86.279268,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.06390851858691332
+      },
+      "combine": {
+        "n": 25,
+        "sum": 5.2848370000000005,
+        "mean": 0.21139348,
+        "median": 0.213272,
+        "min": 0.062182,
+        "max": 0.38106,
+        "p90_nearest_rank": 0.311439,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.0002972356557801928
+      },
+      "generation": {
+        "n": 25,
+        "sum": 2.034748,
+        "mean": 0.08138992,
+        "median": 0.081377,
+        "min": 0.040677,
+        "max": 0.156498,
+        "p90_nearest_rank": 0.108481,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.00011444055060306226
+      },
+      "audio": {
+        "n": 25,
+        "sum": 15.887589999999998,
+        "mean": 0.6355036000000001,
+        "median": 0.646264,
+        "min": 0.411345,
+        "max": 0.851581,
+        "p90_nearest_rank": 0.752792,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.0008935674330952558
+      },
+      "scoring": {
+        "n": 25,
+        "sum": 12.001754,
+        "mean": 0.48007016,
+        "median": 0.3454,
+        "min": 0.174128,
+        "max": 3.000624,
+        "p90_nearest_rank": 0.766988,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.0006750159410219372
+      },
+      "selection": {
+        "n": 25,
+        "sum": 16.456763000000002,
+        "mean": 0.65827052,
+        "median": 0.389021,
+        "min": 0.187015,
+        "max": 3.73485,
+        "p90_nearest_rank": 1.136268,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.0009255794913493475
+      },
+      "render": {
+        "n": 25,
+        "sum": 2227.008755,
+        "mean": 89.0803502,
+        "median": 92.278488,
+        "min": 22.026152,
+        "max": 174.322836,
+        "p90_nearest_rank": 140.998571,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.12525389292435235
+      },
+      "source_postcheck": {
+        "n": 25,
+        "sum": 3.9948,
+        "mean": 0.159792,
+        "median": 0.123377,
+        "min": 0.010603,
+        "max": 0.448181,
+        "p90_nearest_rank": 0.337881,
+        "share_of_sum_of_successful_completed_stage_seconds": 0.0002246799660444994
+      }
+    },
+    "limits": [
+      "Successful-only latency subset excludes five failures; all failure counts and observed failed times retained separately.",
+      "Durations are contended per-runner wall observations, not CPU service time, summed campaign elapsed time, throughput or full application end-to-end RTF.",
+      "Stage elapsed sums may overlap in calendar time between concurrent runners; share is descriptive over recorded stage durations.",
+      "Final corrected campaign reused validated original components; cached follow-up times are never combined to invent a new cold run.",
+      "No new media jobs, models, network, Docker rollout or production tasks were executed for this audit."
+    ]
+  },
+  "original_environment": {
+    "python": "3.11.9",
+    "asr_model": "base",
+    "device": "cpu",
+    "compute_type": "int8",
+    "cpu_threads": 4,
+    "faster_whisper": "1.2.1",
+    "ctranslate2": "4.6.0",
+    "numpy": "2.2.6",
+    "opencv": "4.12.0.88",
+    "scenedetect": "0.6.7.1",
+    "cpu_model": null,
+    "ram_bytes": null,
+    "os_version": null,
+    "hardware_details_not_recorded_at_baseline_not_backfilled": true,
+    "gpu_not_used_for_these_asr_observations": true
+  },
+  "local_verification": {
+    "run": 39,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "success": true,
+    "scope": "12 new direct-route/worker-policy tests, 20 existing cache tests and 7 component/service checks. No new HTTP, Docker, model calls or actual disk exhaustion."
+  },
+  "test_composition": {
+    "new_resource_failure_tests": 12,
+    "existing_cache_tests": 20,
+    "component_service_tests": 7,
+    "separate_summary_and_report_tests": 34
+  },
+  "hardening": {
+    "source_duration_default_seconds": 7200,
+    "source_duration_config_range_seconds": [
+      1,
+      86400
+    ],
+    "duration_unknown_rejected": true,
+    "duration_guard_enforced_on_uncached_and_cache_hit": true,
+    "upload_storage_full_http_code": 507,
+    "other_storage_failure_http_code": 503,
+    "production_services_redeployed": false
+  },
+  "changed_code_fingerprints": [
+    {
+      "path": "backend/clipforge/config.py",
+      "sha256": "f788a6f572205a147c8072cd56084c9c2a7b6d36e621b4d382354c28d9a5e7cd",
+      "all_LF": true
+    },
+    {
+      "path": "backend/clipforge/routes/video.py",
+      "sha256": "9cbbb5591e7a0320236720e26ab9fbcb44b05fc3bda1bdb2844d60f3eaf597f8",
+      "all_LF": true
+    },
+    {
+      "path": "backend/clipforge/services/pipeline.py",
+      "sha256": "1cfd3a908df50bf94adadfb2f2f9838adfb72c1982a8bb6e9b4436ad908d11df",
+      "all_LF": true
+    },
+    {
+      "path": "backend/tests/test_week7_failure_paths.py",
+      "sha256": "8c584af3d596eaf9559fa30f195b37ca4cbf2b6c1f7ceb4302ba3c980e2f8041",
+      "all_LF": true
+    },
+    {
+      "path": "backend/tests/test_result_cache.py",
+      "sha256": "c081ac428ee8c8b6f2bc14d27ed3d6f175a45c4f2ab290234c202524d8a0365f",
+      "all_LF": true
+    },
+    {
+      "path": "backend/tests/test_shot_options.py",
+      "sha256": "710dc72d7e4096ee27e39197ccd675b8eb82830628aeaeaaa00f17322b603e65",
+      "all_LF": true
+    },
+    {
+      "path": "backend/tests/test_video_jobs.py",
+      "sha256": "a88df9fbe16c65c08782b03b33a9756989af14b11abca165d3cbe6e3a244d5a0",
+      "all_LF": true
+    },
+    {
+      "path": ".env.example",
+      "sha256": "e74a021eb6e277df4e5459698719747f50fb8487d6a2c1bd73ee39612dd8fc59",
+      "all_LF": true
+    },
+    {
+      "path": "compose.yaml",
+      "sha256": "bf761fe95ac5d02f78bbd7878f8c09f2038eed2611034689032b1ebe9a6b746d",
+      "all_LF": true
+    }
+  ],
+  "compose": {
+    "filename": "compose.yaml",
+    "static_config_validation": "passed",
+    "command": "docker compose --env-file .env.example config --no-interpolate --quiet",
+    "services": [
+      "redis",
+      "worker",
+      "api"
+    ],
+    "fresh_build_or_rollout": false,
+    "clean_machine_reproduction_measured": false
+  },
+  "test_attempt_provenance": {
+    "initial_attempts_preserved": true,
+    "harness_issues": [
+      "Initial component harness import path incomplete.",
+      "Default sandbox temporary-directory ZIP rename access errors.",
+      "First workspace cache rerun child PYTHONPATH incomplete."
+    ],
+    "final_scope": "Authorized workspace temporary directory and explicit parent/child PYTHONPATH; no product checks weakened."
+  },
+  "evidence_fingerprints": {
+    "observed_baseline_json_sha256": "c75c1fc11600a1c3c3bb82077457ec05f0f2afdedc9b80dff0f922baebc948fb",
+    "hardening_verification_json_sha256": "bd06e0e9d32a5e231e95112d6b3df8b53517308b7a8d9c114b3fe22547676cd8",
+    "final_source_index_sha256": "a4c53b30a3b263482fcb69d2d5f23e820b16b062939ebdee126c29fe57bb677c",
+    "final_test_log_sha256": "d4ea8601b9ac723f1be3f60cbc6889d209247af0983945b43aca981dfe00b4e0"
+  },
+  "limits": [
+    "The taskbook enumerates five failure categories and separately says six; queue unavailability is an explicit engineering addition.",
+    "No full six-case HTTP/Docker fault-injection matrix is claimed. Corrupt and Chinese-path decoding use real synthetic decoder fixtures; other bounded checks include injected dependencies.",
+    "No real disk was filled, no two-hour source was processed, and no production services were changed.",
+    "No new independent CER, shot F1, subtitle timing labels, CPU end-to-end RTF, GPU RTF, or clean-machine reproduction was measured."
+  ]
+}

@@ -26,6 +26,7 @@ services:
       CLIPFORGE_ASR_MODEL_DIR: /models/faster-whisper-base
       CLIPFORGE_ASR_LANGUAGE: ${CLIPFORGE_ASR_LANGUAGE:-}
       CLIPFORGE_RESULT_CACHE: ${CLIPFORGE_RESULT_CACHE:-1}
+      CLIPFORGE_MAX_SOURCE_SECONDS: ${CLIPFORGE_MAX_SOURCE_SECONDS:-7200}
     volumes:
       - media_data:/data
       - ./models:/models:ro
