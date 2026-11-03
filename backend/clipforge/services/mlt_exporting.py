@@ -8,10 +8,12 @@ import argparse
 from contextlib import contextmanager, ExitStack
 import hashlib
 import json
+import os
 import shutil
 from uuid import uuid4
 
 from clipforge.editing.mlt import export_mlt
+from clipforge.editing.subtitles import validate_font_name
 from clipforge.editing.manifest import open_media_source
 from clipforge.services.editing import (
     ProjectError, _contained_file, _digest, _read_json, _revision_folder, _uuid,
@@ -44,10 +46,22 @@ def _saved_text_style_version(metadata):
     if type(version) is int:
         if version == 1 and 'text_style_version' not in metadata:
             return 1
-        if (version == 2 and type(metadata.get('text_style_version')) is int
+        if (version in (2, 3) and type(metadata.get('text_style_version')) is int
                 and metadata['text_style_version'] == 2):
             return 2
     raise ValueError('unsupported saved MLT format/text style version')
+
+
+def _saved_brand_policy(metadata):
+    version = metadata['format_version']
+    if type(version) is int and version in (1, 2):
+        if 'brand_policy_version' not in metadata and 'brand_font_name' not in metadata:
+            return 0
+    elif (type(version) is int and version == 3
+          and type(metadata.get('brand_policy_version')) is int and metadata['brand_policy_version'] == 1):
+        validate_font_name(metadata.get('brand_font_name'))
+        return 1
+    raise ValueError('unsupported saved MLT brand policy')
 
 
 @contextmanager
@@ -93,7 +107,10 @@ def create_task_mlt_export(task_id, revision_id, *, subtitle_id=None):
     try:
         with _export_inputs(task_id, revision_id, saved, subtitle_id) as inputs:
             project, project_bytes, source_root, options, subtitle_saved, subtitle_bytes, verify_source = inputs
-            content = export_mlt(project, source_root, text_style_version=2, **options)
+            options = {**options, 'font_name': options.get('font_name') or
+                       os.environ.get('SUBTITLE_FONT_NAME') or 'Noto Sans CJK SC'}
+            validate_font_name(options['font_name'])
+            content = export_mlt(project, source_root, text_style_version=2, _brand_policy_version=1, **options)
             parent.mkdir(parents=True, exist_ok=True)
             export_id = str(uuid4())
             target = parent / export_id
@@ -106,7 +123,8 @@ def create_task_mlt_export(task_id, revision_id, *, subtitle_id=None):
                 with (folder / name).open("xb") as output:
                     output.write(value)
             metadata = {
-                "format_version": 2, "text_style_version": 2, "artifact_kind": "saved_edl_mlt_export",
+                "format_version": 3, "text_style_version": 2, "artifact_kind": "saved_edl_mlt_export",
+                "brand_policy_version": 1, "brand_font_name": options['font_name'],
                 "task_id": task_id, "revision_id": revision_id, "export_id": export_id,
                 "created_at": now(), "source_task_id": saved["revision"]["source_task_id"],
                 "edl_file_sha256": saved["revision"]["files"]["project.edl.json"],
@@ -155,6 +173,7 @@ def load_task_mlt_export(task_id, revision_id, export_id):
     try:
         metadata = _read_json(_contained_file(folder, "mlt-export.json"))
         text_style_version = _saved_text_style_version(metadata)
+        brand_policy_version = _saved_brand_policy(metadata)
         project = saved["edl"]
         subtitle_id = None
         if "subtitle_id" in metadata:
@@ -181,9 +200,14 @@ def load_task_mlt_export(task_id, revision_id, export_id):
                 raise ValueError("changed MLT artifact")
         with _export_inputs(task_id, revision_id, saved, subtitle_id) as inputs:
             project, project_bytes, source_root, options, subtitle_saved, subtitle_bytes, verify_source = inputs
+            if brand_policy_version == 1:
+                if 'font_name' in options and options['font_name'] != metadata['brand_font_name']:
+                    raise ValueError('MLT brand font differs from its saved subtitle font')
+                options = {**options, 'font_name': metadata['brand_font_name']}
             if ((folder / "source.edl.json").read_bytes() != project_bytes
                     or (folder / "project.mlt").read_text(encoding="utf-8")
-                    != export_mlt(project, source_root, text_style_version=text_style_version, **options)):
+                    != export_mlt(project, source_root, text_style_version=text_style_version,
+                                  _brand_policy_version=brand_policy_version, **options)):
                 raise ValueError("MLT differs from its saved EDL/export policy")
             if subtitle_saved is not None:
                 if (metadata["subtitle_plan_sha256"] != _content_hash(subtitle_saved["plan"])

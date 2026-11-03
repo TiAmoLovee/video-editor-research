@@ -23,6 +23,7 @@ import tempfile
 import time
 
 from clipforge.config import media_tool
+from clipforge.compliance import EXPORT_TAGS, metadata_arguments, require_metadata
 from clipforge.editing.edl import _local_ref, frame_rate, validate_edl
 from clipforge.editing.manifest import (
     CLEANUP_TIMEOUT, _check_identity, _identity, _pipe_reader, _probe_text, _ratio, _timeout,
@@ -246,10 +247,23 @@ def _subtitle_tool(command, timeout, *, cwd=None):
 
 
 def _subtitle_state(stack, plan, edl, analyses, font_file, font_name, executable, deadline):
-    from clipforge.editing.subtitles import to_ass, validate_subtitles
+    from clipforge.editing.subtitles import subtitle_layout, to_ass, validate_subtitles
+    from clipforge.editing.marking import validate_marking_layout
 
     plan = deepcopy(plan)
     validate_subtitles(plan, edl, analyses)
+    # New renders must fit the saved ASS brand without rewriting old ASS bytes.
+    validate_marking_layout(subtitle_layout(plan))
+    family = font_name if font_name is not None else os.environ.get("SUBTITLE_FONT_NAME")
+    if not family:
+        raise ValueError("subtitle burn-in requires SUBTITLE_FONT_FILE and a safe SUBTITLE_FONT_NAME")
+    state = _ass_state(stack, to_ass(plan, font_name=family),
+                       font_file, font_name, executable, deadline)
+    state["report"]["plan_sha256"] = _json_digest(plan)
+    return state
+
+
+def _ass_state(stack, ass, font_file, font_name, executable, deadline):
     configured = font_file if font_file is not None else os.environ.get("SUBTITLE_FONT_FILE")
     family = font_name if font_name is not None else os.environ.get("SUBTITLE_FONT_NAME")
     if not configured or not isinstance(family, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9 ._-]{0,99}", family):
@@ -268,18 +282,23 @@ def _subtitle_state(stack, plan, edl, analyses, font_file, font_name, executable
             raise ValueError("subtitle font exceeds the bounded file limit")
         blocks.append(chunk)
     data = b"".join(blocks)
-    ass = to_ass(plan, font_name=family)
     if not isinstance(ass, str) or len(ass.encode("utf-8")) > MAX_SUBTITLE_LOG_BYTES:
         raise ValueError("generated ASS is not bounded UTF-8 text")
     info = _font_info(data, family, _ass_characters(ass))
     filters, _ = _subtitle_tool([executable, "-hide_banner", "-loglevel", "error", "-filters"], _tool_budget(deadline))
-    if not re.search(r"(?m)^\s*[A-Z.]{3}\s+ass\s+V->V(?:\s|$)", filters):
+    if not re.search(r"(?m)^\s*[A-Z.]{2,3}\s+ass\s+V->V(?:\s|$)", filters):
         raise RuntimeError("configured FFmpeg lacks the libass ASS filter")
     _check_identity(font, identity)
     return {"data": data, "ass": ass, "path": font, "handle": incoming, "identity": identity,
             "filename": "font.ttc" if data[:4] == b"ttcf" else "font.otf" if data[:4] == b"OTTO" else "font.ttf",
-            "report": {"plan_sha256": _json_digest(plan), "ass_sha256": hashlib.sha256(ass.encode("utf-8")).hexdigest(),
+            "report": {"ass_sha256": hashlib.sha256(ass.encode("utf-8")).hexdigest(),
                        "font_sha256": hashlib.sha256(data).hexdigest(), "font_name": family, **info}}
+
+
+def _watermark_state(stack, edl, font_file, font_name, executable, deadline):
+    from clipforge.editing.marking import prepare_watermark
+    return prepare_watermark(stack, edl["profile"], edl["duration_frames"], executable,
+                             deadline, font_file, font_name)
 
 
 def _validate_subtitle_logs(log, state):
@@ -488,8 +507,9 @@ def _command(edl, by_id, executable, graph_path, temporary, has_audio, *, video_
         command += ["-map", "[aout]", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2"]
     else:
         command += ["-an"]
-    command += ["-metadata", "comment=ClipForge EDL renderer 0.1.0", "-metadata", "editing=ClipForge",
-                "-movflags", "+faststart+use_metadata_tags", str(temporary)]
+    command += ["-metadata", "comment=ClipForge EDL renderer 0.1.0", "-metadata", "editing=ClipForge"]
+    command += metadata_arguments()
+    command += ["-movflags", "+faststart+use_metadata_tags", str(temporary)]
     if os.name == "nt" and len(subprocess.list2cmdline(command)) >= 32760:
         raise ValueError("render command exceeds the Windows command-line limit")
     return command
@@ -497,7 +517,7 @@ def _command(edl, by_id, executable, graph_path, temporary, has_audio, *, video_
 
 def _output_facts(video, executable, deadline, expected_audio, expected_samples):
     fields = ("stream=index,codec_type,codec_name,pix_fmt,sample_rate,channels,start_pts,duration_ts,time_base:"
-              "format=format_name:format_tags=comment,editing")
+              "format=format_name:format_tags=comment,editing," + ",".join(EXPORT_TAGS))
     raw = json.loads(_probe_text([executable, "-v", "error", "-show_entries", fields,
                                  "-of", "json", str(video)], _tool_budget(deadline)))
     if (not isinstance(raw, dict) or not isinstance(raw.get("streams"), list)
@@ -533,12 +553,13 @@ def _output_facts(video, executable, deadline, expected_audio, expected_samples)
     if (not isinstance(tags, dict) or tags.get("comment") != "ClipForge EDL renderer 0.1.0"
             or tags.get("editing") != "ClipForge"):
         raise ValueError("rendered MP4 lacks the ClipForge tool metadata")
+    identification = require_metadata(tags)
     return {"video_codec": "h264", "pixel_format": "yuv420p",
             "audio_codec": "aac" if expected_audio else None,
             "audio_sample_rate": AUDIO_RATE if expected_audio else None,
             "audio_channels": 2 if expected_audio else None,
             "audio_track_samples": float(audio_samples) if audio_samples is not None else None,
-            "tool": "ClipForge"}
+            "tool": "ClipForge", "identification_metadata": identification}
 
 
 def _publish(incoming, target, expected_sha256, deadline):
@@ -591,8 +612,9 @@ rectangle and pads the remaining canvas. At most 128 clips are accepted. AAC enc
 has codec priming/padding; sample decisions describe the pre-encode audio axis.
 Output frame PTS/count are measured, while content/order needs an independent
 frame-marker check (the report does not claim to infer content identity).
-Optional subtitles require a validated plan, source analyses, and an explicitly
-configured font file/family. Glyph coverage and libass's actual selections are
+Every new export requires an explicitly configured font file/family for its
+visible editing label. Optional subtitles also require a validated plan and
+source analyses. Glyph coverage and libass's actual selections are
 verified; no system-font fallback is accepted.
 """
     _timeout(timeout)
@@ -612,16 +634,16 @@ verified; no system-font fallback is accepted.
         raise ValueError("render output must use the .mp4 extension")
     target = target.resolve()
     ffmpeg, ffprobe = media_tool("ffmpeg", ffmpeg), media_tool("ffprobe", ffprobe)
-    if subtitle_plan is not None:
-        # The subtitle subprocess has a private cwd. Freeze executable lookup
-        # before entering it so explicit relative tool paths keep their meaning.
-        ffmpeg = shutil.which(ffmpeg) or str(Path(ffmpeg).resolve())
+    # Every new video carries an ASS label in a private cwd.
+    ffmpeg = shutil.which(ffmpeg) or str(Path(ffmpeg).resolve())
     graph, has_audio, decisions = _filter_graph(data)
     with ExitStack() as stack:
-        subtitles = None
         if subtitle_plan is not None:
             subtitles = _subtitle_state(stack, subtitle_plan, data, analyses, font_file, font_name, ffmpeg, deadline)
-        records, by_id = _sources(data, source_root, stack, ffprobe, deadline, _batch_context)
+            records, by_id = _sources(data, source_root, stack, ffprobe, deadline, _batch_context)
+        else:
+            records, by_id = _sources(data, source_root, stack, ffprobe, deadline, _batch_context)
+            subtitles = _watermark_state(stack, data, font_file, font_name, ffmpeg, deadline)
         target.parent.mkdir(parents=True, exist_ok=True)
         # Older Windows FFmpeg builds cannot chdir to or open filter scripts
         # beyond MAX_PATH. Subtitle mode uses the OS temp directory and fixed
@@ -697,8 +719,14 @@ verified; no system-font fallback is accepted.
             "checks": {"source_descriptors_match": True, "source_sha256_match": True,
                        "output_cfr_pts_match": True, "output_frame_count_match": True,
                        "output_media_profile_match": True, "output_audio_presence_match": True,
-                       "output_sha256_match": True, "output_tool_metadata_match": True}}
-    if subtitles is not None:
+                       "output_sha256_match": True, "output_tool_metadata_match": True,
+                       "output_identification_metadata_match": True}}
+    report["visible_marking"] = {"policy": "clipforge-visible-mark-v1", "text": "AI辅助剪辑",
+                                 "font_sha256": subtitles["report"]["font_sha256"],
+                                 "ass_sha256": subtitles["report"]["ass_sha256"],
+                                 "all_output_frames": True, "verified_font_selection": True}
+    report["checks"]["visible_marking_burned"] = True
+    if subtitle_plan is not None:
         report["subtitles"] = subtitles["report"]
         report["checks"].update(subtitle_plan_valid=True, subtitle_font_glyphs_present=True,
                                 subtitle_font_selected=True, subtitles_burned=True)

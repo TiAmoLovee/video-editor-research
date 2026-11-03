@@ -14,6 +14,8 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 from clipforge.editing.edl import _local_ref, validate_edl
+from clipforge.editing.marking import marking_layout
+from clipforge.compliance import VISIBLE_LABEL
 from clipforge.editing.subtitles import (
     _fit_font, subtitle_layout, validate_subtitles, validate_font_name,
 )
@@ -108,7 +110,7 @@ def _text_filter_v1(tractor, *, identifier, start, end, text, font_name, size, l
                          'clipforge:cue_id': identifier})
 
 
-def _subtitle_filters(tractor, plan, font_name, text_style_version):
+def _subtitle_filters(tractor, plan, font_name, text_style_version, *, include_brand=True):
     layout = subtitle_layout(plan)
     # Reserve the policy's full line count even before an editor reflows a cue.
     layout['max_lines'] = plan['policy']['max_lines']
@@ -119,16 +121,35 @@ def _subtitle_filters(tractor, plan, font_name, text_style_version):
         text_filter(tractor, identifier=f'subtitle{index}', start=cue['timeline_in_frame'],
                      end=cue['timeline_out_frame'], text=cue['text'], font_name=font_name,
                      size=size, layout=layout)
-    text_filter(tractor, identifier='clipforge_brand', start=0, end=plan['duration_frames'],
-                 text=plan['brand']['text'], font_name=font_name, size=layout['brand_size'],
-                 layout=layout, brand=True)
+    if include_brand:
+        text_filter(tractor, identifier='clipforge_brand', start=0, end=plan['duration_frames'],
+                    text=plan['brand']['text'], font_name=font_name, size=layout['brand_size'],
+                    layout=layout, brand=True)
+
+
+def _brand_layout(profile):
+    """New export policy, independent of whether a subtitle plan exists."""
+    layout = marking_layout(profile['width'], profile['height'])
+    if layout['brand_size'] < 4 or layout['height'] - 2 * layout['margin_y'] < 14:
+        raise ValueError('MLT explicit label requires room for a font size of at least 4 pixels')
+    return {**layout, 'max_lines': 1}
+
+
+def _brand_filter(tractor, profile, duration, font_name):
+    layout = _brand_layout(profile)
+    _text_filter(tractor, identifier='clipforge_brand', start=0, end=duration,
+                 text=VISIBLE_LABEL, font_name=font_name, size=layout['brand_size'], layout=layout, brand=True)
 
 
 def export_mlt(edl, source_root, require_media=True, *, subtitle_plan=None, analyses=None,
-               font_name="Noto Sans CJK SC", text_style_version=2):
+               font_name="Noto Sans CJK SC", text_style_version=2, _brand_policy_version=1):
     """Return UTF-8-compatible XML; source metadata is declared, not re-probed."""
     if type(text_style_version) is not int or text_style_version not in (1, 2):
         raise ValueError('MLT text_style_version must be integer 1 or 2')
+    # Policy zero is only for byte-exact reconstruction of saved format 1/2
+    # exports. CLI and new saved exports always use the current policy.
+    if type(_brand_policy_version) is not int or _brand_policy_version not in (0, 1):
+        raise ValueError('MLT brand policy must be integer 0 or 1')
     validate_edl(edl)
     audio_sources = {source['id'] for source in edl['sources'] if source['audio_stream_index'] is not None}
     if any(clip['source_id'] in audio_sources and clip['source_out_frame'] - clip['source_in_frame'] == 1
@@ -139,6 +160,9 @@ def export_mlt(edl, source_root, require_media=True, *, subtitle_plan=None, anal
         validate_font_name(font_name)
     elif analyses is not None:
         raise ValueError('analyses require a subtitle plan')
+    if _brand_policy_version == 1:
+        validate_font_name(font_name)
+        _brand_layout(edl['profile'])
     resources = {source["id"]: resolve_source_ref(source["ref"], source_root, require_media)
                  for source in edl["sources"]}
     if require_media:
@@ -238,7 +262,10 @@ def export_mlt(edl, source_root, require_media=True, *, subtitle_plan=None, anal
     _properties(mix, {"a_track": "0", "b_track": "1", "mlt_service": "mix",
                       "always_active": "1", "sum": "1"})
     if subtitle_plan is not None:
-        _subtitle_filters(tractor, subtitle_plan, font_name, text_style_version)
+        _subtitle_filters(tractor, subtitle_plan, font_name, text_style_version,
+                          include_brand=_brand_policy_version == 0)
+    if _brand_policy_version == 1:
+        _brand_filter(tractor, profile, duration, font_name)
     ET.indent(root, space="  ")
     return ET.tostring(root, encoding="utf-8", xml_declaration=True).decode("utf-8") + "\n"
 

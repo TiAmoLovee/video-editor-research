@@ -1,0 +1,82 @@
+{
+  "schema_version": "0.1.0",
+  "artifact_kind": "edl_render_verification",
+  "edl_sha256": "b50be977d5d2e03b96a388f519e6901b7200c744b01ad45d57e3f9f2aad4e757",
+  "elapsed_seconds": 0.515,
+  "output": {
+    "path": "edl-output.mp4",
+    "sha256": "42a463c36163d4dc58b6d680d5586cdd753b6721b657e10a85ed169bd5640a08",
+    "profile": {
+      "width": 320,
+      "height": 180,
+      "fps": {
+        "num": 30,
+        "den": 1
+      }
+    },
+    "total_frames": 10,
+    "audio_stream_index": 1,
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "audio_track_samples": 15984.0,
+    "tool": "ClipForge",
+    "identification_metadata": {
+      "contract": "clipforge-export-marking-v1",
+      "status": "pass",
+      "expected": {
+        "clipforge_editing": "AI-assisted-editing",
+        "clipforge_tool": "ClipForge",
+        "clipforge_marking_version": "1"
+      },
+      "observed": {
+        "clipforge_editing": "AI-assisted-editing",
+        "clipforge_tool": "ClipForge",
+        "clipforge_marking_version": "1"
+      },
+      "missing": [],
+      "mismatched": []
+    }
+  },
+  "sources": [
+    {
+      "source_ids": [
+        "s0"
+      ],
+      "sha256": "645d821f2402ad4fd4417649cbadf159bcc21a447091401d2680b2edebbf8521",
+      "total_frames": 15
+    }
+  ],
+  "clips": [
+    {
+      "id": "clip0",
+      "source_id": "s0",
+      "source_in_frame": 2,
+      "source_out_frame": 12,
+      "timeline_in_frame": 0,
+      "timeline_out_frame": 10,
+      "source_audio_start_sample": 3200,
+      "source_audio_end_sample": 19200,
+      "timeline_audio_samples": 16000,
+      "audio_silence": false
+    }
+  ],
+  "audio": {
+    "policy": "source-timeline-resample-trim-pad",
+    "sample_rate": 48000,
+    "pre_encode_total_samples": 16000
+  },
+  "checks": {
+    "source_descriptors_match": true,
+    "source_sha256_match": true,
+    "output_cfr_pts_match": true,
+    "output_frame_count_match": true,
+    "output_media_profile_match": true,
+    "output_audio_presence_match": true,
+    "output_sha256_match": true,
+    "output_tool_metadata_match": true,
+    "output_identification_metadata_match": true
+  }
+}

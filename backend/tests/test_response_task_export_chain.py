@@ -13,6 +13,7 @@ import unittest
 from unittest.mock import patch
 from uuid import uuid4
 
+from backend.tests.media_prerequisites import require_ass_marking
 from clipforge.api import app
 from clipforge.config import media_tool
 from clipforge.decision.candidates import generate_candidates
@@ -105,6 +106,7 @@ class ResponseTaskExportChainTests(unittest.TestCase):
         self.addCleanup(no_provider.stop)
 
     def test_preview_adopt_saved_read_history_mp4_and_mlt_share_exact_saved_selection(self):
+        require_ass_marking(self.ffmpeg)
         original = {p.name: p.read_bytes() for p in self.folder.iterdir()}
         original_job = jobs.get_job(self.task)
         base = f"/tasks/{self.task}"

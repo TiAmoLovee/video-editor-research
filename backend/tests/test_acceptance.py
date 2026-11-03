@@ -1,4 +1,5 @@
 from copy import deepcopy
+import hashlib
 import json
 import os
 import unittest
@@ -12,6 +13,8 @@ from clipforge.decision.candidates import content_hash
 from clipforge.decision.reviewed import file_hash
 from clipforge.storage.jobs import job_dir, get_job, database
 from clipforge.decision.evaluation import freeze, QUESTIONS
+from clipforge.compliance import EXPORT_TAGS, VISIBLE_LABEL, require_metadata
+from clipforge.editing.marking import POLICY, marking_layout, watermark_ass
 
 
 class AcceptanceTests(unittest.TestCase):
@@ -44,7 +47,7 @@ class AcceptanceTests(unittest.TestCase):
         return task, folder, a, media
 
     def test_import_is_idempotent_and_api_media_and_pagination_keep_acceptance(self):
-        task, folder, a, media = self.ready()
+        task, folder, a, media = self.form_record()
         original = (folder/'candidates.json').read_bytes()
         for _ in range(2):
             entry = install(folder, task, self.analysis, self.result, a, media)
@@ -74,7 +77,7 @@ class AcceptanceTests(unittest.TestCase):
             install(folder, task, self.analysis, self.result, a, media)
 
     def test_changed_stored_media_is_not_served_or_labeled_accepted(self):
-        task, folder, a, media = self.ready()
+        task, folder, a, media = self.form_record()
         entry = install(folder, task, self.analysis, self.result, a, media)
         (folder/'accepted'/f'{entry["id"]}.mp4').write_bytes(b'corrupt')
         self.assertEqual(self.client.get(entry['video_url']).status_code, 500)
@@ -85,14 +88,103 @@ class AcceptanceTests(unittest.TestCase):
         manifest = freeze(self.analysis, self.result, 'example.mp4')
         sample = manifest['samples'][0]
         digest = file_hash(media)
+        # Synthetic renderer evidence: this tests the import contract, not
+        # whether this deliberately non-video byte fixture has visible pixels.
+        frames = sample['end_frame_exclusive']-sample['start_frame']
+        profile = {'width': 960, 'height': 540, 'fps': {'num': 30, 'den': 1}}
+        visible = {'policy': POLICY, 'text': VISIBLE_LABEL, 'font_name': 'TestFont',
+                   'font_sha256': hashlib.sha256(b'synthetic font fixture').hexdigest(),
+                   'ass_sha256': hashlib.sha256(watermark_ass(profile, frames, 'TestFont').encode()).hexdigest(),
+                   'duration_frames': frames, 'fps': profile['fps'], 'layout': marking_layout(960, 540),
+                   'face_indices': [0], 'postscript_names': ['TestFont-Regular'],
+                   'glyph_count': len(set(VISIBLE_LABEL)), 'all_output_frames': True,
+                   'verified_font_selection': True}
         manifest['renders'] = {sample['id']: {'file':sample['file'], 'sha256':digest,
-            'frames': sample['end_frame_exclusive']-sample['start_frame'], 'duration_seconds':sample['duration_seconds']}}
+            'frames': frames, 'duration_seconds':sample['duration_seconds'],
+            'marking': {'visible': visible, 'metadata': require_metadata(EXPORT_TAGS)}}}
         review = {'batch_id':manifest['batch_id'], 'manifest_sha256':content_hash(manifest), 'revision':1,
                   'reviews':{sample['id']:{'answers':dict.fromkeys(QUESTIONS, 'yes'), 'note':'',
                                           'provenance':'user_submitted_local_form'}}}
         a = {'version':'human-evaluation-acceptance-v1','task_id':task,'sample_id':sample['id'],
              'selected_sha256':digest,'evaluation':{'manifest':manifest,'human_review':review}}
         return task, folder, a, media
+
+    def test_new_legacy_import_requires_current_marking_without_publishing(self):
+        task, folder, a, media = self.ready()
+        with self.assertRaisesRegex(ValueError, '当前显式标识.*EDL'):
+            install(folder, task, self.analysis, self.result, a, media)
+        self.assertFalse((folder/'accepted').exists())
+
+    def test_historical_record_stays_readable_and_exact_replay_does_not_rewrite(self):
+        task, folder, a, media = self.ready()
+        entry = checked_entry(task, self.analysis, self.result, a)
+        directory = folder/'accepted'
+        directory.mkdir()
+        historical_media = directory/f'{entry["id"]}.mp4'
+        historical_record = directory/f'{entry["id"]}.json'
+        original_record = (json.dumps({'acceptance': a, 'reviewed': None}, indent=3)+'\n').encode()
+        historical_record.write_bytes(original_record)
+        historical_media.write_bytes(media.read_bytes())
+        self.assertEqual(load_accepted(folder, task, self.analysis, self.result), [entry])
+        with patch('clipforge.decision.acceptance.os.link', side_effect=AssertionError('must not republish')):
+            self.assertEqual(install(folder, task, self.analysis, self.result, a, media), entry)
+        self.assertEqual(historical_record.read_bytes(), original_record)
+        self.assertEqual(historical_media.read_bytes(), media.read_bytes())
+        historical_media.unlink()
+        with self.assertRaisesRegex(ValueError, '验收媒体缺失'):
+            install(folder, task, self.analysis, self.result, a, media)
+        self.assertEqual(historical_record.read_bytes(), original_record)
+
+    def test_orphan_legacy_media_does_not_bypass_new_import_policy(self):
+        task, folder, a, media = self.ready()
+        directory = folder/'accepted'
+        directory.mkdir()
+        orphan = directory/f'{a["selected_sha256"]}.mp4'
+        orphan.write_bytes(media.read_bytes())
+        with self.assertRaisesRegex(ValueError, '当前显式标识'):
+            install(folder, task, self.analysis, self.result, a, media)
+        self.assertEqual(list(directory.glob('*.json')), [])
+        self.assertEqual(orphan.read_bytes(), media.read_bytes())
+
+    def test_current_renderer_evidence_reaches_publication_without_mutating_inputs(self):
+        task, folder, a, media = self.form_record()
+        original = deepcopy(a)
+        source_bytes = media.read_bytes()
+        # Publication atomicity and actual HTTP reads are covered separately;
+        # this unit test isolates the new import gate from filesystem privileges.
+        with patch('clipforge.decision.acceptance.os.link') as publish:
+            item = install(folder, task, self.analysis, self.result, a, media)
+        self.assertEqual(publish.call_count, 2)
+        self.assertEqual(item['id'], file_hash(media))
+        self.assertEqual(a, original)
+        self.assertEqual(media.read_bytes(), source_bytes)
+
+    def test_missing_metadata_only_or_inconsistent_marking_cannot_be_imported(self):
+        task, folder, a, media = self.form_record()
+        edits = [lambda r: r.pop('marking'),
+                 lambda r: r['marking'].pop('visible'),
+                 lambda r: r['marking']['visible'].update(text='different label'),
+                 lambda r: r['marking']['visible'].update(policy='old-policy'),
+                 lambda r: r['marking']['visible'].update(all_output_frames=False),
+                 lambda r: r['marking']['visible'].update(verified_font_selection=False),
+                 lambda r: r['marking']['visible'].update(duration_frames=r['frames']-1),
+                 lambda r: r['marking']['visible'].update(fps={'num': 30, 'den': True}),
+                 lambda r: r['marking']['visible']['layout'].update(margin_x=0),
+                 lambda r: r['marking']['visible'].update(font_sha256='unknown'),
+                 lambda r: r['marking']['visible'].update(ass_sha256='0'*64),
+                 lambda r: r['marking']['visible'].update(face_indices=[]),
+                 lambda r: r['marking']['metadata']['observed'].update(clipforge_tool='other')]
+        for index, edit in enumerate(edits):
+            with self.subTest(index=index):
+                bad = deepcopy(a)
+                manifest = bad['evaluation']['manifest']
+                edit(manifest['renders'][bad['sample_id']])
+                # Even a structurally rehashed review must carry complete
+                # renderer evidence; a JSON flag or metadata alone is not it.
+                bad['evaluation']['human_review']['manifest_sha256'] = content_hash(manifest)
+                with self.assertRaisesRegex(ValueError, '当前显式标识'):
+                    install(folder, task, self.analysis, self.result, bad, media)
+                self.assertFalse((folder/'accepted').exists())
 
     def test_structured_form_import_keeps_provenance_without_fabricated_quote(self):
         task, folder, a, media = self.form_record()
@@ -139,14 +231,14 @@ class AcceptanceTests(unittest.TestCase):
                 checked_entry(task,self.analysis,self.result,bad)
 
     def test_different_feedback_cannot_silently_replace_history(self):
-        task, folder, a, media = self.ready()
+        task, folder, a, media = self.form_record()
         install(folder, task, self.analysis, self.result, a, media)
-        a['user_feedback_verbatim'] = 'a different decision'
+        a['evaluation']['human_review']['reviews'][a['sample_id']]['note'] = 'a different decision'
         with self.assertRaises(ValueError):
             install(folder, task, self.analysis, self.result, a, media)
 
     def test_interrupted_copy_leaves_import_retryable_and_unpublished(self):
-        task, folder, a, media = self.ready()
+        task, folder, a, media = self.form_record()
         def interrupted_copy(src, dst):
             dst.write(b'partial')
             self.assertEqual(load_accepted(folder, task, self.analysis, self.result), [])
@@ -159,7 +251,7 @@ class AcceptanceTests(unittest.TestCase):
         self.assertEqual(self.client.get(item['video_url']).content, media.read_bytes())
 
     def test_failed_record_publication_keeps_valid_media_and_allows_retry(self):
-        task, folder, a, media = self.ready()
+        task, folder, a, media = self.form_record()
         real_link = os.link
         def fail_record(source, destination):
             self.assertEqual(load_accepted(folder, task, self.analysis, self.result), [])
@@ -175,7 +267,7 @@ class AcceptanceTests(unittest.TestCase):
         self.assertEqual(self.client.get(item['video_url']).content, media.read_bytes())
 
     def test_copy_changed_during_import_is_not_published(self):
-        task, folder, a, media = self.ready()
+        task, folder, a, media = self.form_record()
         def changed_copy(src, dst):
             dst.write(b'changed after original hash check')
         with patch('clipforge.decision.acceptance.shutil.copyfileobj', side_effect=changed_copy):
@@ -184,7 +276,7 @@ class AcceptanceTests(unittest.TestCase):
         self.assertEqual(list((folder/'accepted').iterdir()), [])
 
     def test_concurrent_record_is_never_overwritten(self):
-        task, folder, a, media = self.ready()
+        task, folder, a, media = self.form_record()
         real_link = os.link
         existing = {'acceptance': {**a, 'user_feedback_verbatim': 'another reviewer'}, 'reviewed': None}
         def race_record(source, destination):

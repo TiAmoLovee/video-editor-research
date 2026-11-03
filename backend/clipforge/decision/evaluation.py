@@ -10,6 +10,8 @@ import subprocess
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.reviewed import file_hash
 from clipforge.decision.selection import build_selection
+from clipforge.compliance import metadata_arguments, require_metadata
+from clipforge.editing.marking import watermark_session
 
 VERSION = 'human-evaluation-batch-v1'
 QUESTIONS = ('opening_complete', 'ending_complete', 'understandable', 'no_unrelated_content')
@@ -97,7 +99,7 @@ def validate_answers(answers, note):
 
 
 def probe(path, ffprobe):
-    return json.loads(subprocess.run([ffprobe, '-v', 'error', '-count_frames', '-show_streams',
+    return json.loads(subprocess.run([ffprobe, '-v', 'error', '-count_frames', '-show_streams', '-show_format',
                                       '-of', 'json', str(path)], check=True, capture_output=True,
                                      encoding='utf-8', timeout=180).stdout)
 
@@ -109,6 +111,7 @@ def prepare(analysis, scored, source, output, source_name, ffmpeg, ffprobe, *, c
 
 def render_plan(manifest, source, output, ffmpeg, ffprobe):
     """Render an internally frozen plan, also used by word-boundary follow-ups."""
+    source, output = Path(source).expanduser().resolve(), Path(output).expanduser().resolve()
     if not manifest['denominator']:
         raise ValueError('没有可试听的候选，不创建空评测批次')
     if file_hash(source) != manifest['normalized_sha256']:
@@ -120,28 +123,40 @@ def render_plan(manifest, source, output, ffmpeg, ffprobe):
     audio = next((s for s in source_meta['streams'] if s['codec_type'] == 'audio'), None)
     if video['avg_frame_rate'] != '30/1':
         raise ValueError('试听要求已归一化为 30 fps 的视频')
+    # Fix the same even-width aspect-preserving geometry for scaling and labels.
+    width, height = video['width'], video['height']
+    if type(width) is not int or type(height) is not int or min(width, height) <= 0:
+        raise ValueError('试听要求有效的视频尺寸')
+    review_width = 2 * max(1, (width * 540 + height) // (2 * height))
+    profile = {'width': review_width, 'height': 540, 'fps': {'num': 30, 'den': 1}}
     evidence = {}
     for item in manifest['samples']:
         first, last = item['start_frame'], item['end_frame_exclusive']
         if last > int(video['nb_read_frames']):
             raise ValueError('候选帧范围超出源视频')
         target = output/item['file']
-        command = [ffmpeg, '-hide_banner', '-loglevel', 'error', '-nostdin', '-n', '-i', str(source),
-                   '-map', '0:v:0', '-vf', f'trim=start_frame={first}:end_frame={last},setpts=PTS-STARTPTS,scale=-2:540',
-                   '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p', '-threads', '2', '-fps_mode', 'cfr']
-        if audio:
-            rate = int(audio['sample_rate'])
-            samples = round((last-first)*rate/30)
-            # Native audio may end before the final CFR video frame. Preserve
-            # the selected audio, pad only its missing tail, and bound the
-            # pre-encode sample count without relaxing the checks below.
-            command += ['-map', '0:a:0', '-af',
-                        f'atrim=start_sample={round(first*rate/30)}:end_sample={round(last*rate/30)},'
-                        f'asetpts=PTS-STARTPTS,apad=whole_len={samples},atrim=end_sample={samples},asetpts=N/SR/TB',
-                        '-c:a', 'aac', '-b:a', '128k', '-ar', str(rate)]
-        command += ['-movflags', '+faststart', str(target)]
-        subprocess.run(command, check=True, capture_output=True, timeout=600)
+        with watermark_session(profile=profile, duration_frames=last-first, ffmpeg=ffmpeg, timeout=600) as mark:
+            command = [mark.ffmpeg, '-hide_banner', '-loglevel', 'error', '-nostdin', '-n', '-i', str(source),
+                       '-map', '0:v:0', '-vf',
+                       f'trim=start_frame={first}:end_frame={last},setpts=PTS-STARTPTS,scale={review_width}:540,{mark.filter}',
+                       '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p', '-threads', '2',
+                       '-r', '30', '-fps_mode', 'cfr']
+            if audio:
+                rate = int(audio['sample_rate'])
+                samples = round((last-first)*rate/30)
+                # Native audio may end before the final CFR video frame. Preserve
+                # the selected audio, pad only its missing tail, and bound the
+                # pre-encode sample count without relaxing the checks below.
+                command += ['-map', '0:a:0', '-af',
+                            f'atrim=start_sample={round(first*rate/30)}:end_sample={round(last*rate/30)},'
+                            f'asetpts=PTS-STARTPTS,apad=whole_len={samples},atrim=end_sample={samples},asetpts=N/SR/TB',
+                            '-c:a', 'aac', '-b:a', '128k', '-ar', str(rate)]
+            command += ['-map_metadata', '-1', *metadata_arguments(),
+                        '-movflags', '+faststart+use_metadata_tags', str(target)]
+            mark.run(command, timeout=600)
+            marking_report = mark.report
         actual = probe(target, ffprobe)
+        metadata_check = require_metadata(actual.get('format', {}).get('tags'))
         v = next(s for s in actual['streams'] if s['codec_type'] == 'video')
         a = next((s for s in actual['streams'] if s['codec_type'] == 'audio'), None)
         if (int(v['nb_read_frames']) != last-first or v['avg_frame_rate'] != '30/1'
@@ -151,7 +166,8 @@ def render_plan(manifest, source, output, ffmpeg, ffprobe):
             raise ValueError('试听文件帧数或音画时长校验失败')
         evidence[item['id']] = {'file': item['file'], 'sha256': file_hash(target),
                                 'frames': int(v['nb_read_frames']), 'duration_seconds': item['duration_seconds'],
-                                'audio_duration_seconds': float(a['duration']) if a else None}
+                                'audio_duration_seconds': float(a['duration']) if a else None,
+                                'marking': {'visible': marking_report, 'metadata': metadata_check}}
         print(f"Rendered {item['id']} ({len(evidence)}/{manifest['denominator']})", flush=True)
     # A batch becomes reviewable only after every exact-range copy has been verified.
     manifest['renders'] = evidence

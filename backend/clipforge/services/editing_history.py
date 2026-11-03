@@ -26,7 +26,7 @@ ARTIFACT_FIELDS = {
     "export": frozenset({"format_version", "text_style_version", "artifact_kind", "task_id", "revision_id", "export_id", "created_at",
                           "source_task_id", "edl_file_sha256", "edl_content_sha256", "profile", "total_frames",
                           "clip_count", "media_sha256", "framing", "subtitle_id", "subtitle_plan_sha256",
-                          "subtitle_font_name", "cue_count", "files"}),
+                          "subtitle_font_name", "cue_count", "files", "brand_policy_version", "brand_font_name"}),
 }
 
 

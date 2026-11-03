@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-04",
+  "scope": "Week8 initial EDL identification metadata and related export regressions",
+  "python": "3.11.9",
+  "platform": "Windows",
+  "tests_total": 128,
+  "passed_total": 128,
+  "skipped_total": 0,
+  "new_tests": 7,
+  "runs": [
+    {
+      "modules": [
+        "backend.tests.test_week8_compliance",
+        "backend.tests.test_render",
+        "backend.tests.test_rendering_service",
+        "backend.tests.test_subtitle_render",
+        "backend.tests.test_batch_export_service"
+      ],
+      "tests": 45,
+      "passed": 45,
+      "skipped": 0,
+      "elapsed_seconds": 12.44,
+      "returncode": 0,
+      "result_source": "completed exec session 42344 output in chat tool transcript",
+      "note": "Duplicate ZIP-name warning is emitted by the existing batch corruption negative test; run completed OK."
+    },
+    {
+      "modules": [
+        "backend.tests.test_portrait_render",
+        "backend.tests.test_fit_render",
+        "backend.tests.test_batch_export_media",
+        "backend.tests.test_batch_source_verification",
+        "backend.tests.test_render_routes"
+      ],
+      "tests": 31,
+      "passed": 31,
+      "skipped": 0,
+      "elapsed_seconds": 3.67,
+      "returncode": 0,
+      "result_source": "exec result chunk a8bdf0 in chat tool transcript"
+    },
+    {
+      "modules": [
+        "backend.tests.test_subtitles",
+        "backend.tests.test_subtitles_portrait",
+        "backend.tests.test_subtitle_routes",
+        "backend.tests.test_subtitle_timing",
+        "backend.tests.test_subtitle_timing_service",
+        "backend.tests.test_batch_export_routes"
+      ],
+      "tests": 52,
+      "passed": 52,
+      "skipped": 0,
+      "elapsed_seconds": 16.79,
+      "returncode": 0,
+      "result_source": "additional-regression.txt",
+      "log_sha256": "4e2eb89438a62d0a737e29f5ebbb74575278f47142ecb51aa9bcc17c5db42524"
+    }
+  ],
+  "ruff": "passed on compliance.py, editing/render.py, tests/test_week8_compliance.py, tools/week8/check_export.py",
+  "git_diff_check": "passed",
+  "first_attempt": {
+    "tests": 45,
+    "errors": 2,
+    "cause": "Synthetic source fixture did not expose measured BT.709 color primaries and transfer. Added explicit x264 colour parameters to fixture only; product validation kept unchanged."
+  },
+  "synthetic_media_evidence": "summary.json",
+  "synthetic_media_evidence_sha256": "c24f90d9d417cf84f2aaea521876a552ec6575e4632949203a888cd87d92f9ae",
+  "deployed": false,
+  "committed_by_subagent": false
+}

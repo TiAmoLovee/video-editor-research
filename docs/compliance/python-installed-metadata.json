@@ -1,0 +1,2661 @@
+{
+  "collector_packaging_version": "26.3",
+  "edges": [
+    {
+      "enabled_by_extras": [],
+      "from": "amqp",
+      "requirement": "vine<6.0.0,>=5.0.0",
+      "to": "vine"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "anyio",
+      "requirement": "idna>=2.8",
+      "to": "idna"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "anyio",
+      "requirement": "typing_extensions>=4.16.0; python_version < \"3.15\"",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "billiard<5.0,>=4.2.1",
+      "to": "billiard"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "click<9.0,>=8.1.2",
+      "to": "click"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "click-didyoumean>=0.3.0",
+      "to": "click-didyoumean"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "click-plugins>=1.1.1",
+      "to": "click-plugins"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "click-repl>=0.2.0",
+      "to": "click-repl"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "kombu>=5.6.0",
+      "to": "kombu"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "kombu[redis]; extra == \"redis\"",
+      "to": "kombu"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "python-dateutil>=2.8.2",
+      "to": "python-dateutil"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "tzlocal",
+      "to": "tzlocal"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "celery",
+      "requirement": "vine<6.0,>=5.1.0",
+      "to": "vine"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "click",
+      "requirement": "colorama; platform_system == 'Windows'",
+      "to": "colorama"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "click-didyoumean",
+      "requirement": "click (>=7)",
+      "to": "click"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "click-plugins",
+      "requirement": "click>=4.0",
+      "to": "click"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "click-repl",
+      "requirement": "click<9.0,>=7.0",
+      "to": "click"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "click-repl",
+      "requirement": "prompt_toolkit>=3.0.36",
+      "to": "prompt-toolkit"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "click-repl",
+      "requirement": "typing-extensions>=4.7.0",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "ctranslate2",
+      "requirement": "numpy",
+      "to": "numpy"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "ctranslate2",
+      "requirement": "pyyaml<7,>=5.3",
+      "to": "pyyaml"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "ctranslate2",
+      "requirement": "setuptools",
+      "to": "setuptools"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "fastapi",
+      "requirement": "annotated-doc>=0.0.2",
+      "to": "annotated-doc"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "fastapi",
+      "requirement": "pydantic>=2.9.0",
+      "to": "pydantic"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "fastapi",
+      "requirement": "starlette>=0.46.0",
+      "to": "starlette"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "fastapi",
+      "requirement": "typing-extensions>=4.8.0",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "fastapi",
+      "requirement": "typing-inspection>=0.4.2",
+      "to": "typing-inspection"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "faster-whisper",
+      "requirement": "av>=11",
+      "to": "av"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "faster-whisper",
+      "requirement": "ctranslate2<5,>=4.0",
+      "to": "ctranslate2"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "faster-whisper",
+      "requirement": "huggingface-hub>=0.21",
+      "to": "huggingface-hub"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "faster-whisper",
+      "requirement": "onnxruntime<2,>=1.14",
+      "to": "onnxruntime"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "faster-whisper",
+      "requirement": "tokenizers<1,>=0.13",
+      "to": "tokenizers"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "faster-whisper",
+      "requirement": "tqdm",
+      "to": "tqdm"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "httpcore",
+      "requirement": "certifi",
+      "to": "certifi"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "httpcore",
+      "requirement": "h11>=0.16",
+      "to": "h11"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "httpx",
+      "requirement": "anyio",
+      "to": "anyio"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "httpx",
+      "requirement": "certifi",
+      "to": "certifi"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "httpx",
+      "requirement": "httpcore==1.*",
+      "to": "httpcore"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "httpx",
+      "requirement": "idna",
+      "to": "idna"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "huggingface-hub",
+      "requirement": "filelock",
+      "to": "filelock"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "huggingface-hub",
+      "requirement": "fsspec>=2023.5.0",
+      "to": "fsspec"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "huggingface-hub",
+      "requirement": "packaging>=20.9",
+      "to": "packaging"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "huggingface-hub",
+      "requirement": "pyyaml>=5.1",
+      "to": "pyyaml"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "huggingface-hub",
+      "requirement": "requests",
+      "to": "requests"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "huggingface-hub",
+      "requirement": "tqdm>=4.42.1",
+      "to": "tqdm"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "huggingface-hub",
+      "requirement": "typing-extensions>=3.7.4.3",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "jsonschema",
+      "requirement": "attrs>=22.2.0",
+      "to": "attrs"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "jsonschema",
+      "requirement": "jsonschema-specifications>=2023.03.6",
+      "to": "jsonschema-specifications"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "jsonschema",
+      "requirement": "referencing>=0.28.4",
+      "to": "referencing"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "jsonschema",
+      "requirement": "rpds-py>=0.25.0",
+      "to": "rpds-py"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "jsonschema-specifications",
+      "requirement": "referencing>=0.31.0",
+      "to": "referencing"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "kombu",
+      "requirement": "amqp<6.0.0,>=5.1.1",
+      "to": "amqp"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "kombu",
+      "requirement": "amqp<6.0.0,>=5.1.1",
+      "to": "amqp"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "kombu",
+      "requirement": "packaging",
+      "to": "packaging"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "kombu",
+      "requirement": "packaging",
+      "to": "packaging"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "kombu",
+      "requirement": "redis!=4.5.5,!=5.0.2,<6.5,>=4.5.2; extra == \"redis\"",
+      "to": "redis"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "kombu",
+      "requirement": "tzdata>=2025.2",
+      "to": "tzdata"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "kombu",
+      "requirement": "tzdata>=2025.2",
+      "to": "tzdata"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "kombu",
+      "requirement": "vine==5.1.0",
+      "to": "vine"
+    },
+    {
+      "enabled_by_extras": [
+        "redis"
+      ],
+      "from": "kombu",
+      "requirement": "vine==5.1.0",
+      "to": "vine"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "onnxruntime",
+      "requirement": "flatbuffers",
+      "to": "flatbuffers"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "onnxruntime",
+      "requirement": "numpy>=1.21.6",
+      "to": "numpy"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "onnxruntime",
+      "requirement": "packaging",
+      "to": "packaging"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "onnxruntime",
+      "requirement": "protobuf",
+      "to": "protobuf"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "onnxruntime",
+      "requirement": "sympy",
+      "to": "sympy"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "opencv-python-headless",
+      "requirement": "numpy<2.3.0,>=2; python_version >= \"3.9\"",
+      "to": "numpy"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "prompt-toolkit",
+      "requirement": "wcwidth>=0.1.4",
+      "to": "wcwidth"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "pydantic",
+      "requirement": "annotated-types>=0.6.0",
+      "to": "annotated-types"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "pydantic",
+      "requirement": "pydantic-core==2.46.5",
+      "to": "pydantic-core"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "pydantic",
+      "requirement": "typing-extensions>=4.14.1",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "pydantic",
+      "requirement": "typing-inspection>=0.4.2",
+      "to": "typing-inspection"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "pydantic-core",
+      "requirement": "typing-extensions>=4.14.1",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "python-dateutil",
+      "requirement": "six >=1.5",
+      "to": "six"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "referencing",
+      "requirement": "attrs>=22.2.0",
+      "to": "attrs"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "referencing",
+      "requirement": "rpds-py>=0.7.0",
+      "to": "rpds-py"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "referencing",
+      "requirement": "typing-extensions>=4.4.0; python_version < '3.13'",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "requests",
+      "requirement": "certifi>=2023.5.7",
+      "to": "certifi"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "requests",
+      "requirement": "charset_normalizer<4,>=2",
+      "to": "charset-normalizer"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "requests",
+      "requirement": "idna<4,>=2.5",
+      "to": "idna"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "requests",
+      "requirement": "urllib3<3,>=1.26",
+      "to": "urllib3"
+    },
+    {
+      "enabled_by_extras": [
+        "opencv-headless"
+      ],
+      "from": "scenedetect",
+      "requirement": "click<8.3.0,~=8.0",
+      "to": "click"
+    },
+    {
+      "enabled_by_extras": [
+        "opencv-headless"
+      ],
+      "from": "scenedetect",
+      "requirement": "numpy",
+      "to": "numpy"
+    },
+    {
+      "enabled_by_extras": [
+        "opencv-headless"
+      ],
+      "from": "scenedetect",
+      "requirement": "opencv-python-headless; extra == \"opencv-headless\"",
+      "to": "opencv-python-headless"
+    },
+    {
+      "enabled_by_extras": [
+        "opencv-headless"
+      ],
+      "from": "scenedetect",
+      "requirement": "platformdirs",
+      "to": "platformdirs"
+    },
+    {
+      "enabled_by_extras": [
+        "opencv-headless"
+      ],
+      "from": "scenedetect",
+      "requirement": "tqdm",
+      "to": "tqdm"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "starlette",
+      "requirement": "anyio<5,>=3.6.2",
+      "to": "anyio"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "starlette",
+      "requirement": "typing-extensions>=4.10.0; python_version < '3.13'",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "sympy",
+      "requirement": "mpmath<1.4,>=1.1.0",
+      "to": "mpmath"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "tokenizers",
+      "requirement": "huggingface-hub>=0.16.4,<2.0",
+      "to": "huggingface-hub"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "tqdm",
+      "requirement": "colorama; platform_system == \"Windows\"",
+      "to": "colorama"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "typing-inspection",
+      "requirement": "typing-extensions>=4.15.0",
+      "to": "typing-extensions"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "tzlocal",
+      "requirement": "tzdata; platform_system == \"Windows\"",
+      "to": "tzdata"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "uvicorn",
+      "requirement": "click>=7.0",
+      "to": "click"
+    },
+    {
+      "enabled_by_extras": [],
+      "from": "uvicorn",
+      "requirement": "h11>=0.8",
+      "to": "h11"
+    }
+  ],
+  "environment": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.11.9",
+    "os_name": "nt",
+    "platform_machine": "AMD64",
+    "platform_python_implementation": "CPython",
+    "platform_release": "10",
+    "platform_system": "Windows",
+    "platform_version": "10.0.26300",
+    "python_full_version": "3.11.9",
+    "python_version": "3.11",
+    "sys_platform": "win32"
+  },
+  "manifest_sha256": {
+    "backend/requirements-dev.txt": "a443908b10d93a0b1bc8b874c4919f07978b088ce17e8ff1f9ecc9fd253249ee",
+    "backend/requirements-worker.txt": "4704f83051bc10f2e5613be6b510e0d0e5d4be0216d14f72b13e7d62e479c397",
+    "backend/requirements.txt": "79dc8f059042a91bc246c0bd5030ff99a013fec33dfbb515d7130d3062884b2f"
+  },
+  "missing_distributions": [],
+  "packages": {
+    "amqp": {
+      "license": {
+        "declared_label": "BSD",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "49d9777da612e1f4e9269fa9f93ea324a66f9dcc7722ad812de124ef3f266d93",
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "amqp",
+      "project_urls": [],
+      "requires_dist": [
+        "vine<6.0.0,>=5.0.0"
+      ],
+      "version": "5.4.0"
+    },
+    "annotated-doc": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "annotated-doc",
+      "project_urls": [
+        "Changelog, https://github.com/fastapi/annotated-doc/release-notes.md",
+        "Documentation, https://github.com/fastapi/annotated-doc",
+        "Homepage, https://github.com/fastapi/annotated-doc",
+        "Issues, https://github.com/fastapi/annotated-doc/issues",
+        "Repository, https://github.com/fastapi/annotated-doc"
+      ],
+      "requires_dist": [],
+      "version": "0.0.5"
+    },
+    "annotated-types": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "annotated-types",
+      "project_urls": [
+        "Changelog, https://github.com/annotated-types/annotated-types/releases",
+        "Homepage, https://github.com/annotated-types/annotated-types",
+        "Source, https://github.com/annotated-types/annotated-types"
+      ],
+      "requires_dist": [],
+      "version": "0.8.0"
+    },
+    "anyio": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "anyio",
+      "project_urls": [
+        "Changelog, https://anyio.readthedocs.io/en/stable/versionhistory.html",
+        "Documentation, https://anyio.readthedocs.io/en/latest/",
+        "Issue tracker, https://github.com/agronholm/anyio/issues",
+        "Source code, https://github.com/agronholm/anyio"
+      ],
+      "requires_dist": [
+        "exceptiongroup>=1.0.2; python_version < \"3.11\"",
+        "idna>=2.8",
+        "trio>=0.32.0; extra == \"trio\"",
+        "typing_extensions>=4.16.0; python_version < \"3.15\""
+      ],
+      "version": "4.15.1"
+    },
+    "attrs": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "attrs",
+      "project_urls": [
+        "Changelog, https://www.attrs.org/en/stable/changelog.html",
+        "Documentation, https://www.attrs.org/",
+        "Funding, https://github.com/sponsors/hynek",
+        "GitHub, https://github.com/python-attrs/attrs",
+        "Tidelift, https://tidelift.com/subscription/pkg/pypi-attrs?utm_source=pypi-attrs&utm_medium=pypi"
+      ],
+      "requires_dist": [],
+      "version": "26.1.0"
+    },
+    "av": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "BSD-3-Clause",
+        "license_files_declared": [
+          "AUTHORS.py",
+          "AUTHORS.rst",
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "av",
+      "project_urls": [
+        "Bug Tracker, https://github.com/PyAV-Org/PyAV/issues",
+        "Source Code, https://github.com/PyAV-Org/PyAV",
+        "homepage, https://pyav.basswood-io.com"
+      ],
+      "requires_dist": [],
+      "version": "16.1.0"
+    },
+    "billiard": {
+      "license": {
+        "declared_label": "BSD",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "49d9777da612e1f4e9269fa9f93ea324a66f9dcc7722ad812de124ef3f266d93",
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "billiard",
+      "project_urls": [],
+      "requires_dist": [],
+      "version": "4.3.0"
+    },
+    "celery": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 12,
+        "legacy_license_field_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+        "license_classifiers": [],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "celery",
+      "project_urls": [
+        "Changelog, https://docs.celeryq.dev/en/stable/changelog.html",
+        "Code, https://github.com/celery/celery",
+        "Documentation, https://docs.celeryq.dev/en/stable/",
+        "Funding, https://opencollective.com/celery",
+        "Tracker, https://github.com/celery/celery/issues"
+      ],
+      "requires_dist": [
+        "Django>=2.2.28; extra == \"django\"",
+        "azure-identity>=1.19.0; extra == \"azureblockblob\"",
+        "azure-storage-blob>=12.15.0; extra == \"azureblockblob\"",
+        "billiard<5.0,>=4.2.1",
+        "boto3>=1.26.143; extra == \"dynamodb\"",
+        "boto3>=1.26.143; extra == \"s3\"",
+        "boto3>=1.26.143; extra == \"sqs\"",
+        "brotli>=1.0.0; platform_python_implementation == \"CPython\" and extra == \"brotli\"",
+        "brotlipy>=0.7.0; platform_python_implementation == \"PyPy\" and extra == \"brotli\"",
+        "cassandra-driver<4,>=3.25.0; extra == \"cassandra\"",
+        "click-didyoumean>=0.3.0",
+        "click-plugins>=1.1.1",
+        "click-repl>=0.2.0",
+        "click<9.0,>=8.1.2",
+        "couchbase>=3.0.0; (platform_python_implementation != \"PyPy\" and (platform_system != \"Windows\" or python_version < \"3.10\")) and extra == \"couchbase\"",
+        "cryptography==46.0.5; extra == \"auth\"",
+        "elastic-transport<=9.2.1; extra == \"elasticsearch\"",
+        "elasticsearch<=9.3.0; extra == \"elasticsearch\"",
+        "ephem==4.2; platform_python_implementation != \"PyPy\" and extra == \"solar\"",
+        "eventlet>=0.32.0; python_version < \"3.10\" and extra == \"eventlet\"",
+        "exceptiongroup>=1.3.0; python_version < \"3.11\"",
+        "gevent>=1.5.0; extra == \"gevent\"",
+        "google-cloud-firestore==2.23.0; extra == \"gcs\"",
+        "google-cloud-storage>=2.10.0; extra == \"gcs\"",
+        "grpcio==1.76.0; extra == \"gcs\"",
+        "kazoo>=1.3.1; extra == \"zookeeper\"",
+        "kombu>=5.6.0",
+        "kombu[mongodb]; extra == \"mongodb\"",
+        "kombu[msgpack]; extra == \"msgpack\"",
+        "kombu[redis]; extra == \"redis\"",
+        "kombu[sqlalchemy]; extra == \"sqlalchemy\"",
+        "kombu[sqs]>=5.5.0; extra == \"sqs\"",
+        "kombu[yaml]; extra == \"yaml\"",
+        "librabbitmq>=2.0.0; python_version < \"3.11\" and extra == \"librabbitmq\"",
+        "pyArango>=2.0.2; extra == \"arangodb\"",
+        "pycouchdb==1.16.0; extra == \"couchdb\"",
+        "pycurl<7.45.4,>=7.43.0.5; (sys_platform != \"win32\" and platform_python_implementation == \"CPython\" and python_version < \"3.9\") and extra == \"sqs\"",
+        "pycurl>=7.45.4; (sys_platform != \"win32\" and platform_python_implementation == \"CPython\" and python_version >= \"3.9\") and extra == \"sqs\"",
+        "pydantic>=2.12.0a1; python_version >= \"3.14\" and extra == \"pydantic\"",
+        "pydantic>=2.4; python_version < \"3.14\" and extra == \"pydantic\"",
+        "pydocumentdb==2.3.5; extra == \"cosmosdbsql\"",
+        "pylibmc==1.6.3; platform_system != \"Windows\" and extra == \"memcache\"",
+        "pyro4==4.82; python_version < \"3.11\" and extra == \"pyro\"",
+        "pytest-celery[all]>=1.3.0; extra == \"pytest\"",
+        "python-consul2==0.1.5; extra == \"consul\"",
+        "python-dateutil>=2.8.2",
+        "python-memcached>=1.61; extra == \"pymemcache\"",
+        "softlayer_messaging>=1.0.3; extra == \"slmq\"",
+        "tblib==3.2.2; extra == \"tblib\"",
+        "tzlocal",
+        "urllib3>=1.26.16; extra == \"sqs\"",
+        "vine<6.0,>=5.1.0",
+        "zstandard==0.23.0; extra == \"zstd\""
+      ],
+      "version": "5.6.3"
+    },
+    "certifi": {
+      "license": {
+        "declared_label": "MPL-2.0",
+        "legacy_license_field_characters": 7,
+        "legacy_license_field_sha256": "09962c1dc23fac80a0e5a88b2eb7051b74a6443a568ca2a045a4ec2fb82aeee5",
+        "license_classifiers": [
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "certifi",
+      "project_urls": [
+        "Source, https://github.com/certifi/python-certifi"
+      ],
+      "requires_dist": [],
+      "version": "2026.7.22"
+    },
+    "charset-normalizer": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "charset-normalizer",
+      "project_urls": [
+        "Changelog, https://github.com/jawah/charset_normalizer/blob/master/CHANGELOG.md",
+        "Code, https://github.com/jawah/charset_normalizer",
+        "Documentation, https://charset-normalizer.readthedocs.io/",
+        "Issue tracker, https://github.com/jawah/charset_normalizer/issues"
+      ],
+      "requires_dist": [],
+      "version": "3.5.1"
+    },
+    "click": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "BSD-3-Clause",
+        "license_files_declared": [
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "click",
+      "project_urls": [
+        "Changes, https://click.palletsprojects.com/page/changes/",
+        "Chat, https://discord.gg/pallets",
+        "Documentation, https://click.palletsprojects.com/",
+        "Donate, https://palletsprojects.com/donate",
+        "Source, https://github.com/pallets/click/"
+      ],
+      "requires_dist": [
+        "colorama; platform_system == 'Windows'"
+      ],
+      "version": "8.2.1"
+    },
+    "click-didyoumean": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "click-didyoumean",
+      "project_urls": [
+        "Repository, https://github.com/click-contrib/click-didyoumean"
+      ],
+      "requires_dist": [
+        "click (>=7)"
+      ],
+      "version": "0.3.1"
+    },
+    "click-plugins": {
+      "license": {
+        "declared_label": "New BSD",
+        "legacy_license_field_characters": 7,
+        "legacy_license_field_sha256": "11a8f5d376a80dc794a72dca066ae5010d9c45f2f16707c4acd7710209e0b3fc",
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "AUTHORS.txt",
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "click-plugins",
+      "project_urls": [],
+      "requires_dist": [
+        "click>=4.0",
+        "coveralls; extra == \"dev\"",
+        "pytest-cov; extra == \"dev\"",
+        "pytest>=3.6; extra == \"dev\"",
+        "wheel; extra == \"dev\""
+      ],
+      "version": "1.1.1.2"
+    },
+    "click-repl": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "click-repl",
+      "project_urls": [],
+      "requires_dist": [
+        "click<9.0,>=7.0",
+        "flake8>=6.0.0; extra == \"testing\"",
+        "mypy>=1.9.0; extra == \"testing\"",
+        "prompt_toolkit>=3.0.36",
+        "pytest-cov>=4.0.0; extra == \"testing\"",
+        "pytest>=7.2.1; extra == \"testing\"",
+        "tox>=4.4.3; extra == \"testing\"",
+        "typing-extensions>=4.7.0"
+      ],
+      "version": "0.4.0"
+    },
+    "colorama": {
+      "license": {
+        "declared_label": "License :: OSI Approved :: BSD License",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "colorama",
+      "project_urls": [
+        "Homepage, https://github.com/tartley/colorama"
+      ],
+      "requires_dist": [],
+      "version": "0.4.6"
+    },
+    "ctranslate2": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "ctranslate2",
+      "project_urls": [
+        "Documentation, https://opennmt.net/CTranslate2",
+        "Forum, https://forum.opennmt.net",
+        "Gitter, https://gitter.im/OpenNMT/CTranslate2",
+        "Source, https://github.com/OpenNMT/CTranslate2"
+      ],
+      "requires_dist": [
+        "numpy",
+        "pyyaml<7,>=5.3",
+        "setuptools"
+      ],
+      "version": "4.6.0"
+    },
+    "fastapi": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "fastapi",
+      "project_urls": [
+        "Changelog, https://fastapi.tiangolo.com/release-notes/",
+        "Documentation, https://fastapi.tiangolo.com/",
+        "Homepage, https://github.com/fastapi/fastapi",
+        "Issues, https://github.com/fastapi/fastapi/issues",
+        "Repository, https://github.com/fastapi/fastapi"
+      ],
+      "requires_dist": [
+        "annotated-doc>=0.0.2",
+        "email-validator>=2.0.0; extra == \"all\"",
+        "email-validator>=2.0.0; extra == \"standard\"",
+        "email-validator>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "fastapi-cli[standard-no-fastapi-cloud-cli]>=0.0.32; extra == \"standard-no-fastapi-cloud-cli\"",
+        "fastapi-cli[standard]>=0.0.32; extra == \"all\"",
+        "fastapi-cli[standard]>=0.0.32; extra == \"standard\"",
+        "fastar>=0.9.0; extra == \"standard\"",
+        "httpx<1.0.0,>=0.23.0; extra == \"all\"",
+        "httpx<1.0.0,>=0.23.0; extra == \"standard\"",
+        "httpx<1.0.0,>=0.23.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "itsdangerous>=1.1.0; extra == \"all\"",
+        "jinja2>=3.1.5; extra == \"all\"",
+        "jinja2>=3.1.5; extra == \"standard\"",
+        "jinja2>=3.1.5; extra == \"standard-no-fastapi-cloud-cli\"",
+        "pydantic-extra-types>=2.0.0; extra == \"all\"",
+        "pydantic-extra-types>=2.0.0; extra == \"standard\"",
+        "pydantic-extra-types>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "pydantic-settings>=2.0.0; extra == \"all\"",
+        "pydantic-settings>=2.0.0; extra == \"standard\"",
+        "pydantic-settings>=2.0.0; extra == \"standard-no-fastapi-cloud-cli\"",
+        "pydantic>=2.9.0",
+        "python-multipart>=0.0.18; extra == \"all\"",
+        "python-multipart>=0.0.18; extra == \"standard\"",
+        "python-multipart>=0.0.18; extra == \"standard-no-fastapi-cloud-cli\"",
+        "pyyaml>=5.3.1; extra == \"all\"",
+        "starlette>=0.46.0",
+        "typing-extensions>=4.8.0",
+        "typing-inspection>=0.4.2",
+        "uvicorn[standard]>=0.12.0; extra == \"all\"",
+        "uvicorn[standard]>=0.12.0; extra == \"standard\"",
+        "uvicorn[standard]>=0.12.0; extra == \"standard-no-fastapi-cloud-cli\""
+      ],
+      "version": "0.141.1"
+    },
+    "faster-whisper": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "faster-whisper",
+      "project_urls": [],
+      "requires_dist": [
+        "av>=11",
+        "black==23.*; extra == \"dev\"",
+        "ctranslate2<5,>=4.0",
+        "flake8==6.*; extra == \"dev\"",
+        "huggingface-hub>=0.21",
+        "isort==5.*; extra == \"dev\"",
+        "onnxruntime<2,>=1.14",
+        "pytest==7.*; extra == \"dev\"",
+        "tokenizers<1,>=0.13",
+        "tqdm",
+        "transformers[torch]>=4.23; extra == \"conversion\""
+      ],
+      "version": "1.2.1"
+    },
+    "filelock": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "filelock",
+      "project_urls": [
+        "Documentation, https://py-filelock.readthedocs.io",
+        "Homepage, https://github.com/tox-dev/py-filelock",
+        "Source, https://github.com/tox-dev/py-filelock",
+        "Tracker, https://github.com/tox-dev/py-filelock/issues"
+      ],
+      "requires_dist": [],
+      "version": "4.0.5"
+    },
+    "flatbuffers": {
+      "license": {
+        "declared_label": "Apache 2.0",
+        "legacy_license_field_characters": 10,
+        "legacy_license_field_sha256": "cf989ea142f203f532233fa944ee1d8d5acfe6f6875e4d611f515ee108ba26df",
+        "license_classifiers": [
+          "License :: OSI Approved :: Apache Software License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "flatbuffers",
+      "project_urls": [
+        "Documentation, https://google.github.io/flatbuffers/",
+        "Source, https://github.com/google/flatbuffers"
+      ],
+      "requires_dist": [],
+      "version": "25.12.19"
+    },
+    "fsspec": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "BSD-3-Clause",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "fsspec",
+      "project_urls": [
+        "Changelog, https://filesystem-spec.readthedocs.io/en/latest/changelog.html",
+        "Documentation, https://filesystem-spec.readthedocs.io/en/latest/",
+        "Homepage, https://github.com/fsspec/filesystem_spec"
+      ],
+      "requires_dist": [
+        "adlfs; extra == 'abfs'",
+        "adlfs; extra == 'adl'",
+        "adlfs; extra == 'full'",
+        "adlfs; extra == 'test-full'",
+        "aiobotocore<3.0.0,>=2.5.4; extra == 'test-downstream'",
+        "aiohttp!=4.0.0a0,!=4.0.0a1; extra == 'full'",
+        "aiohttp!=4.0.0a0,!=4.0.0a1; extra == 'http'",
+        "aiohttp!=4.0.0a0,!=4.0.0a1; extra == 'test'",
+        "aiohttp!=4.0.0a0,!=4.0.0a1; extra == 'test-full'",
+        "backports-zstd; (python_version < '3.14') and extra == 'test-full'",
+        "cloudpickle; extra == 'test-full'",
+        "dask; extra == 'dask'",
+        "dask; extra == 'full'",
+        "dask; extra == 'test-full'",
+        "dask[dataframe,test]; extra == 'test-downstream'",
+        "distributed; extra == 'dask'",
+        "distributed; extra == 'full'",
+        "distributed; extra == 'test-full'",
+        "dropbox; extra == 'dropbox'",
+        "dropbox; extra == 'full'",
+        "dropbox; extra == 'test-full'",
+        "dropboxdrivefs; extra == 'dropbox'",
+        "dropboxdrivefs; extra == 'full'",
+        "dropboxdrivefs; extra == 'test-full'",
+        "fastparquet; extra == 'test-full'",
+        "fusepy; extra == 'full'",
+        "fusepy; extra == 'fuse'",
+        "fusepy; extra == 'test-full'",
+        "gcsfs>=2026.4.0; extra == 'full'",
+        "gcsfs>=2026.4.0; extra == 'gcs'",
+        "gcsfs>=2026.4.0; extra == 'gs'",
+        "gcsfs>=2026.4.0; extra == 'test-full'",
+        "jinja2; extra == 'test-full'",
+        "kerchunk; extra == 'test-full'",
+        "libarchive-c; extra == 'full'",
+        "libarchive-c; extra == 'libarchive'",
+        "libarchive-c; extra == 'test-full'",
+        "lz4; extra == 'test-full'",
+        "moto[server]<5,>4; extra == 'test-downstream'",
+        "notebook; extra == 'test-full'",
+        "numpy; extra == 'test'",
+        "numpy; extra == 'test-full'",
+        "numpydoc; extra == 'doc'",
+        "ocifs; extra == 'full'",
+        "ocifs; extra == 'oci'",
+        "ocifs; extra == 'test-full'",
+        "pandas<3.0.0; extra == 'test-full'",
+        "panel; extra == 'full'",
+        "panel; extra == 'gui'",
+        "panel; extra == 'test-full'",
+        "paramiko; extra == 'full'",
+        "paramiko; extra == 'sftp'",
+        "paramiko; extra == 'ssh'",
+        "paramiko; extra == 'test-full'",
+        "pre-commit; extra == 'dev'",
+        "pyarrow>=1; extra == 'arrow'",
+        "pyarrow>=1; extra == 'full'",
+        "pyarrow>=1; extra == 'hdfs'",
+        "pyarrow>=1; extra == 'test-full'",
+        "pyftpdlib; extra == 'test-full'",
+        "pygit2; extra == 'full'",
+        "pygit2; extra == 'git'",
+        "pygit2; extra == 'test-full'",
+        "pytest-asyncio!=0.22.0; extra == 'test'",
+        "pytest-asyncio!=0.22.0; extra == 'test-full'",
+        "pytest-benchmark; extra == 'test'",
+        "pytest-benchmark; extra == 'test-full'",
+        "pytest-cov; extra == 'test'",
+        "pytest-cov; extra == 'test-full'",
+        "pytest-mock; extra == 'test'",
+        "pytest-mock; extra == 'test-full'",
+        "pytest-recording; extra == 'test'",
+        "pytest-recording; extra == 'test-full'",
+        "pytest-rerunfailures; extra == 'test'",
+        "pytest-rerunfailures; extra == 'test-full'",
+        "pytest-timeout; extra == 'test-downstream'",
+        "pytest; extra == 'test'",
+        "pytest; extra == 'test-full'",
+        "python-snappy; extra == 'test-full'",
+        "requests; extra == 'dropbox'",
+        "requests; extra == 'full'",
+        "requests; extra == 'github'",
+        "requests; extra == 'test'",
+        "requests; extra == 'test-full'",
+        "ruff>=0.5; extra == 'dev'",
+        "s3fs>=2026.6.0; extra == 'full'",
+        "s3fs>=2026.6.0; extra == 's3'",
+        "s3fs>=2026.6.0; extra == 'test-full'",
+        "smbprotocol; extra == 'full'",
+        "smbprotocol; extra == 'smb'",
+        "smbprotocol; extra == 'test-full'",
+        "sphinx-design; extra == 'doc'",
+        "sphinx-rtd-theme; extra == 'doc'",
+        "sphinx; extra == 'doc'",
+        "tqdm; extra == 'full'",
+        "tqdm; extra == 'test-full'",
+        "tqdm; extra == 'tqdm'",
+        "urllib3; extra == 'test-full'",
+        "xarray; extra == 'test-downstream'",
+        "yarl; extra == 'doc'",
+        "zarr; extra == 'test-downstream'",
+        "zarr<3.2.0; extra == 'test-full'",
+        "zstandard; (python_version < '3.14') and extra == 'test-full'"
+      ],
+      "version": "2026.9.0"
+    },
+    "h11": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "h11",
+      "project_urls": [],
+      "requires_dist": [],
+      "version": "0.16.0"
+    },
+    "httpcore": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": "BSD-3-Clause",
+        "license_files_declared": [
+          "LICENSE.md"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "httpcore",
+      "project_urls": [
+        "Documentation, https://www.encode.io/httpcore",
+        "Homepage, https://www.encode.io/httpcore/",
+        "Source, https://github.com/encode/httpcore"
+      ],
+      "requires_dist": [
+        "anyio<5.0,>=4.0; extra == 'asyncio'",
+        "certifi",
+        "h11>=0.16",
+        "h2<5,>=3; extra == 'http2'",
+        "socksio==1.*; extra == 'socks'",
+        "trio<1.0,>=0.22.0; extra == 'trio'"
+      ],
+      "version": "1.0.9"
+    },
+    "httpx": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 12,
+        "legacy_license_field_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "httpx",
+      "project_urls": [
+        "Changelog, https://github.com/encode/httpx/blob/master/CHANGELOG.md",
+        "Documentation, https://www.python-httpx.org",
+        "Homepage, https://github.com/encode/httpx",
+        "Source, https://github.com/encode/httpx"
+      ],
+      "requires_dist": [
+        "anyio",
+        "brotli; (platform_python_implementation == 'CPython') and extra == 'brotli'",
+        "brotlicffi; (platform_python_implementation != 'CPython') and extra == 'brotli'",
+        "certifi",
+        "click==8.*; extra == 'cli'",
+        "h2<5,>=3; extra == 'http2'",
+        "httpcore==1.*",
+        "idna",
+        "pygments==2.*; extra == 'cli'",
+        "rich<14,>=10; extra == 'cli'",
+        "socksio==1.*; extra == 'socks'",
+        "zstandard>=0.18.0; extra == 'zstd'"
+      ],
+      "version": "0.28.1"
+    },
+    "huggingface-hub": {
+      "license": {
+        "declared_label": "Apache",
+        "legacy_license_field_characters": 6,
+        "legacy_license_field_sha256": "87ec4027e1c873944291bdd61ee07ed30d74d45cbb418c85ae256e0a18e9e2cc",
+        "license_classifiers": [
+          "License :: OSI Approved :: Apache Software License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "huggingface-hub",
+      "project_urls": [],
+      "requires_dist": [
+        "InquirerPy==0.3.4; extra == \"all\"",
+        "InquirerPy==0.3.4; extra == \"cli\"",
+        "InquirerPy==0.3.4; extra == \"dev\"",
+        "InquirerPy==0.3.4; extra == \"testing\"",
+        "Jinja2; extra == \"all\"",
+        "Jinja2; extra == \"dev\"",
+        "Jinja2; extra == \"testing\"",
+        "Pillow; extra == \"all\"",
+        "Pillow; extra == \"dev\"",
+        "Pillow; extra == \"testing\"",
+        "aiohttp; extra == \"all\"",
+        "aiohttp; extra == \"dev\"",
+        "aiohttp; extra == \"inference\"",
+        "aiohttp; extra == \"mcp\"",
+        "aiohttp; extra == \"testing\"",
+        "authlib>=1.3.2; extra == \"all\"",
+        "authlib>=1.3.2; extra == \"dev\"",
+        "authlib>=1.3.2; extra == \"oauth\"",
+        "authlib>=1.3.2; extra == \"testing\"",
+        "fastai>=2.4; extra == \"fastai\"",
+        "fastapi; extra == \"all\"",
+        "fastapi; extra == \"all\"",
+        "fastapi; extra == \"dev\"",
+        "fastapi; extra == \"dev\"",
+        "fastapi; extra == \"oauth\"",
+        "fastapi; extra == \"testing\"",
+        "fastapi; extra == \"testing\"",
+        "fastcore>=1.3.27; extra == \"fastai\"",
+        "filelock",
+        "fsspec>=2023.5.0",
+        "gradio>=4.0.0; extra == \"all\"",
+        "gradio>=4.0.0; extra == \"dev\"",
+        "gradio>=4.0.0; extra == \"testing\"",
+        "graphviz; extra == \"tensorflow\"",
+        "hf-xet<2.0.0,>=1.1.2; extra == \"hf-xet\"",
+        "hf-xet<2.0.0,>=1.1.3; platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"arm64\" or platform_machine == \"aarch64\"",
+        "hf_transfer>=0.1.4; extra == \"hf-transfer\"",
+        "httpx; extra == \"all\"",
+        "httpx; extra == \"dev\"",
+        "httpx; extra == \"oauth\"",
+        "httpx; extra == \"testing\"",
+        "itsdangerous; extra == \"all\"",
+        "itsdangerous; extra == \"dev\"",
+        "itsdangerous; extra == \"oauth\"",
+        "itsdangerous; extra == \"testing\"",
+        "jedi; extra == \"all\"",
+        "jedi; extra == \"dev\"",
+        "jedi; extra == \"testing\"",
+        "keras<3.0; extra == \"tensorflow-testing\"",
+        "libcst>=1.4.0; extra == \"all\"",
+        "libcst>=1.4.0; extra == \"dev\"",
+        "libcst>=1.4.0; extra == \"quality\"",
+        "mcp>=1.8.0; extra == \"mcp\"",
+        "mypy<1.15.0,>=1.14.1; python_version == \"3.8\" and extra == \"all\"",
+        "mypy<1.15.0,>=1.14.1; python_version == \"3.8\" and extra == \"dev\"",
+        "mypy<1.15.0,>=1.14.1; python_version == \"3.8\" and extra == \"quality\"",
+        "mypy==1.15.0; python_version >= \"3.9\" and extra == \"all\"",
+        "mypy==1.15.0; python_version >= \"3.9\" and extra == \"dev\"",
+        "mypy==1.15.0; python_version >= \"3.9\" and extra == \"quality\"",
+        "numpy; extra == \"all\"",
+        "numpy; extra == \"dev\"",
+        "numpy; extra == \"testing\"",
+        "packaging>=20.9",
+        "pydot; extra == \"tensorflow\"",
+        "pytest-asyncio; extra == \"all\"",
+        "pytest-asyncio; extra == \"dev\"",
+        "pytest-asyncio; extra == \"testing\"",
+        "pytest-cov; extra == \"all\"",
+        "pytest-cov; extra == \"dev\"",
+        "pytest-cov; extra == \"testing\"",
+        "pytest-env; extra == \"all\"",
+        "pytest-env; extra == \"dev\"",
+        "pytest-env; extra == \"testing\"",
+        "pytest-mock; extra == \"all\"",
+        "pytest-mock; extra == \"dev\"",
+        "pytest-mock; extra == \"testing\"",
+        "pytest-rerunfailures<16.0; extra == \"all\"",
+        "pytest-rerunfailures<16.0; extra == \"dev\"",
+        "pytest-rerunfailures<16.0; extra == \"testing\"",
+        "pytest-vcr; extra == \"all\"",
+        "pytest-vcr; extra == \"dev\"",
+        "pytest-vcr; extra == \"testing\"",
+        "pytest-xdist; extra == \"all\"",
+        "pytest-xdist; extra == \"dev\"",
+        "pytest-xdist; extra == \"testing\"",
+        "pytest<8.2.2,>=8.1.1; extra == \"all\"",
+        "pytest<8.2.2,>=8.1.1; extra == \"dev\"",
+        "pytest<8.2.2,>=8.1.1; extra == \"testing\"",
+        "pyyaml>=5.1",
+        "requests",
+        "ruff>=0.9.0; extra == \"all\"",
+        "ruff>=0.9.0; extra == \"dev\"",
+        "ruff>=0.9.0; extra == \"quality\"",
+        "safetensors[torch]; extra == \"torch\"",
+        "soundfile; extra == \"all\"",
+        "soundfile; extra == \"dev\"",
+        "soundfile; extra == \"testing\"",
+        "tensorflow; extra == \"tensorflow\"",
+        "tensorflow; extra == \"tensorflow-testing\"",
+        "toml; extra == \"fastai\"",
+        "torch; extra == \"torch\"",
+        "tqdm>=4.42.1",
+        "ty; extra == \"all\"",
+        "ty; extra == \"dev\"",
+        "ty; extra == \"quality\"",
+        "typer; extra == \"mcp\"",
+        "types-PyYAML; extra == \"all\"",
+        "types-PyYAML; extra == \"dev\"",
+        "types-PyYAML; extra == \"typing\"",
+        "types-requests; extra == \"all\"",
+        "types-requests; extra == \"dev\"",
+        "types-requests; extra == \"typing\"",
+        "types-simplejson; extra == \"all\"",
+        "types-simplejson; extra == \"dev\"",
+        "types-simplejson; extra == \"typing\"",
+        "types-toml; extra == \"all\"",
+        "types-toml; extra == \"dev\"",
+        "types-toml; extra == \"typing\"",
+        "types-tqdm; extra == \"all\"",
+        "types-tqdm; extra == \"dev\"",
+        "types-tqdm; extra == \"typing\"",
+        "types-urllib3; extra == \"all\"",
+        "types-urllib3; extra == \"dev\"",
+        "types-urllib3; extra == \"typing\"",
+        "typing-extensions>=3.7.4.3",
+        "typing-extensions>=4.8.0; extra == \"all\"",
+        "typing-extensions>=4.8.0; extra == \"dev\"",
+        "typing-extensions>=4.8.0; extra == \"typing\"",
+        "urllib3<2.0; extra == \"all\"",
+        "urllib3<2.0; extra == \"dev\"",
+        "urllib3<2.0; extra == \"testing\""
+      ],
+      "version": "0.36.2"
+    },
+    "idna": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "BSD-3-Clause",
+        "license_files_declared": [
+          "LICENSE.md"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "idna",
+      "project_urls": [
+        "Changelog, https://github.com/kjd/idna/blob/master/HISTORY.md",
+        "Issue tracker, https://github.com/kjd/idna/issues",
+        "Source, https://github.com/kjd/idna"
+      ],
+      "requires_dist": [
+        "coverage >= 7.10.0 ; extra == \"all\"",
+        "hypothesis >= 6.141.1 ; extra == \"all\"",
+        "mypy >= 1.11.2 ; extra == \"all\"",
+        "pytest >= 8.3.2 ; extra == \"all\"",
+        "ruff >= 0.16.0 ; extra == \"all\"",
+        "ty >= 0.0.37 ; extra == \"all\""
+      ],
+      "version": "3.20"
+    },
+    "jieba": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "jieba",
+      "project_urls": [],
+      "requires_dist": [],
+      "version": "0.42.1"
+    },
+    "jsonschema": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "COPYING"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "jsonschema",
+      "project_urls": [
+        "Changelog, https://github.com/python-jsonschema/jsonschema/blob/main/CHANGELOG.rst",
+        "Documentation, https://python-jsonschema.readthedocs.io/",
+        "Funding, https://github.com/sponsors/Julian",
+        "Homepage, https://github.com/python-jsonschema/jsonschema",
+        "Issues, https://github.com/python-jsonschema/jsonschema/issues/",
+        "Source, https://github.com/python-jsonschema/jsonschema",
+        "Tidelift, https://tidelift.com/subscription/pkg/pypi-jsonschema?utm_source=pypi-jsonschema&utm_medium=referral&utm_campaign=pypi-link"
+      ],
+      "requires_dist": [
+        "attrs>=22.2.0",
+        "fqdn; extra == 'format'",
+        "fqdn; extra == 'format-nongpl'",
+        "idna; extra == 'format'",
+        "idna; extra == 'format-nongpl'",
+        "isoduration; extra == 'format'",
+        "isoduration; extra == 'format-nongpl'",
+        "jsonpointer>1.13; extra == 'format'",
+        "jsonpointer>1.13; extra == 'format-nongpl'",
+        "jsonschema-specifications>=2023.03.6",
+        "referencing>=0.28.4",
+        "rfc3339-validator; extra == 'format'",
+        "rfc3339-validator; extra == 'format-nongpl'",
+        "rfc3986-validator>0.1.0; extra == 'format-nongpl'",
+        "rfc3987-syntax>=1.1.0; extra == 'format-nongpl'",
+        "rfc3987; extra == 'format'",
+        "rpds-py>=0.25.0",
+        "uri-template; extra == 'format'",
+        "uri-template; extra == 'format-nongpl'",
+        "webcolors>=1.11; extra == 'format'",
+        "webcolors>=24.6.0; extra == 'format-nongpl'"
+      ],
+      "version": "4.26.0"
+    },
+    "jsonschema-specifications": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "COPYING"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "jsonschema-specifications",
+      "project_urls": [
+        "Documentation, https://jsonschema-specifications.readthedocs.io/",
+        "Funding, https://github.com/sponsors/Julian",
+        "Homepage, https://github.com/python-jsonschema/jsonschema-specifications",
+        "Issues, https://github.com/python-jsonschema/jsonschema-specifications/issues/",
+        "Source, https://github.com/python-jsonschema/jsonschema-specifications",
+        "Tidelift, https://tidelift.com/subscription/pkg/pypi-jsonschema-specifications?utm_source=pypi-jsonschema-specifications&utm_medium=referral&utm_campaign=pypi-link"
+      ],
+      "requires_dist": [
+        "referencing>=0.31.0"
+      ],
+      "version": "2025.9.1"
+    },
+    "kombu": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 12,
+        "legacy_license_field_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+        "license_classifiers": [],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "kombu",
+      "project_urls": [
+        "Source, https://github.com/celery/kombu"
+      ],
+      "requires_dist": [
+        "PyYAML>=3.10; extra == \"yaml\"",
+        "amqp<6.0.0,>=5.1.1",
+        "azure-identity>=1.12.0; extra == \"azurestoragequeues\"",
+        "azure-servicebus>=7.10.0; extra == \"azureservicebus\"",
+        "azure-storage-queue>=12.6.0; extra == \"azurestoragequeues\"",
+        "boto3>=1.26.143; extra == \"sqs\"",
+        "confluent-kafka>=2.2.0; extra == \"confluentkafka\"",
+        "google-cloud-monitoring>=2.16.0; extra == \"gcpubsub\"",
+        "google-cloud-pubsub>=2.18.4; extra == \"gcpubsub\"",
+        "grpcio==1.75.1; extra == \"gcpubsub\"",
+        "kazoo>=2.8.0; extra == \"zookeeper\"",
+        "librabbitmq>=2.0.0; python_version < \"3.11\" and extra == \"librabbitmq\"",
+        "msgpack==1.1.2; extra == \"msgpack\"",
+        "packaging",
+        "protobuf==6.32.1; extra == \"gcpubsub\"",
+        "pycurl>=7.43.0.5; (sys_platform != \"win32\" and platform_python_implementation == \"CPython\") and extra == \"sqs\"",
+        "pymongo==4.15.3; extra == \"mongodb\"",
+        "pyro4==4.82; extra == \"pyro\"",
+        "python-consul2==0.1.5; extra == \"consul\"",
+        "qpid-python==1.36.0-1; extra == \"qpid\"",
+        "qpid-tools==1.36.0-1; extra == \"qpid\"",
+        "redis!=4.5.5,!=5.0.2,<6.5,>=4.5.2; extra == \"redis\"",
+        "softlayer_messaging>=1.0.3; extra == \"slmq\"",
+        "sqlalchemy<2.1,>=1.4.48; extra == \"sqlalchemy\"",
+        "tzdata>=2025.2",
+        "urllib3>=1.26.16; extra == \"sqs\"",
+        "vine==5.1.0"
+      ],
+      "version": "5.6.2"
+    },
+    "mpmath": {
+      "license": {
+        "declared_label": "BSD",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "49d9777da612e1f4e9269fa9f93ea324a66f9dcc7722ad812de124ef3f266d93",
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "mpmath",
+      "project_urls": [
+        "Documentation, http://mpmath.org/doc/current/",
+        "Source, https://github.com/fredrik-johansson/mpmath",
+        "Tracker, https://github.com/fredrik-johansson/mpmath/issues"
+      ],
+      "requires_dist": [
+        "codecov ; extra == 'develop'",
+        "gmpy2 (>=2.1.0a4) ; (platform_python_implementation != \"PyPy\") and extra == 'gmpy'",
+        "pycodestyle ; extra == 'develop'",
+        "pytest (>=4.6) ; extra == 'develop'",
+        "pytest (>=4.6) ; extra == 'tests'",
+        "pytest-cov ; extra == 'develop'",
+        "sphinx ; extra == 'docs'",
+        "wheel ; extra == 'develop'"
+      ],
+      "version": "1.3.0"
+    },
+    "numpy": {
+      "license": {
+        "declared_label": "License :: OSI Approved :: BSD License",
+        "legacy_license_field_characters": 47527,
+        "legacy_license_field_sha256": "c2c756c00eb6289344b0d93f9c2802d9c0dc70957ae7af4294b9626499b630d9",
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "numpy",
+      "project_urls": [
+        "documentation, https://numpy.org/doc/",
+        "download, https://pypi.org/project/numpy/#files",
+        "homepage, https://numpy.org",
+        "release notes, https://numpy.org/doc/stable/release",
+        "source, https://github.com/numpy/numpy",
+        "tracker, https://github.com/numpy/numpy/issues"
+      ],
+      "requires_dist": [],
+      "version": "2.2.6"
+    },
+    "onnxruntime": {
+      "license": {
+        "declared_label": "MIT License",
+        "legacy_license_field_characters": 11,
+        "legacy_license_field_sha256": "abb2896dc3c2a9402f901b88d5035cf0a83d5cf7c17e73642cdf562b0b9d3bc5",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "onnxruntime",
+      "project_urls": [],
+      "requires_dist": [
+        "flatbuffers",
+        "numpy>=1.21.6",
+        "packaging",
+        "protobuf",
+        "sympy"
+      ],
+      "version": "1.24.3"
+    },
+    "opencc-python-reimplemented": {
+      "license": {
+        "declared_label": "Apache License",
+        "legacy_license_field_characters": 14,
+        "legacy_license_field_sha256": "b142bb415e882507276996b922f14995136b23d512ba933262d8904e4f124779",
+        "license_classifiers": [
+          "License :: OSI Approved :: Apache Software License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "opencc-python-reimplemented",
+      "project_urls": [],
+      "requires_dist": [],
+      "version": "0.1.7"
+    },
+    "opencv-python-headless": {
+      "license": {
+        "declared_label": "Apache 2.0",
+        "legacy_license_field_characters": 10,
+        "legacy_license_field_sha256": "cf989ea142f203f532233fa944ee1d8d5acfe6f6875e4d611f515ee108ba26df",
+        "license_classifiers": [
+          "License :: OSI Approved :: Apache Software License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE-3RD-PARTY.txt",
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "opencv-python-headless",
+      "project_urls": [],
+      "requires_dist": [
+        "numpy<2.0; python_version < \"3.9\"",
+        "numpy<2.3.0,>=2; python_version >= \"3.9\""
+      ],
+      "version": "4.12.0.88"
+    },
+    "packaging": {
+      "license": {
+        "declared_label": "Apache-2.0 OR BSD-2-Clause",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "Apache-2.0 OR BSD-2-Clause",
+        "license_files_declared": [
+          "LICENSE",
+          "LICENSE.APACHE",
+          "LICENSE.BSD"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "packaging",
+      "project_urls": [
+        "Documentation, https://packaging.pypa.io/",
+        "Source, https://github.com/pypa/packaging"
+      ],
+      "requires_dist": [],
+      "version": "26.3"
+    },
+    "platformdirs": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "platformdirs",
+      "project_urls": [
+        "Changelog, https://github.com/tox-dev/platformdirs/releases",
+        "Documentation, https://platformdirs.readthedocs.io",
+        "Homepage, https://github.com/tox-dev/platformdirs",
+        "Source, https://github.com/tox-dev/platformdirs",
+        "Tracker, https://github.com/tox-dev/platformdirs/issues"
+      ],
+      "requires_dist": [
+        "appdirs==1.4.4; extra == 'test'",
+        "covdefaults>=2.3; extra == 'test'",
+        "furo>=2024.8.6; extra == 'docs'",
+        "mypy>=1.14.1; extra == 'type'",
+        "proselint>=0.14; extra == 'docs'",
+        "pytest-cov>=6; extra == 'test'",
+        "pytest-mock>=3.14; extra == 'test'",
+        "pytest>=8.3.4; extra == 'test'",
+        "sphinx-autodoc-typehints>=3; extra == 'docs'",
+        "sphinx>=8.1.3; extra == 'docs'"
+      ],
+      "version": "4.4.0"
+    },
+    "prompt-toolkit": {
+      "license": {
+        "declared_label": "License :: OSI Approved :: BSD License",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "AUTHORS.rst",
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "prompt-toolkit",
+      "project_urls": [
+        "Documentation, https://python-prompt-toolkit.readthedocs.io/en/stable/",
+        "Homepage, https://github.com/prompt-toolkit/python-prompt-toolkit"
+      ],
+      "requires_dist": [
+        "wcwidth>=0.1.4"
+      ],
+      "version": "3.0.53"
+    },
+    "protobuf": {
+      "license": {
+        "declared_label": "3-Clause BSD License",
+        "legacy_license_field_characters": 20,
+        "legacy_license_field_sha256": "15934bcfcb57d72b1b73d913180ce7f86d2773c32725efa41ddb6b14e143cb84",
+        "license_classifiers": [],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "protobuf",
+      "project_urls": [],
+      "requires_dist": [],
+      "version": "7.36.2"
+    },
+    "pydantic": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "pydantic",
+      "project_urls": [
+        "Changelog, https://docs.pydantic.dev/latest/changelog/",
+        "Documentation, https://docs.pydantic.dev",
+        "Funding, https://github.com/sponsors/samuelcolvin",
+        "Homepage, https://github.com/pydantic/pydantic",
+        "Source, https://github.com/pydantic/pydantic"
+      ],
+      "requires_dist": [
+        "annotated-types>=0.6.0",
+        "email-validator>=2.0.0; extra == 'email'",
+        "pydantic-core==2.46.5",
+        "typing-extensions>=4.14.1",
+        "typing-inspection>=0.4.2",
+        "tzdata; (python_version >= '3.9' and platform_system == 'Windows') and extra == 'timezone'"
+      ],
+      "version": "2.13.5"
+    },
+    "pydantic-core": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "pydantic-core",
+      "project_urls": [
+        "Funding, https://github.com/sponsors/samuelcolvin",
+        "Homepage, https://github.com/pydantic",
+        "Source, https://github.com/pydantic/pydantic/tree/main/pydantic-core"
+      ],
+      "requires_dist": [
+        "typing-extensions>=4.14.1"
+      ],
+      "version": "2.46.5"
+    },
+    "python-dateutil": {
+      "license": {
+        "declared_label": "Dual License",
+        "legacy_license_field_characters": 12,
+        "legacy_license_field_sha256": "199628ddb098f90709bb2dc43f816a5a40fe31690de0e25d0f4d6455fe6bc609",
+        "license_classifiers": [
+          "License :: OSI Approved :: Apache Software License",
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "python-dateutil",
+      "project_urls": [
+        "Documentation, https://dateutil.readthedocs.io/en/stable/",
+        "Source, https://github.com/dateutil/dateutil"
+      ],
+      "requires_dist": [
+        "six >=1.5"
+      ],
+      "version": "2.9.0.post0"
+    },
+    "python-multipart": {
+      "license": {
+        "declared_label": "Apache-2.0",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: Apache Software License"
+        ],
+        "license_expression": "Apache-2.0",
+        "license_files_declared": [
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "python-multipart",
+      "project_urls": [
+        "Changelog, https://github.com/Kludex/python-multipart/blob/master/CHANGELOG.md",
+        "Documentation, https://kludex.github.io/python-multipart/",
+        "Homepage, https://github.com/Kludex/python-multipart",
+        "Source, https://github.com/Kludex/python-multipart"
+      ],
+      "requires_dist": [],
+      "version": "0.0.32"
+    },
+    "pyyaml": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "pyyaml",
+      "project_urls": [
+        "Bug Tracker, https://github.com/yaml/pyyaml/issues",
+        "CI, https://github.com/yaml/pyyaml/actions",
+        "Documentation, https://pyyaml.org/wiki/PyYAMLDocumentation",
+        "Mailing lists, http://lists.sourceforge.net/lists/listinfo/yaml-core",
+        "Source Code, https://github.com/yaml/pyyaml"
+      ],
+      "requires_dist": [],
+      "version": "6.0.3"
+    },
+    "redis": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "redis",
+      "project_urls": [
+        "Changes, https://github.com/redis/redis-py/releases",
+        "Code, https://github.com/redis/redis-py",
+        "Documentation, https://redis.readthedocs.io/en/latest/",
+        "Homepage, https://github.com/redis/redis-py",
+        "Issue tracker, https://github.com/redis/redis-py/issues"
+      ],
+      "requires_dist": [
+        "async-timeout>=4.0.3; python_full_version < '3.11.3'",
+        "cryptography>=36.0.1; extra == 'ocsp'",
+        "hiredis>=3.2.0; extra == 'hiredis'",
+        "pyjwt>=2.9.0; extra == 'jwt'",
+        "pyopenssl>=20.0.1; extra == 'ocsp'",
+        "requests>=2.31.0; extra == 'ocsp'"
+      ],
+      "version": "6.4.0"
+    },
+    "referencing": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "COPYING"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "referencing",
+      "project_urls": [
+        "Changelog, https://referencing.readthedocs.io/en/stable/changes/",
+        "Documentation, https://referencing.readthedocs.io/",
+        "Funding, https://github.com/sponsors/Julian",
+        "Homepage, https://github.com/python-jsonschema/referencing",
+        "Issues, https://github.com/python-jsonschema/referencing/issues/",
+        "Source, https://github.com/python-jsonschema/referencing",
+        "Tidelift, https://tidelift.com/subscription/pkg/pypi-referencing?utm_source=pypi-referencing&utm_medium=referral&utm_campaign=pypi-link"
+      ],
+      "requires_dist": [
+        "attrs>=22.2.0",
+        "rpds-py>=0.7.0",
+        "typing-extensions>=4.4.0; python_version < '3.13'"
+      ],
+      "version": "0.37.0"
+    },
+    "requests": {
+      "license": {
+        "declared_label": "Apache-2.0",
+        "legacy_license_field_characters": 10,
+        "legacy_license_field_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+        "license_classifiers": [
+          "License :: OSI Approved :: Apache Software License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE",
+          "NOTICE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "requests",
+      "project_urls": [
+        "Documentation, https://requests.readthedocs.io",
+        "Source, https://github.com/psf/requests"
+      ],
+      "requires_dist": [
+        "PySocks!=1.5.7,>=1.5.6; extra == \"socks\"",
+        "certifi>=2023.5.7",
+        "chardet<8,>=3.0.2; extra == \"use-chardet-on-py3\"",
+        "charset_normalizer<4,>=2",
+        "idna<4,>=2.5",
+        "urllib3<3,>=1.26"
+      ],
+      "version": "2.34.2"
+    },
+    "rpds-py": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "rpds-py",
+      "project_urls": [
+        "Documentation, https://rpds.readthedocs.io/",
+        "Funding, https://github.com/sponsors/Julian",
+        "Homepage, https://github.com/crate-py/rpds",
+        "Issues, https://github.com/crate-py/rpds/issues/",
+        "Source, https://github.com/crate-py/rpds",
+        "Tidelift, https://tidelift.com/subscription/pkg/pypi-rpds-py?utm_source=pypi-rpds-py&utm_medium=referral&utm_campaign=pypi-link",
+        "Upstream, https://github.com/orium/rpds"
+      ],
+      "requires_dist": [],
+      "version": "2026.6.3"
+    },
+    "ruff": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "ruff",
+      "project_urls": [
+        "Changelog, https://github.com/astral-sh/ruff/blob/main/CHANGELOG.md",
+        "Documentation, https://docs.astral.sh/ruff/",
+        "Repository, https://github.com/astral-sh/ruff"
+      ],
+      "requires_dist": [],
+      "version": "0.16.8"
+    },
+    "scenedetect": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 12,
+        "legacy_license_field_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+        "license_classifiers": [],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "scenedetect",
+      "project_urls": [
+        "Bug Tracker, https://github.com/Breakthrough/PySceneDetect/issues/",
+        "Documentation, https://www.scenedetect.com/docs/",
+        "Homepage, https://www.scenedetect.com",
+        "Repository, https://github.com/Breakthrough/PySceneDetect/"
+      ],
+      "requires_dist": [
+        "av>=9.2; extra == \"pyav\"",
+        "click<8.3.0,~=8.0",
+        "moviepy; extra == \"moviepy\"",
+        "numpy",
+        "opencv-python-headless; extra == \"opencv-headless\"",
+        "opencv-python; extra == \"opencv\"",
+        "platformdirs",
+        "tqdm"
+      ],
+      "version": "0.6.7.1"
+    },
+    "setuptools": {
+      "license": {
+        "declared_label": "License :: OSI Approved :: MIT License",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "setuptools",
+      "project_urls": [
+        "Changelog, https://setuptools.pypa.io/en/stable/history.html",
+        "Documentation, https://setuptools.pypa.io/"
+      ],
+      "requires_dist": [
+        "build[virtualenv] ; extra == 'testing'",
+        "build[virtualenv] ; extra == 'testing-integration'",
+        "filelock (>=3.4.0) ; extra == 'testing'",
+        "filelock (>=3.4.0) ; extra == 'testing-integration'",
+        "flake8 (<5) ; extra == 'testing'",
+        "flake8-2020 ; extra == 'testing'",
+        "furo ; extra == 'docs'",
+        "ini2toml[lite] (>=0.9) ; extra == 'testing'",
+        "jaraco.envs (>=2.2) ; extra == 'testing'",
+        "jaraco.envs (>=2.2) ; extra == 'testing-integration'",
+        "jaraco.packaging (>=9) ; extra == 'docs'",
+        "jaraco.path (>=3.2.0) ; extra == 'testing'",
+        "jaraco.path (>=3.2.0) ; extra == 'testing-integration'",
+        "jaraco.tidelift (>=1.4) ; extra == 'docs'",
+        "mock ; extra == 'testing'",
+        "pip (>=19.1) ; extra == 'testing'",
+        "pip-run (>=8.8) ; extra == 'testing'",
+        "pygments-github-lexers (==0.0.5) ; extra == 'docs'",
+        "pytest (>=6) ; extra == 'testing'",
+        "pytest ; extra == 'testing-integration'",
+        "pytest-black (>=0.3.7) ; (platform_python_implementation != \"PyPy\") and extra == 'testing'",
+        "pytest-checkdocs (>=2.4) ; extra == 'testing'",
+        "pytest-cov ; (platform_python_implementation != \"PyPy\") and extra == 'testing'",
+        "pytest-enabler (>=1.3) ; extra == 'testing'",
+        "pytest-enabler ; extra == 'testing-integration'",
+        "pytest-flake8 ; extra == 'testing'",
+        "pytest-mypy (>=0.9.1) ; (platform_python_implementation != \"PyPy\") and extra == 'testing'",
+        "pytest-perf ; extra == 'testing'",
+        "pytest-xdist ; extra == 'testing'",
+        "pytest-xdist ; extra == 'testing-integration'",
+        "rst.linker (>=1.9) ; extra == 'docs'",
+        "sphinx (>=3.5) ; extra == 'docs'",
+        "sphinx-favicon ; extra == 'docs'",
+        "sphinx-hoverxref (<2) ; extra == 'docs'",
+        "sphinx-inline-tabs ; extra == 'docs'",
+        "sphinx-notfound-page (==0.8.3) ; extra == 'docs'",
+        "sphinx-reredirects ; extra == 'docs'",
+        "sphinxcontrib-towncrier ; extra == 'docs'",
+        "tomli ; extra == 'testing-integration'",
+        "tomli-w (>=1.0.0) ; extra == 'testing'",
+        "virtualenv (>=13.0.0) ; extra == 'testing'",
+        "virtualenv (>=13.0.0) ; extra == 'testing-integration'",
+        "wheel ; extra == 'testing'",
+        "wheel ; extra == 'testing-integration'"
+      ],
+      "version": "65.5.0"
+    },
+    "six": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "six",
+      "project_urls": [],
+      "requires_dist": [],
+      "version": "1.17.0"
+    },
+    "starlette": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "BSD-3-Clause",
+        "license_files_declared": [
+          "LICENSE.md"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "starlette",
+      "project_urls": [
+        "Changelog, https://starlette.dev/release-notes/",
+        "Documentation, https://starlette.dev/",
+        "Funding, https://github.com/sponsors/Kludex",
+        "Homepage, https://github.com/Kludex/starlette",
+        "Source, https://github.com/Kludex/starlette"
+      ],
+      "requires_dist": [
+        "anyio<5,>=3.6.2",
+        "httpx2>=2.0.0; extra == 'full'",
+        "httpx<0.29.0,>=0.27.0; extra == 'full'",
+        "itsdangerous; extra == 'full'",
+        "jinja2; extra == 'full'",
+        "python-multipart>=0.0.18; extra == 'full'",
+        "pyyaml; extra == 'full'",
+        "typing-extensions>=4.10.0; python_version < '3.13'"
+      ],
+      "version": "1.6.0"
+    },
+    "sympy": {
+      "license": {
+        "declared_label": "BSD",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "49d9777da612e1f4e9269fa9f93ea324a66f9dcc7722ad812de124ef3f266d93",
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "AUTHORS",
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "sympy",
+      "project_urls": [
+        "Source, https://github.com/sympy/sympy"
+      ],
+      "requires_dist": [
+        "hypothesis>=6.70.0; extra == \"dev\"",
+        "mpmath<1.4,>=1.1.0",
+        "pytest>=7.1.0; extra == \"dev\""
+      ],
+      "version": "1.14.0"
+    },
+    "tokenizers": {
+      "license": {
+        "declared_label": "License :: OSI Approved :: Apache Software License",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: Apache Software License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "tokenizers",
+      "project_urls": [
+        "Homepage, https://github.com/huggingface/tokenizers",
+        "Source, https://github.com/huggingface/tokenizers"
+      ],
+      "requires_dist": [
+        "datasets ; extra == 'testing'",
+        "huggingface-hub>=0.16.4,<2.0",
+        "numpy ; extra == 'testing'",
+        "pytest ; extra == 'testing'",
+        "pytest-asyncio ; extra == 'testing'",
+        "requests ; extra == 'testing'",
+        "ruff ; extra == 'testing'",
+        "setuptools-rust ; extra == 'docs'",
+        "sphinx ; extra == 'docs'",
+        "sphinx-rtd-theme ; extra == 'docs'",
+        "tokenizers[testing] ; extra == 'dev'",
+        "ty ; extra == 'testing'"
+      ],
+      "version": "0.22.2"
+    },
+    "tqdm": {
+      "license": {
+        "declared_label": "MPL-2.0 AND MIT",
+        "legacy_license_field_characters": 15,
+        "legacy_license_field_sha256": "497716e0cebf8fb1944bbac349083f8ba656e10320c3f9811a955fc8786d0cc1",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License",
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENCE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "tqdm",
+      "project_urls": [
+        "changelog, https://tqdm.github.io/releases",
+        "homepage, https://tqdm.github.io",
+        "repository, https://github.com/tqdm/tqdm",
+        "wiki, https://github.com/tqdm/tqdm/wiki"
+      ],
+      "requires_dist": [
+        "colorama; platform_system == \"Windows\"",
+        "ipywidgets>=6; extra == \"notebook\"",
+        "nbval; extra == \"dev\"",
+        "pytest-asyncio>=0.24; extra == \"dev\"",
+        "pytest-cov; extra == \"dev\"",
+        "pytest-timeout; extra == \"dev\"",
+        "pytest>=6; extra == \"dev\"",
+        "requests; extra == \"discord\"",
+        "requests; extra == \"telegram\"",
+        "slack-sdk; extra == \"slack\""
+      ],
+      "version": "4.67.1"
+    },
+    "typing-extensions": {
+      "license": {
+        "declared_label": "PSF-2.0",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "PSF-2.0",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "typing-extensions",
+      "project_urls": [
+        "Bug Tracker, https://github.com/python/typing_extensions/issues",
+        "Changes, https://github.com/python/typing_extensions/blob/main/CHANGELOG.md",
+        "Documentation, https://typing-extensions.readthedocs.io/",
+        "Home, https://github.com/python/typing_extensions",
+        "Q & A, https://github.com/python/typing/discussions",
+        "Repository, https://github.com/python/typing_extensions"
+      ],
+      "requires_dist": [],
+      "version": "4.16.0"
+    },
+    "typing-inspection": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "typing-inspection",
+      "project_urls": [
+        "Changelog, https://github.com/pydantic/typing-inspection/blob/main/HISTORY.md",
+        "Documentation, https://pydantic.github.io/typing-inspection/dev/",
+        "Homepage, https://github.com/pydantic/typing-inspection",
+        "Source, https://github.com/pydantic/typing-inspection"
+      ],
+      "requires_dist": [
+        "typing-extensions>=4.15.0"
+      ],
+      "version": "0.4.4"
+    },
+    "tzdata": {
+      "license": {
+        "declared_label": "Apache-2.0",
+        "legacy_license_field_characters": 10,
+        "legacy_license_field_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+        "license_classifiers": [],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE",
+          "licenses/LICENSE_APACHE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "tzdata",
+      "project_urls": [
+        "Bug Reports, https://github.com/python/tzdata/issues",
+        "Documentation, https://tzdata.python.org",
+        "Source, https://github.com/python/tzdata"
+      ],
+      "requires_dist": [],
+      "version": "2026.4"
+    },
+    "tzlocal": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "tzlocal",
+      "project_urls": [
+        "Changelog, https://github.com/regebro/tzlocal/blob/master/CHANGES.txt",
+        "Issue tracker, https://github.com/regebro/tzlocal/issues",
+        "Source code, https://github.com/regebro/tzlocal"
+      ],
+      "requires_dist": [
+        "check_manifest; extra == \"testing\"",
+        "pyroma; extra == \"testing\"",
+        "pytest-cov; extra == \"testing\"",
+        "pytest-mock>=3.3; extra == \"testing\"",
+        "pytest>=4.3; extra == \"testing\"",
+        "ruff; extra == \"testing\"",
+        "tzdata; platform_system == \"Windows\"",
+        "zest.releaser; extra == \"devenv\""
+      ],
+      "version": "5.4.4"
+    },
+    "urllib3": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "MIT",
+        "license_files_declared": [
+          "LICENSE.txt"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "urllib3",
+      "project_urls": [
+        "Changelog, https://github.com/urllib3/urllib3/blob/main/CHANGES.rst",
+        "Code, https://github.com/urllib3/urllib3",
+        "Documentation, https://urllib3.readthedocs.io",
+        "Issue tracker, https://github.com/urllib3/urllib3/issues",
+        "Security policy, https://urllib3.readthedocs.io/en/latest/security.html"
+      ],
+      "requires_dist": [
+        "backports-zstd>=1.0.0; (python_version < '3.14') and extra == 'zstd'",
+        "brotli>=1.2.0; (platform_python_implementation == 'CPython') and extra == 'brotli'",
+        "brotlicffi>=1.2.0.0; (platform_python_implementation != 'CPython') and extra == 'brotli'",
+        "h2<5,>=4; extra == 'h2'",
+        "pysocks!=1.5.7,<2.0,>=1.5.6; extra == 'socks'"
+      ],
+      "version": "2.8.0"
+    },
+    "uvicorn": {
+      "license": {
+        "declared_label": "BSD-3-Clause",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [],
+        "license_expression": "BSD-3-Clause",
+        "license_files_declared": [
+          "LICENSE.md"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "uvicorn",
+      "project_urls": [
+        "Changelog, https://uvicorn.dev/release-notes",
+        "Funding, https://github.com/sponsors/Kludex",
+        "Homepage, https://uvicorn.dev/",
+        "Source, https://github.com/Kludex/uvicorn"
+      ],
+      "requires_dist": [
+        "click>=7.0",
+        "h11>=0.8",
+        "httptools>=0.8.0; extra == 'standard'",
+        "python-dotenv>=0.13; extra == 'standard'",
+        "pyyaml>=5.1; extra == 'standard'",
+        "typing-extensions>=4.0; python_version < '3.11'",
+        "uvloop>=0.15.1; (sys_platform != 'win32' and (sys_platform != 'cygwin' and platform_python_implementation != 'PyPy')) and extra == 'standard'",
+        "watchfiles>=0.20; extra == 'standard'",
+        "websockets>=13.0; extra == 'standard'"
+      ],
+      "version": "0.53.0"
+    },
+    "vine": {
+      "license": {
+        "declared_label": "BSD",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "49d9777da612e1f4e9269fa9f93ea324a66f9dcc7722ad812de124ef3f266d93",
+        "license_classifiers": [
+          "License :: OSI Approved :: BSD License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "vine",
+      "project_urls": [],
+      "requires_dist": [],
+      "version": "5.1.0"
+    },
+    "wcwidth": {
+      "license": {
+        "declared_label": "License :: OSI Approved :: MIT License",
+        "legacy_license_field_characters": 0,
+        "legacy_license_field_sha256": null,
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "wcwidth",
+      "project_urls": [
+        "Homepage, https://github.com/jquast/wcwidth"
+      ],
+      "requires_dist": [],
+      "version": "0.9.1"
+    },
+    "webrtcvad-wheels": {
+      "license": {
+        "declared_label": "MIT",
+        "legacy_license_field_characters": 3,
+        "legacy_license_field_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "license_classifiers": [
+          "License :: OSI Approved :: MIT License"
+        ],
+        "license_expression": null,
+        "license_files_declared": [
+          "LICENSE"
+        ],
+        "source": "installed distribution METADATA; no legal interpretation or bundled-code audit"
+      },
+      "name": "webrtcvad-wheels",
+      "project_urls": [],
+      "requires_dist": [
+        "psutil ; extra == 'dev'",
+        "unittest2 ; extra == 'dev'"
+      ],
+      "version": "2.0.14"
+    }
+  },
+  "schema_version": "clipforge-installed-metadata-v1"
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": "clipforge-inventory-worktree-provenance-v1",
+  "date": "2026-11-04",
+  "source_baseline_commit": "6b507a6fb735d3dbd4f733fc42cae0e0d540ca57",
+  "source_state": "current visible-marking working tree above the upstream baseline; input_sha256 is authoritative for captured files",
+  "historical_inventory": {
+    "file": "dependency-inventory.json",
+    "sha256": "2d829cb3b86f74127e868e34ab314b2b8df12e722817b7c086ca7a35d5c0f35d",
+    "preserved_byte_for_byte": true
+  },
+  "reused_python_snapshot": {
+    "file": "python-installed-metadata.json",
+    "sha256": "bca29a2bb7b2452a3e9875c15d0e048419a86c30aa669464d4485c15a9fb2a8a",
+    "preserved_byte_for_byte": true
+  },
+  "current_inventory": {
+    "file": "dependency-inventory-visible-marking.json",
+    "sha256": "2f4ea5a88177bfa8e331af26263e65cddf821c484f383efae9c9ccccb8fa304b"
+  },
+  "input_differences_from_historical_inventory": {
+    "deploy/Dockerfile.worker": {
+      "historical_sha256": "b3a958bb9fbe06c1c976639ab33f6a512029d1384d8a6e20f366d83a82e87441",
+      "working_tree_sha256": "5e7d44d9b04049943d44db2c124333d2164e3f9c5bd4b4c2fb4058d696ee3592"
+    }
+  },
+  "component_records_unchanged": true,
+  "offline_reproduction_byte_equal": true,
+  "validation": {
+    "inventory_tests": 5,
+    "passed": 5,
+    "ruff": "passed"
+  },
+  "scope_note": "Dockerfile.worker now declares fonts-noto-cjk and the subtitle font configuration; apt package version and image digest remain unmeasured and are not added as verified Python/npm components."
+}

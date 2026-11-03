@@ -28,7 +28,7 @@ class ShotOptionsTests(unittest.TestCase):
                 parse_options(text)
 
     def test_upload_isolated_settings_and_worker_receives_normalized_region(self):
-        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {'CLIPFORGE_DATA_DIR': directory}), TestClient(app) as client:
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {'CLIPFORGE_DATA_DIR': directory, 'FFPROBE': 'ffprobe'}), TestClient(app) as client:
             settings = {'method': 'robust', 'region': [0.1, 0.2, 0.9, 0.8]}
             with patch('clipforge.routes.video.submit_video'):
                 response = client.post('/tasks', files={'file': ('screen.mp4', b'video', 'video/mp4')},

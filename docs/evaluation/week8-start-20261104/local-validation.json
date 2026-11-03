@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-04",
+  "validation_scope": "local Week8 kickoff; not a full backend/frontend CI rerun",
+  "export_regressions": {
+    "passed": 128,
+    "skipped": 0,
+    "details": "regression-results.json"
+  },
+  "dependency_inventory_tests": {
+    "passed": 5,
+    "new_tests": 5
+  },
+  "total_related_tests_passed": 133,
+  "ruff_whole_repository": "passed",
+  "git_diff_check": "passed",
+  "compose_static_config": "passed",
+  "docker_engine": "unavailable",
+  "new_remote_ci": "not_run",
+  "inventory_offline_reproduction": "byte_identical",
+  "inventory_sha256": "2d829cb3b86f74127e868e34ab314b2b8df12e722817b7c086ca7a35d5c0f35d",
+  "new_document_local_links": "all_resolve",
+  "full_git_history_secret_scan": "not_run; gitleaks not available in current command path",
+  "deployment_changed": false,
+  "release_created": false,
+  "generated_evidence_line_endings": "canonical LF; source-copy transformation receipt retained"
+}

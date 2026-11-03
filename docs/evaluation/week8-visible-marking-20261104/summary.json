@@ -1,0 +1,613 @@
+{
+  "artifact_kind": "week8_visible_marking_public_transcription",
+  "format_version": 1,
+  "snapshot_date": "2026-11-04",
+  "snapshot_timezone": "Asia/Shanghai",
+  "provenance": "Selected fields transcribed and derived from retained local reports; not raw-byte report copies.",
+  "raw_reports_included": false,
+  "source_reports": [
+    {
+      "id": "edl-landscape-center-crop",
+      "retained_relative_path": "work/week8-visible-qa/edl-pixels-01/pixel-verification.json",
+      "raw_bytes_sha256": "c8746381e16b8ec3e410a946fa0040ac1380d5a566b81e903555433b8db7db11"
+    },
+    {
+      "id": "edl-fit-pad",
+      "retained_relative_path": "work/week8-visible-qa/edl-fit-pixels-01/pixel-verification.json",
+      "raw_bytes_sha256": "1b21067ff091097b9fc5b6611f70841e01fa1d7115197cd1ed2c748bd625d0b6"
+    },
+    {
+      "id": "batch-three-clips",
+      "retained_relative_path": "work/week8-visible-qa/batch-pixels-03/real-media-verification.json",
+      "raw_bytes_sha256": "b0bc82f052c5ddd35bc8e1e263650d089224a214f5fbdda6940f17c18498b1cf"
+    },
+    {
+      "id": "mlt-native-v2",
+      "retained_relative_path": "work/week8-mlt-native-v2/native-mlt-verification.json",
+      "raw_bytes_sha256": "1c13a56b22ad951074a8720b52c96f088385f11197bb87c37f97d020b269905c"
+    },
+    {
+      "id": "tiny-height-unresolved",
+      "retained_relative_path": "work/week8-font-prerequisites/tiny-height-result.json",
+      "raw_bytes_sha256": "ddcb6053b645400bba144c23dd91eb19157f5f14b24a431a3935f8ef33f71fe9"
+    }
+  ],
+  "test_scope_totals": {
+    "edl_cases": 18,
+    "edl_frames": 3240,
+    "batch_clips": 3,
+    "batch_frames": 28,
+    "mlt_native_cases": 5,
+    "mlt_native_frames": 69
+  },
+  "test_scope_note": "These are media-case/frame counts, not repository-wide unit-test totals.",
+  "all_synthetic": true,
+  "font_family": "Microsoft YaHei",
+  "font_file_included": false,
+  "edl_method": {
+    "source_ranges_half_open": [
+      [
+        0,
+        90
+      ],
+      [
+        150,
+        240
+      ]
+    ],
+    "source_sequence_check": "Every output frame decoded; independent central binary source-frame barcode.",
+    "watermark_check": "Every output frame: top-right ROI differs from uniform source background.",
+    "pixel_difference_threshold": 20,
+    "minimum_required_changed_pixels": 12,
+    "minimum_required_roi_contrast": 90,
+    "source_controls": "Each run checked all 300 frames of four unmarked sources: changed ROI pixels = 0.",
+    "screenshot_output_frames": [
+      0,
+      89,
+      90,
+      179
+    ],
+    "original_analysis_fixture_unchanged": true,
+    "ocr_or_legal_certification": false
+  },
+  "edl_cases": [
+    {
+      "case": "dark-silent-landscape-plain",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        640,
+        360
+      ],
+      "audio_present": false,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 227,
+      "minimum_roi_contrast": 214,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "792abf3b7d06b426addf0bcda6b601830a248820030ca827d813653d612d15cc"
+    },
+    {
+      "case": "dark-silent-portrait-plain",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": false,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "f4d8fd78376be01a6a21be69f1e11a0ce99967caf105e70b818cf85b0819bdb9"
+    },
+    {
+      "case": "dark-audio-landscape-plain",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        640,
+        360
+      ],
+      "audio_present": true,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 227,
+      "minimum_roi_contrast": 214,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "14548c84bd49382fe006682996c7c3f81264eeed5404dcc748c5f9426e6143fe"
+    },
+    {
+      "case": "dark-audio-landscape-subtitles",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        640,
+        360
+      ],
+      "audio_present": true,
+      "captions": true,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 227,
+      "minimum_roi_contrast": 214,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "c02a927ffcfc490d7fbd240c2301d01d219cba919e41bf54baba81114e1c9ece"
+    },
+    {
+      "case": "dark-audio-portrait-plain",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": true,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "1f9733ce654ebf1e41d3b49198db915b6d4e16474650d04467ac6735dcae73ba"
+    },
+    {
+      "case": "dark-audio-portrait-subtitles",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": true,
+      "captions": true,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "970514383d5ca0a8d632589fe81d5177d9af29450a16449e09e5d39728f7ecaf"
+    },
+    {
+      "case": "light-silent-landscape-plain",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        640,
+        360
+      ],
+      "audio_present": false,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 353,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "4c593429f2a4ce626a10e3bef7cc3ca8a0e48d0ffdd89ec5b66017d8dd9c98fc"
+    },
+    {
+      "case": "light-silent-portrait-plain",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": false,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 803,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "c6c0dc2dd42fd5eaaa664e1d8dc4d13ec9ba562fd9e6de12e04403658a2ff7e8"
+    },
+    {
+      "case": "light-audio-landscape-plain",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        640,
+        360
+      ],
+      "audio_present": true,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 353,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "999bfdd1dd0c9240246fe146f8148bc8b2b0534eb48c023103ae72b54d8f4176"
+    },
+    {
+      "case": "light-audio-landscape-subtitles",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        640,
+        360
+      ],
+      "audio_present": true,
+      "captions": true,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 353,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "57ea954aca77d87c2462ca46292bf1ea3a5a1a619ab45dc956db00a6045f48c9"
+    },
+    {
+      "case": "light-audio-portrait-plain",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": true,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 803,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "0ff24e5e7cc5dedbad5542d4a084a825cef6527d9ec9db615e67467c719248f5"
+    },
+    {
+      "case": "light-audio-portrait-subtitles",
+      "report_id": "edl-landscape-center-crop",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": true,
+      "captions": true,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 803,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "680ae74cde1ca4e1e3cd168e18a468a88f6799be894044e28a6ef4215e527483"
+    },
+    {
+      "case": "dark-silent-fit_pad-plain",
+      "report_id": "edl-fit-pad",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": false,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "1224731a7909073bf94d4617e7ac4c89b7d3a73d798af8077d3be217e8f7de1a"
+    },
+    {
+      "case": "dark-audio-fit_pad-plain",
+      "report_id": "edl-fit-pad",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": true,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "6fa38ff80cd3a67cedf3ca6c8a49d8af82042b3c88a00c0f849962e13befae40"
+    },
+    {
+      "case": "dark-audio-fit_pad-subtitles",
+      "report_id": "edl-fit-pad",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": true,
+      "captions": true,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "846ce6f6cf45a556e965091abecc2a832b691f96c57a0cc7a315c2550cbbc2bd"
+    },
+    {
+      "case": "light-silent-fit_pad-plain",
+      "report_id": "edl-fit-pad",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": false,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "e53c376ae5180ad9eb8e9733b700d2a942dfb1c6e8653d0d9b8779bec0cbf023"
+    },
+    {
+      "case": "light-audio-fit_pad-plain",
+      "report_id": "edl-fit-pad",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": true,
+      "captions": false,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "dd751eee1920ea1bd427d476f1f079e9ea57a617b45cf5e5f6e41a08e816a6ae"
+    },
+    {
+      "case": "light-audio-fit_pad-subtitles",
+      "report_id": "edl-fit-pad",
+      "frames": 180,
+      "size": [
+        360,
+        640
+      ],
+      "audio_present": true,
+      "captions": true,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 524,
+      "minimum_roi_contrast": 255,
+      "source_frame_sequence_matches": true,
+      "output_sha256": "ca023c80431b868dc889b53cd45ffc242c4254cef3fc4e6fd15a1c4423c16086"
+    }
+  ],
+  "batch_method": {
+    "source_profile": {
+      "width": 160,
+      "height": 48,
+      "fps": 30
+    },
+    "watermark_check": "Every decoded frame compared with known source stripes in the top-right ROI.",
+    "pixel_difference_threshold": 20,
+    "minimum_required_changed_pixels": 10,
+    "source_sequence_check": "Independent center-row 10-bit source-frame barcode on every frame.",
+    "maximum_allowed_marker_error": 3,
+    "ocr": false
+  },
+  "batch_cases": [
+    {
+      "case": "clip-001",
+      "report_id": "batch-three-clips",
+      "frames": 8,
+      "ffprobe_frames": 8,
+      "source_range_half_open": [
+        1,
+        9
+      ],
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 168,
+      "maximum_marker_error": 1,
+      "source_cut_error_frames": 0,
+      "source_frame_sequence_matches": true,
+      "audio_sample_rate": 48000,
+      "audio_pre_encode_samples": 12800,
+      "saved_frame_indices": [
+        0,
+        4,
+        7
+      ],
+      "output_sha256": "50126b370e2df5db7024d65c26071c20ee9c2bd57ab222b15d17a6c4ca6963b9"
+    },
+    {
+      "case": "clip-002",
+      "report_id": "batch-three-clips",
+      "frames": 11,
+      "ffprobe_frames": 11,
+      "source_range_half_open": [
+        37,
+        48
+      ],
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 171,
+      "maximum_marker_error": 1,
+      "source_cut_error_frames": 0,
+      "source_frame_sequence_matches": true,
+      "audio_sample_rate": 48000,
+      "audio_pre_encode_samples": 17600,
+      "saved_frame_indices": [
+        0,
+        5,
+        10
+      ],
+      "output_sha256": "adb73d406616b7a7a32265ad99cf6f90cd35dfe8e77b9081d1cdab9877905218"
+    },
+    {
+      "case": "clip-003",
+      "report_id": "batch-three-clips",
+      "frames": 9,
+      "ffprobe_frames": 9,
+      "source_range_half_open": [
+        103,
+        112
+      ],
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 171,
+      "maximum_marker_error": 1,
+      "source_cut_error_frames": 0,
+      "source_frame_sequence_matches": true,
+      "audio_sample_rate": 48000,
+      "audio_pre_encode_samples": 14400,
+      "saved_frame_indices": [
+        0,
+        4,
+        8
+      ],
+      "output_sha256": "c94b171487a382487113765e524628b9907a11493c94afc111d0e52ccccb1e1e"
+    }
+  ],
+  "mlt_method": {
+    "scope": "native melt synthetic-video rendering; no GUI save/reopen or end-user export validation",
+    "comparison": "Same qtext filter/conversion with transparent label ink; every frame compared.",
+    "frame_sequence_check": "Playlist source ranges checked structurally; no independent source-frame barcode.",
+    "audio_validation": "video-only native consumer; source/EDL audio metadata retained, audio output not tested",
+    "qt_font_dpi": 96
+  },
+  "mlt_cases": [
+    {
+      "case": "plain-landscape",
+      "report_id": "mlt-native-v2",
+      "frames": 17,
+      "source_ranges_half_open": [
+        [
+          0,
+          8
+        ],
+        [
+          15,
+          24
+        ]
+      ],
+      "brand_count": 1,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 1480,
+      "maximum_rgb_error_outside_mark": 0,
+      "independent_source_frame_sequence_test": false,
+      "saved_frame_indices": [
+        0,
+        8,
+        16
+      ],
+      "mlt_sha256": "0d2c76242629621d71b8bc40f70c7d801b2e7deb3e5e4bfb24bf1f9c58b7932c"
+    },
+    {
+      "case": "subtitled-landscape",
+      "report_id": "mlt-native-v2",
+      "frames": 17,
+      "source_ranges_half_open": [
+        [
+          0,
+          8
+        ],
+        [
+          15,
+          24
+        ]
+      ],
+      "brand_count": 1,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 1480,
+      "maximum_rgb_error_outside_mark": 0,
+      "independent_source_frame_sequence_test": false,
+      "saved_frame_indices": [
+        0,
+        8,
+        16
+      ],
+      "mlt_sha256": "9ec016e26fdb02d0b697ff0b77b980929d28f9ba8ebf45c4cc8da10da6df90ed"
+    },
+    {
+      "case": "plain-portrait-silent",
+      "report_id": "mlt-native-v2",
+      "frames": 17,
+      "source_ranges_half_open": [
+        [
+          0,
+          8
+        ],
+        [
+          15,
+          24
+        ]
+      ],
+      "brand_count": 1,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 5624,
+      "maximum_rgb_error_outside_mark": 0,
+      "independent_source_frame_sequence_test": false,
+      "saved_frame_indices": [
+        0,
+        8,
+        16
+      ],
+      "mlt_sha256": "e7eb1a7b04e4226da361bc5e9f20b5eaca98b9e87d4260bb703e3c3d95047c38"
+    },
+    {
+      "case": "subtitled-portrait",
+      "report_id": "mlt-native-v2",
+      "frames": 17,
+      "source_ranges_half_open": [
+        [
+          0,
+          8
+        ],
+        [
+          15,
+          24
+        ]
+      ],
+      "brand_count": 1,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 5624,
+      "maximum_rgb_error_outside_mark": 0,
+      "independent_source_frame_sequence_test": false,
+      "saved_frame_indices": [
+        0,
+        8,
+        16
+      ],
+      "mlt_sha256": "87695cd156f0d7882c9daf57ccd95f11cb1915eef534cd2307710f216a273723"
+    },
+    {
+      "case": "plain-single-frame",
+      "report_id": "mlt-native-v2",
+      "frames": 1,
+      "source_ranges_half_open": [
+        [
+          29,
+          30
+        ]
+      ],
+      "brand_count": 1,
+      "watermark_all_frames": true,
+      "minimum_changed_roi_pixels": 1480,
+      "maximum_rgb_error_outside_mark": 0,
+      "independent_source_frame_sequence_test": false,
+      "saved_frame_indices": [
+        0
+      ],
+      "mlt_sha256": "bd6b4ef5fcc77192df0d2d841cc1243bc79281e9b07c5df9c6282b0b9661adb2"
+    }
+  ],
+  "limitations": [
+    "Pixel presence is not OCR, a readability guarantee for all backgrounds, or authenticity certification.",
+    "The 160x48 batch fixture establishes label pixels but not comfortable native-size text legibility.",
+    "Initial 12 EDL cases have no implementation-hash snapshot; six fit-pad cases report unchanged implementation hashes.",
+    "No GUI save/reopen, third-party end-user export, Docker rebuild, or full test-suite completion is claimed here.",
+    "The 160x2 counterexample below remained unresolved at this snapshot; positive cases do not establish all-size coverage."
+  ],
+  "edl_implementation_snapshot": {
+    "initial_twelve": "not recorded by the earlier script revision",
+    "fit_pad_unchanged_during_run": true,
+    "fit_pad_source_sha256": {
+      "backend/clipforge/editing/render.py": "58a0c14ac608f7e8d10f71c6e9adf97246f34c87cf48365d0fd7b22578f1ff9c",
+      "backend/clipforge/editing/marking.py": "a8fdbb60d6a4826be31eca35dbb728398eab109623344d8404b9072c108f26d7",
+      "backend/clipforge/editing/edl.py": "b05d6fe87faa40b152305e32c5b43bae69acb7d4faf4c2d20a066ea054e19617",
+      "backend/clipforge/editing/subtitles.py": "7463201d7f3a916be65517e4751e96a5d7b5f1c247ed29422e12bdb7c0a0f8da"
+    }
+  },
+  "batch_source_unchanged": true,
+  "batch_legacy_zip_unchanged": true,
+  "known_counterexample_at_snapshot": {
+    "report_id": "tiny-height-unresolved",
+    "status": "unresolved_at_snapshot",
+    "size": [
+      160,
+      2
+    ],
+    "frames": 1,
+    "visible_pixels": 0,
+    "maximum_gray": 0,
+    "renderer_reported_all_output_frames": true,
+    "interpretation": "Layout admitted a 160x2 canvas; decoded black frame has no visible label despite renderer evidence flag.",
+    "counted_as_positive_case": false
+  }
+}

@@ -42,10 +42,32 @@ jobs:
         run: python -m pip install -r backend/requirements-dev.txt -r backend/requirements-worker.txt
       - name: Check dependency compatibility
         run: python -m pip check
+      - name: Install Linux video marking prerequisites
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-noto-cjk
+          echo "SUBTITLE_FONT_FILE=/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" >> "$GITHUB_ENV"
+          echo "SUBTITLE_FONT_NAME=Noto Sans CJK SC" >> "$GITHUB_ENV"
+      - name: Prepare Windows video marking font
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $markingFont = Join-Path $env:RUNNER_TEMP 'NotoSansCJKsc-Regular.otf'
+          $fontUrl = 'https://raw.githubusercontent.com/notofonts/noto-cjk/165c01b46ea533872e002e0785ff17e44f6d97d8/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf'
+          Invoke-WebRequest -Uri $fontUrl -OutFile $markingFont -TimeoutSec 120
+          $expectedFontHash = '2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b'
+          if ((Get-FileHash -LiteralPath $markingFont -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expectedFontHash) {
+            throw 'Downloaded CI marking font does not match the pinned SHA256'
+          }
+          "SUBTITLE_FONT_FILE=$markingFont" >> $env:GITHUB_ENV
+          "SUBTITLE_FONT_NAME=Noto Sans CJK SC" >> $env:GITHUB_ENV
       - name: Check Python errors with Ruff
         run: python -m ruff check --no-cache --output-format=github .
       - name: Run unit tests
         run: python -m unittest discover -s backend/tests -p "test_*.py" -v
+      - name: Check week8 dependency inventory tools
+        run: python -m unittest discover -s tools/week8 -p "test_*.py" -v
 
   frontend:
     name: Frontend / ${{ matrix.os }}

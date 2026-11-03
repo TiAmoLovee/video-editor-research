@@ -1,8 +1,9 @@
 FROM python:3.11-slim-trixie
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 FFMPEG=ffmpeg FFPROBE=ffprobe
+ENV SUBTITLE_FONT_FILE=/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc SUBTITLE_FONT_NAME="Noto Sans CJK SC"
 WORKDIR /app/backend
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ffmpeg \
+    && apt-get install -y --no-install-recommends ffmpeg fonts-noto-cjk \
     && rm -rf /var/lib/apt/lists/*
 COPY backend/requirements-worker.txt ./
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked python -m pip install --timeout 120 --retries 5 -r requirements-worker.txt \

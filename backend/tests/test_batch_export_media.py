@@ -12,6 +12,7 @@ from uuid import uuid4
 from zipfile import ZipFile
 
 from backend.tests import test_editing_service as fixtures
+from backend.tests.media_prerequisites import require_ass_marking
 from backend.tests.test_candidates import fixture
 from clipforge.decision.candidates import generate_candidates
 from clipforge.decision.scoring import score_candidates
@@ -23,11 +24,19 @@ FFPROBE = os.environ.get('FFPROBE') or shutil.which('ffprobe')
 
 @unittest.skipUnless(FFMPEG and FFPROBE, 'set FFMPEG/FFPROBE to run the real media verification')
 class BatchExportMediaTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        require_ass_marking(FFMPEG)
+
     def setUp(self):
         fixtures.EditingServiceTests.setUp(self)
 
     def test_three_edited_clips_have_exact_independent_frame_markers_and_audio(self):
         width, height, frame_count = 160, 48, 930
+        evidence_dir = os.environ.get('CLIPFORGE_BATCH_EVIDENCE_DIR')
+        target = Path(evidence_dir) if evidence_dir else None
+        if target:
+            target.mkdir(parents=True, exist_ok=True)
         # Each input frame has an independent grayscale marker. Source hashes
         # and output frame counts alone cannot establish the cut's content.
         def marker(index):
@@ -59,7 +68,8 @@ class BatchExportMediaTests(unittest.TestCase):
                                                        ffmpeg=FFMPEG, ffprobe=FFPROBE, timeout=90)
         saved = batch_export.load_task_batch_export(self.task_id, revision['revision_id'], record['export_id'])
         archive_path = self.folder / 'edits' / revision['revision_id'] / 'exports' / 'batch' / record['export_id'] / 'clips.zip'
-        evidence = {'artifact_kind': 'week6_batch_real_media_acceptance', 'verified_at': datetime.now(timezone.utc).isoformat(),
+        evidence = {'artifact_kind': 'week8_batch_visible_media_acceptance', 'verified_at': datetime.now(timezone.utc).isoformat(),
+                    'source_is_synthetic': True, 'exact_label_visual_review': 'requires_saved_screenshot_review',
                     'source_frame_count': frame_count, 'source_profile': {'width': width, 'height': height, 'fps': 30},
                     'source_sha256': source_hash, 'export': record, 'clips': [], 'marker_tolerance': 3}
         with ZipFile(archive_path) as archive:
@@ -83,6 +93,27 @@ class BatchExportMediaTests(unittest.TestCase):
                 # three-level encoding tolerance cannot hide an off-by-one.
                 inferred = [sum(int(value >= 128) << bit for bit, value in enumerate(actual)) for actual in observed]
                 self.assertEqual(inferred, list(range(start, end)))
+                # The original image consists only of known stripes. A label
+                # must change actual top-right pixels on every decoded frame;
+                # center-row barcodes above independently preserve cut order.
+                roi_counts = []
+                for offset, source_index in enumerate(range(start, end)):
+                    background = marker(source_index)
+                    roi_counts.append(sum(
+                        abs(decoded[offset * width * height + y * width + x] - background[x // 16]) > 20
+                        for y in range(height // 3) for x in range(width // 2, width - 2)))
+                self.assertTrue(all(count >= 10 for count in roi_counts),
+                                f'visible overlay missing from a ZIP frame: {roi_counts}')
+                screenshots = []
+                if target:
+                    for offset in sorted({0, (end - start) // 2, end - start - 1}):
+                        name = f'clip-{item["index"]:03d}-frame-{offset:03d}.png'
+                        frame = decoded[offset * width * height:(offset + 1) * width * height]
+                        subprocess.run([FFMPEG, '-v', 'error', '-nostdin', '-y', '-f', 'rawvideo',
+                                        '-pixel_format', 'gray', '-video_size', f'{width}x{height}', '-i', 'pipe:0',
+                                        '-vf', 'scale=640:192:flags=neighbor', '-frames:v', '1', str(target / name)],
+                                       input=frame, check=True, capture_output=True, timeout=20)
+                        screenshots.append({'frame': offset, 'file': name})
                 self.assertEqual(item['frame_count'], end - start)
                 self.assertEqual(item['verification']['output']['total_frames'], end - start)
                 self.assertEqual(item['verification']['audio']['sample_rate'], 48000)
@@ -97,6 +128,9 @@ class BatchExportMediaTests(unittest.TestCase):
                     'expected_frame_count': end - start, 'ffprobe_frame_count': end - start,
                     'decoded_source_frame_indices': inferred, 'expected_markers': expected, 'observed_markers': observed,
                     'maximum_marker_error': max(errors), 'source_cut_error_frames': 0,
+                    'visible_overlay_pixel_counts_every_frame': roi_counts,
+                    'all_frames_have_visible_overlay': True, 'pixel_check_is_ocr': False,
+                    'screenshots': screenshots,
                     'audio_sample_rate': 48000, 'audio_pre_encode_samples': (end - start) * 1600,
                     'clip_sha256': item['sha256']})
                 path.unlink()
@@ -106,10 +140,7 @@ class BatchExportMediaTests(unittest.TestCase):
         evidence.update(total_verified_frames=sum(end - start for start, end in ranges),
                         source_unchanged=True, legacy_zip_unchanged=True, normalized_media_copy_count=1,
                         all_frames_in_expected_order=True)
-        evidence_dir = os.environ.get('CLIPFORGE_BATCH_EVIDENCE_DIR')
-        if evidence_dir:
-            target = Path(evidence_dir)
-            target.mkdir(parents=True, exist_ok=True)
+        if target:
             (target / 'real-media-verification.json').write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding='utf-8')
             (target / 'manifest.json').write_text(json.dumps(saved['manifest'], ensure_ascii=False, indent=2), encoding='utf-8')
             shutil.copyfile(archive_path, target / 'verified-clips.zip')

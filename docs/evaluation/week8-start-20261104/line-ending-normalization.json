@@ -1,0 +1,36 @@
+{
+  "scope": "Generated evidence copies only; no historical human originals changed",
+  "reason": "Canonical LF serialization for stable cross-platform hashes and clean diffs",
+  "files": [
+    {
+      "file": "docs/compliance/python-installed-metadata.json",
+      "original_sha256": "23db6af8fe489b791c8bebbb72cb0368b270b6e594414210a664a445d5c7adaa",
+      "lf_sha256": "bca29a2bb7b2452a3e9875c15d0e048419a86c30aa669464d4485c15a9fb2a8a"
+    },
+    {
+      "file": "docs/evaluation/week8-start-20261104/local-validation.json",
+      "original_sha256": "a04135354969436767eb0d4b57d1ec70689a55c1a4ebbfb088d9c8b3baf44718",
+      "lf_sha256": "fe9570f3099d3791ad040c3f8355b54f29a21597c0ee50de4eb481fccaeede3c"
+    },
+    {
+      "file": "docs/evaluation/week8-start-20261104/regression-results.json",
+      "original_sha256": "1316708ab8b9ec4e0aa3424b83e649705e7441d416e0b2ba8f6059dab6d61717",
+      "lf_sha256": "f03d50a848a6be2079211d9af1043ee0efe00de4b32ac84dc47d7a7242ef53d9"
+    },
+    {
+      "file": "docs/evaluation/week8-start-20261104/render-verification.json",
+      "original_sha256": "db99086653675fad9ab79f953e3f89650bb4b6dfe964c43566a4c40d6f0aa3c1",
+      "lf_sha256": "a826b392e601ca961e77b84b6e0edb1d9e3627c3dc9c02d7571605e75c58b56a"
+    },
+    {
+      "file": "docs/evaluation/week8-start-20261104/summary.json",
+      "original_sha256": "cf2b370fb17db9c6672679777f908979f51867b0d8cc86027db1d0ab2e966406",
+      "lf_sha256": "c24f90d9d417cf84f2aaea521876a552ec6575e4632949203a888cd87d92f9ae"
+    },
+    {
+      "file": "docs/evaluation/week8-start-20261104/additional-regression.txt",
+      "original_sha256": "55b2637e1ebbc7b9fa44a32696548607352e8511a40ba4616efbf4ddead68621",
+      "lf_sha256": "4e2eb89438a62d0a737e29f5ebbb74575278f47142ecb51aa9bcc17c5db42524"
+    }
+  ]
+}

@@ -150,6 +150,7 @@ class ResultCacheTests(unittest.TestCase):
         source=Path(self.temp.name)/'video.mp4';source.write_bytes(b'a')
         with patch.object(cache,'verify_model',return_value={'revision':'one'}) as verify, \
              patch.object(cache,'version',return_value='1'), \
+             patch.object(cache, 'font_fingerprint', return_value={'policy': 'test', 'font_sha256': 'fixed'}), \
              patch.object(cache.subprocess,'run',return_value=type('Tool',(),{'stdout':'ffmpeg-test'})()):
             key,_=cache.fingerprint(source,None,'ffmpeg','ffprobe')
             with patch.object(cache, 'load_config', return_value=replace(cache.load_config(), keyword_weight=20)):

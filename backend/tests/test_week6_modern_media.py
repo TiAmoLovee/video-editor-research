@@ -10,6 +10,7 @@ from uuid import uuid4
 from zipfile import ZipFile
 
 from backend.tests import test_editing_service as fixtures
+from backend.tests.media_prerequisites import require_ass_marking
 from backend.tests.test_candidates import fixture
 from clipforge.decision.candidates import generate_candidates
 from clipforge.decision.scoring import score_candidates
@@ -21,6 +22,10 @@ FFPROBE = os.environ.get("FFPROBE") or shutil.which("ffprobe")
 
 @unittest.skipUnless(FFMPEG and FFPROBE, "set FFMPEG/FFPROBE for real fit-pad batch verification")
 class Week6ModernMediaTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        require_ass_marking(FFMPEG)
+
     setUp = fixtures.EditingServiceTests.setUp
 
     def test_fitted_batch_decodes_each_intended_frame_inside_unchanged_black_margins(self):

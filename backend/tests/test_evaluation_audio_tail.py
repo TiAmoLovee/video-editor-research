@@ -10,6 +10,7 @@ import sys
 import tempfile
 import unittest
 
+from backend.tests.media_prerequisites import require_ass_marking
 from clipforge.decision.candidates import content_hash
 from clipforge.decision.evaluation import probe, render_plan
 from clipforge.decision.reviewed import file_hash
@@ -25,6 +26,10 @@ FFMPEG,FFPROBE=executable('ffmpeg'),executable('ffprobe')
 
 @unittest.skipUnless(FFMPEG and FFPROBE,'Real audio-tail tests require local FFMPEG/FFPROBE executables; no downloads are attempted')
 class EvaluationAudioTailTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        require_ass_marking(FFMPEG)
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory(prefix='evaluation-audio-tail-')
         self.addCleanup(self.temp.cleanup)

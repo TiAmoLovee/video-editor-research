@@ -103,6 +103,7 @@ class AsrRuntimeTests(unittest.TestCase):
     def test_result_fingerprint_changes_for_device_and_compute_type(self):
         with patch.object(result_cache, 'verify_model', return_value={'revision': 'fixed'}), \
              patch.object(result_cache, 'version', return_value='fixed'), \
+             patch.object(result_cache, 'font_fingerprint', return_value={'policy': 'test', 'font_sha256': 'fixed'}), \
              patch.object(result_cache.subprocess, 'run', return_value=Object(stdout='fixed-tool')):
             cpu_key, cpu = result_cache.fingerprint(self.source, None, 'ffmpeg', 'ffprobe')
             with patch.dict(os.environ, {'CLIPFORGE_ASR_DEVICE': 'cuda'}):

@@ -12,6 +12,7 @@ import tempfile
 import time
 from uuid import UUID, uuid4
 
+from clipforge.editing.marking import font_fingerprint, validate_render_marking
 from clipforge.analysis.combine import combine_analysis
 from clipforge.analysis.model import model_directory, model_spec, verify_model
 from clipforge.analysis.runtime import runtime_settings, validate_cached_runtime
@@ -61,6 +62,7 @@ def fingerprint(source, options, ffmpeg, ffprobe):
     descriptor = {'format': FORMAT, 'source_sha256': sha256(source),
                   'source_suffix': Path(source).suffix.lower(), 'shot_options': options,
                   'model': identity, 'asr_runtime': runtime_settings(),
+                  'visible_marking': font_fingerprint(),
                   'language': os.environ.get('CLIPFORGE_ASR_LANGUAGE') or None,
                   'implementation': code, 'schema_sha256': sha256(schema),
                   'decision_schema_sha256': {name: sha256(schema.parent / name) for name in
@@ -199,12 +201,21 @@ def validate_bundle(folder, source, result, descriptor):
         actual_media = {n for n in result['files'] if re.fullmatch(r'repair_[a-f0-9]{64}\.mp4', n)}
         if expected_media != actual_media:
             raise ValueError('边界优化文件清单不匹配')
+        if 'visible_marking' in descriptor:
+            for entry in boundary['renders'].values():
+                validate_render_marking(entry.get('marking'), descriptor['visible_marking'], entry['frames'])
     elif 'boundary_optimization.json' in result['files']:
         raise ValueError('离线模式不能恢复模型边界结果')
     plan = read('clips/clip_plan.json')
     if (plan['clips'] != result['clips'] or plan['total_frames'] != result['total_frames']
             or result['clip_count'] != len(result['clips'])):
         raise ValueError('缓存切片清单不一致')
+    if 'visible_marking' in descriptor:
+        markings = plan.get('render_markings')
+        if not isinstance(markings, dict) or set(markings) != {clip['file'] for clip in plan['clips']}:
+            raise ValueError('缓存缺少逐片显式标识证明')
+        for clip in plan['clips']:
+            validate_render_marking(markings[clip['file']], descriptor['visible_marking'], clip['frame_count'])
 
 
 def restore(index, descriptor, source, destination):

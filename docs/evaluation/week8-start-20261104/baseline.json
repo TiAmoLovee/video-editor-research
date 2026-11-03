@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-04",
+  "repository": "TiAmoLovee/video-editor-research",
+  "upstream_baseline_commit": "6b507a6fb735d3dbd4f733fc42cae0e0d540ca57",
+  "upstream_pr": 19,
+  "upstream_pr_merged": true,
+  "baseline_file_verification": {
+    "method": "SHA1 of Git blob header plus exact source bytes against GitHub recursive tree",
+    "verified_source_files": 606,
+    "missing": 0,
+    "mismatches": 0
+  },
+  "local_snapshot_root_commit": "26bf0674cd7d49e6664aa2e5a94fc0dcd135db95",
+  "local_history_note": "Local root commit records a verified source snapshot; it does not reconstruct upstream Git history.",
+  "baseline_ci": {
+    "head_sha": "a03661812542f65e6df8a2ddc983048818d57a10",
+    "run_id": 41340891980,
+    "run_url": "https://github.com/TiAmoLovee/video-editor-research/actions/runs/41340891980",
+    "jobs": [
+      {"name": "Python 3.11 / windows-latest", "conclusion": "success"},
+      {"name": "Python 3.11 / ubuntu-latest", "conclusion": "success"},
+      {"name": "Frontend / ubuntu-latest", "conclusion": "success"},
+      {"name": "Frontend / windows-latest", "conclusion": "success"}
+    ],
+    "applies_to_week8_changes": false
+  },
+  "week8_docker_preflight": {
+    "compose_config_exit_code": 0,
+    "docker_server_reachable": false,
+    "reason": "dockerDesktopLinuxEngine named pipe unavailable",
+    "images_built_this_run": false,
+    "third_party_reproduction_completed": false
+  },
+  "deployment_changed": false,
+  "old_human_answers_or_media_changed": false,
+  "new_remote_ci_run": false,
+  "release_created": false
+}
