@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "status": "deployed_and_sampled_visual_review_passed",
+  "commit": "ca8a5abf74c7984ec94875e1afc9adea387f07d0",
+  "deployment_attempts": 1,
+  "export_driver_attempts": 1,
+  "automated_report_sha256": "c794e3da358828a1ee5499ec6153c4f0b495a4512b22ad02daf56ecb8e49509f",
+  "deployment_result_sha256": "d283fb45cf8c084a3bda1a0a484d243e8e07eef360bfa8b4dddeb0986e68c138",
+  "date": "2026-11-04",
+  "environment_scope": "existing development-machine Docker services; source images plus reviewed local compatibility recipe",
+  "deployment": {
+    "status": "completed",
+    "api_image": "sha256:974c6696958fef474a76536ceb2dd7524b81f692a94801ccf8827ae3670c49b6",
+    "worker_image": "sha256:423951661381ed274c77a375a7d9f9124311fccbe1bd51f5090cd809a9a02c83",
+    "redis_recreated": false,
+    "existing_task_records_unchanged": 23,
+    "existing_file_inventory_preserved": 432,
+    "file_inventory_scope": "paths, size, mtime and selected metadata-content hashes; not all historical media full-byte hashes"
+  },
+  "exports": {
+    "profile": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 30
+    },
+    "plain_frames": 1153,
+    "subtitled_frames": 1153,
+    "batch_frames": [
+      604,
+      549
+    ],
+    "metadata_check": "passed",
+    "decoded_audio": "AAC 48000Hz stereo, all four streams decode without errors and are non-silent",
+    "plain_and_subtitled_audio": "decoded PCM identical",
+    "selected_task_pre_existing_files_full_hash_unchanged": 41,
+    "media": [
+      {
+        "file": "plain.mp4",
+        "bytes": 39014215,
+        "sha256": "e44c394cf73fd1278be40564b3cbb31da76f3fd18712ea5512af0d2960e68780"
+      },
+      {
+        "file": "subtitled.mp4",
+        "bytes": 39164529,
+        "sha256": "d59c0398038c25f32bd8a1935cfbf3d7297c661c72e871483eaf53596c930d45"
+      },
+      {
+        "file": "clips.zip",
+        "bytes": 39095895,
+        "sha256": "4704b1f0bee5106645a29371e6b1fc4621379041503f0f58a0c45683a0ace243"
+      }
+    ]
+  },
+  "visible_label": {
+    "text": "AI辅助剪辑",
+    "reviewer": "Codex visual inspection",
+    "sample_count": 16,
+    "sampling": "first, middle, last and both sides of EDL cut",
+    "readable": true,
+    "clipped": false,
+    "overlaps_added_subtitles": false,
+    "claim_scope": "sampled visible text plus complete-timeline renderer receipts; not frame-by-frame glyph inspection of all production frames"
+  },
+  "mlt": {
+    "new_projects": 2,
+    "xml_structure": "passed",
+    "native_render_in_this_run": false,
+    "shotcut_round_trip": false,
+    "media_relinking_required_for_windows": true
+  },
+  "limitations": [
+    "MLT XML verified; no Shotcut GUI round trip or new native MLT media rendering in this deployment acceptance.",
+    "This is development-machine verification, not independent third-party reproduction.",
+    "Project licensing, actual-image SBOM audit, full isolated fault matrix and remaining week-eight deliverables remain separate work."
+  ],
+  "historical_failure_reports_preserved": true
+}

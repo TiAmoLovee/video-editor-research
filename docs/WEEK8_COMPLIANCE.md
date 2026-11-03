@@ -83,5 +83,5 @@ python -m unittest backend.tests.test_week8_compliance -v
 
 ## 当前后续工作
 
-1. 最新 Docker 镜像实际构建与运行、Shotcut GUI 对新无字幕工程的打开／另存，以及用户改变字体／滤镜后再导出均需独立复核。
+1. 合并后水印镜像已在现有本机服务完成部署与实际MP4/ZIP验收，见 [本机验收](evaluation/week8-local-deployment-20261104/README.md)。修正后的默认镜像构建、完整容器故障矩阵、Shotcut GUI 对新工程的打开／另存／再导出仍需独立复核。
 2. 结合许可证清单、素材授权登记、技术报告和干净机复现，逐项收敛第八周交付。尚无证据的项目保持未完成，不以字段存在代替验证。

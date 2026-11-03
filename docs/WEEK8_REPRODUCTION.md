@@ -2,7 +2,11 @@
 
 2026-11-04。状态：尚未执行第三方干净机复现。此模板不代表测试通过；不得预填实测时长、运行者或结果。执行者使用 README 的默认配置，自备有权使用、含清晰讲话的 30–90 秒视频。
 
-本轮开发机预检：`docker compose config --quiet` 退出码 0；`docker version` 无法连接 `dockerDesktopLinuxEngine` 管道，当前 Linux 引擎不可用。因此本轮未构建或启动容器，也没有第三方 30 分钟数据。静态配置有效不能替代实际部署。
+第八周启动时的开发机预检：`docker compose config --quiet` 退出码 0；当时 `docker version` 无法连接 `dockerDesktopLinuxEngine` 管道，该次预检未构建或启动容器。静态配置有效不能替代实际部署；也没有第三方 30 分钟数据。
+
+2026-11-04 默认镜像配方收敛：API 补齐 `config/scoring` 与 `prompts`，与 worker 的默认资源路径一致；两镜像使用 Debian HTTPS 软件源、APT 3 次重试及 30 秒传输超时，缺少 CA/预期源或索引更新不完整即失败。源准备采用本机部署临时配方已使用的策略。本次源码修正仅完成静态和离线测试：在临时目录执行 Dockerfile 内实际源准备代码，并只按 API 的 COPY 清单加载默认评分配置和 prompt，没有调用模型。**修正后的默认 Dockerfile 尚未重新构建**，已有临时配方的构建结果不能替代它的镜像验收；后续需记录默认构建的镜像 ID 和运行结果。
+
+2026-11-04 本机部署已完成，随后实际无字幕／有字幕MP4及逐片ZIP导出和16帧目视水印验收通过，历史任务与文件保留。该结果属于现有开发机与兼容配方，详细范围见 [本机验收](evaluation/week8-local-deployment-20261104/README.md)，不替代下列第三方记录。
 
 ## 环境与计时
 
