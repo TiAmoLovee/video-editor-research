@@ -1,0 +1,36 @@
+{
+  "record_kind": "week8_visible_marking_local_regression",
+  "date_local": "2026-11-04",
+  "scope": "initial full run followed by targeted fixes; not a claim that the full local suite passed",
+  "full_run": {
+    "command": "python -m unittest discover -s backend/tests -p test_*.py -v",
+    "tests_run": 1168,
+    "passed": 1158,
+    "failures": 2,
+    "errors": 7,
+    "skipped": 1,
+    "duration_seconds": 289.863,
+    "source_changed_during_run": false,
+    "raw_log_sha256": "4c8cd96df28656e911e9db3e42385ff4714e212ed26589afc90abc84e0c8d4d7",
+    "errors_reason": "All seven errors were acceptance atomic-publication tests denied os.link by the Windows execution sandbox (WinError 5); product code was not replaced to conceal this.",
+    "skip_reason": "Windows read-share handles prevented the intentional concurrent source mutation in test_manifest.test_file_changed_during_probe_is_rejected."
+  },
+  "fixes_after_full_run": [
+    {
+      "finding": "New MLT brand policy and font fields were omitted from the public history whitelist.",
+      "resolution": "Return the already-validated brand_policy_version and brand_font_name fields."
+    },
+    {
+      "finding": "Shot-options unit test expected bare ffprobe while inheriting the caller's explicit tool path.",
+      "resolution": "Isolate FFPROBE for that mocked test; preserve the exact detector-argument assertion."
+    }
+  ],
+  "history_route_and_shot_retest": {
+    "tests_run": 19,
+    "passed": 19,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "remaining_validation": "A normal Windows/Linux CI environment must validate atomic hard-link publication; CI results are recorded separately."
+}

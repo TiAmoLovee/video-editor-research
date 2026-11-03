@@ -30,7 +30,7 @@
 
 沿用第二周的 `FFMPEG`、`FFPROBE` 及 `media_tool()` 配置优先级。烧录所用 FFmpeg 必须支持 `ass` / libass，字体必须覆盖所需中文字符。额外配置 `SUBTITLE_FONT_FILE` 和 `SUBTITLE_FONT_NAME`，CLI 显式参数优先。缺工具、缺字体、缺字、字体来源不匹配均停止发布，不能静默生成无字幕成片。
 
-API 镜像安装 `fonts-noto-cjk`，配置 `/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc` 与 `Noto Sans CJK SC`；本地 Windows 验证显式使用电脑现有字体，不把个人路径写进产品代码，也不向仓库上传 Windows 字体。原生代码不会自动读取 `.env` 文件。
+API 与 worker 镜像均安装 `fonts-noto-cjk`，配置 `/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc` 与 `Noto Sans CJK SC`；本地 Windows 验证显式使用电脑现有字体，不把个人路径写进产品代码，也不向仓库上传 Windows 字体。原生代码不会自动读取 `.env` 文件。第八周起，所有新视频导出均需该字体与 libass 配置以显示“AI辅助剪辑”，包括未选择字幕的导出；见 [完整说明](WEEK8_VISIBLE_MARKING.md)。
 
 字幕渲染在系统临时目录内使用固定的相对文件名，完成核验后持锁复制发布。实际对照证实旧 Windows FFmpeg/libass 无法读取超长工程目录下的 ASS；短临时路径已修复此问题。读取字体或 ASS 的失败 warning 同样拒绝发布，不允许依赖同名字体回退产生表面成功。内部日志仅保留有界诊断尾部，API 不暴露本机路径和工具输出。
 

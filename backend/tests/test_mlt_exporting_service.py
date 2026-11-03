@@ -41,11 +41,14 @@ class MltExportingServiceTests(unittest.TestCase):
         subtitle = subtitling.create_task_subtitles(self.task_id, self.revision_id, font_name="Microsoft YaHei")
         def legacy_export(project, source_root, **options):
             options['text_style_version'] = 1
+            options['_brand_policy_version'] = 0
             return export_mlt(project, source_root, **options)
         with patch.object(mlt_exporting, 'export_mlt', side_effect=legacy_export):
             record = self.create(subtitle['subtitle_id'])
         record['format_version'] = 1
         record.pop('text_style_version')
+        record.pop('brand_policy_version')
+        record.pop('brand_font_name')
         (self.target(record) / 'mlt-export.json').write_text(json.dumps(record), encoding='utf-8')
         return record
 
@@ -57,13 +60,54 @@ class MltExportingServiceTests(unittest.TestCase):
         self.assertEqual(mlt_exporting.load_task_mlt_export(
             self.task_id, self.revision_id, record["export_id"]), {"export": record})
         self.assertEqual(set(record["files"]), mlt_exporting.MLT_FILES)
-        self.assertEqual((record['format_version'], record['text_style_version']), (2, 2))
+        self.assertEqual((record['format_version'], record['text_style_version']), (3, 2))
+        self.assertEqual(record['brand_policy_version'], 1)
         self.assertEqual((self.target(record) / "source.edl.json").read_bytes(), original["project.edl.json"])
         self.assertEqual(record["edl_file_sha256"], self.revision["files"]["project.edl.json"])
         self.assertTrue(all((self.revision_folder / n).read_bytes() == value for n, value in original.items()))
         self.assertEqual(jobs.get_job(self.task_id), before)
         self.assertEqual((self.folder / "normalized.mp4").read_bytes(), self.media)
         self.assertEqual((self.folder / "result.zip").read_bytes(), b"old ZIP unchanged")
+
+    def test_genuine_legacy_plain_format_two_remains_readable_and_unmodified(self):
+        def legacy_export(project, source_root, **options):
+            options['_brand_policy_version'] = 0
+            return export_mlt(project, source_root, **options)
+        with patch.object(mlt_exporting, 'export_mlt', side_effect=legacy_export):
+            record = self.create()
+        record.update(format_version=2)
+        record.pop('brand_policy_version')
+        record.pop('brand_font_name')
+        folder = self.target(record)
+        (folder / 'mlt-export.json').write_text(json.dumps(record), encoding='utf-8')
+        original = {p.name: p.read_bytes() for p in folder.iterdir()}
+        self.assertFalse(ET.parse(folder / 'project.mlt').getroot().findall('tractor/filter'))
+        with patch.object(mlt_exporting, 'export_mlt', side_effect=export_mlt):
+            self.assertEqual(mlt_exporting.load_task_mlt_export(
+                self.task_id, self.revision_id, record['export_id'])['export'], record)
+            with mlt_exporting.open_mlt_export_file(self.task_id, self.revision_id,
+                                                   record['export_id'], 'project.mlt') as stream:
+                self.assertEqual(stream.read(), original['project.mlt'])
+        self.assertEqual({p.name: p.read_bytes() for p in folder.iterdir()}, original)
+
+    def test_plain_brand_font_is_frozen_and_rehashed_label_removal_is_rejected(self):
+        with patch.object(mlt_exporting, 'export_mlt', side_effect=export_mlt):
+            with patch.dict(os.environ, {'SUBTITLE_FONT_NAME': 'Microsoft YaHei'}):
+                record = self.create()
+            with patch.dict(os.environ, {'SUBTITLE_FONT_NAME': 'Different current font'}):
+                self.assertEqual(mlt_exporting.load_task_mlt_export(
+                    self.task_id, self.revision_id, record['export_id'])['export'], record)
+            self.assertEqual(record['brand_font_name'], 'Microsoft YaHei')
+            folder = self.target(record)
+            xml = folder / 'project.mlt'
+            root = ET.parse(xml).getroot()
+            tractor = root.find('tractor')
+            tractor.remove(tractor.find("filter[@id='clipforge_brand']"))
+            xml.write_bytes(ET.tostring(root, encoding='utf-8'))
+            record['files']['project.mlt'] = mlt_exporting._digest(xml)
+            (folder / 'mlt-export.json').write_text(json.dumps(record), encoding='utf-8')
+            with self.assertRaises(editing.ProjectError):
+                mlt_exporting.load_task_mlt_export(self.task_id, self.revision_id, record['export_id'])
 
     def test_subtitle_export_uses_saved_plan_font_and_exact_exports(self):
         subtitle = subtitling.create_task_subtitles(self.task_id, self.revision_id, font_name="Microsoft YaHei")
@@ -90,7 +134,7 @@ class MltExportingServiceTests(unittest.TestCase):
         original = {p.name: p.read_bytes() for p in self.target(legacy).iterdir()}
         with patch.object(mlt_exporting, 'export_mlt', side_effect=export_mlt):
             current = self.create(legacy['subtitle_id'])
-            self.assertEqual((current['format_version'], current['text_style_version']), (2, 2))
+            self.assertEqual((current['format_version'], current['text_style_version']), (3, 2))
             for record, style in ((legacy, 'richText'), (current, 'dynamicText')):
                 saved = mlt_exporting.load_task_mlt_export(self.task_id, self.revision_id, record['export_id'])
                 self.assertEqual(saved['export'], record)
@@ -128,9 +172,11 @@ class MltExportingServiceTests(unittest.TestCase):
     def test_unknown_ambiguous_and_boolean_export_versions_are_rejected(self):
         record = self.create()
         path = self.target(record) / 'mlt-export.json'
-        changes = [{'format_version': value} for value in (0, 3, True, 2.0, '2')]
+        changes = [{'format_version': value} for value in (0, 4, True, 2.0, '2')]
         changes += [{'text_style_version': value} for value in (None, 1, 3, True, 2.0, '2')]
         changes += [{'format_version': 1, 'text_style_version': value} for value in (1, 2, None)]
+        changes += [{'brand_policy_version': value} for value in (0, 2, True, 1.0, '1')]
+        changes += [{'brand_font_name': value} for value in (None, '', 'Bad,Font')]
         for change in changes:
             path.write_text(json.dumps({**record, **change}), encoding='utf-8')
             with self.subTest(change=change), self.assertRaises(editing.ProjectError) as caught:

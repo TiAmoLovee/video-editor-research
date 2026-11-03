@@ -110,15 +110,38 @@ class RenderHarness:
         for stream in videos:
             stream.update(self.fact_changes.get(stream["codec_type"], {}))
         return json.dumps({"streams": videos, "format": {"format_name": "mov,mp4", "tags": {
-            "comment": "ClipForge EDL renderer 0.1.0", "editing": "ClipForge"}}})
+            "comment": "ClipForge EDL renderer 0.1.0", "editing": "ClipForge",
+            "clipforge_editing": "AI-assisted-editing", "clipforge_tool": "ClipForge",
+            "clipforge_marking_version": "1"}}})
+
+    def subtitle_tool(self, command, timeout, *, cwd=None):
+        from backend.tests.test_subtitle_render import good_log
+        if "-filters" in command:
+            return " ... ass V->V Render ASS subtitles\n", ""
+        translated = list(command)
+        if cwd is not None:
+            position = translated.index("-filter_complex_script") + 1
+            translated[position] = str(Path(cwd) / translated[position])
+            translated[-1] = str(Path(cwd) / translated[-1])
+        return self.tool(translated, timeout), good_log()
 
     def install(self, stack):
+        # Generic render tests isolate native font/rendering; dedicated subtitle
+        # and marking tests exercise the actual font validation and libass path.
+        from backend.tests.test_subtitle_render import font_fixture
+        font = self.root / "harness-marking-font.ttf"
+        font.write_bytes(font_fixture())
+        def watermark_state(context, edl, font_file, font_name, executable, deadline):
+            return _real_watermark_state(context, edl, str(font), "TestFont", executable, deadline)
+        stack.enter_context(patch.object(render, "_watermark_state", side_effect=watermark_state))
+        stack.enter_context(patch.object(render, "_subtitle_tool", side_effect=self.subtitle_tool))
         stack.enter_context(patch.object(render, "open_media_source", side_effect=self.open_source))
         stack.enter_context(patch.object(render, "build_media_manifest", side_effect=self.manifest))
         stack.enter_context(patch.object(render, "_probe_text", side_effect=self.tool))
 
 
 _real_open_source = render.open_media_source
+_real_watermark_state = render._watermark_state
 
 
 class RenderTests(unittest.TestCase):
@@ -163,7 +186,7 @@ class RenderTests(unittest.TestCase):
             self.assertNotIn("-frames:v", command)
             self.assertNotIn("-shortest", command)
             self.assertIn("editing=ClipForge", command)
-            self.assertEqual(command[0], "custom folder/ffmpeg.exe")
+            self.assertEqual(command[0], str(Path("custom folder/ffmpeg.exe").resolve()))
             self.assertEqual(harness.commands[1][0][0], "custom folder/ffprobe.exe")
             self.assertTrue(result["checks"]["output_sha256_match"])
 

@@ -10,6 +10,8 @@ import tempfile
 from pathlib import Path
 
 from clipforge.media.probe import normalize_metadata, probe_video
+from clipforge.compliance import metadata_arguments, require_metadata
+from clipforge.editing.marking import watermark_session
 
 
 FPS = 30
@@ -91,7 +93,7 @@ def split_video(video_path: str, output_dir: str, ffmpeg: str | None = None,
 
     frames = read_frame_count(source, video["stream_index"], ffprobe, timeout)
     plan = {"plan_version": "1.0", "source_file": source.name, "fps": FPS,
-            "total_frames": frames, "clips": build_plan(frames)}
+            "total_frames": frames, "clips": build_plan(frames), "render_markings": {}}
     target.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix=".clipforge-split-", dir=target.parent) as temp:
         staged = Path(temp) / "result"
@@ -100,18 +102,26 @@ def split_video(video_path: str, output_dir: str, ffmpeg: str | None = None,
         for number, clip in enumerate(plan["clips"], start=1):
             print(f"正在切片 {number}/{len(plan['clips'])}：{clip['file']}", file=sys.stderr)
             output = staged / clip["file"]
-            command = [ffmpeg, "-hide_banner", "-loglevel", "error", "-nostats",
-                       "-nostdin", "-n", "-ss", f"{clip['start_frame'] / FPS:.9f}",
-                       "-i", str(source), "-t", f"{clip['frame_count'] / FPS:.9f}",
-                       "-map", f"0:{video['stream_index']}"]
-            command += ["-map", f"0:{audio['stream_index']}"] if audio else ["-an"]
-            command += ["-c:v", "libx264",
-                        "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p",
-                        "-fps_mode", "cfr"]
-            if audio:
-                command += ["-c:a", "aac", "-b:a", "128k"]
-            command += ["-movflags", "+faststart", str(output)]
-            run_tool(command, timeout)
+            profile = {"width": video["width"], "height": video["height"], "fps": {"num": FPS, "den": 1}}
+            with watermark_session(profile=profile, duration_frames=clip["frame_count"],
+                                   ffmpeg=ffmpeg, timeout=timeout) as mark:
+                command = [mark.ffmpeg, "-hide_banner", "-loglevel", "error", "-nostats",
+                           "-nostdin", "-n", "-ss", f"{clip['start_frame'] / FPS:.9f}",
+                           "-i", str(source), "-t", f"{clip['frame_count'] / FPS:.9f}",
+                           "-map", f"0:{video['stream_index']}"]
+                command += ["-map", f"0:{audio['stream_index']}"] if audio else ["-an"]
+                command += ["-vf", mark.filter, "-c:v", "libx264",
+                            "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p",
+                            "-r", str(FPS), "-fps_mode", "cfr"]
+                if audio:
+                    command += ["-c:a", "aac", "-b:a", "128k"]
+                command += ["-map_metadata", "-1", *metadata_arguments(),
+                            "-movflags", "+faststart+use_metadata_tags", str(output)]
+                mark.run(command, timeout=timeout)
+                tags = json.loads(run_tool([ffprobe, "-v", "error", "-show_entries", "format_tags",
+                                            "-of", "json", str(output)], timeout))
+                metadata_check = require_metadata(tags.get("format", {}).get("tags"))
+                plan["render_markings"][clip["file"]] = {"visible": mark.report, "metadata": metadata_check}
             result = normalize_metadata(probe_video(str(output), ffprobe), str(output))
             if result["video"]["codec"] != "h264" or result["video"]["avg_frame_rate"] != "30/1":
                 raise ValueError(f"{clip['file']} 的视频参数异常。")

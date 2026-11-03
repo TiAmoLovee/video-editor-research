@@ -1,5 +1,7 @@
 # ClipForge 智剪工坊
 
+**第八周更新（2026-11-04，工作分支）：** 新普通／字幕成片、ZIP 每片、自动切片和优化预览均加入全时段“AI辅助剪辑”；新 MLT 工程包含同文滤镜。真实解码验收、字体配置与历史兼容范围见 [显式水印记录](docs/WEEK8_VISIBLE_MARKING.md)。第七周没有待补人工问卷；最终许可审计、容器与第三方干净机复现、报告／演示及 Release 仍按 [第八周计划](docs/WEEK8_PLAN.md)推进。
+
 **第七周更新（2026-11-02）：** 30 源／141 段双人人评及后续固定样本精度、词时间、字幕同步、CPU／CUDA 性能补测均已归档。新三段 CER 30.92%；新增字幕同步有 3 个明确超差起点，CPU／CUDA 冷路径 RTF 2.686／2.736 均未达参考。所有失败和范围保留。[人评报告](docs/WEEK7_RESULTS.md) · [补测结果与限制](docs/WEEK7_VALIDATION.md) · [最新周报](docs/WEEKLY.md)
 
 
@@ -15,17 +17,17 @@
 
 **第五周本地交付：[功能与验收核对](docs/WEEK5_DELIVERY.md) · [统一 EDL 与第二周衔接](docs/WEEK2_TO_WEEK5.md) · [网页导出与历史恢复](docs/WEB_EXPORT.md)**。已打通明确选择候选 → 保存 EDL → 精确 MP4／可继续编辑的 MLT，包含固定中心 9:16、SRT／ASS 和字幕烧录。真实网页导出及播放跳转、五例 Shotcut 实际打开另存与整数切点回读均通过。新 MLT 字幕将文字与样式分开保存，实际中文全文替换、两行编辑、另存及原生渲染通过；旧版导出按保存的策略继续核验。隔离 Linux 的合成 EDL 导出及 HTTP 范围读取已通过，用户已确认三处人声字幕无明显同步问题，当时尚未量化 ≤0.3 秒；后续有限样本数字与超差见 [第七周补测](docs/WEEK7_VALIDATION.md)。Test3 的固定中心取景会丢失说话人，建议保留横屏；尺寸和帧序通过不代表取景合格。第五周 PR #8 已合并，2026-10-13 核对本机 8200 服务可读取原任务及新版导出工作台；这些导出检查不等于第四周叙事质量已经达标。
 
-**第四周阶段性交付：[当前状态与遗留项](docs/WEEK4_PLAN.md) · [历史人工评测](docs/HUMAN_EVALUATION.md) · [候选工作台](docs/WEEK4_WORKBENCH.md)**。基础候选流程已合并。本分支继续接入可选的自动首尾优化：新任务会使用规则基线筛选候选，再选择词级边界、生成可播放和下载的优化视频。New4 新素材人工评测为 **17/19，89.47%**，达到该单批次的 85% 目标；[完整结果及两个结尾问题](docs/evaluation/new4-20261009/result.json)均保留。此结论不代表所有视频都达到 85%；这次新增接入尚未部署或推送。
+**第四周阶段性交付：[历史计划与遗留项](docs/WEEK4_PLAN.md) · [历史人工评测](docs/HUMAN_EVALUATION.md) · [候选工作台](docs/WEEK4_WORKBENCH.md)**。候选流程及可选自动首尾优化的源码已纳入整合版本。明确启用优化后，系统基于规则候选选择词级边界并生成优化预览；默认保持关闭。New4 当时单批次人工评测为 **17/19，89.47%**，[结果及两个结尾问题](docs/evaluation/new4-20261009/result.json)保留为历史证据。它不代表当前所有素材达到 85%；最新默认规则质量以第七周报告为准，源码交付与作者本机部署状态分别记录。
 
 边界优化默认关闭。Docker 使用 `compose.yaml`、`compose.asr-small.yaml`、`compose.boundary.yaml` 三个配置，最后一个会选择已验证的规则基线并读取 `CLIPFORGE_BOUNDARY_CONFIG_FILE` 和私下导出的 `CLIPFORGE_LLM_API_KEY`。本机执行需要设置 `CLIPFORGE_BOUNDARY_REPAIR=1` 与 `CLIPFORGE_BOUNDARY_CONFIG`。配置样例为 `config/boundaries/sentence-v1.json`；继续已有实验时，在私有 `.local.json` 中将 `initial_used_tokens` 设置为已用量（本次为 91,987），而非重新获得一份额度。用量账本保存在任务数据目录的 `boundary-budget.sqlite3`，跨任务预留、结算，未知用量会停止后续调用；失败不重试，整批返回原候选。缓存命中不再调用模型。
 
 优化视频与原评分、人工验收分别保存，模型选择不会自动变为人工通过。页面的“边界优化试听”可查看新范围；S02 和 S14 的既有失败记录不会被本次接入改写。源视频本身不会发送给模型，调用包含完整转写和候选边界。
 
-ClipForge 当前流程：**网页上传 → 后台归一化 → 镜头检测 → 语音活动检测 → 词级转写与分析校验 → 每段最多 30 秒切片 → 查询阶段进度 → 预览与下载**。第三周新增 PySceneDetect 镜头区间、WebRTC VAD 语音区间，词级转写、中文分句与 analysis.json 汇总，以及 shots.json / vad.json / asr.json 下载；成品仍采用固定帧数切片，镜头结果暂不改变选段。
+ClipForge 当前主流程：**网页上传 → 归一化、镜头与语音分析 → 候选生成及评分 → 转写联动与人工复核 → 保存和编辑 EDL → 按保存版本导出 MP4、MLT 或逐片 ZIP**。字幕可单独保存并用于成片导出；SRT／ASS 和分析文件可下载。早期的每段最多 30 秒固定切片保留为另一种结果，不代表候选工作台及 EDL 导出的选段方式。模型评分与边界优化按明确配置启用，默认流程使用本地 ASR 和规则评分。
 
 **第三周实现：[镜头检测](docs/SHOT_DETECTION.md) · [语音活动检测](docs/VAD_DETECTION.md) · [词级转写与分析汇总](docs/ASR_ANALYSIS.md)**。早期实现及当时验收范围保留在原文档；当前配置的有限样本识别、词时间、镜头及性能结果见 [第七周补测](docs/WEEK7_VALIDATION.md)。
 
-根据老师的工程反馈，本分支将单文件前端迁移为 **React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5**，后端、测试和部署文件分目录，并统一 FFmpeg 环境配置。第二周原有验收记录是历史证据，迁移后的验证范围单独记录。
+根据老师的工程反馈，项目此前已将单文件前端迁移为 **React 18 + TypeScript 5 + Vite + Zustand 4 + Ant Design 5**，后端、测试和部署文件分目录，并统一 FFmpeg 环境配置。第二周原有验收记录是历史证据，迁移后的验证范围单独记录。
 
 **老师查看入口：[工程整改说明](docs/ENGINEERING_REFACTOR.md)** · [第二周交付摘要](docs/WEEK2_DELIVERY.md) · [周报](docs/WEEKLY.md)
 
@@ -88,7 +90,7 @@ docker compose ps
 
 API 镜像先使用 Node.js 24 构建 React 页面，再把静态产物复制到 Python 镜像。worker 自带 FFmpeg。只用 Docker 运行时无需在宿主机额外安装 Node、Python 或 FFmpeg。首次构建需要网络，可能需要配置 Docker Desktop 代理。
 
-**从旧版迁移时，等待正在处理的任务完成，再同时重新构建 API 和 worker**。本次 Python 模块路径发生变化，不能只更新页面。服务名、8200 端口、任务 API、Celery 任务名、SQLite 表结构及数据卷名称保持不变。不要删除数据卷；历史任务仍由现有数据卷读取，容器迁移后的实际回归需按整改说明执行。
+**从早期单文件版本迁移时，等待正在处理的任务完成，再同时重新构建 API 和 worker**。历史工程重构曾改变 Python 模块路径，因此从该旧版迁移不能只更新页面。服务名、8200 端口、任务 API、Celery 任务名、SQLite 表结构及数据卷名称保持不变。不要删除数据卷；历史任务仍由现有数据卷读取，容器迁移后的实际回归需按整改说明执行。
 
 以后可用 `docker compose up -d` 启动，用 `docker compose stop` 停止。处理任务时保持 Docker 运行和电脑唤醒。`docker compose down -v` 会删除数据卷，不用于普通关闭。
 

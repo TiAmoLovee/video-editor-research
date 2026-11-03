@@ -1,6 +1,7 @@
 """Task-local, explicit import of human-approved media; no model calls or cache writes."""
 import argparse
 from copy import deepcopy
+import hashlib
 import json
 import math
 import os
@@ -191,7 +192,73 @@ def load_accepted(folder, task_id, analysis, candidates):
     return items
 
 
+def _require_current_marking(acceptance):
+    """Require renderer evidence bound by the reviewed manifest and media hash.
+
+    This is a consistency check on a trusted local renderer's evidence, not
+    pixel recognition or an authenticity certificate for arbitrary supplied
+    JSON. Metadata strings or a self-declared 'marked' flag are insufficient.
+    Historical readers deliberately do not impose the new-import policy.
+    """
+    from clipforge.compliance import VISIBLE_LABEL, require_metadata
+    from clipforge.editing.marking import POLICY, marking_layout, watermark_ass
+
+    try:
+        if acceptance['version'] != 'human-evaluation-acceptance-v1':
+            raise ValueError('legacy acceptance has no current render evidence')
+        manifest = acceptance['evaluation']['manifest']
+        sample = next(s for s in manifest['samples'] if s['id'] == acceptance['sample_id'])
+        render = manifest['renders'][sample['id']]
+        marking = render['marking']
+        visible = marking['visible']
+        frames = sample['end_frame_exclusive'] - sample['start_frame']
+        fps = visible['fps']
+        if (render['sha256'] != acceptance['selected_sha256']
+                or visible['policy'] != POLICY or visible['text'] != VISIBLE_LABEL
+                or visible['all_output_frames'] is not True
+                or visible['verified_font_selection'] is not True
+                or type(visible['duration_frames']) is not int or visible['duration_frames'] != frames
+                or fps != {'num': 30, 'den': 1}
+                or any(type(fps[key]) is not int for key in ('num', 'den'))):
+            raise ValueError('marking policy or full-frame evidence mismatch')
+        layout = visible['layout']
+        if (not isinstance(layout, dict) or any(type(v) is not int for v in layout.values())
+                or layout != marking_layout(layout['width'], layout['height'])):
+            raise ValueError('marking layout differs from the current policy')
+        family = visible['font_name']
+        if (not isinstance(family, str) or family != family.strip()
+                or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9 ._-]{0,99}', family)
+                or any(not isinstance(visible[key], str)
+                       or not re.fullmatch('[a-f0-9]{64}', visible[key])
+                       for key in ('font_sha256', 'ass_sha256'))):
+            raise ValueError('marking font or ASS identity is missing')
+        faces, names = visible['face_indices'], visible['postscript_names']
+        if (not isinstance(faces, list) or not faces
+                or any(type(face) is not int or face < 0 for face in faces)
+                or faces != sorted(set(faces))
+                or not isinstance(names, list) or not names
+                or any(not isinstance(name, str) or not re.fullmatch(r'[A-Za-z0-9_.-]{1,127}', name)
+                       for name in names)
+                or names != sorted(set(names))
+                or type(visible['glyph_count']) is not int or visible['glyph_count'] != len(set(VISIBLE_LABEL))):
+            raise ValueError('marking verified font selection is incomplete')
+        profile = {'width': layout['width'], 'height': layout['height'], 'fps': fps}
+        ass = watermark_ass(profile, frames, family)
+        if hashlib.sha256(ass.encode('utf-8')).hexdigest() != visible['ass_sha256']:
+            raise ValueError('marking ASS does not cover the current label and full timeline')
+        if marking['metadata'] != require_metadata(marking['metadata']['observed']):
+            raise ValueError('marking metadata evidence is inconsistent')
+    except (KeyError, TypeError, ValueError, StopIteration, OverflowError) as error:
+        raise ValueError('新增验收导入缺少当前显式标识渲染证明，请通过 EDL 新导出，'
+                         '或用当前评测渲染器生成并重新评价；历史验收记录仍可原样读取。') from error
+
+
 def install(folder, task_id, analysis, candidates, acceptance, video, reviewed=None):
+    """Publish only currently marked new imports; keep exact historical replays.
+
+    Historical acceptance records describe the exact original media and are
+    never rewritten or silently relabeled as satisfying today's export policy.
+    """
     entry = checked_entry(task_id, analysis, candidates, acceptance, reviewed)
     if file_hash(video) != entry['id']:
         raise ValueError('实际视频与人工试听文件不一致')
@@ -199,16 +266,21 @@ def install(folder, task_id, analysis, candidates, acceptance, video, reviewed=N
     directory = root/'accepted'
     if not directory.resolve().is_relative_to(root):
         raise ValueError('验收目录越界')
-    directory.mkdir(exist_ok=True)
     payload = {'acceptance': acceptance, 'reviewed': reviewed}
     record, media = directory/f'{entry["id"]}.json', directory/f'{entry["id"]}.mp4'
     if any(not p.resolve().is_relative_to(root) for p in (record, media)):
         raise ValueError('验收文件越界')
-    if record.exists() and read(record) != payload:
-        raise ValueError('已存在不同验收记录，拒绝覆盖')
+    if record.exists():
+        if read(record) != payload:
+            raise ValueError('已存在不同验收记录，拒绝覆盖')
+        if not media.is_file() or file_hash(media) != entry['id']:
+            raise ValueError('已存在验收媒体缺失或发生变化，拒绝重新发布')
+        return entry
     if media.exists():
         if file_hash(media) != entry['id']:
             raise ValueError('已存在不同试听文件，拒绝覆盖')
+    _require_current_marking(acceptance)
+    directory.mkdir(exist_ok=True)
     # Readers only enumerate final JSON records. Stage complete files on the same
     # filesystem, then publish media first and the record last without overwriting.
     # A failed record publication can leave valid media, which a retry may reuse.

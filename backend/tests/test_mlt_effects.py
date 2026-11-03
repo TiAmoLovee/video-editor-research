@@ -97,7 +97,8 @@ class MLTEffectTests(unittest.TestCase):
     def test_legacy_text_style_keeps_original_rich_text_and_single_line_box(self):
         project, analyses, plan = self.fixture()
         before = deepcopy((project, analyses, plan))
-        root = self.xml(project, subtitle_plan=plan, analyses=analyses, text_style_version=1)
+        root = self.xml(project, subtitle_plan=plan, analyses=analyses, text_style_version=1,
+                        _brand_policy_version=0)
         effect = root.find("tractor/filter[@id='subtitle1']")
         original_html = ('<html><head><meta name="qrichtext" content="1" /></head><body>'
                          '<p align="center" style="margin:0px;line-height:12px;">'
@@ -143,7 +144,9 @@ class MLTEffectTests(unittest.TestCase):
         self.assertEqual(subtitle_layout(portrait_plan)['brand_size'], 6)
         root = self.xml(portrait, subtitle_plan=portrait_plan, analyses=analyses)
         self.assertEqual((props(root.findall('tractor/filter')[-1])['size'],
-                          props(root.findall('tractor/filter')[-1])['shotcut:pointSize']), ('4', '3'))
+                          props(root.findall('tractor/filter')[-1])['shotcut:pointSize']), ('8', '6'))
+        legacy = self.xml(portrait, subtitle_plan=portrait_plan, analyses=analyses, _brand_policy_version=0)
+        self.assertEqual(props(legacy.findall('tractor/filter')[-1])['size'], '4')
 
     def test_font_size_below_four_pixels_fails_without_changing_plan(self):
         source = source_fixture(audio=False)
@@ -153,7 +156,9 @@ class MLTEffectTests(unittest.TestCase):
         self.assertEqual(subtitle_layout(plan)['brand_size'], 3)
         before = deepcopy((project, analyses, plan))
         with self.assertRaisesRegex(ValueError, 'at least 4 pixels'):
-            self.xml(project, subtitle_plan=plan, analyses=analyses)
+            self.xml(project, subtitle_plan=plan, analyses=analyses, _brand_policy_version=0)
+        current = self.xml(project, subtitle_plan=plan, analyses=analyses)
+        self.assertEqual(props(current.findall('tractor/filter')[-1])['size'], '8')
         self.assertEqual((project, analyses, plan), before)
 
     def test_simple_text_utf16_limit_counts_newline_and_astral_characters(self):

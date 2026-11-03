@@ -1,0 +1,70 @@
+{
+  "status": "pass",
+  "rejected_before_encoding": [
+    {
+      "width": 14,
+      "height": 180,
+      "error": "video is too small to contain the visible editing label"
+    },
+    {
+      "width": 160,
+      "height": 2,
+      "error": "video is too small to contain the complete visible editing label"
+    },
+    {
+      "width": 160,
+      "height": 16,
+      "error": "video is too small to contain the complete visible editing label"
+    }
+  ],
+  "supported": {
+    "width": 160,
+    "height": 48,
+    "frames": 1,
+    "visible_pixels_above_20": 128,
+    "maximum_gray": 180,
+    "font_name": "Noto Sans CJK SC",
+    "output_sha256": "8f2ac6bfde724b1917abfa1c5deb994d61f2be82464a041cdf51180d59ca4c0a",
+    "marking": {
+      "ass_sha256": "6718f9c2d414a2ad0cb81d3365cc3b7c1021242cf59d8a1994f0b7af03276310",
+      "font_sha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b",
+      "font_name": "Noto Sans CJK SC",
+      "face_indices": [
+        0
+      ],
+      "postscript_names": [
+        "NotoSansCJKsc-Regular"
+      ],
+      "glyph_count": 6,
+      "policy": "clipforge-visible-mark-v1",
+      "text": "AI辅助剪辑",
+      "duration_frames": 1,
+      "fps": {
+        "num": 30,
+        "den": 1
+      },
+      "layout": {
+        "width": 160,
+        "height": 48,
+        "margin_x": 8,
+        "margin_y": 3,
+        "brand_size": 8,
+        "available_width": 140
+      },
+      "all_output_frames": true,
+      "verified_font_selection": true
+    },
+    "tags": {
+      "major_brand": "isom",
+      "minor_version": "512",
+      "compatible_brands": "isomiso2avc1mp41",
+      "clipforge_editing": "AI-assisted-editing",
+      "clipforge_tool": "ClipForge",
+      "clipforge_marking_version": "1",
+      "encoder": "Lavf61.7.100"
+    }
+  },
+  "scope": "Synthetic canvas guard and visible pixel regression; no legal-compliance claim.",
+  "source_report_sha256": "c38c0700bc3189772bcc4f2945e5feca932ee6e549ee1ca6b09a9bbd37c420b8",
+  "copy_policy": "JSON transcription with LF; original report retained unchanged"
+}

@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-04",
+  "scope": "Week8 initial EDL export identification metadata; synthetic media only",
+  "source_frames": 15,
+  "output_frames": 10,
+  "source_duration_seconds": 0.5,
+  "output_duration_seconds": 0.3333333333333333,
+  "source_has_audio": true,
+  "tools": {
+    "ffmpeg": "ffmpeg version n8.1.2-34-g9b6c8969e0 Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version n8.1.2-34-g9b6c8969e0 Copyright (c) 2007-2026 the FFmpeg developers"
+  },
+  "positive_metadata_check": {
+    "schema_version": "1.0.0",
+    "scope": "metadata-only",
+    "file_name": "edl-output.mp4",
+    "sha256": "42a463c36163d4dc58b6d680d5586cdd753b6721b657e10a85ed169bd5640a08",
+    "mp4_video": true,
+    "metadata": {
+      "contract": "clipforge-export-marking-v1",
+      "status": "pass",
+      "expected": {
+        "clipforge_editing": "AI-assisted-editing",
+        "clipforge_tool": "ClipForge",
+        "clipforge_marking_version": "1"
+      },
+      "observed": {
+        "clipforge_editing": "AI-assisted-editing",
+        "clipforge_tool": "ClipForge",
+        "clipforge_marking_version": "1"
+      },
+      "missing": [],
+      "mismatched": []
+    },
+    "metadata_check_passed": true,
+    "visible_label": {
+      "status": "not_checked",
+      "expected_text": "AI辅助剪辑",
+      "reason": "Metadata cannot establish whether pixels contain a perceptible label."
+    },
+    "legal_compliance_assessed": false
+  },
+  "negative_unmarked_check": {
+    "schema_version": "1.0.0",
+    "scope": "metadata-only",
+    "file_name": "synthetic-unmarked-source.mp4",
+    "sha256": "645d821f2402ad4fd4417649cbadf159bcc21a447091401d2680b2edebbf8521",
+    "mp4_video": true,
+    "metadata": {
+      "contract": "clipforge-export-marking-v1",
+      "status": "fail",
+      "expected": {
+        "clipforge_editing": "AI-assisted-editing",
+        "clipforge_tool": "ClipForge",
+        "clipforge_marking_version": "1"
+      },
+      "observed": {},
+      "missing": [
+        "clipforge_editing",
+        "clipforge_tool",
+        "clipforge_marking_version"
+      ],
+      "mismatched": []
+    },
+    "metadata_check_passed": false,
+    "visible_label": {
+      "status": "not_checked",
+      "expected_text": "AI辅助剪辑",
+      "reason": "Metadata cannot establish whether pixels contain a perceptible label."
+    },
+    "legal_compliance_assessed": false
+  },
+  "visible_marking_completed": false,
+  "files": {
+    "edl-output.mp4": "42a463c36163d4dc58b6d680d5586cdd753b6721b657e10a85ed169bd5640a08",
+    "synthetic-unmarked-source.mp4": "645d821f2402ad4fd4417649cbadf159bcc21a447091401d2680b2edebbf8521"
+  }
+}
