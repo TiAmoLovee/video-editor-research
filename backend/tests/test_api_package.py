@@ -1,5 +1,6 @@
 """验证 API 镜像 COPY 的运行时文件能完成只读候选校验，不依赖开发机资源。"""
 from contextlib import ExitStack
+import os
 from pathlib import Path
 import re
 import shutil
@@ -87,7 +88,8 @@ class ApiPackageTests(unittest.TestCase):
         analysis['media']['normalized_sha256'] = source['sha256']
         dockerfile = (root / 'deploy/Dockerfile.api').read_text(encoding='utf-8')
         runtime = dockerfile.split('FROM python:', 1)[1]
-        schema_check = next(line for line in runtime.splitlines() if line.startswith('RUN python -c'))
+        schema_check = next(line for line in runtime.splitlines() if line.startswith('RUN python -c')
+                            and 'Draft202012Validator' in line)
         self.assertIn("'edl.schema.json'", schema_check)
         copies = re.findall(r'^COPY --chown=appuser:appuser (schemas|config/scoring|prompts) (/app/\S+)$', runtime, re.M)
         with tempfile.TemporaryDirectory() as temp, ExitStack() as stack:
@@ -118,6 +120,33 @@ class ApiPackageTests(unittest.TestCase):
                 edl.candidates_to_edl(generated, selected, source)
             with self.assertRaises(FileNotFoundError):
                 mlt.export_mlt(project, media_root)
+
+    def test_default_scoring_configuration_and_prompts_load_from_api_image_resources(self):
+        root = candidates.ROOT
+        runtime = (root / 'deploy/Dockerfile.api').read_text(encoding='utf-8').split('FROM python:', 1)[1]
+        copies = re.findall(r'^COPY --chown=appuser:appuser (schemas|config/scoring|prompts) (/app/\S+)$', runtime, re.M)
+        analysis = fixture([(0, 10), (10, 20), (20, 30)])
+        with tempfile.TemporaryDirectory() as temp, ExitStack() as stack:
+            packaged = Path(temp)
+            for source, destination in copies:
+                shutil.copytree(root / source, packaged / destination.removeprefix('/app/'))
+            for module in (candidates, validation, scoring, llm):
+                stack.enter_context(patch.object(module, 'ROOT', packaged))
+            # Load after redirecting ROOT: precomputed host results can conceal
+            # a missing runtime configuration directory in the API image.
+            result = scoring.score_candidates(candidates.generate_candidates(analysis), analysis)
+            self.assertEqual(result['scoring']['version'], 'rule-v1')
+            self.assertEqual(len(result['candidates']), 3)
+            with patch.dict(os.environ, {'CLIPFORGE_SCORER': 'llm', 'CLIPFORGE_LLM_CONFIG': ''}):
+                settings = llm.settings_snapshot()
+                self.assertTrue(settings['prompt'].strip())
+                self.assertEqual(settings['prompt_sha256'], candidates.content_hash(settings['prompt']))
+                (packaged / 'prompts/scoring/llm-v1.txt').unlink()
+                with self.assertRaises(FileNotFoundError):
+                    llm.settings_snapshot()
+            (packaged / 'config/scoring/rule-v1.json').unlink()
+            with self.assertRaises(FileNotFoundError):
+                scoring.load_config()
 
 
 if __name__ == '__main__':

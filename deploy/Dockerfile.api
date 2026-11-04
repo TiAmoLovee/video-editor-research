@@ -9,7 +9,16 @@ FROM python:3.11-slim-bookworm
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 CLIPFORGE_FRONTEND_DIST=/app/frontend/dist
 ENV SUBTITLE_FONT_FILE=/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc SUBTITLE_FONT_NAME="Noto Sans CJK SC"
 WORKDIR /app/backend
-RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg fonts-noto-cjk \
+# Use authenticated Debian HTTPS endpoints; fail on missing trust or partial updates.
+RUN python -c "from pathlib import Path; \
+    root = Path('/etc/apt'); cert = Path('/etc/ssl/certs/ca-certificates.crt'); \
+    assert cert.is_file() and cert.stat().st_size > 0, 'Trusted CA bundle is missing'; \
+    files = [root/'sources.list', *sorted((root/'sources.list.d').glob('*.sources')), *sorted((root/'sources.list.d').glob('*.list'))]; \
+    texts = [(path, path.read_text(encoding='utf-8')) for path in files if path.is_file()]; \
+    assert any('deb.debian.org/' in value or 'security.debian.org/' in value for _, value in texts), 'Expected Debian sources are missing'; \
+    [(path.write_text(value.replace('http://deb.debian.org/', 'https://deb.debian.org/').replace('http://security.debian.org/', 'https://security.debian.org/'), encoding='utf-8')) for path, value in texts if 'http://deb.debian.org/' in value or 'http://security.debian.org/' in value]" \
+    && apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update --error-on=any \
+    && apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y --no-install-recommends ffmpeg fonts-noto-cjk \
     && rm -rf /var/lib/apt/lists/*
 COPY backend/requirements.txt backend/requirements-worker.txt ./
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked python -m pip install --timeout 120 --retries 5 -r requirements.txt -r requirements-worker.txt \
@@ -17,6 +26,8 @@ RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked python -m pip inst
     && mkdir -p /data && chown appuser:appuser /data
 COPY --chown=appuser:appuser backend/clipforge ./clipforge
 COPY --chown=appuser:appuser schemas /app/schemas
+COPY --chown=appuser:appuser config/scoring /app/config/scoring
+COPY --chown=appuser:appuser prompts /app/prompts
 COPY --from=frontend --chown=appuser:appuser /frontend/dist /app/frontend/dist
 USER appuser
 RUN python -c "import json; from pathlib import Path; from jsonschema import Draft202012Validator; [Draft202012Validator.check_schema(json.loads((Path('/app/schemas') / name).read_text())) for name in ('analysis.schema.json', 'candidates.schema.json', 'scored_candidates.schema.json', 'llm_candidates.schema.json', 'edl.schema.json', 'edl-v0.2.schema.json', 'edl-v0.3.schema.json', 'subtitles.schema.json', 'subtitles-v0.2.schema.json')]"

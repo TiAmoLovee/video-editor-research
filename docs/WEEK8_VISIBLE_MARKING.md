@@ -24,7 +24,7 @@ $env:SUBTITLE_FONT_NAME = "Microsoft YaHei"
 $env:PYTHONPATH = "$PWD;$PWD/backend"
 ```
 
-以上 Windows 字体示例仅使用本机已有文件，不随仓库分发。也可使用覆盖所需字形的 Noto 字体。API 与 worker Dockerfile 均安装 `fonts-noto-cjk` 并配置 `Noto Sans CJK SC`；Dockerfile 更新不等于本轮完成容器运行验收。原生程序不自动载入 `.env`。
+以上 Windows 字体示例仅使用本机已有文件，不随仓库分发。也可使用覆盖所需字形的 Noto 字体。API 与 worker Dockerfile 均安装 `fonts-noto-cjk` 并配置 `Noto Sans CJK SC`；默认Dockerfile的验证与现有服务的兼容部署分别记录，见后续本机验收。原生程序不自动载入 `.env`。
 
 新 MLT 的完成记录升级为 format 3，冻结 `brand_policy_version=1` 与字体名称；旧 format 1／2 按原策略生成、核验，避免新政策破坏历史文件读取。Shotcut 所在机器需安装相应字体。工程可编辑，外部工具删除滤镜、替换字体或另选编码参数后需要重新检查；本轮不保证外部成品带项目自定义元数据。
 
@@ -58,4 +58,6 @@ python tools/week8/verify_visible_exports.py --help
 
 EDL 像素工具要求新输出目录，保留逐例 JSON、MP4、关键截图和总览图，拒绝覆盖既有证据。MLT 原生用例另外设置 `MLT_MELT`、`MLT_TEST_FONT`；没有对应工具／字体时明确跳过，不能将跳过计为通过。
 
-当前未完成项目仍包括新工程的 Shotcut GUI 另存、最新 Docker 运行、第三方干净机复现、完整许可审计和第八周其余交付。原生 melt 渲染不冒充 GUI 验收；本轮测试也不改变第七周已记录的识别质量、边界质量或性能结果。
+2026-11-04 追加：合并后的镜像已部署到本机，实际无字幕／有字幕MP4和ZIP两片通过自动核验，16张首中末与切点截图的“AI辅助剪辑”可读；详见 [本机验收](evaluation/week8-local-deployment-20261104/README.md)。该次实际素材与此前合成测试分开记录，不将抽样检查写成全帧字形识别。
+
+当前未完成项目仍包括新工程的 Shotcut GUI 另存与再导出、修正后默认Dockerfile构建、完整容器故障矩阵、第三方干净机复现、完整许可审计和第八周其余交付。原生 melt 渲染不冒充 GUI 验收；本轮测试也不改变第七周已记录的识别质量、边界质量或性能结果。

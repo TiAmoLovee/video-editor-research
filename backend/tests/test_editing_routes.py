@@ -161,7 +161,7 @@ class EditingRoutesTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[2]
         dockerfile = (root / "deploy" / "Dockerfile.api").read_text(encoding="utf-8")
         runtime = dockerfile.split("FROM python:", 1)[1]
-        installation = re.search(r"apt-get install[^\n]*\bffmpeg\b", runtime)
+        installation = re.search(r"apt-get[^\n]*\binstall\b[^\n]*\bffmpeg\b", runtime)
         self.assertIsNotNone(installation)
         self.assertLess(installation.start(), runtime.index("USER appuser"))
         self.assertIn("/var/lib/apt/lists/*", runtime)
